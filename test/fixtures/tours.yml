@@ -1,0 +1,30 @@
+# == Schema Information
+#
+# Table name: tours
+#
+#  id         :uuid             not null, primary key
+#  date       :date
+#  end_time   :time
+#  number     :integer
+#  start_time :time
+#  timezone   :string
+#  title      :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+one:
+  number: 1
+  title: MyString
+  date: 2024-05-20
+  start_time: 2024-05-20 13:11:51
+  end_time: 2024-05-20 13:11:51
+  timezone: MyString
+
+two:
+  number: 1
+  title: MyString
+  date: 2024-05-20
+  start_time: 2024-05-20 13:11:51
+  end_time: 2024-05-20 13:11:51
+  timezone: MyString
