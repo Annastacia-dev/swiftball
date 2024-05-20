@@ -7,6 +7,7 @@
 #  end_time   :time
 #  number     :integer
 #  start_time :time
+#  status     :integer          default(0)
 #  timezone   :string
 #  title      :string
 #  created_at :datetime         not null

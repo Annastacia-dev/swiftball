@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_20_103908) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_20_104648) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -41,6 +41,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_20_103908) do
     t.uuid "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "attempts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.uuid "quiz_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quiz_id"], name: "index_attempts_on_quiz_id"
+    t.index ["user_id"], name: "index_attempts_on_user_id"
   end
 
   create_table "choices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -80,6 +89,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_20_103908) do
     t.index ["tour_id"], name: "index_quizzes_on_tour_id"
   end
 
+  create_table "responses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "choice_id", null: false
+    t.uuid "attempt_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["attempt_id"], name: "index_responses_on_attempt_id"
+    t.index ["choice_id"], name: "index_responses_on_choice_id"
+  end
+
   create_table "tours", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "number"
     t.string "title"
@@ -89,6 +107,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_20_103908) do
     t.string "timezone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status", default: 0
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -107,6 +126,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_20_103908) do
     t.string "unconfirmed_email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "role", default: 0
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -124,7 +144,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_20_103908) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "attempts", "quizzes"
+  add_foreign_key "attempts", "users"
   add_foreign_key "choices", "questions"
   add_foreign_key "questions", "quizzes"
   add_foreign_key "quizzes", "tours"
+  add_foreign_key "responses", "attempts"
+  add_foreign_key "responses", "choices"
 end
