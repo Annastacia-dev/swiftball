@@ -18,5 +18,13 @@
 #  fk_rails_...  (question_id => questions.id)
 #
 class Choice < ApplicationRecord
+  has_paper_trail
+
+  has_one_attached :image
+
+  # association
   belongs_to :question
+
+  # validations
+  validates :content, presence: true, uniqueness: true
 end

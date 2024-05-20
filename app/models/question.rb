@@ -19,5 +19,31 @@
 #  fk_rails_...  (quiz_id => quizzes.id)
 #
 class Question < ApplicationRecord
+  has_paper_trail
+
+  # associations
   belongs_to :quiz
+  has_many :choices
+
+  # validations
+  validates :content, presence: true, uniqueness: true
+  validates :points, presence: true
+  validates :era, presence: true
+
+  # enums
+  enum era: {
+    lover: 0,
+    fearless: 1,
+    red: 2,
+    speak_now: 3,
+    folkmore: 4,
+    '1989': 5,
+    the_tortured_poets_department: 6,
+    acoustic_set: 7,
+    midnights: 8
+  }
+
+  def self.eras_options
+    eras.map { |k, _v| [k.humanize, k] }
+  end
 end

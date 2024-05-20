@@ -1,22 +1,15 @@
 <div id="<%= dom_id choice %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Question:</strong>
-    <%= choice.question_id %>
-  </p>
+   <% if choice.image.attached? %>
+     <%= image_tag choice.image, class: 'w-full h-72 object-cover' %>
+   <% end %>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Content:</strong>
-    <%= choice.content %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Correct:</strong>
-    <%= choice.correct %>
-  </p>
+    <p class="my-5">
+      <%= choice.content %>
+    </p>
 
   <% if action_name != "show" %>
-    <%= link_to "Show this choice", choice, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Edit this choice", edit_choice_path(choice), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Show this choice", quiz_question_choice_path(@quiz, @question, choice), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Edit this choice", edit_quiz_question_choice_path(@quiz, @question, choice), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
     <hr class="mt-6">
   <% end %>
 </div>

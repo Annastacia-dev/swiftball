@@ -1,4 +1,6 @@
 class ChoicesController < ApplicationController
+  before_action :find_question
+  before_action :set_quiz
   before_action :set_choice, only: %i[ show edit update destroy ]
 
   # GET /choices or /choices.json
@@ -12,7 +14,7 @@ class ChoicesController < ApplicationController
 
   # GET /choices/new
   def new
-    @choice = Choice.new
+    @choice = @question.choices.new
   end
 
   # GET /choices/1/edit
@@ -21,11 +23,11 @@ class ChoicesController < ApplicationController
 
   # POST /choices or /choices.json
   def create
-    @choice = Choice.new(choice_params)
+    @choice = @question.choices.new(choice_params)
 
     respond_to do |format|
       if @choice.save
-        format.html { redirect_to choice_url(@choice), notice: "Choice was successfully created." }
+        format.html { redirect_to quiz_question_choices_path(@question.quiz, @question), notice: "Choice was successfully created." }
         format.json { render :show, status: :created, location: @choice }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -59,12 +61,20 @@ class ChoicesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def find_question
+      @question = Question.find(params[:question_id])
+    end
+
+    def set_quiz
+      @quiz = @question.quiz
+    end
+
     def set_choice
       @choice = Choice.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def choice_params
-      params.require(:choice).permit(:question_id, :content, :correct)
+      params.require(:choice).permit(:question_id, :content, :correct, :image)
     end
 end

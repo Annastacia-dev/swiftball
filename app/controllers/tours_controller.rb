@@ -3,7 +3,7 @@ class ToursController < ApplicationController
 
   # GET /tours or /tours.json
   def index
-    @tours = Tour.all
+    @tours = Tour.order(date: :desc)
   end
 
   # GET /tours/1 or /tours/1.json
@@ -60,7 +60,7 @@ class ToursController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tour
-      @tour = Tour.find(params[:id])
+      @tour = Tour.friendly.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

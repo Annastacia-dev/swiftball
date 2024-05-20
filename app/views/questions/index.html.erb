@@ -5,10 +5,21 @@
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Questions</h1>
-    <%= link_to "New question", new_question_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+    <%= link_to "New question", new_quiz_question_path(@quiz), class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
 
   <div id="questions" class="min-w-full">
-    <%= render @questions %>
+    <% @questions_by_era.each do |era, questions| %>
+      <h2>Era: <%= era %></h2>
+      <ul class="mb-5">
+        <% questions.each do |question| %>
+          <li>
+            <%= link_to quiz_question_path(@quiz, question) do %>
+              <%= question.content %>(worth <%= question.points %> points)
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
   </div>
 </div>

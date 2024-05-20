@@ -4,10 +4,10 @@
 #
 #  id         :uuid             not null, primary key
 #  date       :date
-#  end_time   :time
 #  number     :integer
+#  slug       :string
 #  start_time :time
-#  status     :integer          default(0)
+#  status     :integer          default("pending")
 #  timezone   :string
 #  title      :string
 #  created_at :datetime         not null

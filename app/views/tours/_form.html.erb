@@ -32,13 +32,12 @@
   </div>
 
   <div class="my-5">
-    <%= form.label :end_time %>
-    <%= form.time_field :end_time, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
     <%= form.label :timezone %>
-    <%= form.text_field :timezone, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    <%=
+      form.select :timezone,
+      ActiveSupport::TimeZone.all.map { |tz| [tz.tzinfo.identifier] },
+      {}
+      %>
   </div>
 
   <div class="inline">

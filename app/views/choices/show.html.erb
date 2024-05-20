@@ -6,10 +6,10 @@
 
     <%= render @choice %>
 
-    <%= link_to "Edit this choice", edit_choice_path(@choice), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Edit this choice", edit_quiz_question_choice_path(@quiz, @question, @choice), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     <div class="inline-block ml-2">
-      <%= button_to "Destroy this choice", choice_path(@choice), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+      <%= button_to "Destroy this choice", quiz_question_choice_path(@quiz, @question, @choice), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
     </div>
-    <%= link_to "Back to choices", choices_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Back to choices", quiz_question_choices_path(@quiz, @question), class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
   </div>
 </div>

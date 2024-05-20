@@ -1,33 +1,10 @@
 <div id="<%= dom_id tour %>">
   <p class="my-5">
-    <strong class="block font-medium mb-1">Number:</strong>
     <%= tour.number %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Title:</strong>
     <%= tour.title %>
   </p>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Date:</strong>
-    <%= tour.date %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Start time:</strong>
-    <%= tour.start_time %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">End time:</strong>
-    <%= tour.end_time %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Timezone:</strong>
-    <%= tour.timezone %>
-  </p>
+  <%= render 'quizzes/quiz', quiz: tour.quiz %>
 
   <% if action_name != "show" %>
     <%= link_to "Show this tour", tour, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>

@@ -5,10 +5,10 @@
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Choices</h1>
-    <%= link_to "New choice", new_choice_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+    <%= link_to "New choice", new_quiz_question_choice_path(@quiz, @question), class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
 
-  <div id="choices" class="min-w-full">
+  <div id="choices" class="min-w-full grid lg:grid-cols-4 grid-cols-2 gap-5">
     <%= render @choices %>
   </div>
 </div>

@@ -3,6 +3,7 @@
 # Table name: quizzes
 #
 #  id         :uuid             not null, primary key
+#  slug       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  tour_id    :uuid             not null
