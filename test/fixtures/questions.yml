@@ -1,0 +1,32 @@
+# == Schema Information
+#
+# Table name: questions
+#
+#  id         :uuid             not null, primary key
+#  content    :text
+#  era        :integer          default(0)
+#  points     :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  quiz_id    :uuid             not null
+#
+# Indexes
+#
+#  index_questions_on_quiz_id  (quiz_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (quiz_id => quizzes.id)
+#
+
+one:
+  quiz: one
+  era: 1
+  points: 1
+  content: MyText
+
+two:
+  quiz: two
+  era: 1
+  points: 1
+  content: MyText
