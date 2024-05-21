@@ -1,29 +1,72 @@
-<h2>Sign up</h2>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'bg-center bg-cover bg-no-repeat min-h-screen', style: "background-image: url('#{image_path('eras_tour/background.png')}')" }) do |f| %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+  <div class="bg-black/90 min-h-screen w-full grid lg:grid-cols-3 gap-5 justify-center items-center text-white font-roboto font-light">
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+    <%= render 'shared/logo' %>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+    <div class="flex flex-col gap-8 border-l border-gray-100 py-5 px-20 col-span-2 lg:ml-20 text-sm ">
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+      <h2 class="text-lg uppercase font-bold">Sign up</h2>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="grid lg:grid-cols-2 gap-4">
+
+        <div class="flex flex-col gap-1">
+          <%= f.label :name %>
+          <%= f.text_field :name, autofocus: true, class: "bg-transparent", required: true %>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <%= f.label :username %>
+          <%= f.text_field :username, autofocus: true, class: "bg-transparent", required: true %>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <%= f.label :email %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "bg-transparent", required: true %>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <%= f.label :country %>
+          <%= f.select :country, options_for_select(@country_options_for_select), {}, class: "bg-black text-white", required: true %>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <%= f.label :timezone %>
+          <%= f.select :timezone, @timezones, {}, required: true, class: "bg-black text-white" %>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <div class="flex">
+            <%= f.label :password %>
+            <% if @minimum_password_length %>
+            <em>(<%= @minimum_password_length %> characters minimum)</em>
+            <% end %>
+          </div>
+          <%= f.password_field :password, autocomplete: "new-password", required: true, class: "bg-transparent" %>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <%= f.label :password_confirmation %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "bg-transparent", required: true %>
+        </div>
+
+        <div class="flex items-center gap-2 my-4 col-span-2">
+        <%= f.check_box :terms_and_conditions, class: 'h-6 w-6 bg-transparent', required: true %>
+        <%= f.label :terms_and_conditions, 'I agree to terms & conditions and privacy policy' %>
+      </div>
+
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Sign up", class: 'px-4 py-2 bg-white text-black rounded font-semibold lg:w-1/2 cursor-pointer' %>
+      </div>
+
+      <%= render "devise/shared/links" %>
+
+    </div>
+
   </div>
 <% end %>
 
-<%= render "devise/shared/links" %>

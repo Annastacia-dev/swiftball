@@ -33,11 +33,7 @@
 
   <div class="my-5">
     <%= form.label :timezone %>
-    <%=
-      form.select :timezone,
-      ActiveSupport::TimeZone.all.map { |tz| [tz.tzinfo.identifier] },
-      {}
-      %>
+    <%= form.select :timezone, @timezones, {} %>
   </div>
 
   <div class="inline">

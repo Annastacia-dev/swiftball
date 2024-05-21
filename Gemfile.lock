@@ -100,6 +100,8 @@ GEM
       xpath (~> 3.2)
     concurrent-ruby (1.2.3)
     connection_pool (2.4.1)
+    countries (6.0.1)
+      unaccent (~> 0.3)
     crass (1.0.6)
     date (3.3.4)
     debug (1.9.2)
@@ -288,6 +290,7 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    unaccent (0.4.0)
     unicode-display_width (2.5.0)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -313,6 +316,7 @@ DEPENDENCIES
   bootsnap
   byebug
   capybara
+  countries (~> 6.0.1)
   debug
   devise
   dotenv-rails

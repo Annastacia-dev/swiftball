@@ -6,13 +6,14 @@
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string
 #  confirmed_at           :datetime
+#  country                :string
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  name                   :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
-#  role                   :integer          default(0)
+#  role                   :integer          default("user")
 #  terms_and_conditions   :boolean
 #  timezone               :string
 #  unconfirmed_email      :string
@@ -38,6 +39,7 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :username, presence: true, uniqueness: true
   validates :timezone, presence: true
+  validates :country, presence: true
 
   # enums
   enum role: {

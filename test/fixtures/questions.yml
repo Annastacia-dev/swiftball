@@ -4,7 +4,7 @@
 #
 #  id         :uuid             not null, primary key
 #  content    :text
-#  era        :integer          default(0)
+#  era        :integer          default("lover")
 #  points     :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
