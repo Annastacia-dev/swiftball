@@ -1,0 +1,29 @@
+<div data-controller="dropdown" class='relative'>
+  <button data-action="click->dropdown#toggle" class="flex items-center gap-1 px-4 py-2 w-full">
+    <p class='flex items-center gap-2 capitalize'>
+      <i class="<%= icon_class %>"></i>
+      <span class><%= title %></span>
+    </p>
+  </button>
+
+  <ul data-dropdown-target="menu" class="hidden text-white rounded mt-2 flex flex-col gap-3 bg-black absolute right-0 text-sm w-60 p-2">
+    <% items.each_with_index do |item, index| %>
+      <li class='p-1'>
+        <% if item[:type] == 'button' %>
+          <%= button_to item[:path], method: item[:method], class: "px-4 flex items-center gap-4" do %>
+            <i class="<%= item[:icon_class] %>"></i>
+            <%= item[:menu_text] %>
+          <% end %>
+        <% else %>
+          <%= link_to item[:path], class: "px-4 flex items-center gap-4" do %>
+            <i class="<%= item[:icon_class] %>"></i>
+            <%= item[:menu_text] %>
+          <% end %>
+        <% end %>
+      </li>
+      <% if index != (items.length - 1) %>
+       <hr class="border" />
+      <% end %>
+    <% end %>
+  </ul>
+</div>

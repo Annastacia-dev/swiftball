@@ -23,7 +23,7 @@ class Quiz < ApplicationRecord
   friendly_slug_scope to_slug: :title
 
   # associations
-  belongs_to :tour
+  belongs_to :tour, dependent: :destroy
   has_many :questions
 
   # instance methods

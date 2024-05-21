@@ -25,7 +25,7 @@ class ToursController < ApplicationController
 
     respond_to do |format|
       if @tour.save
-        format.html { redirect_to tour_url(@tour), notice: "Tour was successfully created." }
+        format.html { redirect_to tours_path, notice: "Tour was successfully created." }
         format.json { render :show, status: :created, location: @tour }
       else
         format.html { render :new, status: :unprocessable_entity }
