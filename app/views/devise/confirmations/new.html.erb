@@ -1,16 +1,27 @@
-<h2>Resend confirmation instructions</h2>
 
-<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post, class: 'bg-center bg-cover bg-no-repeat min-h-screen', style: "background-image: url('#{image_path('eras_tour/background.png')}')" }) do |f| %>
+  <div class="bg-black/90 min-h-screen w-full grid lg:grid-cols-3 gap-5 justify-center items-center text-white font-roboto font-light">
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
-  </div>
+    <%= render 'shared/logo' %>
 
-  <div class="actions">
-    <%= f.submit "Resend confirmation instructions" %>
+    <div class="flex flex-col gap-8 border-l border-gray-100 py-5 px-20 col-span-2 lg:ml-20 text-sm ">
+
+      <h2 class="text-lg uppercase font-bold">Resend confirmation instructions</h2>
+
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="flex flex-col gap-1">
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: "bg-transparent lg:w-1/2" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Resend confirmation instructions",  class: 'px-4 py-2 bg-white text-black rounded font-semibold lg:w-1/2 cursor-pointer' %>
+      </div>
+
+      <%= render "devise/shared/links" %>
+
+    </div>
   </div>
 <% end %>
 
-<%= render "devise/shared/links" %>
