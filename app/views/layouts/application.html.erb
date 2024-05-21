@@ -13,6 +13,9 @@
   </head>
 
   <body>
+    <% if current_user %>
+     <%= render 'layouts/navbar' %>
+    <% end %>
     <main class="bg-gray-50 relative">
       <% unless flash.empty? %>
         <div id="flash" class="text-white sm:pl-20 absolute top-0 right-40 z-50 w-[50%]shadow-lg rounded">
