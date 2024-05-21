@@ -11,4 +11,7 @@ Rails.application.routes.draw do
       resources :choices
     end
   end
+
+  post 'attempt_quiz/:id', to: "quizzes#attempt_quiz", as: :attempt_quiz
+  get 'attempt/:id', to: 'quizzes#attempt', as: :attempt
 end

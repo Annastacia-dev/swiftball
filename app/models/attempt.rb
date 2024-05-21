@@ -19,7 +19,20 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Attempt < ApplicationRecord
+  has_paper_trail
+
   # associations
   belongs_to :user
   belongs_to :quiz
+
+  # validations
+  validate :single_attempt_per_quiz
+
+  private
+
+  def single_attempt_per_quiz
+    if Attempt.exists?(user_id: user_id, quiz_id: quiz_id)
+      errors.add(:base, "You can only attempt this quiz once")
+    end
+  end
 end

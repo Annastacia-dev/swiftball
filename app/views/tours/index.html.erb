@@ -24,15 +24,24 @@
           ] %>
         <% else %>
           <% if tour.status == 'pending' %>
-           <div class="px-4 py-2 bg-gray-200 text-black">
+           <div class="px-4 py-2 bg-gray-200 text-black rounded">
              <i class="fa-solid fa-spinner"></i>
              pending
            </div>
           <% elsif tour.status == 'open' %>
-            <button>
-            </button>
+            <% if  current_user.has_attempted_quiz?(tour.quiz) %>
+              <%= link_to attempt_path(tour.quiz), class:"bg-black text-white px-4 py-2 rounded" do %>
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                edit predictions
+              <% end %>
+            <% else %>
+              <%= button_to attempt_quiz_path(tour.quiz), method: :post, class:"bg-black text-white px-4 py-2 rounded" do %>
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                predict
+              <% end %>
+            <% end %>
           <% elsif tour.status == 'closed' %>
-            <div class="px-4 py-2 bg-gray-200 text-black">
+            <div class="px-4 py-2 bg-gray-200 text-black rounded">
               <i class="fa-solid fa-xmark"></i>
               closed
             </div>

@@ -19,6 +19,9 @@
 #  fk_rails_...  (choice_id => choices.id)
 #
 class Response < ApplicationRecord
+  has_paper_trail
+
+  # associations
   belongs_to :choice
   belongs_to :attempt
 end

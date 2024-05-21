@@ -28,6 +28,7 @@ class Tour < ApplicationRecord
   validates :date, presence: true
   validates :start_time, presence: true
   validates :timezone, presence: true
+  validate :one_quiz
 
   # enums
   enum status: {
@@ -49,7 +50,9 @@ class Tour < ApplicationRecord
   def create_quiz
     quiz = Quiz.order(created_at: :desc).first
     if quiz
-      quiz.dup.update(tour_id: self.id)
+      dupe = quiz.dup
+      dupe.update(tour_id: self.id)
+      dupe << quiz.questions
     else
       create_new_quiz
     end
@@ -57,5 +60,11 @@ class Tour < ApplicationRecord
 
   def create_new_quiz
     Quiz.create!(tour_id: self.id)
+  end
+
+  def one_quiz
+    if tour.quiz
+      errors.add(:base, "This tour alread has a quiz")
+    end
   end
 end

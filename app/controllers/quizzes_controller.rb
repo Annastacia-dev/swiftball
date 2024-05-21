@@ -1,5 +1,5 @@
 class QuizzesController < ApplicationController
-  before_action :set_quiz, only: %i[ show edit update destroy ]
+  before_action :set_quiz, only: %i[ show edit update destroy attempt_quiz attempt ]
 
   # GET /quizzes or /quizzes.json
   def index
@@ -54,6 +54,22 @@ class QuizzesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to tours_path, notice: "Quiz was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  # Custom
+
+  def attempt_quiz
+    @attempt = current_user.attempts.new({
+      quiz_id: @quiz.id
+    })
+
+    respond_to do |format|
+      if @attempt.save
+        format.html { redirect_to attempt_path(@attempt) }
+      else
+        format.html { redirect_to tours_path, alert: @quiz.errors, status: :unprocessable_entity }
+      end
     end
   end
 

@@ -34,6 +34,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
+  # associations
+  has_many :quizzes
+  has_many :attempts
+
   # validations
   validates :terms_and_conditions, acceptance: true
   validates :name, presence: true
@@ -41,9 +45,19 @@ class User < ApplicationRecord
   validates :timezone, presence: true
   validates :country, presence: true
 
+  # scopes
+  scope :has_attempted_quiz, ->(quiz_id) {
+    joins(:attempts).where(attempts: { quiz_id: quiz_id }).distinct
+  }
+
   # enums
   enum role: {
     user: 0,
     admin: 1
   }
+
+  # instance methods
+  def has_attempted_quiz?(quiz_id)
+    attempts.exists?(quiz_id: quiz_id)
+  end
 end

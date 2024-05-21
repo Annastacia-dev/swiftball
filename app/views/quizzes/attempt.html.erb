@@ -1,0 +1,9 @@
+<div class="min-h-screen">
+  <h5 class="font-semibold font-courier uppercase text-md p-5"><%= @quiz.title %> </h5>
+
+  <% @quiz.questions.all.group_by(&:era).each do |era, questions| %>
+    <div class="mt-10">
+      <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era %></h1>
+    </div>
+  <% end %>
+</div>
