@@ -11,6 +11,8 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+        roboto: ['"Roboto", sans-serif'],
+        courier: ['"Courier Prime", monospace']
       },
     },
   },
