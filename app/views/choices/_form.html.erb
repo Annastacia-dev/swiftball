@@ -11,22 +11,27 @@
     </div>
   <% end %>
 
-  <div class="my-5">
-    <%= form.label :image %>
-    <%= form.file_field :image, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
+  <div class="flex flex-col gap-5 lg:w-1/2 my-5">
 
-  <div class="my-5">
-    <%= form.label :content %>
-    <%= form.text_field :content, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
+    <div class="flex flex-col gap-1">
+      <%= form.label :image %>
+      <%= form.file_field :image, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full" %>
+    </div>
 
-  <div class="my-5">
-    <%= form.label :correct %>
-    <%= form.check_box :correct, class: "block mt-2 h-5 w-5" %>
-  </div>
+    <div class="flex flex-col gap-1">
+      <%= form.label :content %>
+      <%= form.text_field :content, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full", required: true %>
+    </div>
 
-  <div class="inline">
-    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+    <div class="flex items-center gap-2">
+      <%= form.check_box :correct, class: "h-8 w-8" %>
+      <%= form.label :correct %>
+    </div>
+
+    <div class="flex gap-5">
+      <%= form.submit class: "rounded py-2 px-4 bg-black text-white  font-medium cursor-pointer" %>
+      <%= form.submit 'Create Choice & Add Another', class: "rounded py-2 px-4 border border-black text-black  font-medium cursor-pointer hover:bg-gray-200" %>
+    </div>
+
   </div>
 <% end %>

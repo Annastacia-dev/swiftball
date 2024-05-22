@@ -13,5 +13,7 @@ Rails.application.routes.draw do
   end
 
   post 'attempt_quiz/:id', to: "quizzes#attempt_quiz", as: :attempt_quiz
+  post 'open_quiz/:id', to: "quizzes#open_quiz", as: :open_quiz
+  post 'close_quiz/:id', to: "quizzes#close_quiz", as: :close_quiz
   get 'attempt/:id', to: 'quizzes#attempt', as: :attempt
 end

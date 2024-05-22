@@ -27,7 +27,11 @@ class ChoicesController < ApplicationController
 
     respond_to do |format|
       if @choice.save
-        format.html { redirect_to quiz_question_choices_path(@question.quiz, @question), notice: "Choice was successfully created." }
+        if params[:commit] == "Create Choice & Add Another"
+          format.html { redirect_to new_quiz_question_choice_path(@question.quiz, @question), notice: "Choice was successfully created." }
+        else
+          format.html { redirect_to quiz_path(@question.quiz), notice: "Choice was successfully created." }
+        end
         format.json { render :show, status: :created, location: @choice }
       else
         format.html { render :new, status: :unprocessable_entity }

@@ -3,6 +3,7 @@
 # Table name: tours
 #
 #  id         :uuid             not null, primary key
+#  base       :boolean          default(FALSE)
 #  date       :date
 #  number     :integer
 #  slug       :string

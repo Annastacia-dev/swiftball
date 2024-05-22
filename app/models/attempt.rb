@@ -24,6 +24,7 @@ class Attempt < ApplicationRecord
   # associations
   belongs_to :user
   belongs_to :quiz
+  has_many :responses, dependent: :destroy
 
   # validations
   validate :single_attempt_per_quiz

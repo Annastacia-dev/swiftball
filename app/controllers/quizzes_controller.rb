@@ -1,5 +1,8 @@
 class QuizzesController < ApplicationController
-  before_action :set_quiz, only: %i[ show edit update destroy attempt_quiz attempt ]
+
+  before_action :set_quiz, only: %i[ show edit destroy attempt_quiz attempt open_quiz close_quiz ]
+  before_action :set_tour
+
 
   # GET /quizzes/1 or /quizzes/1.json
   def show
@@ -35,10 +38,46 @@ class QuizzesController < ApplicationController
     end
   end
 
+  def open_quiz
+    if @tour.status != 'open'
+      respond_to do |format|
+        if @tour.update(status: :open)
+          format.html { redirect_to tours_path, notice: 'Quiz is now open' }
+        else
+          format.html { redirect_to tours_path, notice: 'Something went wrong, try again' }
+        end
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to tours_path, notice: 'Quiz is already open' }
+      end
+    end
+  end
+
+  def close_quiz
+    if @tour.status != 'closed'
+      respond_to do |format|
+        if @tour.update(status: :closed)
+          format.html { redirect_to tours_path, notice: 'Quiz is now closed' }
+        else
+          format.html { redirect_to tours_path, notice: 'Something went wrong, try again' }
+        end
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to tours_path, notice: 'Quiz is already closed' }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz
       @quiz = Quiz.friendly.find(params[:id])
+    end
+
+    def set_tour
+      @tour = @quiz.tour
     end
 
     # Only allow a list of trusted parameters through.

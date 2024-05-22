@@ -1,7 +1,16 @@
-<div class="mx-auto md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">New choice</h1>
+<div class="pt-10 px-12 min-h-screen">
+
+<%= render 'components/breadcrumb', breadcrumbs: [
+    { text: 'quizzes', path: root_path },
+    { text: "#{@question.quiz.title}", path: quiz_path(@question.quiz) },
+    { text: "#{@question.content}", path: quiz_question_path(@question.quiz, @question)},
+    { text: 'Choices'},
+    { text: 'New Choice'}
+  ] %>
+
+  <h1 class="font-semibold text-xl font-courier capitalize">New choice</h1>
+
 
   <%= render "form", choice: @choice %>
 
-  <%= link_to "Back to choices", quiz_question_choices_path(@quiz, @question), class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
 </div>
