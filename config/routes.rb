@@ -7,13 +7,14 @@ Rails.application.routes.draw do
   devise_for :users
   resources :tours
   resources :quizzes do
+    post 'submit', on: :member
+    post 'attempt', on: :member
+    post 'open', on: :member
+    post 'close', on: :member
     resources :questions do
       resources :choices
     end
   end
 
-  post 'attempt_quiz/:id', to: "quizzes#attempt_quiz", as: :attempt_quiz
-  post 'open_quiz/:id', to: "quizzes#open_quiz", as: :open_quiz
-  post 'close_quiz/:id', to: "quizzes#close_quiz", as: :close_quiz
   get 'attempt/:id', to: 'quizzes#attempt', as: :attempt
 end

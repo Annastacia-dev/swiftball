@@ -30,7 +30,7 @@
                 edit predictions
               <% end %>
             <% else %>
-              <%= button_to attempt_quiz_path(tour.quiz), method: :post, class:"bg-black text-white px-4 py-2 rounded" do %>
+              <%= button_to attempt_quiz_path(tour.quiz), method: :post, class:"bg-black text-white px-4 py-2 rounded hover:bg-gray-900" do %>
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
                 predict
               <% end %>

@@ -1,6 +1,6 @@
 class QuizzesController < ApplicationController
 
-  before_action :set_quiz, only: %i[ show edit destroy attempt_quiz attempt open_quiz close_quiz ]
+  before_action :set_quiz, only: %i[ show edit destroy attempt_quiz attempt open_quiz close_quiz submit_quiz]
   before_action :set_tour
 
 
@@ -31,11 +31,14 @@ class QuizzesController < ApplicationController
 
     respond_to do |format|
       if @attempt.save
-        format.html { redirect_to attempt_path(@attempt) }
+        format.html { redirect_to attempt_path(@quiz) }
       else
         format.html { redirect_to tours_path, alert: @quiz.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def submit_quiz
   end
 
   def open_quiz
