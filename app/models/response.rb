@@ -28,4 +28,10 @@ class Response < ApplicationRecord
   belongs_to :question
   belongs_to :choice
   belongs_to :attempt
+
+  # instance methods
+
+  def predicted_correctly?
+    question.choices.find_by(correct: true) == choice
+  end
 end

@@ -8,7 +8,7 @@ class ToursController < ApplicationController
 
   # GET /tours/1 or /tours/1.json
   def show
-    @attempts = Attempt.where(quiz_id: @tour.quiz.id)
+    @attempts = Attempt.where(quiz_id: @tour.quiz.id).sort_by { |attempt| -attempt.score }
   end
 
   # GET /tours/new

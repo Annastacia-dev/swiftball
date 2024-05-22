@@ -24,11 +24,29 @@ class Attempt < ApplicationRecord
   # associations
   belongs_to :user
   belongs_to :quiz
-  has_many :questions, dependent: :destroy
   has_many :responses, dependent: :destroy
+  has_many :questions, through: :responses, dependent: :destroy
 
   # validations
   validate :single_attempt_per_quiz
+
+  # instance methods
+
+  def total_questions
+    questions.size
+  end
+
+  def score
+    score = 0
+
+    responses.each do |response|
+      if response.predicted_correctly?
+        score += response.question.points
+      end
+    end
+
+    score
+  end
 
   private
 
