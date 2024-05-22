@@ -40,7 +40,8 @@ class Question < ApplicationRecord
     '1989': 5,
     the_tortured_poets_department: 6,
     acoustic_set: 7,
-    midnights: 8
+    midnights: 8,
+    extra: 9
   }
 
   def self.eras_options

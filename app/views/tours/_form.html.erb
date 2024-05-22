@@ -11,32 +11,36 @@
     </div>
   <% end %>
 
-  <div class="my-5">
-    <%= form.label :number %>
-    <%= form.number_field :number, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
+  <div class="grid lg:grid-cols-2 gap-x-10 gap-y-5 lg:w-3/4 my-5">
 
-  <div class="my-5">
-    <%= form.label :title %>
-    <%= form.text_field :title, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
+    <div class="flex flex-col gap-1">
+      <%= form.label :number %>
+      <%= form.number_field :number, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent" %>
+    </div>
 
-  <div class="my-5">
-    <%= form.label :date %>
-    <%= form.date_field :date, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
+    <div class="flex flex-col gap-1">
+      <%= form.label :title %>
+      <%= form.text_field :title, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent" %>
+    </div>
 
-  <div class="my-5">
-    <%= form.label :start_time %>
-    <%= form.time_field :start_time, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
+    <div class="flex flex-col gap-1">
+      <%= form.label :date %>
+      <%= form.date_field :date, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent" %>
+    </div>
 
-  <div class="my-5">
-    <%= form.label :timezone %>
-    <%= form.select :timezone, @timezones, {} %>
+    <div class="flex flex-col gap-1">
+      <%= form.label :start_time %>
+      <%= form.time_field :start_time, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent" %>
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <%= form.label :timezone %>
+      <%= form.select :timezone, @timezones, {}, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent" %>
+    </div>
+
   </div>
 
   <div class="inline">
-    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+    <%= form.submit class: "rounded py-2 px-4 bg-black text-white  font-medium cursor-pointer" %>
   </div>
 <% end %>

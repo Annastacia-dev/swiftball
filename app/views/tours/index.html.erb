@@ -18,7 +18,7 @@
         <% if current_user.admin? %>
           <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: [
             { path: quiz_path(tour.quiz), icon_class: 'fa-solid fa-circle-question', menu_text: 'View Quiz' },
-            { path: edit_quiz_path(tour.quiz), icon_class: 'fa-solid fa-pencil', menu_text: 'Edit Quiz' },
+            { path: edit_tour_path(tour), icon_class: 'fa-solid fa-pencil', menu_text: 'Edit Quiz' },
             { path: new_quiz_question_path(tour.quiz), icon_class: 'fa-solid fa-clipboard-question', menu_text: 'Add a Question' },
             { path: quiz_path(tour.quiz), icon_class: 'fa-solid fa-delete-left', menu_text: 'Delete Quiz', type:'button', method: 'delete' },
           ] %>
