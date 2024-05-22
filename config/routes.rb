@@ -6,9 +6,10 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :tours
+  resources :attempts
   resources :quizzes do
     post 'submit', on: :member
-    post 'attempt', on: :member
+    post 'take', on: :member
     post 'open', on: :member
     post 'close', on: :member
     resources :questions do
@@ -16,5 +17,5 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'attempt/:id', to: 'quizzes#attempt', as: :attempt
+  get 'take/:id', to: 'quizzes#take', as: :take
 end

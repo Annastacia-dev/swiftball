@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_22_101630) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_22_124214) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -95,8 +95,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_22_101630) do
     t.uuid "attempt_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "question_id", null: false
     t.index ["attempt_id"], name: "index_responses_on_attempt_id"
     t.index ["choice_id"], name: "index_responses_on_choice_id"
+    t.index ["question_id"], name: "index_responses_on_question_id"
   end
 
   create_table "tours", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -154,4 +156,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_22_101630) do
   add_foreign_key "quizzes", "tours"
   add_foreign_key "responses", "attempts"
   add_foreign_key "responses", "choices"
+  add_foreign_key "responses", "questions"
 end

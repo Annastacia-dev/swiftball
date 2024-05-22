@@ -1,0 +1,21 @@
+<div class="min-h-screen">
+
+  <div class="flex justify-between items-center p-5">
+    <h5 class="font-semibold font-courier uppercase text-md ">your <%= @quiz.title %> predicitions </h5>
+    <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: attempt_dropdown_items(@quiz) %>
+  </div>
+
+
+  <% @questions_by_era.each do |era, responses| %>
+    <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era %></h1>
+    <div class="grid lg:grid-cols-3">
+      <% responses.each_with_index do |response, index| %>
+        <div class="flex flex-col px-5 py-3 gap-3">
+            <%= (index + 1).to_s.rjust(2, '0') %>. <%= response.question.content %> (worth <%= response.question.points %> points)
+            <%= image_tag(response.choice.image, alt: "Option #{index + 1}", class: 'w-full h-[30rem] object-cover object-center rounded') if response.choice.image.attached? %>
+            <p class="font-medium capitalize"><%= response.choice.content %></p>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

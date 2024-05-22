@@ -1,6 +1,6 @@
 class QuizzesController < ApplicationController
 
-  before_action :set_quiz, only: %i[ show edit destroy attempt_quiz attempt open_quiz close_quiz submit_quiz]
+  before_action :set_quiz, only: %i[ show edit destroy take open close submit]
   before_action :set_tour
 
 
@@ -24,24 +24,27 @@ class QuizzesController < ApplicationController
 
   # Custom
 
-  def attempt_quiz
-    @attempt = current_user.attempts.new({
-      quiz_id: @quiz.id
-    })
+  def submit
+    selected_options = params[:selected_options]
+
+    attempt =  current_user.attempts.new(quiz: @quiz)
 
     respond_to do |format|
-      if @attempt.save
-        format.html { redirect_to attempt_path(@quiz) }
+      if attempt.save
+        selected_options.each do |question_id, choice_id|
+          attempt.responses.create(
+            question_id: question_id,
+            choice_id: choice_id
+          )
+        end
+       format.html { redirect_to tours_path, notice: "Your answers have been submitted!" }
       else
-        format.html { redirect_to tours_path, alert: @quiz.errors, status: :unprocessable_entity }
+        format.html { render :attempt, status: :unprocessable_entity }
       end
     end
   end
 
-  def submit_quiz
-  end
-
-  def open_quiz
+  def open
     if @tour.status != 'open'
       respond_to do |format|
         if @tour.update(status: :open)
@@ -57,7 +60,7 @@ class QuizzesController < ApplicationController
     end
   end
 
-  def close_quiz
+  def close
     if @tour.status != 'closed'
       respond_to do |format|
         if @tour.update(status: :closed)

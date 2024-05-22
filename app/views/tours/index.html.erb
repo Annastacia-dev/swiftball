@@ -25,12 +25,9 @@
            </div>
           <% elsif tour.status == 'open' %>
             <% if  current_user.has_attempted_quiz?(tour.quiz) %>
-              <%= link_to attempt_path(tour.quiz), class:"bg-black text-white px-4 py-2 rounded" do %>
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
-                edit predictions
-              <% end %>
+              <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: attempt_dropdown_items(tour.quiz) %>
             <% else %>
-              <%= button_to attempt_quiz_path(tour.quiz), method: :post, class:"bg-black text-white px-4 py-2 rounded hover:bg-gray-900" do %>
+              <%= link_to take_quiz_path(tour.quiz), class:"bg-black text-white px-4 py-2 rounded" do %>
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
                 predict
               <% end %>
