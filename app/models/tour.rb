@@ -63,7 +63,7 @@ class Tour < ApplicationRecord
   end
 
   def one_quiz
-    if tour.quiz
+    if self.quiz
       errors.add(:base, "This tour alread has a quiz")
     end
   end

@@ -1,41 +1,33 @@
 <%= form_with(model: tour, class: "contents") do |form| %>
   <% if tour.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(tour.errors.count, "error") %> prohibited this tour from being saved:</h2>
-
-      <ul>
-        <% tour.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
+    <%= render 'shared/errors', object: tour %>
   <% end %>
 
   <div class="grid lg:grid-cols-2 gap-x-10 gap-y-5 lg:w-3/4 my-5">
 
     <div class="flex flex-col gap-1">
       <%= form.label :number %>
-      <%= form.number_field :number, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent" %>
+      <%= form.number_field :number, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full" %>
     </div>
 
     <div class="flex flex-col gap-1">
       <%= form.label :title %>
-      <%= form.text_field :title, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent" %>
+      <%= form.text_field :title, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full" %>
     </div>
 
     <div class="flex flex-col gap-1">
       <%= form.label :date %>
-      <%= form.date_field :date, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent" %>
+      <%= form.date_field :date, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full" %>
     </div>
 
     <div class="flex flex-col gap-1">
       <%= form.label :start_time %>
-      <%= form.time_field :start_time, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent" %>
+      <%= form.time_field :start_time, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full" %>
     </div>
 
     <div class="flex flex-col gap-1">
       <%= form.label :timezone %>
-      <%= form.select :timezone, @timezones, {}, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent" %>
+      <%= form.select :timezone, @timezones, {}, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full" %>
     </div>
 
   </div>
