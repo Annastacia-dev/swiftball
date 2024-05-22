@@ -12,9 +12,15 @@
   <div id="tours" class="min-w-full mt-10">
     <% @tours.each_with_index do |tour, index| %>
       <div class="flex justify-between font-courier">
-        <p class="flex gap-4">
-          <%= tour.number %>. <span class="font-semibold uppercase"><%= tour.title %></span>
-        </p>
+        <% if current_user.admin? %>
+          <%= link_to tour_path(tour), class:"flex gap-4 hover:underline" do %>
+            <%= tour.number %>. <span class="font-semibold uppercase"><%= tour.title %></span>
+          <% end %>
+        <% else %>
+          <p class="flex gap-4">
+            <%= tour.number %>. <span class="font-semibold uppercase"><%= tour.title %></span>
+          </p>
+        <% end %>
         <% if current_user.admin? %>
           <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: quiz_dropdown_items(tour.quiz) %>
         <% else %>

@@ -1,25 +1,42 @@
-<div class="w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-  <% end %>
+<div class="min-h-screen pt-10">
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Questions</h1>
-    <%= link_to "New question", new_quiz_question_path(@quiz), class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  <div class="px-10">
+    <%= render 'components/breadcrumb', breadcrumbs: [
+      {text: 'Quizzes', path: tours_path},
+      {text: "#{@quiz.title}", path: tour_path(@quiz.tour)},
+      {text: "#{@quiz.title} Quiz", path: quiz_path(@quiz)},
+      {text: "Questions", path: quiz_questions_path(@quiz)},
+    ] %>
+  </div>
+
+  <div class="flex justify-between items-center px-10 mb-8">
+    <h1 class="font-semibold text-xl font-courier">Questions</h1>
+    <%= link_to new_quiz_question_path(@quiz), class: "rounded py-2 px-4 bg-black text-white font-medium capitalize flex gap-2 items-center" do %>
+      <i class="fa-solid fa-plus"></i>
+      new question
+    <% end %>
   </div>
 
   <div id="questions" class="min-w-full">
     <% @questions_by_era.each do |era, questions| %>
-      <h2>Era: <%= era %></h2>
-      <ul class="mb-5">
-        <% questions.each do |question| %>
-          <li>
-            <%= link_to quiz_question_path(@quiz, question) do %>
-              <%= question.content %>(worth <%= question.points %> points)
+      <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era %></h1>
+      <% questions.each do |question| %>
+        <div class="mt-5">
+          <div class="grid lg:grid-cols-6 gap-4 px-5 py-3">
+            <% question.choices.each_with_index do |choice, index| %>
+            <div class="choice py-3 flex flex-col gap-4 font-medium">
+              <%= image_tag(choice.image, alt: "Option #{index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
+              <div class="flex justify-between items-center capitalize">
+                <%= choice.content %>
+                <% if current_user.admin? %>
+                  <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: choice_dropdown_items(choice) %>
+                <% end %>
+              </div>
+            </div>
             <% end %>
-          </li>
-        <% end %>
-      </ul>
+          </div>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>

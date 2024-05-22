@@ -1,16 +1,28 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
-
-    <%= render @question %>
-
-    <%= link_to "Add a choice", new_quiz_question_choice_path(@quiz, @question), class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Edit this question", edit_quiz_question_path(@quiz, @question), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <div class="inline-block ml-2">
-      <%= button_to "Destroy this question", quiz_question_path(@quiz, @question), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
-    </div>
-    <%= link_to "Back to questions", quiz_questions_path(@quiz), class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+<div class="min-h-screen">
+  <div class="p-5 my-5">
+    <%= render 'components/breadcrumb', breadcrumbs: [
+      {text: 'Quizzes', path: tours_path},
+      {text: "#{@quiz.title}", path: quiz_path(@quiz)},
+      {text: "Questions", path: quiz_questions_path(@quiz)},
+      {text: "#{@question.content}", path: quiz_question_path(@quiz, @question)},
+    ] %>
   </div>
+
+  <div class="mt-5">
+    <h1 class="<%= era_color(@question.era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= @question.content %></h1>
+    <div class="grid lg:grid-cols-6 gap-4 px-5 py-3">
+      <% @question.choices.each_with_index do |choice, index| %>
+      <div class="choice py-3 flex flex-col gap-4 font-medium">
+        <%= image_tag(choice.image, alt: "Option #{index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
+        <div class="flex justify-between items-center capitalize">
+          <%= choice.content %>
+          <% if current_user.admin? %>
+            <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: choice_dropdown_items(choice) %>
+          <% end %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+
 </div>

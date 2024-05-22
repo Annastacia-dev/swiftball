@@ -1,6 +1,14 @@
 <div class="min-h-screen">
+  
+  <div class="p-5">
+    <%= render 'components/breadcrumb', breadcrumbs: [
+      {text: 'Quizzes', path: tours_path},
+      {text: "#{@tour.title}", path: tour_path(@tour)},
+      {text: "#{@tour.title} quiz", path: quiz_path(@tour.quiz)}
+    ] %>
+  </div>
 
-  <div class="flex justify-between items-center p-5">
+  <div class="flex justify-between items-center px-5">
     <h5 class="font-semibold font-courier uppercase text-md "><%= @quiz.title %> </h5>
     <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: quiz_dropdown_items(@quiz) %>
   </div>
@@ -23,8 +31,11 @@
            <% question.choices.each_with_index do |choice, index| %>
             <div class="choice py-3 flex flex-col gap-4 font-medium">
               <%= image_tag(choice.image, alt: "Option #{index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
-              <div class="flex gap-2 items-center capitalize">
+              <div class="flex justify-between capitalize">
                 <%= choice.content %>
+                <% if current_user.admin? %>
+                  <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: choice_dropdown_items(choice) %>
+                <% end %>
               </div>
             </div>
             <% end %>

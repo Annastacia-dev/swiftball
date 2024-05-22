@@ -1,7 +1,8 @@
 class ChoicesController < ApplicationController
-  before_action :find_question
-  before_action :set_quiz
-  before_action :set_choice, only: %i[ show edit update destroy ]
+  before_action :set_choice, only: %i[ show edit update destroy correct ]
+  before_action :find_question, only: %i[new create]
+  before_action :set_quiz, only: %i[new create]
+
 
   # GET /choices or /choices.json
   def index
@@ -58,8 +59,22 @@ class ChoicesController < ApplicationController
     @choice.destroy!
 
     respond_to do |format|
-      format.html { redirect_to choices_url, notice: "Choice was successfully destroyed." }
+      format.html { redirect_to quiz_question_choices_path(@choice.question.quiz, @choice.question), notice: "Choice was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  # Custom
+
+  def correct
+    @question = @choice.question
+
+    @question.choices.where(correct: true).update(correct: false)
+
+    @choice.update(correct: true)
+
+    respond_to do |format|
+      format.html { redirect_to request.referrer, notice: "Choice was marked correct." }
     end
   end
 

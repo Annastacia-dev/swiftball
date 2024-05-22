@@ -8,6 +8,7 @@ class ToursController < ApplicationController
 
   # GET /tours/1 or /tours/1.json
   def show
+    @attempts = Attempt.where(quiz_id: @tour.quiz.id)
   end
 
   # GET /tours/new
