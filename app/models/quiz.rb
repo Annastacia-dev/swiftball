@@ -27,6 +27,10 @@ class Quiz < ApplicationRecord
   has_many :questions, dependent: :destroy
   has_many :attempts, dependent: :destroy
 
+  def total_attempts
+    attempts.size
+  end
+
   # instance methods
   def title
     tour.title

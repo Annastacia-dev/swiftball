@@ -1,6 +1,8 @@
 class QuizzesController < ApplicationController
 
   before_action :set_quiz, only: %i[ show edit destroy take open close submit]
+  before_action :authenticate_admin!, only: %i[show edit destroy open close]
+  before_action :check_tour_open, only: %i[take]
   before_action :set_tour
 
 
@@ -89,5 +91,15 @@ class QuizzesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def quiz_params
       params.require(:quiz).permit(:tour_id)
+    end
+
+    def check_tour_open
+      respond_to do |format|
+        if @quiz.tour.status == 'closed'
+          format.html { redirect_to root_path, alert: 'Sorry you missed this one, Quiz is closed' }
+        elsif  @quiz.tour.status == 'pending'
+          format.html { redirect_to root_path, alert: 'Hey early bird, Quiz is not yet open' }
+        end
+      end
     end
 end

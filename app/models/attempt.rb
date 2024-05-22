@@ -48,6 +48,15 @@ class Attempt < ApplicationRecord
     score
   end
 
+  def total_possible_points
+    quiz.questions.sum(:points)
+  end
+
+  def position
+    attempt_scores = quiz.attempts.map(&:score).compact.sort.reverse
+    attempt_scores.index(score)&.+(1)
+  end
+
   private
 
   def single_attempt_per_quiz

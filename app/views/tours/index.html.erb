@@ -14,28 +14,25 @@
       <div class="flex justify-between font-courier">
         <% if current_user.admin? %>
           <%= link_to tour_path(tour), class:"flex gap-4 items-center " do %>
-            <%= tour.number %>. <span class="font-semibold uppercase hover:underline"><%= tour.title %></span>
+            <%= (tour.number).to_s.rjust(2, '0') %>.. <span class="font-semibold uppercase hover:underline"><%= tour.title %></span>
             <% if tour.status == 'open' %>
-              <i class="fa-solid fa-circle-check text-green-600 title="open"></i>
-            <% elsif tour.status == 'pending' %>
-              <i class="fa-solid fa-spinner text-gray-600"></i>
+              <i class="fa-solid fa-circle-check text-green-600" title="open"></i>
+            <% elsif tour.status == 'pending'%>
+              <i class="fa-solid fa-spinner text-gray-600" title="pending"></i>
             <% elsif tour.status == 'closed' %>
-              <i class="fa-solid fa-circle-xmark text-red-600"></i>
+              <i class="fa-solid fa-circle-xmark text-red-600" title="closed"></i>
             <% end %>
           <% end %>
         <% else %>
           <p class="flex gap-4">
-            <%= tour.number %>. <span class="font-semibold uppercase"><%= tour.title %></span>
+          <%= (tour.number).to_s.rjust(2, '0') %>. <span class="font-semibold uppercase"><%= tour.title %></span>
           </p>
         <% end %>
         <% if current_user.admin? %>
           <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: quiz_dropdown_items(tour.quiz) %>
         <% else %>
           <% if tour.status == 'pending' %>
-           <div class="px-4 py-2 bg-gray-200 text-black rounded">
-             <i class="fa-solid fa-spinner"></i>
-             pending
-           </div>
+            <i class="fa-solid fa-spinner text-gray-600" title="pending"></i>
           <% elsif tour.status == 'open' %>
             <% if  current_user.has_attempted_quiz?(tour.quiz) %>
               <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: attempt_dropdown_items(tour.quiz) %>
@@ -46,10 +43,14 @@
               <% end %>
             <% end %>
           <% elsif tour.status == 'closed' %>
-            <div class="px-4 py-2 bg-gray-200 text-black rounded">
-              <i class="fa-solid fa-xmark"></i>
-              closed
-            </div>
+            <% if  current_user.has_attempted_quiz?(tour.quiz) %>
+              <% attempt = current_user.attempts.find_by(quiz_id: tour.quiz.id) %>
+              <span class="font-semibold font-roboto">pts: <%= attempt.score %> / <%= attempt.total_possible_points %> </span>
+              <span class="font-semibold font-roboto">pos: <%= attempt.position %> / <%= attempt.quiz.total_attempts %> </span>
+              <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: attempt_dropdown_items(tour.quiz) %>
+            <% else %>
+              <i class="fa-solid fa-circle-xmark text-red-600" title="closed"></i>
+            <% end %>
           <% end %>
         <% end %>
       </div>

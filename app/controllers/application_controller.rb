@@ -6,6 +6,14 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def authenticate_admin!
+    if !current_user.admin?
+      respond_to do |format|
+      format.html  { redirect_to root_path, alert: 'You are not authorized to access this' }
+      end
+    end
+  end
+
   def set_variables
     @timezones = ActiveSupport::TimeZone.all.map { |tz| [tz.tzinfo.identifier] }.sort
     @country_options_for_select = ISO3166::Country.all.map { |country| [country.iso_short_name, country.iso_short_name] }.sort
