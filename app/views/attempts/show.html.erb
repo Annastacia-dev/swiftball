@@ -11,6 +11,9 @@
     <div class="grid lg:grid-cols-3">
       <% responses.each_with_index do |response, index| %>
         <div class="flex flex-col px-5 py-3 gap-3">
+            <% if choice.correct %>
+              <i class="fa-solid fa-circle-check text-green-600"></i>
+            <% end %>
             <%= (index + 1).to_s.rjust(2, '0') %>. <%= response.question.content %> (worth <%= response.question.points %> points)
             <%= image_tag(response.choice.image, alt: "Option #{index + 1}", class: 'w-full h-[30rem] object-cover object-center rounded') if response.choice.image.attached? %>
             <p class="font-medium capitalize"><%= response.choice.content %></p>

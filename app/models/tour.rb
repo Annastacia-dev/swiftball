@@ -29,7 +29,7 @@ class Tour < ApplicationRecord
   validates :date, presence: true
   validates :start_time, presence: true
   validates :timezone, presence: true
-  validate :one_quiz
+  validate :one_quiz, on: :create
 
   # enums
   enum status: {
@@ -54,6 +54,10 @@ class Tour < ApplicationRecord
       dupe = quiz.dup
       dupe.update(tour_id: self.id)
       dupe << quiz.questions
+
+      dupe.quiz.questions.each do |question|
+        question << quiz.questions.find(question.id).choices
+      end
     else
       create_new_quiz
     end

@@ -66,7 +66,7 @@ class QuizzesController < ApplicationController
         if @tour.update(status: :closed)
           format.html { redirect_to tours_path, notice: 'Quiz is now closed' }
         else
-          format.html { redirect_to tours_path, notice: 'Something went wrong, try again' }
+          format.html { redirect_to tours_path, alert: "#{@tour.errors.join(',')}", status: :unprocessable_entity }
         end
       end
     else

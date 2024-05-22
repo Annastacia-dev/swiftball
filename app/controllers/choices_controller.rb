@@ -69,12 +69,18 @@ class ChoicesController < ApplicationController
   def correct
     @question = @choice.question
 
-    @question.choices.where(correct: true).update(correct: false)
+    if @question.quiz.tour.status != 'closed'
+      respond_to do |format|
+        format.html { redirect_to request.referrer, alert: 'Please Close this quiz before selecting correct answer' }
+      end
+    else
+      @question.choices.where(correct: true).update(correct: false)
 
-    @choice.update(correct: true)
+      @choice.update(correct: true)
 
-    respond_to do |format|
-      format.html { redirect_to request.referrer, notice: "Choice was marked correct." }
+      respond_to do |format|
+        format.html { redirect_to request.referrer, notice: "Choice was marked correct." }
+      end
     end
   end
 

@@ -27,4 +27,22 @@ class Choice < ApplicationRecord
 
   # validations
   validates :content, presence: true, uniqueness: true
+  validate :tour_is_closed_before_marking_correct
+  validate :only_one_correct_answer_per_question
+
+  private
+
+  def tour_is_closed_before_marking_correct
+    if correct == true && question.quiz.tour.status != 'closed'
+      errors.add(:base, "Please close the quiz before choosing correct answers")
+    end
+  end
+
+  def only_one_correct_answer_per_question
+    correct_answer = question.choices.find_by(correct: true)
+
+    if correct_answer
+      errors.add(:base, "A correct answer already exists mark it as false then choose another one")
+    end
+  end
 end

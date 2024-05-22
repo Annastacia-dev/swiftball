@@ -15,6 +15,9 @@
       <div class="choice py-3 flex flex-col gap-4 font-medium">
         <%= image_tag(choice.image, alt: "Option #{index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
         <div class="flex justify-between items-center capitalize">
+          <% if choice.correct %>
+            <i class="fa-solid fa-circle-check text-green-600"></i>
+          <% end %>
           <%= choice.content %>
           <% if current_user.admin? %>
             <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: choice_dropdown_items(choice) %>

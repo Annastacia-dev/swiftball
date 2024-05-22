@@ -13,8 +13,15 @@
     <% @tours.each_with_index do |tour, index| %>
       <div class="flex justify-between font-courier">
         <% if current_user.admin? %>
-          <%= link_to tour_path(tour), class:"flex gap-4 hover:underline" do %>
-            <%= tour.number %>. <span class="font-semibold uppercase"><%= tour.title %></span>
+          <%= link_to tour_path(tour), class:"flex gap-4 items-center " do %>
+            <%= tour.number %>. <span class="font-semibold uppercase hover:underline"><%= tour.title %></span>
+            <% if tour.status == 'open' %>
+              <i class="fa-solid fa-circle-check text-green-600 title="open"></i>
+            <% elsif tour.status == 'pending' %>
+              <i class="fa-solid fa-spinner text-gray-600"></i>
+            <% elsif tour.status == 'closed' %>
+              <i class="fa-solid fa-circle-xmark text-red-600"></i>
+            <% end %>
           <% end %>
         <% else %>
           <p class="flex gap-4">
