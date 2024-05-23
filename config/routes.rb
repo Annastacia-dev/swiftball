@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Defines the root path route ("/")
   root "tours#index"
 
   devise_for :users
@@ -19,5 +18,8 @@ Rails.application.routes.draw do
   resources :attempts
   resources :choices do
     post 'correct', on: :member
+  end
+  resources :albums do
+    resources :songs
   end
 end

@@ -57,20 +57,15 @@ module ApplicationHelper
     end
   end
 
-  def eras_tour_images
-    [
-      'eras_tour/1.jpeg',
-      'eras_tour/2.jpeg',
-      'eras_tour/3.jpeg',
-      'eras_tour/4.jpeg',
-      'eras_tour/5.jpeg',
-      'eras_tour/6.jpeg',
-      'eras_tour/7.jpeg',
-      'eras_tour/8.jpeg',
-      'eras_tour/9.jpeg',
-      'eras_tour/10.jpeg',
-      'eras_tour/11.jpeg',
-      'eras_tour/12.jpeg',
+  def navbar_items
+    items = [
+      { path: destroy_user_session_path, icon_class: 'fa-solid fa-right-from-bracket', menu_text: 'Logout', type: 'button', method: :delete }
     ]
+
+    if current_user.admin?
+      items.unshift( { path: albums_path, icon_class: 'fa-solid fa-record-vinyl', menu_text: 'Albums'})
+    end
+
+    items
   end
 end

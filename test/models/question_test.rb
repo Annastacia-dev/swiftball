@@ -2,13 +2,14 @@
 #
 # Table name: questions
 #
-#  id         :uuid             not null, primary key
-#  content    :text
-#  era        :integer          default("lover")
-#  points     :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  quiz_id    :uuid             not null
+#  id            :uuid             not null, primary key
+#  content       :text
+#  era           :integer          default("lover")
+#  include_album :boolean          default(FALSE)
+#  points        :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  quiz_id       :uuid             not null
 #
 # Indexes
 #

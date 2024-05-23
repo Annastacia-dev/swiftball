@@ -1,15 +1,5 @@
 <%= form_with(model: [@quiz, @question, choice], class: "contents") do |form| %>
-  <% if choice.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(choice.errors.count, "error") %> prohibited this choice from being saved:</h2>
-
-      <ul>
-        <% choice.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render 'shared/errors', object: choice %>
 
   <div class="flex flex-col gap-5 lg:w-1/2 my-5">
 

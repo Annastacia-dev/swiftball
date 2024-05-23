@@ -1,0 +1,21 @@
+<ul class="flex-col flex absolute fixed left-3/4 inset-0 bg-black gap-8  px-10 py-20 gap-2  text-white font-normal text-sm hidden h-screen z-50 font-courier" id="sidebar">
+  <i class='fa-solid fa-xmark cursor-pointer absolute right-10 top-5 text-lg' onclick="document.getElementById('sidebar').classList.toggle('hidden')"></i>
+    <% items.each_with_index do |item, index| %>
+      <li class="">
+        <% if item[:type] == 'button' %>
+          <%= button_to item[:path], method: item[:method], class: "px-4 flex items-center gap-4" do %>
+            <i class="<%= item[:icon_class] %>"></i>
+            <%= item[:menu_text] %>
+          <% end %>
+        <% else %>
+          <%= link_to item[:path], class: "px-4 flex items-center gap-4" do %>
+            <i class="<%= item[:icon_class] %>"></i>
+            <%= item[:menu_text] %>
+          <% end %>
+        <% end %>
+      </li>
+      <% if index != (items.length - 1) %>
+       <hr class="border" />
+      <% end %>
+    <% end %>
+</ul>

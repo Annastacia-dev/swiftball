@@ -1,0 +1,23 @@
+<div class="pt-10 px-12 min-h-screen">
+  <div class="flex justify-between items-center">
+    <h1 class="font-semibold text-xl font-courier">Albums</h1>
+    <% if current_user.admin? %>
+      <%= render 'components/drawer', button_icon: 'fa-solid fa-plus', button_text: 'new album', title: 'New Album', id: 'new_album'  do %>
+       <%= render 'form' %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div id="albums" class="min-w-full mt-10">
+    <% @albums.each_with_index do |album, index| %>
+      <div class="flex justify-between font-courier">
+        <%= link_to album_path(album), class:"flex gap-4 items-center " do %>
+          <%= (index + 1).to_s.rjust(2, '0') %>. <span class="font-semibold uppercase hover:underline"><%= album.title %></span>
+        <% end %>
+      </div>
+      <% if index != (@albums.length - 1) %>
+        <hr class="border border-black my-4" />
+      <% end %>
+    <% end %>
+  </div>
+</div>
