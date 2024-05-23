@@ -3,6 +3,7 @@
 # Table name: attempts
 #
 #  id         :uuid             not null, primary key
+#  slug       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  quiz_id    :uuid             not null

@@ -1,4 +1,11 @@
 <div class="min-h-screen relative">
+  
+   <div class="p-5">
+    <%= render 'components/breadcrumb', breadcrumbs: [
+      { text: 'home', path: root_path },
+      { text: "#{@attempt.quiz.title} predictions"}
+    ] %>
+    </div>
 
   <div class="flex justify-between items-center p-5">
     <h5 class="font-semibold font-courier uppercase text-md ">your <%= @quiz.title %> predicitions </h5>

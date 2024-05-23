@@ -9,7 +9,7 @@
           <div class="flex flex-col px-5 py-3 ">
           <%= (index + 1).to_s.rjust(2, '0') %>. <%= question.content %> (worth <%= question.points %> points)
           <div class="grid lg:grid-cols-6 gap-4">
-            <% question.choices.each_with_index do |choice, index| %>
+            <% question.choices.order(:created_at).each_with_index do |choice, index| %>
               <div class="choice py-3 flex flex-col gap-4">
                 <%= image_tag(choice.image, alt: "Option #{index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
                 <div class="flex gap-2 items-center capitalize font-medium">

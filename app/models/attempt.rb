@@ -3,6 +3,7 @@
 # Table name: attempts
 #
 #  id         :uuid             not null, primary key
+#  slug       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  quiz_id    :uuid             not null
@@ -21,6 +22,9 @@
 class Attempt < ApplicationRecord
   has_paper_trail
 
+  include Sluggable
+  friendly_slug_scope to_slug: :title
+
   # associations
   belongs_to :user
   belongs_to :quiz
@@ -31,6 +35,10 @@ class Attempt < ApplicationRecord
   validate :single_attempt_per_quiz
 
   # instance methods
+
+  def title
+    "#{user.username} #{quiz.title}"
+  end
 
   def total_questions
     questions.size

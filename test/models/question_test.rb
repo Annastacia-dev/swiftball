@@ -6,6 +6,7 @@
 #  content       :text
 #  era           :integer          default("lover")
 #  include_album :boolean          default(FALSE)
+#  include_song  :boolean          default(TRUE)
 #  points        :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null

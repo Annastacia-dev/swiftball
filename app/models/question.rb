@@ -6,6 +6,7 @@
 #  content       :text
 #  era           :integer          default("lover")
 #  include_album :boolean          default(FALSE)
+#  include_song  :boolean          default(TRUE)
 #  points        :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -27,7 +28,7 @@ class Question < ApplicationRecord
   has_many :choices, dependent: :destroy
 
   # validations
-  validates :content, presence: true, uniqueness: true
+  validates :content, presence: true, uniqueness: { scope: :quiz_id }
   validates :points, presence: true
   validates :era, presence: true
 
@@ -37,12 +38,13 @@ class Question < ApplicationRecord
     fearless: 1,
     red: 2,
     speak_now: 3,
-    folkmore: 4,
-    '1989': 5,
-    the_tortured_poets_department: 6,
-    acoustic_set: 7,
-    midnights: 8,
-    extra: 9
+    reputation: 4,
+    folkmore: 5,
+    '1989': 6,
+    the_tortured_poets_department: 7,
+    acoustic_set: 8,
+    midnights: 9,
+    extra: 10
   }
 
   def self.eras_options

@@ -99,6 +99,8 @@ class QuizzesController < ApplicationController
           format.html { redirect_to root_path, alert: 'Sorry you missed this one, Quiz is closed' }
         elsif  @quiz.tour.status == 'pending'
           format.html { redirect_to root_path, alert: 'Hey early bird, Quiz is not yet open' }
+        else
+         format.html  { render :take }
         end
       end
     end

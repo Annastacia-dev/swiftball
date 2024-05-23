@@ -51,16 +51,33 @@ class Tour < ApplicationRecord
   def create_quiz
     quiz = Quiz.order(created_at: :desc).first
     if quiz
-      dupe = quiz.dup
-      dupe.update(tour_id: self.id)
-      dupe << quiz.questions
-
-      dupe.quiz.questions.each do |question|
-        question << quiz.questions.find(question.id).choices
-      end
+      duplicate_quiz(quiz)
     else
       create_new_quiz
     end
+  end
+
+  def duplicate_quiz(original_quiz)
+    dupe = original_quiz.dup
+    dupe.tour_id = self.id
+    dupe.save!
+    original_quiz.questions.each do |original_question|
+      new_question = original_question.dup
+      new_question.quiz_id = dupe.id
+      new_question.save!
+
+      original_question.choices.each do |original_choice|
+        new_choice = original_choice.dup
+        new_choice.question_id = new_question.id
+        new_choice.correct = false
+        new_choice.save!
+
+        if original_choice.image.attached?
+          new_choice.image.attach(original_choice.image.blob)
+        end
+      end
+    end
+    dupe
   end
 
   def create_new_quiz

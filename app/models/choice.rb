@@ -26,7 +26,7 @@ class Choice < ApplicationRecord
   belongs_to :question
 
   # validations
-  validates :content, presence: true, uniqueness: true
+  validates :content, presence: true, uniqueness: { scope: :question_id }
   validate :tour_is_closed_before_marking_correct
   validate :only_one_correct_answer_per_question
 
@@ -40,7 +40,6 @@ class Choice < ApplicationRecord
 
   def only_one_correct_answer_per_question
     correct_answer = question.choices.find_by(correct: true)
-
     if correct_answer
       errors.add(:base, "A correct answer already exists mark it as false then choose another one")
     end

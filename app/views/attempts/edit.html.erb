@@ -1,5 +1,14 @@
 <div class="min-h-screen">
-  <h5 class="font-semibold font-courier uppercase text-md p-5"><%= @quiz.title %></h5>
+
+  <div class="px-5 py-3">
+    <%= render 'components/breadcrumb', breadcrumbs: [
+      { text: 'home', path: root_path },
+      { text: "Edit #{@attempt.quiz.title} predictions"}
+    ] %>
+    </div>
+
+
+  <h5 class="font-semibold font-courier uppercase text-md px-5"><%= @quiz.title %></h5>
 
   <%= form_with(model: @attempt, url: attempt_path(@attempt), method: :patch, local: true) do |f| %>
     <% @quiz.questions.all.group_by(&:era).each do |era, questions| %>
@@ -9,7 +18,7 @@
           <div class="flex flex-col px-5 py-3 ">
             <%= (q_index + 1).to_s.rjust(2, '0') %>. <%= question.content %> (worth <%= question.points %> points)
             <div class="grid lg:grid-cols-6 gap-4">
-              <% question.choices.each_with_index do |choice, c_index| %>
+              <% question.choices.order(:created_at).each_with_index do |choice, c_index| %>
                 <div class="choice py-3 flex flex-col gap-4">
                   <%= image_tag(choice.image, alt: "Option #{c_index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
                   <div class="flex gap-2 items-center capitalize font-medium">

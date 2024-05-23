@@ -26,7 +26,7 @@ class AttemptsController < ApplicationController
   private
 
   def set_attempt
-    @attempt = current_user.attempts.find(params[:id])
+    @attempt = current_user.attempts.friendly.find(params[:id])
   end
 
   def set_quiz
