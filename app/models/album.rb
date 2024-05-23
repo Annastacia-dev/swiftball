@@ -15,7 +15,7 @@ class Album < ApplicationRecord
   friendly_slug_scope to_slug: :title
 
   # associations
-  has_many :songs
+  has_many :songs, dependent: :destroy
 
   # validations
   validates :title, presence: true, uniqueness: true

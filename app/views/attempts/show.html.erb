@@ -25,7 +25,7 @@
 
 
   <% @questions_by_era.each do |era, responses| %>
-    <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era %></h1>
+    <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
     <div class="grid lg:grid-cols-3">
       <% responses.each_with_index do |response, index| %>
         <div class="flex flex-col justify-center px-5 py-3 gap-2">

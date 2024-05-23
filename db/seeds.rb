@@ -223,7 +223,7 @@ puts 'Extra Questions ...'
 
 Question.create!(
   quiz_id: quiz.id,
-  era: 'midnights',
+  era: 'extra',
   points: 5,
   content: 'Will there be a special guest?'
 )

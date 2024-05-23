@@ -14,7 +14,7 @@
             <%= render item[:view] %>
           <% end %>
         <% elsif item[:type] == 'button' %>
-          <%= button_to item[:path], method: item[:method], class: "px-4 flex items-center gap-4" data: item[:method] === 'delete' ? { confirm: "Are you sure?", turbo_confirm: "Are you sure?" : "" } do %>
+          <%= button_to item[:path], method: item[:method], class: "px-4 flex items-center gap-4", data: (item[:method] === 'delete' ? { confirm: "Are you sure?", turbo_confirm: "Are you sure?" } : {}) do %>
             <i class="<%= item[:icon_class] %>"></i>
             <%= item[:menu_text] %>
           <% end %>

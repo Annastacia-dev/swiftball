@@ -19,7 +19,7 @@
 
   <div id="questions" class="min-w-full">
     <% @questions_by_era.each do |era, questions| %>
-      <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era %></h1>
+      <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
       <% questions.each do |question| %>
         <div class="mt-5">
           <div class="grid lg:grid-cols-6 gap-4 px-5 py-3">
