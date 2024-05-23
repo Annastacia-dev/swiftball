@@ -1,0 +1,13 @@
+<div class="pt-10 px-12 min-h-screen">
+
+  <%= render 'components/breadcrumb', breadcrumbs: [
+    { text: 'home', path: root_path },
+    { text: 'albums', path: albums_path },
+    { text: "#{@album.title}", path: album_path(@album) },
+    { text: "Edit #{@song.title}"}
+  ] %>
+
+  <h1 class="font-semibold text-xl font-courier capitalize">edit song</h1>
+
+  <%= render "form", song: @song %>
+</div>

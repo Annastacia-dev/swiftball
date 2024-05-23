@@ -1,0 +1,28 @@
+<div class="pt-10 px-12 min-h-screen">
+  <%= render 'components/breadcrumb', breadcrumbs: [
+    { text: 'home', path: root_path },
+    { text: 'albums', path: albums_path },
+    { text: "#{@album.title}", path: album_path(@album) },
+  ] %>
+
+  <div class="flex justify-between items-center">
+    <h5 class="font-semibold font-courier uppercase text-md "><%= @album.title %> </h5>
+    <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: album_dropdown_items(@album) %>
+  </div>
+
+  <div id="songs" class="min-w-full mt-10">
+    <% @album.songs.each_with_index do |song, index| %>
+      <div class="flex justify-between font-courier">
+        <p class="flex gap-4 items-center" >
+          <%= (index + 1).to_s.rjust(2, '0') %>. <span class="font-semibold uppercase hover:underline"><%= song.title %></span>
+        </p>
+        <% if current_user.admin? %>
+          <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: song_dropdown_items(song) %>
+        <% end %>
+      </div>
+      <% if index != (@album.songs.length - 1) %>
+        <hr class="border border-black my-4" />
+      <% end %>
+    <% end %>
+  </div>
+</div>

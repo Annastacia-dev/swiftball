@@ -23,6 +23,14 @@ class AlbumsController < ApplicationController
   end
 
   def update
+    path = request.referrer ? request.referrer : albums_path
+    respond_to do |format|
+      if @album.update(album_params)
+        format.html { redirect_to path, notice: "Album was successfully updated." }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy

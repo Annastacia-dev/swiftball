@@ -13,4 +13,20 @@ class Album < ApplicationRecord
 
   include Sluggable
   friendly_slug_scope to_slug: :title
+
+  # associations
+  has_many :songs
+
+  # validations
+  validates :title, presence: true, uniqueness: true
+
+
+  # callbacks
+  before_save :downcase_title
+
+  private
+
+  def downcase_title
+    self.title = title.downcase
+  end
 end
