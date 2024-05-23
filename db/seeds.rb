@@ -111,7 +111,7 @@ Question.create!(
   content: '1989 set'
 )
 
-puts 'The Tortured Poests Department Questions ...'
+puts 'The Tortured Poets Department Questions ...'
 
 Question.create!(
   quiz_id: quiz.id,
@@ -162,7 +162,7 @@ Question.create!(
   quiz_id: quiz.id,
   era: 'acoustic_set',
   points: 0,
-  content: 'Please pick a surprise song from {{album}}',
+  content: 'Please pick a guitar surprise song from {{album}}',
   include_song: true
 )
 
@@ -192,7 +192,7 @@ Question.create!(
   quiz_id: quiz.id,
   era: 'acoustic_set',
   points: 0,
-  content: 'Please pick a surprise song from {{album}}',
+  content: 'Please pick a piano surprise song from {{album}}',
   include_song: true
 )
 
@@ -228,14 +228,7 @@ Question.create!(
   content: 'Will there be a special guest?'
 )
 
-Question.create!(
-  quiz_id: quiz.id,
-  era: 'midnights',
-  points: 5,
-  content: 'Will there be a special guest?'
-)
-
-puts "Questions created: #{Question.all size}"
+puts "Questions created: #{Question.all.size}"
 
 puts "Adding Albums"
 
@@ -251,7 +244,7 @@ album_titles = [
   'evermore',
   'midnights',
   'the tortured poets department',
-  '	Non-Album Single (Movie Soundtrack, Collab, Unreleased) '
+  'non-album single (movie soundtrack, collab, unreleased)'
 ]
 
 album_titles.each do |title|
@@ -317,7 +310,7 @@ end
 puts "Added fearless songs"
 
 puts "Seeding Red songs"
-const red = [
+red_songs = [
   "State of grace",
   "Red",
   "Treacherous",
@@ -347,7 +340,7 @@ const red = [
   "Run ft Ed sheeran",
   "The very first night"
 ];
-red = Album.find_by_title('red')
+red_album = Album.find_by_title('red')
 red_songs.each do |title|
   red_album.songs.create(title: title)
 end
@@ -379,7 +372,7 @@ speak_now_songs = [
   "Foolish one",
   "Timeless"
 ];
-speak_now = Album.find_by_title('speak now')
+speak_now_album = Album.find_by_title('speak now')
 speak_now_songs.each do |title|
   speak_now_album.songs.create(title: title)
 end
@@ -596,7 +589,7 @@ ttpd_songs.each do |title|
 end
 puts "Added ttpd songs"
 
-
+puts "Seeding extra songs"
 extra_songs = [
     "Safe & sound",
     "Eyes open",
@@ -621,7 +614,11 @@ extra_songs = [
     "Crazier, hannah montana",
     "only the young"
 ];
-
+extra_album = Album.find_by_title('non-album single (movie soundtrack, collab, unreleased)')
+extra_songs.each do |title|
+  extra_album.songs.create(title: title)
+end
+puts "Added extra songs"
 
 
 
