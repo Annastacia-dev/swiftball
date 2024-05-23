@@ -29,6 +29,8 @@ class QuizzesController < ApplicationController
   def submit
     selected_options = params[:selected_options]
 
+    return if selected_options.blank?
+
     attempt =  current_user.attempts.new(quiz: @quiz)
 
     respond_to do |format|

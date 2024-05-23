@@ -88,7 +88,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_23_151810) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "include_album", default: false
-    t.boolean "include_song", default: true
+    t.boolean "include_song", default: false
     t.index ["quiz_id"], name: "index_questions_on_quiz_id"
   end
 

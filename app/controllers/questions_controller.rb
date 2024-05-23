@@ -40,7 +40,7 @@ class QuestionsController < ApplicationController
   def update
     respond_to do |format|
       if @question.update(question_params)
-        format.html { redirect_to question_url(@question), notice: "Question was successfully updated." }
+        format.html { redirect_to quiz_questions_path(@quiz), notice: "Question was successfully updated." }
         format.json { render :show, status: :ok, location: @question }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -54,7 +54,7 @@ class QuestionsController < ApplicationController
     @question.destroy!
 
     respond_to do |format|
-      format.html { redirect_to questions_url, notice: "Question was successfully destroyed." }
+      format.html { redirect_to quiz_questions_path(@quiz), notice: "Question was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -70,6 +70,6 @@ class QuestionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def question_params
-      params.require(:question).permit(:quiz_id, :era, :points, :content)
+      params.require(:question).permit(:quiz_id, :era, :points, :content, :include_album, :include_song)
     end
 end

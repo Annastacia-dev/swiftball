@@ -18,6 +18,9 @@
                 </div>
               </div>
               <% end %>
+              <% if question.include_album %>
+                <%= f.select :album, options_for_select(@albums), {}, class: "capitalize", required: true %>
+              <% end %>
           </div>
           </div>
         <% end %>

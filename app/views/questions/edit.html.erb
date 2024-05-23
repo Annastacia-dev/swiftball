@@ -1,8 +1,14 @@
-<div class="mx-auto md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Editing question</h1>
+<div class="pt-10 px-12 min-h-screen">
+
+  <%= render 'components/breadcrumb', breadcrumbs: [
+    { text: 'quizzes', path: root_path },
+    { text: "#{@quiz.title}", path: quiz_path(@quiz)},
+    { text: "Questions", path: quiz_questions_path(@quiz)},
+    { text: "Edit #{@question.content}"}
+  ] %>
+
+  <h1 class="font-semibold text-xl font-courier capitalize">Editing question</h1>
 
   <%= render "form", question: @question %>
 
-  <%= link_to "Show this question", @question, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-  <%= link_to "Back to questions", quiz_questions_path(@quiz), class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
 </div>
