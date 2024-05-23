@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_22_124214) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_23_082355) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -41,6 +41,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_22_124214) do
     t.uuid "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "albums", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "attempts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -101,6 +107,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_22_124214) do
     t.index ["question_id"], name: "index_responses_on_question_id"
   end
 
+  create_table "songs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "album_id", null: false
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["album_id"], name: "index_songs_on_album_id"
+  end
+
   create_table "tours", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "number"
     t.string "title"
@@ -157,4 +171,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_22_124214) do
   add_foreign_key "responses", "attempts"
   add_foreign_key "responses", "choices"
   add_foreign_key "responses", "questions"
+  add_foreign_key "songs", "albums"
 end

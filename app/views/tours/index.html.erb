@@ -24,9 +24,9 @@
             <% end %>
           <% end %>
         <% else %>
-          <p class="flex gap-4">
-          <%= (tour.number).to_s.rjust(2, '0') %>. <span class="font-semibold uppercase"><%= tour.title %></span>
-          </p>
+          <div class="flex flex-col gap-2">
+           <p><%= (tour.number).to_s.rjust(2, '0') %>. <span class="font-semibold uppercase"><%= tour.title %></span></p>
+          </div>
         <% end %>
         <% if current_user.admin? %>
           <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: quiz_dropdown_items(tour.quiz) %>
@@ -45,9 +45,10 @@
           <% elsif tour.status == 'closed' %>
             <% if  current_user.has_attempted_quiz?(tour.quiz) %>
               <% attempt = current_user.attempts.find_by(quiz_id: tour.quiz.id) %>
-              <span class="font-semibold font-roboto">pts: <%= attempt.score %> / <%= attempt.total_possible_points %> </span>
-              <span class="font-semibold font-roboto">pos: <%= attempt.position %> / <%= attempt.quiz.total_attempts %> </span>
-              <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: attempt_dropdown_items(tour.quiz) %>
+              <%= link_to attempt_path(attempt), class: 'bg-black px-2 py-2 text-white hover:bg-gray-900 rounded' do %>
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                view results
+              <% end %>
             <% else %>
               <i class="fa-solid fa-circle-xmark text-red-600" title="closed"></i>
             <% end %>

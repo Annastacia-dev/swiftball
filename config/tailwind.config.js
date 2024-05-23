@@ -12,7 +12,8 @@ module.exports = {
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
         roboto: ['"Roboto", sans-serif'],
-        courier: ['"Courier Prime", monospace']
+        courier: ['"Courier Prime", monospace'],
+        handwriting: ['"Patrick Hand", cursive']
       },
     },
   },
