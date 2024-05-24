@@ -1,5 +1,4 @@
 <div class="min-h-screen relative">
-  
    <div class="p-5">
     <%= render 'components/breadcrumb', breadcrumbs: [
       { text: 'home', path: root_path },
@@ -28,7 +27,7 @@
     <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
     <div class="grid lg:grid-cols-3">
       <% responses.each_with_index do |response, index| %>
-        <div class="flex flex-col justify-center px-5 py-3 gap-2">
+        <div class="flex flex-col lg:justify-start justify-center px-5 py-3 gap-2">
           <div class="flex flex-col gap-3">
               <%= (index + 1).to_s.rjust(2, '0') %>. <%= response.question.content %> (worth <%= response.question.points %> points)
               <%= image_tag(response.choice.image, alt: "Option #{index + 1}", class: 'w-full h-[30rem] object-cover object-center rounded') if response.choice.image.attached? %>

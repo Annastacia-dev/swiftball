@@ -28,6 +28,17 @@ class QuizzesController < ApplicationController
 
   def submit
     selected_options = params[:selected_options]
+    albums_one = params[:albums_0]
+    albums_two = params[:albums_1]
+    albums_three = params[:albums_1]
+    albums_four = params[:albums_3]
+
+    songs_one = params[:songs_0]
+    songs_two = params[:songs_1]
+    songs_three = params[:songs_1]
+    songs_four = params[:songs_3]
+
+    byebug
 
     return if selected_options.blank?
 

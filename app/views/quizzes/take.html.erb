@@ -6,20 +6,20 @@
       <div class="mt-10">
         <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
         <% questions.each_with_index do |question, index| %>
-          <div class="flex flex-col px-5 py-3 capitalize ">
+          <div class="flex flex-col px-5 py-3 capitalize font-medium ">
           <%= (index + 1).to_s.rjust(2, '0') %>. <%= question.content %> (worth <%= question.points %> points)
           <div class="grid <%= question&.choices&.first&.image&.attached? ? 'lg:grid-cols-6 grid-cols-2' : 'grid-cols-1' %> gap-4">
             <% question.choices.order(:created_at).each_with_index do |choice, index| %>
               <div class="choice py-3 flex flex-col gap-4">
                 <%= image_tag(choice.image, alt: "Option #{index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
-                <div class="flex gap-2 items-center capitalize font-medium">
+                <div class="flex gap-2 items-center capitalize font-light">
                 <%= f.radio_button "selected_options[#{question.id}]", choice.id, required: true, class: (question.include_mashup ? 'mashup-choice' : ''), data: { content: question.content, choice_content: choice.content, question_id: question.id } %>
                   <%= choice.content %>
                 </div>
               </div>
             <% end %>
             <% if question.include_album_and_song %>
-              <div class="album-song-fields mt-4 grid grid-cols-2 gap-2" data-content="<%= question.id %>">
+              <div class="album-song-fields mt-4 grid grid-cols-2 gap-2 font-light" data-content="<%= question.id %>">
                <%= f.select "album_#{question.id}", options_for_select(@albums), {prompt: 'Select an album'}, class: "album-select capitalize", required: true %>
               <%= f.select "song_#{question.id}", [], {prompt: 'Select a song'}, class: "song-select capitalize", required: true %>
               </div>
@@ -31,7 +31,7 @@
     <% end %>
 
     <div class="mt-10 flex justify-center">
-      <%= f.submit "Submit Predictions", class: "bg-black text-white font-bold py-2 px-4 rounded lg:w-full mb-2 hover:bg-gray-900 cursor-pointer" %>
+      <%= f.submit "Submit Predictions", class: "bg-black text-white font-bold py-2 px-4 rounded lg:w-11/12 mb-2 hover:bg-gray-900 cursor-pointer" %>
     </div>
   <% end %>
 </div>
@@ -77,7 +77,7 @@
 
       for (let i = 0; i < numberOfFields; i++) {
         const albumSelect = document.createElement('select');
-        albumSelect.name = `albums[${questionId}]`;
+        albumSelect.name = `albums_${i}[${questionId}]`;
 
         const defaultOption = document.createElement('option');
         defaultOption.value = '';
@@ -89,6 +89,7 @@
         defaultOption.disabled = true;
         defaultOption.selected = true;
         albumSelect.appendChild(defaultOption);
+        albumSelect.required = true;
 
         albumSelect.classList.add('capitalize');
         albumsPromise.then(albums => {
@@ -116,8 +117,9 @@
         defaultSongOption.selected = true;
 
         songSelect.appendChild(defaultSongOption);
-        songSelect.name = `songs[${questionId}`;
+        songSelect.name = `songs_${i}[${questionId}`;
         songSelect.classList.add('capitalize');
+        songSelect.required = true;
 
         albumSelect.addEventListener('change', async (event) => {
           const selectedAlbumId = event.target.value;
