@@ -13,11 +13,17 @@
               <div class="choice py-3 flex flex-col gap-4">
                 <%= image_tag(choice.image, alt: "Option #{index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
                 <div class="flex gap-2 items-center capitalize font-medium">
-                  <%= f.radio_button "selected_options[#{question.id}]", choice.id, required: true, data:( question.include_mashup ? {question_id: question.id} : "" ) %>
+                <%= f.radio_button "selected_options[#{question.id}]", choice.id, required: true, class: (question.include_mashup ? 'mashup-choice' : ''), data: { content: question.content, choice_content: choice.content, question_id: question.id } %>
                   <%= choice.content %>
                 </div>
               </div>
-              <% end %>
+            <% end %>
+            <% if question.include_album_and_song %>
+              <div class="album-song-fields mt-4 grid grid-cols-2 gap-2" data-content="<%= question.id %>">
+               <%= f.select "album_#{question.id}", options_for_select(@albums), {prompt: 'Select an album'}, class: "album-select capitalize my-5", required: true %>
+              <%= f.select "song_#{question.id}", [], {prompt: 'Select a song'}, class: "song-select capitalize my-5", required: true %>
+              </div>
+            <% end %>
           </div>
           </div>
         <% end %>
@@ -25,12 +31,115 @@
     <% end %>
 
     <div class="mt-10 flex justify-center">
-      <%= f.submit "Submit Predictions", class: "bg-black text-white font-bold py-2 px-4 rounded w-3/4 mb-4 hover:bg-gray-900 cursor-pointer" %>
+      <%= f.submit "Submit Predictions", class: "bg-black text-white font-bold py-2 px-4 rounded lg:w-full mb-2 hover:bg-gray-900 cursor-pointer" %>
     </div>
   <% end %>
 </div>
 
 <script>
   document.addEventListener("turbo:load", () => {
-  })
+    document.querySelectorAll('.mashup-choice').forEach((element) => {
+      // updateAlbumsongSelects(element)
+      element.addEventListener('change', (event) => {
+        if (event.target.checked) {
+          updateAlbumsongSelects(element)
+        }
+      });
+    });
+
+    function updateAlbumsongSelects(selectedElement) {
+      const questionContent = selectedElement.dataset.content;
+      const mashupType = selectedElement.dataset.choiceContent.toLowerCase();
+      const container = selectedElement.parentElement.parentElement.parentElement.parentElement.nextElementSibling.children[0].children[0]
+      const questionId = container.dataset.content
+      let numberOfFields;
+
+      switch (mashupType) {
+        case 'no mashup':
+          numberOfFields = 1;
+          break;
+        case 'mashup (2 songs) ':
+          numberOfFields = 2;
+          break;
+        case 'mashup (3 songs)':
+          numberOfFields = 3;
+          break;
+        case 'mashup (4+ songs)':
+          numberOfFields = 4;
+          break;
+        default:
+          numberOfFields = 1;
+      }
+
+      container.innerHTML = '';
+
+      const albumsPromise = getAlbums()
+
+      for (let i = 0; i < numberOfFields; i++) {
+        const albumSelect = document.createElement('select');
+        albumSelect.name = `albums[${questionId}]`;
+
+        console.log('i', i)
+        console.log ('no of fields', numberOfFields)
+
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        if (mashupType === 'no mashup'){
+          defaultOption.text = 'Select Album'
+        } else {
+          defaultOption.text = `Select Album ${i + 1}`
+        }
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        albumSelect.appendChild(defaultOption);
+
+        albumSelect.classList.add('capitalize');
+        albumsPromise.then(albums => {
+          albums.forEach(album => {
+            const option = document.createElement('option');
+            option.value = album.id;
+            option.text = album.title;
+            albumSelect.appendChild(option);
+          });
+        }).catch(error => {
+          console.error('Error fetching albums:', error);
+        });
+
+        const songSelect = document.createElement('select');
+        songSelect.name = `songs[${questionId}][]`;
+        songSelect.placeholder = i === 0 ? 'Select song' : `Select Song ${i + 1}`;
+        songSelect.classList.add('song-input');
+
+        container.appendChild(albumSelect);
+        container.appendChild(songSelect);
+      }
+
+    }
+
+
+    // Fetch albums data from your server or API
+      function getAlbums() {
+        return fetch('/albums', {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            return data;
+          })
+          .catch(error => {
+            console.error('Error fetching albums:', error);
+          });
+      }
+
+
+
+  });
 </script>

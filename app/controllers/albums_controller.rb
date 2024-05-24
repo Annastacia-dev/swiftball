@@ -5,6 +5,11 @@ class AlbumsController < ApplicationController
   def index
     @albums = Album.all.order(:created_at)
     @album = Album.new
+
+    respond_to do |format|
+      format.html { render :index }
+      format.json {render json: @albums }
+    end
   end
 
   def create

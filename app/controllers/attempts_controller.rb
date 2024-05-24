@@ -7,20 +7,24 @@ class AttemptsController < ApplicationController
   end
 
   def update
-    responses = params[:attempt][:responses]
+    if @quiz.tour.status == 'open'
+      responses = params[:attempt][:responses]
 
-    responses.each do |question_id, choice_id|
-      response = @attempt.responses.find_by(question_id: question_id)
+      responses.each do |question_id, choice_id|
+        response = @attempt.responses.find_by(question_id: question_id)
 
-      if response.update(choice_id: choice_id)
-        next
-      else
-        redirect_to attempt_path(@attempt), alert: "Something went wrong. Please try again."
-        return
+        if response.update(choice_id: choice_id)
+          next
+        else
+          redirect_to attempt_path(@attempt), alert: "Something went wrong. Please try again."
+          return
+        end
       end
-    end
 
-    redirect_to attempt_path(@attempt), notice: "Your answers have been updated!"
+      redirect_to attempt_path(@attempt), notice: "Your answers have been updated!"
+    elsif @quiz.tour.status == 'closed'
+      redirect_to attempt_path(@attempt), alert: "Sorry this quiz has been closed!"
+    end
   end
 
   private
