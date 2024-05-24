@@ -2,6 +2,15 @@ class SongsController < ApplicationController
   before_action :set_album
   before_action :set_song, only: %i[edit update destroy]
 
+  def index
+    @songs = @album.songs.all.order(:created_at)
+
+    respond_to do |format|
+      format.html { render :index }
+      format.json {render json: @songs }
+    end
+  end
+
   def create
     @song = @album.songs.new(song_params)
 

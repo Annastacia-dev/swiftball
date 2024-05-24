@@ -20,8 +20,8 @@
             <% end %>
             <% if question.include_album_and_song %>
               <div class="album-song-fields mt-4 grid grid-cols-2 gap-2" data-content="<%= question.id %>">
-               <%= f.select "album_#{question.id}", options_for_select(@albums), {prompt: 'Select an album'}, class: "album-select capitalize my-5", required: true %>
-              <%= f.select "song_#{question.id}", [], {prompt: 'Select a song'}, class: "song-select capitalize my-5", required: true %>
+               <%= f.select "album_#{question.id}", options_for_select(@albums), {prompt: 'Select an album'}, class: "album-select capitalize", required: true %>
+              <%= f.select "song_#{question.id}", [], {prompt: 'Select a song'}, class: "song-select capitalize", required: true %>
               </div>
             <% end %>
           </div>
@@ -39,7 +39,7 @@
 <script>
   document.addEventListener("turbo:load", () => {
     document.querySelectorAll('.mashup-choice').forEach((element) => {
-      // updateAlbumsongSelects(element)
+      updateAlbumsongSelects(element)
       element.addEventListener('change', (event) => {
         if (event.target.checked) {
           updateAlbumsongSelects(element)
@@ -79,9 +79,6 @@
         const albumSelect = document.createElement('select');
         albumSelect.name = `albums[${questionId}]`;
 
-        console.log('i', i)
-        console.log ('no of fields', numberOfFields)
-
         const defaultOption = document.createElement('option');
         defaultOption.value = '';
         if (mashupType === 'no mashup'){
@@ -106,12 +103,41 @@
         });
 
         const songSelect = document.createElement('select');
-        songSelect.name = `songs[${questionId}][]`;
-        songSelect.placeholder = i === 0 ? 'Select song' : `Select Song ${i + 1}`;
-        songSelect.classList.add('song-input');
+
+        const defaultSongOption = document.createElement('option');
+        defaultSongOption.value = '';
+
+        if (mashupType === 'no mashup'){
+          defaultSongOption.text = 'Select  Song'
+        } else {
+          defaultSongOption.text = `Select Song ${i + 1}`
+        }
+        defaultSongOption.disabled = true;
+        defaultSongOption.selected = true;
+
+        songSelect.appendChild(defaultSongOption);
+        songSelect.name = `songs[${questionId}`;
+        songSelect.classList.add('capitalize');
+
+        albumSelect.addEventListener('change', async (event) => {
+          const selectedAlbumId = event.target.value;
+          if (selectedAlbumId) {
+            try {
+              const songs = await getSongs(selectedAlbumId);
+              updateSongOptions(songs, songSelect);
+            } catch (error) {
+              console.error('Error fetching songs:', error);
+            }
+          } else {
+            // Clear songSelect options if no album is selected
+            songSelect.innerHTML = '';
+            songSelect.appendChild(defaultSongOption);
+          }
+        });
 
         container.appendChild(albumSelect);
         container.appendChild(songSelect);
+
       }
 
     }
@@ -139,7 +165,31 @@
           });
       }
 
+      // Function to fetch songs for a given album ID
+      async function getSongs(albumId) {
+        const response = await fetch(`/albums/${albumId}/songs`, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          }
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data;
+      }
 
+      // Function to update songSelect options based on fetched songs
+      function updateSongOptions(songs, songSelect) {
+        songSelect.innerHTML = '';
+        songs.forEach(song => {
+          const option = document.createElement('option');
+          option.value = song.id;
+          option.text = song.title;
+          songSelect.appendChild(option);
+        });
+      }
 
   });
 </script>
