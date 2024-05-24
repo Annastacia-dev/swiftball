@@ -2,24 +2,21 @@
   <h5 class="font-semibold font-courier uppercase text-md p-5"><%= @quiz.title %> </h5>
 
   <%= form_with(url: submit_quiz_path(@quiz.id), method: :post, local: true) do |f| %>
-    <% @quiz.questions.all.group_by(&:era).each do |era, questions| %>
+    <% @quiz.questions.order(:created_at).all.group_by(&:era).each do |era, questions| %>
       <div class="mt-10">
         <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
         <% questions.each_with_index do |question, index| %>
-          <div class="flex flex-col px-5 py-3 ">
+          <div class="flex flex-col px-5 py-3 capitalize ">
           <%= (index + 1).to_s.rjust(2, '0') %>. <%= question.content %> (worth <%= question.points %> points)
-          <div class="grid lg:grid-cols-6 gap-4">
+          <div class="grid <%= question&.choices&.first&.image&.attached? ? 'lg:grid-cols-6 grid-cols-2' : 'grid-cols-1' %> gap-4">
             <% question.choices.order(:created_at).each_with_index do |choice, index| %>
               <div class="choice py-3 flex flex-col gap-4">
                 <%= image_tag(choice.image, alt: "Option #{index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
                 <div class="flex gap-2 items-center capitalize font-medium">
-                  <%= f.radio_button "selected_options[#{question.id}]", choice.id, required: true %>
+                  <%= f.radio_button "selected_options[#{question.id}]", choice.id, required: true, data:( question.include_mashup ? {question_id: question.id} : "" ) %>
                   <%= choice.content %>
                 </div>
               </div>
-              <% end %>
-              <% if question.include_album %>
-                <%= f.select :album, options_for_select(@albums), {}, class: "capitalize", required: true %>
               <% end %>
           </div>
           </div>
@@ -32,3 +29,8 @@
     </div>
   <% end %>
 </div>
+
+<script>
+  document.addEventListener("turbo:load", () => {
+  })
+</script>

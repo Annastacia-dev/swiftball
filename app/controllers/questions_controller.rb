@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
   # GET /questions or /questions.json
   def index
     @questions = Question.all
-    @questions_by_era = Question.all.group_by(&:era)
+    @questions_by_era = Question.all.order(:created_at).group_by(&:era)
   end
 
   # GET /questions/1 or /questions/1.json
@@ -70,6 +70,6 @@ class QuestionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def question_params
-      params.require(:question).permit(:quiz_id, :era, :points, :content, :include_album, :include_song)
+      params.require(:question).permit(:quiz_id, :era, :points, :content, :include_mashup, :include_album_and_song)
     end
 end

@@ -2,15 +2,15 @@
 #
 # Table name: questions
 #
-#  id            :uuid             not null, primary key
-#  content       :text
-#  era           :integer          default("lover")
-#  include_album :boolean          default(FALSE)
-#  include_song  :boolean          default(FALSE)
-#  points        :integer
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  quiz_id       :uuid             not null
+#  id                     :uuid             not null, primary key
+#  content                :text
+#  era                    :integer          default("lover")
+#  include_album_and_song :boolean          default(FALSE)
+#  include_mashup         :boolean          default(FALSE)
+#  points                 :integer
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  quiz_id                :uuid             not null
 #
 # Indexes
 #

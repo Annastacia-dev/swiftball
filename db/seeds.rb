@@ -147,23 +147,16 @@ Question.create!(
   quiz_id: quiz.id,
   era: 'acoustic_set',
   points: 3,
-  content: 'Will there be a Guitar Surprise Song Mashup?'
+  content: 'Will there be a Guitar Surprise Song Mashup?',
+  include_mashup: true
 )
 
 Question.create!(
   quiz_id: quiz.id,
   era: 'acoustic_set',
   points: 6,
-  content: 'Guitar Acoustic Set Album',
-  include_album: true
-)
-
-Question.create!(
-  quiz_id: quiz.id,
-  era: 'acoustic_set',
-  points: 0,
-  content: 'Please pick a guitar surprise song from {{album}}',
-  include_song: true
+  content: 'pick Guitar Acoustic Set Album and song',
+  include_album_and_song: true
 )
 
 Question.create!(
@@ -177,23 +170,16 @@ Question.create!(
   quiz_id: quiz.id,
   era: 'acoustic_set',
   points: 3,
-  content: 'Will there be a Piano Surprise Song Mashup?'
+  content: 'Will there be a Piano Surprise Song Mashup?',
+  include_mashup: true
 )
 
 Question.create!(
   quiz_id: quiz.id,
   era: 'acoustic_set',
   points: 6,
-  content: 'Piano Acoustic Set Album',
-  include_album: true
-)
-
-Question.create!(
-  quiz_id: quiz.id,
-  era: 'acoustic_set',
-  points: 0,
-  content: 'Please pick a piano surprise song from {{album}}',
-  include_song: true
+  content: 'Pick Piano Acoustic Set Album and Song',
+  include_album_and_song: true
 )
 
 puts 'Midnights Questions ...'
@@ -248,7 +234,7 @@ album_titles = [
 ]
 
 album_titles.each do |title|
-  Album.create(title: title)
+  Album.create!(title: title)
 end
 
 puts "Created #{Album.count} albums."
@@ -272,7 +258,7 @@ debut_songs = [
 ]
 debut_album = Album.find_by_title('debut')
 debut_songs.each do |title|
-  debut_album.songs.create(title: title)
+  debut_album.songs.create!(title: title)
 end
 puts "Added debut songs"
 
@@ -305,7 +291,7 @@ fearless_songs = [
 ]
 fearless_album = Album.find_by_title('fearless')
 fearless_songs.each do |title|
-  fearless_album.songs.create(title: title)
+  fearless_album.songs.create!(title: title)
 end
 puts "Added fearless songs"
 
@@ -342,7 +328,7 @@ red_songs = [
 ];
 red_album = Album.find_by_title('red')
 red_songs.each do |title|
-  red_album.songs.create(title: title)
+  red_album.songs.create!(title: title)
 end
 puts "Added red songs"
 
@@ -374,7 +360,7 @@ speak_now_songs = [
 ];
 speak_now_album = Album.find_by_title('speak now')
 speak_now_songs.each do |title|
-  speak_now_album.songs.create(title: title)
+  speak_now_album.songs.create!(title: title)
 end
 puts "Added speak now songs"
 
@@ -405,7 +391,7 @@ birth_year_songs = [
 ];
 birth_year_album = Album.find_by_title('1989')
 birth_year_songs.each do |title|
-  birth_year_album.songs.create(title: title)
+  birth_year_album.songs.create!(title: title)
 end
 puts "Added 1989 songs"
 
@@ -430,7 +416,7 @@ rep_songs = [
 ]
 rep_album = Album.find_by_title('reputation')
 rep_songs.each do |title|
-  rep_album.songs.create(title: title)
+  rep_album.songs.create!(title: title)
 end
 puts "Added rep songs"
 
@@ -459,7 +445,7 @@ lover_songs = [
 
 lover_album = Album.find_by_title('lover')
 lover_songs.each do |title|
-  lover_album.songs.create(title: title)
+  lover_album.songs.create!(title: title)
 end
 puts "Added lover songs"
 
@@ -487,7 +473,7 @@ folklore_songs = [
 
 folklore_album = Album.find_by_title('folklore')
 folklore_songs.each do |title|
-  folklore_album.songs.create(title: title)
+  folklore_album.songs.create!(title: title)
 end
 puts "Added folklore songs"
 
@@ -513,7 +499,7 @@ evermore_songs = [
 ];
 evermore_album = Album.find_by_title('evermore')
 evermore_songs.each do |title|
-  evermore_album.songs.create(title: title)
+  evermore_album.songs.create!(title: title)
 end
 puts "Added evermore songs"
 
@@ -545,7 +531,7 @@ midnights_songs = [
 ];
 midnights_album = Album.find_by_title('midnights')
 midnights_songs.each do |title|
-  midnights_album.songs.create(title: title)
+  midnights_album.songs.create!(title: title)
 end
 puts "Added midnights songs"
 
@@ -585,7 +571,7 @@ puts "Seeding ttpd songs"
 ];
 ttpd_album = Album.find_by_title('the tortured poets department')
 ttpd_songs.each do |title|
-  ttpd_album.songs.create(title: title)
+  ttpd_album.songs.create!(title: title)
 end
 puts "Added ttpd songs"
 
@@ -616,9 +602,12 @@ extra_songs = [
 ];
 extra_album = Album.find_by_title('non-album single (movie soundtrack, collab, unreleased)')
 extra_songs.each do |title|
-  extra_album.songs.create(title: title)
+  extra_album.songs.create!(title: title)
 end
 puts "Added extra songs"
+
+puts "Done!"
+
 
 
 

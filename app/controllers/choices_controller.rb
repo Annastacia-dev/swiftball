@@ -43,9 +43,10 @@ class ChoicesController < ApplicationController
 
   # PATCH/PUT /choices/1 or /choices/1.json
   def update
+    path = request.referrer ? request.referrer : quiz_question_choices_path(@quiz, @question)
     respond_to do |format|
       if @choice.update(choice_params)
-        format.html { redirect_to choice_url(@choice), notice: "Choice was successfully updated." }
+        format.html { redirect_to path, notice: "Choice was successfully updated." }
         format.json { render :show, status: :ok, location: @choice }
       else
         format.html { render :edit, status: :unprocessable_entity }
