@@ -23,5 +23,22 @@ module Swiftball
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    # mailing
+    config.action_mailer.delivery_method = :smtp
+    username = Rails.env.production? ? Rails.application.credentials.mail[:prod_username] : Rails.application.credentials.mail[:sandbox_username]
+    password = Rails.env.production? ? Rails.application.credentials.mail[:prod_password] : Rails.application.credentials.mail[:sandbox_password]
+
+    config.action_mailer.smtp_settings = {
+      user_name: username,
+      password: password,
+      domain: Rails.application.credentials.mail[:domain],
+      address: Rails.application.credentials.mail[:address],
+      port: Rails.application.credentials.mail[:port],
+      authentication: Rails.application.credentials.mail[:authentication],
+      enable_starttls: Rails.application.credentials.mail[:enable_starttls],
+      openssl_verify_mode: Rails.application.credentials.mail[:openssl_verify_mode],
+      open_timeout: 5,
+      read_timeout: 5
+    }
   end
 end

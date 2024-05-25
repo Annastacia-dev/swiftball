@@ -35,8 +35,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
 
   # associations
-  has_many :quizzes
-  has_many :attempts
+  has_many :attempts, dependent: :destroy
 
   # validations
   validates :terms_and_conditions, acceptance: true

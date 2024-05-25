@@ -59,6 +59,7 @@ module ApplicationHelper
 
   def navbar_items
     items = [
+      { path: edit_user_registration_path, icon_class: 'fa-solid fa-user', menu_text: 'Profile' },
       { path: destroy_user_session_path, icon_class: 'fa-solid fa-right-from-bracket', menu_text: 'Logout', type: 'button', method: :delete }
     ]
 
