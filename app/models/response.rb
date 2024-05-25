@@ -6,7 +6,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  attempt_id  :uuid             not null
-#  choice_id   :uuid             not null
+#  choice_id   :uuid
 #  question_id :uuid             not null
 #
 # Indexes
@@ -26,8 +26,10 @@ class Response < ApplicationRecord
 
   # associations
   belongs_to :question
-  belongs_to :choice
+  belongs_to :choice, optional: :true
   belongs_to :attempt
+  has_many :mashup_answers, dependent: :destroy
+
 
   # instance methods
 

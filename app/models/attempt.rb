@@ -29,7 +29,6 @@ class Attempt < ApplicationRecord
   belongs_to :user
   belongs_to :quiz
   has_many :responses, dependent: :destroy
-  has_many :mashup_answers, dependent: :destroy
   has_many :questions, through: :responses, dependent: :destroy
 
   # validations

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_25_071609) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_25_074851) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -82,15 +82,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_25_071609) do
 
   create_table "mashup_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "question_id", null: false
-    t.uuid "attempt_id"
+    t.uuid "response_id"
     t.boolean "correct", default: false
     t.uuid "album_id", null: false
     t.uuid "song_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["album_id"], name: "index_mashup_answers_on_album_id"
-    t.index ["attempt_id"], name: "index_mashup_answers_on_attempt_id"
     t.index ["question_id"], name: "index_mashup_answers_on_question_id"
+    t.index ["response_id"], name: "index_mashup_answers_on_response_id"
     t.index ["song_id"], name: "index_mashup_answers_on_song_id"
   end
 
@@ -115,7 +115,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_25_071609) do
   end
 
   create_table "responses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "choice_id", null: false
+    t.uuid "choice_id"
     t.uuid "attempt_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -185,8 +185,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_25_071609) do
   add_foreign_key "attempts", "users"
   add_foreign_key "choices", "questions"
   add_foreign_key "mashup_answers", "albums"
-  add_foreign_key "mashup_answers", "attempts"
   add_foreign_key "mashup_answers", "questions"
+  add_foreign_key "mashup_answers", "responses"
   add_foreign_key "mashup_answers", "songs"
   add_foreign_key "questions", "quizzes"
   add_foreign_key "quizzes", "tours"

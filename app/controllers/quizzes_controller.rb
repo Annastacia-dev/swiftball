@@ -60,7 +60,12 @@ class QuizzesController < ApplicationController
       if albums.present?
         albums.each do |question_id, album_id|
           song_id = songs[question_id]
-          attempt.mashup_answers.create(
+
+          response = attempt.responses.create(
+            question_id: question_id
+          )
+
+          response.mashup_answers.create(
             question_id: question_id,
             album_id: album_id,
             song_id: song_id

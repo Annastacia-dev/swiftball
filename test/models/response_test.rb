@@ -6,7 +6,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  attempt_id  :uuid             not null
-#  choice_id   :uuid             not null
+#  choice_id   :uuid
 #  question_id :uuid             not null
 #
 # Indexes

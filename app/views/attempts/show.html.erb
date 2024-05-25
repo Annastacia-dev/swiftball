@@ -26,28 +26,43 @@
   <% @questions_by_era.each do |era, responses| %>
     <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
     <div class="grid lg:grid-cols-3">
-      <% responses.each_with_index do |response, index| %>
+      <% responses.sort_by { |response| response.question.created_at }.group_by { |response| response.question.id }.each_with_index do |(question_id, grouped_responses), index| %>
+        <% response = grouped_responses.first %>
+        <% choice = response&.choice %>
         <div class="flex flex-col lg:justify-start justify-center px-5 py-3 gap-2">
           <div class="flex flex-col gap-3">
-              <%= (index + 1).to_s.rjust(2, '0') %>. <%= response.question.content %> (worth <%= response.question.points %> points)
-              <%= image_tag(response.choice.image, alt: "Option #{index + 1}", class: 'w-full h-[30rem] object-cover object-center rounded') if response.choice.image.attached? %>
-              <p class="font-medium capitalize flex items-center gap-2">
-                <% if response.choice.correct %>
-                  <i class="fa-solid fa-circle-check text-green-600"></i>
-                <% end %>
-              <%= response.choice.content %>
-              </p>
+            <%= (index + 1).to_s.rjust(2, '0') %>. <%= response.question.content %> (worth <%= response.question.points %> points)
+            <%= image_tag(choice&.image, alt: "Option #{index + 1}", class: 'w-full h-[30rem] object-cover object-center rounded') if choice&.image&.attached? %>
+            <p class="font-medium capitalize flex items-center gap-2">
+              <% if choice&.correct %>
+                <i class="fa-solid fa-circle-check text-green-600"></i>
+              <% end %>
+              <%= choice&.content %>
+            </p>
           </div>
 
           <% correct_choice = response.question.choices.find_by(correct: true) %>
-          <% if !response.choice.correct && correct_choice.present? %>
+          <% if !choice&.correct && correct_choice.present? %>
             <p class="text-red-600 text-sm flex gap-3 items-center font-semibold capitalize">
               <i class="fa-solid fa-xmark"></i>
               <span> correct choice: <%= correct_choice.content %> </span>
             </p>
           <% end %>
+
+          <% mashup_answers = grouped_responses.flat_map(&:mashup_answers) %>
+          <% if mashup_answers.present? %>
+            <div class="flex flex-col gap-3">
+              <% mashup_answers.each do |mashup| %>
+                <p class="font-medium capitalize flex items-center gap-2">
+                  <%= mashup.album.title %> - <%= mashup.song.title %>
+                </p>
+              <% end %>
+            </div>
+          <% end %>
+
         </div>
       <% end %>
     </div>
   <% end %>
+
 </div>
