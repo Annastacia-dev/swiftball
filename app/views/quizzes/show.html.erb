@@ -41,7 +41,17 @@
                 <% end %>
               </div>
             </div>
-            <% end %>
+           <% end %>
+
+           <% if question.include_album_and_song %>
+             <% question&.mashup_answers.where(response_id: nil).each do |mashup| %>
+               <% if mashup.correct %>
+               <p class="flex gap-2 items-center font-medium capitalize">
+               <i class="fa-solid fa-circle-check text-green-600"></i> <%= mashup.album.title %> - <%= mashup.song.title %>
+               </p>
+               <% end %>
+             <% end %>
+           <% end %>
          </div>
         </div>
       <% end %>

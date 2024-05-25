@@ -12,14 +12,21 @@ Rails.application.routes.draw do
     post 'open', on: :member
     post 'close', on: :member
     resources :questions do
+      get 'pick_surprise_song', on: :member
+      post 'surprise_song_answer', on: :member
       resources :choices
     end
   end
   resources :attempts
   resources :choices do
     post 'correct', on: :member
+    post 'incorrect', on: :member
   end
   resources :albums do
     resources :songs
+  end
+
+  resources :responses do
+    resources :mashup_answers, only: :index
   end
 end

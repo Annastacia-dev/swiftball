@@ -85,6 +85,24 @@ class ChoicesController < ApplicationController
     end
   end
 
+  def incorrect
+    @question = @choice.question
+
+    if @question.quiz.tour.status != 'closed'
+      respond_to do |format|
+        format.html { redirect_to request.referrer, alert: 'Please Close this quiz before marking choices' }
+      end
+    else
+      @question.choices.where(correct: true).update(correct: false)
+
+      @choice.update(correct: false)
+
+      respond_to do |format|
+        format.html { redirect_to request.referrer, notice: "Choice was marked incorrect." }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def find_question

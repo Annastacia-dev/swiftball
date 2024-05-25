@@ -27,7 +27,7 @@
 #
 class MashupAnswer < ApplicationRecord
   belongs_to :question
-  belongs_to :response
+  belongs_to :response, optional: true
   belongs_to :album
   belongs_to :song
 end

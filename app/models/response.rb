@@ -34,6 +34,8 @@ class Response < ApplicationRecord
   # instance methods
 
   def predicted_correctly?
-    question.choices.find_by(correct: true) == choice
+    if question.choices.size.positive?
+      question.choices.find_by(correct: true) == choice
+    end
   end
 end

@@ -14,7 +14,7 @@
     <% @quiz.questions.order(:created_at).all.group_by(&:era).each do |era, questions| %>
       <div class="mt-10">
         <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
-        <% questions.order(:created_at).each_with_index do |question, q_index| %>
+        <% questions.each_with_index do |question, q_index| %>
           <div class="flex flex-col px-5 py-3 ">
             <%= (q_index + 1).to_s.rjust(2, '0') %>. <%= question.content %> (worth <%= question.points %> points)
             <div class="grid lg:grid-cols-6 gap-4">

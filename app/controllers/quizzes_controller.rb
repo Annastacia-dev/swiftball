@@ -2,7 +2,7 @@ class QuizzesController < ApplicationController
 
   before_action :set_quiz, only: %i[ show edit destroy take open close submit]
   before_action :authenticate_admin!, only: %i[show edit destroy open close]
-  before_action :check_tour_open, only: %i[take]
+  before_action :check_tour_open, only: %i[take submit]
   before_action :set_tour
 
 

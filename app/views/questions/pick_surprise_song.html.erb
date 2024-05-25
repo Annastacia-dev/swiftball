@@ -1,54 +1,36 @@
-<div class="min-h-screen">
-  <h5 class="font-semibold font-courier uppercase text-md p-5"><%= @quiz.title %> </h5>
+<div class="min-h-screen px-5">
 
-  <%= form_with(url: submit_quiz_path(@quiz.id), method: :post, local: true) do |f| %>
-    <% @quiz.questions.order(:created_at).all.group_by(&:era).each do |era, questions| %>
-      <div class="mt-10">
-        <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
-        <% questions.each_with_index do |question, index| %>
-          <div class="flex flex-col px-5 py-3 capitalize font-medium ">
-          <%= (index + 1).to_s.rjust(2, '0') %>. <%= question.content %> (worth <%= question.points %> points)
-          <div class="grid <%= question&.choices&.first&.image&.attached? ? 'lg:grid-cols-6 grid-cols-2' : 'grid-cols-1' %> gap-4">
-            <% question.choices.order(:created_at).each_with_index do |choice, index| %>
-              <div class="choice py-3 flex flex-col gap-4">
-                <%= image_tag(choice.image, alt: "Option #{index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
-                <div class="flex gap-2 items-center capitalize font-light">
-                <%= f.radio_button "selected_options[#{question.id}]", choice.id, required: true, class: (question.include_mashup ? 'mashup-choice' : ''), data: { content: question.content, choice_content: choice.content, question_id: question.id } %>
-                  <%= choice.content %>
-                </div>
-              </div>
-            <% end %>
-            <% if question.include_album_and_song %>
-              <div class="album-song-fields mt-4 grid grid-cols-2 gap-2 font-light" data-content="<%= question.id %>">
-              </div>
-            <% end %>
-          </div>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
+  <div class="">
+    <%= render 'components/breadcrumb', breadcrumbs: [
+      {text: 'Quizzes', path: tours_path},
+      {text: "#{@quiz.title} quiz", path: quiz_path(@quiz)},
+      {text: "Questions", path: quiz_questions_path(@quiz)},
+      {text: "#{@question.content}"}
+    ] %>
+  </div>
 
-    <div class="mt-10 flex justify-center">
-      <%= f.submit "Submit Predictions", class: "bg-black text-white font-bold py-2 px-4 rounded lg:w-11/12 mb-2 hover:bg-gray-900 cursor-pointer" %>
+  <div class="flex justify-between items-center px-5">
+    <h5 class="font-semibold font-courier uppercase text-md "><%= @question.content %> </h5>
+  </div>
+
+  <%= form_with(url: surprise_song_answer_quiz_question_path(@quiz.id, @question.id), method: :post, local: true) do |f| %>
+    <div id="album-song" class="album-song-fields mt-10 grid grid-cols-2 gap-2 font-light mb-10 lg:w-3/4 px-5 capitalize " data-content="<%= @question.id %>" data-mashup="<%= @mashup_ans.content.downcase %>">
     </div>
+    <%= f.submit 'Submit', class: "bg-black text-white px-4 py-2 rounded font-semibold cursor-pointer mt-10 ml-5 w-1/4" %>
   <% end %>
 </div>
 
 <script>
   document.addEventListener("turbo:load", () => {
-    document.querySelectorAll('.mashup-choice').forEach((element) => {
-      updateAlbumsongSelects(element)
-      element.addEventListener('change', (event) => {
-        if (event.target.checked) {
-          updateAlbumsongSelects(element)
-        }
-      });
-    });
+
+  const element = document.getElementById("album-song")
+  updateAlbumsongSelects(element)
+    
 
     function updateAlbumsongSelects(selectedElement) {
-      const mashupType = selectedElement.dataset.choiceContent.toLowerCase();
-      const container = selectedElement.parentElement.parentElement.parentElement.parentElement.nextElementSibling.children[0].children[0]
-      const questionId = container.dataset.content
+      const mashupType = selectedElement.dataset.mashup.toLowerCase();
+      const container = selectedElement
+      const questionId = selectedElement.dataset.content
       let numberOfFields;
 
       switch (mashupType) {
@@ -192,3 +174,4 @@
 
   });
 </script>
+
