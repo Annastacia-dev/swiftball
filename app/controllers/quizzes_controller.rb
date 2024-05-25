@@ -27,18 +27,8 @@ class QuizzesController < ApplicationController
   # Custom
 
   def submit
+
     selected_options = params[:selected_options]
-    albums_one = params[:albums_0]
-    albums_two = params[:albums_1]
-    albums_three = params[:albums_1]
-    albums_four = params[:albums_3]
-
-    songs_one = params[:songs_0]
-    songs_two = params[:songs_1]
-    songs_three = params[:songs_1]
-    songs_four = params[:songs_3]
-
-    byebug
 
     return if selected_options.blank?
 
@@ -52,9 +42,30 @@ class QuizzesController < ApplicationController
             choice_id: choice_id
           )
         end
+
+       update_mashup_answers(attempt)
+
        format.html { redirect_to tours_path, notice: "Your answers have been submitted!" }
       else
-        format.html { render :attempt, status: :unprocessable_entity }
+        format.html { render :take, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update_mashup_answers(attempt)
+    (0..3).each do |i|
+      albums = params["albums_#{i}"]
+      songs = params["songs_#{i}"]
+
+      if albums.present?
+        albums.each do |question_id, album_id|
+          song_id = songs[question_id]
+          attempt.mashup_answers.create(
+            question_id: question_id,
+            album_id: album_id,
+            song_id: song_id
+          )
+        end
       end
     end
   end
@@ -116,5 +127,16 @@ class QuizzesController < ApplicationController
          format.html  { render :take }
         end
       end
+    end
+
+    def manually_merge_hashes(*hashes)
+      merged_hash = {}
+      hashes.each do |hash|
+        next if hash.nil?
+        hash.each do |key, value|
+          merged_hash[key] = value
+        end
+      end
+      merged_hash
     end
 end

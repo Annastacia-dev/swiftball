@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_24_081232) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_25_071609) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -78,6 +78,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_24_081232) do
     t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
+
+  create_table "mashup_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "question_id", null: false
+    t.uuid "attempt_id"
+    t.boolean "correct", default: false
+    t.uuid "album_id", null: false
+    t.uuid "song_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["album_id"], name: "index_mashup_answers_on_album_id"
+    t.index ["attempt_id"], name: "index_mashup_answers_on_attempt_id"
+    t.index ["question_id"], name: "index_mashup_answers_on_question_id"
+    t.index ["song_id"], name: "index_mashup_answers_on_song_id"
   end
 
   create_table "questions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -170,6 +184,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_24_081232) do
   add_foreign_key "attempts", "quizzes"
   add_foreign_key "attempts", "users"
   add_foreign_key "choices", "questions"
+  add_foreign_key "mashup_answers", "albums"
+  add_foreign_key "mashup_answers", "attempts"
+  add_foreign_key "mashup_answers", "questions"
+  add_foreign_key "mashup_answers", "songs"
   add_foreign_key "questions", "quizzes"
   add_foreign_key "quizzes", "tours"
   add_foreign_key "responses", "attempts"

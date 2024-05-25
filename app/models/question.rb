@@ -26,6 +26,7 @@ class Question < ApplicationRecord
   # associations
   belongs_to :quiz
   has_many :choices, dependent: :destroy
+  has_many :mashup_answers, dependent: :destroy
 
   # validations
   validates :content, presence: true, uniqueness: { scope: :quiz_id }

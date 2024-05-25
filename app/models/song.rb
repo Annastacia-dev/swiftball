@@ -21,6 +21,7 @@ class Song < ApplicationRecord
 
   # associations
   belongs_to :album
+  has_many :mashup_answers, dependent: :destroy
 
   # validations
   validates :title, presence: true, uniqueness: true

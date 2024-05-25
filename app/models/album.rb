@@ -16,6 +16,7 @@ class Album < ApplicationRecord
 
   # associations
   has_many :songs, dependent: :destroy
+  has_many :mashup_answers, dependent: :destroy
 
   # validations
   validates :title, presence: true, uniqueness: true
