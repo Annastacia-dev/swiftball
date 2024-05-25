@@ -53,7 +53,34 @@ class Attempt < ApplicationRecord
       end
     end
 
-    score
+    score + mashup_score
+  end
+
+  def mashup_score
+    m_score = 0
+
+    responses.each do |response|
+
+      question = response.question
+
+      correct_mashups = question.mashup_answers.where(response_id: nil, correct: true)
+      correct_albums = correct_mashups.pluck(:album_id)
+      correct_songs = correct_mashups.pluck(:song_id)
+
+      if response.mashup_answers
+        response.mashup_answers.each do |mashup|
+          if correct_albums.include?(mashup.album_id) && correct_songs.include?(mashup.song_id)
+            m_score += question.points
+          elsif correct_albums.include?(mashup.album_id) && !correct_songs.include?(mashup.song_id)
+            m_score += 1
+          elsif !correct_albums.include?(mashup.album_id) &&correct_songs.include?(mashup.song_id)
+            m_score +=1
+          end
+        end
+      end
+    end
+
+   m_score
   end
 
   def total_possible_points
