@@ -118,6 +118,6 @@ class QuestionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def question_params
-      params.require(:question).permit(:quiz_id, :era, :points, :content, :include_mashup, :include_album_and_song)
+      params.require(:question).permit(:quiz_id, :era, :points, :content, :piano_mashup, :guitar_mashup, :include_album_and_song)
     end
 end

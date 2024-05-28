@@ -43,7 +43,7 @@ class ChoicesController < ApplicationController
 
   # PATCH/PUT /choices/1 or /choices/1.json
   def update
-    path = request.referrer ? request.referrer : quiz_question_choices_path(@quiz, @question)
+    path = quiz_question_path(@choice.question.quiz, @choice.question)
     respond_to do |format|
       if @choice.update(choice_params)
         format.html { redirect_to path, notice: "Choice was successfully updated." }
@@ -119,6 +119,6 @@ class ChoicesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def choice_params
-      params.require(:choice).permit(:question_id, :content, :correct, :image)
+      params.require(:choice).permit(:question_id, :content, :correct, :image, :new_item)
     end
 end

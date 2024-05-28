@@ -17,9 +17,11 @@
           <%= link_to tour_path(tour), class:"flex gap-4 items-center " do %>
             <%= (tour.number).to_s.rjust(2, '0') %>. <span class="font-semibold uppercase hover:underline"><%= tour.title %></span>
             <% if tour.status == 'open' %>
-              <i class="fa-solid fa-circle-check text-green-600" title="open"></i>
-            <% elsif tour.status == 'pending'%>
+              <i class="fa-solid fa-circle-check text-orange-500" title="open"></i>
+            <% elsif tour.status == 'pending' %>
               <i class="fa-solid fa-spinner text-gray-600" title="pending"></i>
+            <% elsif tour.status == 'live' %>
+              <i class="fa-solid fa-bullseye text-green-600 animate-ping"></i>
             <% elsif tour.status == 'closed' %>
               <i class="fa-solid fa-circle-xmark text-red-600" title="closed"></i>
             <% end %>
@@ -43,15 +45,19 @@
                 predict
               <% end %>
             <% end %>
-          <% elsif tour.status == 'closed' %>
+          <% elsif tour.status == 'closed' || tour.status == 'live' %>
             <% if  current_user.has_attempted_quiz?(tour.quiz) %>
               <% attempt = current_user.attempts.find_by(quiz_id: tour.quiz.id) %>
               <%= link_to attempt_path(attempt), class: 'bg-black px-2 py-2 text-white hover:bg-gray-900 rounded' do %>
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
-                view results
+                <%= tour.status == 'live' ? 'view progress' : tour.status == 'closed' ? 'view results' : '' %>
               <% end %>
             <% else %>
-              <i class="fa-solid fa-circle-xmark text-red-600" title="closed"></i>
+              <% if tour.status == 'closed' %>
+                <i class="fa-solid fa-circle-xmark text-red-600" title="closed"></i>
+              <% elsif tour.status == 'live' %>
+                <i class="fa-solid fa-bullseye text-green-600 animate-ping"></i>
+              <% end %>
             <% end %>
           <% end %>
         <% end %>

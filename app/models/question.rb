@@ -52,4 +52,8 @@ class Question < ApplicationRecord
   def self.eras_options
     eras.map { |k, _v| [k.humanize, k] }
   end
+
+  def include_mashup?
+    piano_mashup || guitar_mashup
+  end
 end

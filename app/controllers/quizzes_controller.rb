@@ -76,6 +76,22 @@ class QuizzesController < ApplicationController
   end
 
   def open
+    if @tour.status != 'live'
+      respond_to do |format|
+        if @tour.update(status: :live)
+          format.html { redirect_to tours_path, notice: 'Show is now live & quiz is close' }
+        else
+          format.html { redirect_to tours_path, notice: 'Something went wrong, try again' }
+        end
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to tours_path, notice: 'Show is already live' }
+      end
+    end
+  end
+
+  def open
     if @tour.status != 'open'
       respond_to do |format|
         if @tour.update(status: :open)
@@ -124,7 +140,7 @@ class QuizzesController < ApplicationController
 
     def check_tour_open
       respond_to do |format|
-        if @quiz.tour.status == 'closed'
+        if @quiz.tour.status == 'closed' || @quiz.tour.status == 'live'
           format.html { redirect_to root_path, alert: 'Sorry you missed this one, Quiz is closed' }
         elsif  @quiz.tour.status == 'pending'
           format.html { redirect_to root_path, alert: 'Hey early bird, Quiz is not yet open' }

@@ -38,6 +38,10 @@ module QuizzesHelper
       items << { path: edit_tour_path(quiz.tour), icon_class: 'fa-solid fa-pencil', menu_text: 'Edit Quiz' }
     end
 
+    if quiz.tour.status != 'live'
+      items << { path: live_quiz_path(quiz), icon_class: 'fa-solid fa-bullseye', menu_text: 'Go Live', type:'button', method: 'post' }
+    end
+
     if quiz.tour.status != 'open'
       items << { path: open_quiz_path(quiz), icon_class: 'fa-solid fa-wand-magic-sparkles', menu_text: 'Open Quiz', type:'button', method: 'post' }
     end

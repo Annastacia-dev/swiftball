@@ -35,7 +35,8 @@ class Tour < ApplicationRecord
   enum status: {
     pending: 0,
     open: 1,
-    closed: 2
+    live: 2,
+    closed: 3
   }
 
   # callbacks

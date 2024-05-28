@@ -5,6 +5,8 @@
 #  id          :uuid             not null, primary key
 #  content     :string
 #  correct     :boolean          default(FALSE)
+#  new_item    :boolean          default(FALSE)
+#  position    :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  question_id :uuid             not null
