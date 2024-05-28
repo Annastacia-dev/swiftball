@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get 'take', on: :member
     post 'open', on: :member
     post 'close', on: :member
+    post 'live', on: :member
     resources :questions do
       get 'pick_surprise_song', on: :member
       post 'surprise_song_answer', on: :member
