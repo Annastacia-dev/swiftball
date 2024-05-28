@@ -68,6 +68,8 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+gem 'aws-sdk', require: false
+gem 'cloudinary', '~> 2.1', '>= 2.1.0'
 gem "devise"
 gem "friendly_id"
 gem "paper_trail"

@@ -34,7 +34,7 @@ class Choice < ApplicationRecord
   validate :only_one_correct_answer_per_question, if: :correct_changed?
 
   # callbacks
-  before_save :set_position
+  before_validation :set_position
 
   private
 
@@ -42,7 +42,7 @@ class Choice < ApplicationRecord
     if position.nil?
       max_position = question.choices.maximum(:position) || 0
       new_item = question.choices.find_by(new_item: true)
-      new_item_position = new_item.position
+      new_item_position = new_item&.position
 
       if new_item_position
         self.position = new_item_position

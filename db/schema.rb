@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_28_064945) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_28_102252) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -106,6 +106,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_28_064945) do
     t.boolean "piano_mashup", default: false
     t.boolean "include_album_and_song", default: false
     t.boolean "guitar_mashup", default: false
+    t.integer "position"
     t.index ["quiz_id"], name: "index_questions_on_quiz_id"
   end
 

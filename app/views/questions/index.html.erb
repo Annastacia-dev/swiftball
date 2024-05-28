@@ -32,7 +32,7 @@
             <% end %>
           </div>
           <div class="grid <%= question&.choices&.first&.image&.attached? ? 'lg:grid-cols-6 grid-cols-2' : 'grid-cols-1' %> gap-4">
-            <% question.choices.order(:created_at).each_with_index do |choice, index| %>
+            <% question.choices.order(:position).each_with_index do |choice, index| %>
             <div class="choice py-3 flex flex-col gap-4 font-medium">
               <%= image_tag(choice.image, alt: "Option #{index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
               <div class="flex justify-between items-center capitalize">

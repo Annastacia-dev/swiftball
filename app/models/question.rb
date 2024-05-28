@@ -9,6 +9,7 @@
 #  include_album_and_song :boolean          default(FALSE)
 #  piano_mashup           :boolean          default(FALSE)
 #  points                 :integer
+#  position               :integer
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  quiz_id                :uuid             not null
@@ -31,8 +32,12 @@ class Question < ApplicationRecord
 
   # validations
   validates :content, presence: true, uniqueness: { scope: :quiz_id }
+  validates :position, presence: true, uniqueness: { scope: :quiz_id }
   validates :points, presence: true
   validates :era, presence: true
+
+  # callbacks
+  before_validation :set_position
 
   # enums
   enum era: {
@@ -55,5 +60,14 @@ class Question < ApplicationRecord
 
   def include_mashup?
     piano_mashup || guitar_mashup
+  end
+
+  private
+
+  def set_position
+    if position.nil?
+      max_position = quiz.questions.maximum(:position) || 0
+      self.position = max_position + 1
+    end
   end
 end

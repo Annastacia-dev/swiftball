@@ -16,10 +16,10 @@ class MashupAnswersController < ApplicationController
   end
 
   def update
-    byebug
+    path = current_user.admin? ? quiz_path(@question.quiz) : edit_attempt_path(@mashup_answer.response.attempt)
     respond_to do |format|
       if @mashup_answer.update(mashup_params)
-        format.html { redirect_to quiz_path(@question.quiz), notice: "Mashup Answer was successfully updated." }
+        format.html { redirect_to path, notice: "Mashup Answer was successfully updated." }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end

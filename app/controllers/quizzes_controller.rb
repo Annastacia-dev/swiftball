@@ -2,7 +2,7 @@ class QuizzesController < ApplicationController
 
   before_action :set_quiz, only: %i[ show edit destroy take open close submit]
   before_action :authenticate_admin!, only: %i[show edit destroy open close]
-  before_action :check_tour_open, only: %i[take submit]
+  before_action :check_tour_open, only: %i[take]
   before_action :set_tour
 
 
@@ -28,27 +28,31 @@ class QuizzesController < ApplicationController
 
   def submit
 
-    selected_options = params[:selected_options]
+    if @quiz.tour.status == 'open'
+      selected_options = params[:selected_options]
 
-    return if selected_options.blank?
+      return if selected_options.blank?
 
-    attempt =  current_user.attempts.new(quiz: @quiz)
+      attempt =  current_user.attempts.new(quiz: @quiz)
 
-    respond_to do |format|
-      if attempt.save
-        selected_options.each do |question_id, choice_id|
-          attempt.responses.create(
-            question_id: question_id,
-            choice_id: choice_id
-          )
+      respond_to do |format|
+        if attempt.save
+          selected_options.each do |question_id, choice_id|
+            attempt.responses.create(
+              question_id: question_id,
+              choice_id: choice_id
+            )
+          end
+
+        update_mashup_answers(attempt)
+
+        format.html { redirect_to tours_path, notice: "Your answers have been submitted!" }
+        else
+          format.html { render :take, status: :unprocessable_entity }
         end
-
-       update_mashup_answers(attempt)
-
-       format.html { redirect_to tours_path, notice: "Your answers have been submitted!" }
-      else
-        format.html { render :take, status: :unprocessable_entity }
       end
+    else
+      format.html { redirect_to root_path, alert: 'Sorry you missed this one, Quiz is closed' }
     end
   end
 

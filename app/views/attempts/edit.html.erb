@@ -17,8 +17,8 @@
         <% questions.each_with_index do |question, q_index| %>
           <div class="flex flex-col px-5 py-3 ">
             <%= (q_index + 1).to_s.rjust(2, '0') %>. <%= question.content %> (worth <%= question.points %> points)
-            <div class="grid lg:grid-cols-6 gap-4">
-              <% question.choices.order(:created_at).each_with_index do |choice, c_index| %>
+            <div class="grid <%= question&.choices&.first&.image&.attached? ? 'lg:grid-cols-6 grid-cols-2' : 'grid-cols-1' %> gap-4">
+              <% question.choices.order(:position).each_with_index do |choice, c_index| %>
                 <div class="choice py-3 flex flex-col gap-4">
                   <%= image_tag(choice.image, alt: "Option #{c_index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
                   <div class="flex gap-2 items-center capitalize font-medium">
@@ -31,6 +31,19 @@
               <% end %>
             </div>
           </div>
+          <% if question.include_album_and_song %>
+            <% mashup_answers = @attempt.responses.where(question_id: question.id).flat_map(&:mashup_answers) %>
+            <% mashup_answers.each do |mashup| %>
+              <div class="flex justify-between px-5 py-3">
+                <p class="flex gap-2 items-center font-medium capitalize">
+                  <%= mashup.album.title %> - <%= mashup.song.title %>
+                </p>
+                <%= link_to edit_mashup_answer_path(mashup) do %>
+                  <i class="fa-solid fa-pencil px-4"></i>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
         <% end %>
       </div>
     <% end %>

@@ -3,7 +3,11 @@ class ToursController < ApplicationController
 
   # GET /tours or /tours.json
   def index
-    @tours = Tour.order(date: :desc)
+    if current_user.admin?
+      @tours = Tour.order(date: :desc)
+    else
+      @tours = Tour.order(date: :desc).where.not(base: true).where(status: [:closed, :open, :live])
+    end
   end
 
   # GET /tours/1 or /tours/1.json

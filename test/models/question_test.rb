@@ -9,6 +9,7 @@
 #  include_album_and_song :boolean          default(FALSE)
 #  piano_mashup           :boolean          default(FALSE)
 #  points                 :integer
+#  position               :integer
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  quiz_id                :uuid             not null

@@ -68,30 +68,39 @@
 
           <% if mashup_answers.present? %>
             <div class="grid lg:grid-cols-1 gap-5">
-            <div class="flex flex-col gap-3">
-              <% mashup_answers.each do |mashup| %>
-                <p class="font-medium capitalize flex items-center gap-2">
-                  <%= mashup.album.title %>
-                    <% if correct_albums.include?(mashup.album_id) %>
-                      <i class="fa-solid fa-circle-check text-green-600"></i>
-                    <% else %>
-                      <i class="fa-solid fa-xmark text-red-600"></i>
+              <div class="flex flex-col gap-3">
+                <% mashup_answers.each do |mashup| %>
+                  <p class="font-medium capitalize flex items-center gap-2">
+                    <%= mashup.album.title %>
+                      <% if correct_albums.present? %>
+                        <% if correct_albums.include?(mashup.album_id) %>
+                          <i class="fa-solid fa-circle-check text-green-600"></i>
+                        <% else %>
+                          <i class="fa-solid fa-xmark text-red-600"></i>
+                        <% end %>
+                      <% end %>
+                    - <%= mashup.song.title %>
+                    <% if correct_songs.present? %>
+                      <% if correct_songs.include?(mashup.song_id) %>
+                        <i class="fa-solid fa-circle-check text-green-600"></i>
+                      <% else %>
+                        <i class="fa-solid fa-xmark text-red-600"></i>
+                      <% end %>
                     <% end %>
-                   - <%= mashup.song.title %>
-                   <% if correct_songs.include?(mashup.song_id) %>
-                      <i class="fa-solid fa-circle-check text-green-600"></i>
-                    <% else %>
-                      <i class="fa-solid fa-xmark text-red-600"></i>
-                    <% end %>
-                </p>
+                  </p>
+                <% end %>
+              </div>
+
+              <% if correct_mashups.present?  %>
+                <p class="font-medium underline text-orange-500 capitalize"> correct surprise songs </p>
+
+                <div class="flex flex-col gap-3">
+                  <% correct_mashups.each do |mashup| %>
+                    <span class="text-violet-500 capitalize text-sm font-medium"> <%= mashup.album.title %> - <%= mashup.song.title %> </span>
+                  <% end %>
+                </div>
               <% end %>
-            </div>
-            <p class="font-medium underline text-orange-500 capitalize"> correct surprise songs </p>
-            <div class="flex flex-col gap-3">
-              <% correct_mashups.each do |mashup| %>
-                <span class="text-violet-500 capitalize text-sm font-medium"> <%= mashup.album.title %> - <%= mashup.song.title %> </span>
-              <% end %>
-            </div>
+
             </div>
           <% end %>
 
