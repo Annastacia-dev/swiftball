@@ -1,10 +1,10 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'bg-center bg-cover bg-no-repeat min-h-screen', style: "background-image: url('#{image_path('background.png')}')" }) do |f| %>
 
-  <div class="bg-black/90 min-h-screen w-full lg:grid lg:grid-cols-3 gap-5 flex flex-col lg:justify-center items-center text-white font-roboto font-light lg:pt-0 pt-10">
+  <div class="bg-black/90 min-h-screen w-full lg:grid lg:grid-cols-3 gap-5 flex flex-col justify-center items-center text-white font-roboto font-light lg:pt-0 pt-10">
 
     <%= render 'shared/logo' %>
 
-    <div class="flex flex-col gap-8 border-l border-gray-100 py-5 px-20 col-span-2 lg:ml-20 text-sm ">
+    <div class="flex flex-col  gap-8 lg:border-l lg:border-gray-100 py-5 lg:px-20 px-5 lg:col-span-2 lg:ml-20 text-sm lg:w-10/12 w-11/12">
 
       <h2 class="text-lg uppercase font-bold">Sign up</h2>
 
@@ -60,7 +60,7 @@
       </div>
 
       <div class="actions">
-        <%= f.submit "Sign up", class: 'px-4 py-2 bg-white text-black rounded font-semibold lg:w-1/2 cursor-pointer' %>
+        <%= f.submit "Sign up", class: 'px-4 py-2 bg-white text-black rounded font-semibold lg:w-1/2 w-full cursor-pointer' %>
       </div>
 
       <%= render "devise/shared/links" %>
