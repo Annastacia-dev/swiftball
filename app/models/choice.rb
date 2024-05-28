@@ -56,7 +56,7 @@ class Choice < ApplicationRecord
   end
 
   def tour_is_closed_before_marking_correct
-    if correct == true && question.quiz.tour.status != 'closed'
+    if correct == true && ( question.quiz.tour.status != 'closed' && question.quiz.tour.status != 'live' )
       errors.add(:base, "Please close the quiz before choosing correct answers")
     end
   end

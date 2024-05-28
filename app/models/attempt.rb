@@ -44,6 +44,14 @@ class Attempt < ApplicationRecord
     questions.size
   end
 
+  def correct_attempt_questions
+    correct_questions_count = responses.select { |response| response.predicted_correctly?}.size
+  end
+
+  def questions_with_correct_answers
+    correct_questions_count = questions.select { |question| question.choices.where(correct: true).exists? }.size
+  end
+
   def score
     score = 0
 
