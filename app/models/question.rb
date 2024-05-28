@@ -5,8 +5,9 @@
 #  id                     :uuid             not null, primary key
 #  content                :text
 #  era                    :integer          default("lover")
+#  guitar_mashup          :boolean          default(FALSE)
 #  include_album_and_song :boolean          default(FALSE)
-#  include_mashup         :boolean          default(FALSE)
+#  piano_mashup           :boolean          default(FALSE)
 #  points                 :integer
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null

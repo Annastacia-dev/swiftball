@@ -148,7 +148,7 @@ Question.create!(
   era: 'acoustic_set',
   points: 3,
   content: 'Will there be a Guitar Surprise Song Mashup?',
-  include_mashup: true
+  guitar_mashup: true
 )
 
 Question.create!(
@@ -171,7 +171,7 @@ Question.create!(
   era: 'acoustic_set',
   points: 3,
   content: 'Will there be a Piano Surprise Song Mashup?',
-  include_mashup: true
+  piano_mashup: true
 )
 
 Question.create!(
