@@ -13,7 +13,7 @@
     <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: quiz_dropdown_items(@quiz) %>
   </div>
 
-  <% @quiz.questions.order(:era).all.group_by(&:era).each do |era, questions| %>
+  <% @quiz.questions.order(:era).all.order(:created_at).group_by(&:era).each do |era, questions| %>
     <div class="mt-10">
       <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
       <% questions.each_with_index do |question, index| %>
@@ -31,9 +31,9 @@
            <% question.choices.order(:position).each_with_index do |choice, index| %>
             <div class="choice py-3 flex flex-col gap-4 font-medium">
               <%= image_tag(choice.image, alt: "Option #{index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
-              <div class="flex justify-between items-center capitalize">
+              <div class="flex justify-between items-center capitalize relative">
                 <% if choice.correct %>
-                  <i class="fa-solid fa-circle-check text-green-600"></i>
+                  <i class="fa-solid fa-circle-check text-green-600 absolute -top-3"></i>
                 <% end %>
                 <%= choice.content %>
                 <% if current_user.admin? %>
@@ -44,11 +44,18 @@
            <% end %>
 
            <% if question.include_album_and_song %>
-             <% question&.mashup_answers.where(response_id: nil).each do |mashup| %>
+             <% question&.mashup_answers.order(:created_at).where(response_id: nil).each do |mashup| %>
                <% if mashup.correct %>
+               <div class="flex justify-between">
                <p class="flex gap-2 items-center font-medium capitalize">
                <i class="fa-solid fa-circle-check text-green-600"></i> <%= mashup.album.title %> - <%= mashup.song.title %>
                </p>
+               <% if current_user.admin? %>
+                <%= link_to edit_mashup_answer_path(mashup) do %>
+                  <i class="fa-solid fa-pencil px-4"></i>
+                <% end %>
+               <% end %>
+               </div>
                <% end %>
              <% end %>
            <% end %>

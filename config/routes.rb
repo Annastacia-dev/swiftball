@@ -30,4 +30,6 @@ Rails.application.routes.draw do
   resources :responses do
     resources :mashup_answers, only: :index
   end
+
+  resources :mashup_answers, only: %i[edit update]
 end

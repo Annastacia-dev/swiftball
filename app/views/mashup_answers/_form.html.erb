@@ -1,0 +1,62 @@
+<%= form_with(model: [mashup_answer], class: "contents") do |f| %>
+  <%= render 'shared/errors', object: mashup_answer %>
+
+  <div class="mt-10 grid lg:grid-cols-2 gap-2 font-light mb-10 lg:w-3/4 capitalize">
+    <div class="flex flex-col gap-1">
+      <%= f.label :album_id, 'Album' %>
+      <%= f.select :album_id, options_for_select(@albums, @mashup_answer.album_id), {}, { class: "capitalize", required: true, id: "album" } %>
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <%= f.label :song_id, 'Song' %>
+      <%= f.select :song_id, [], {}, { class: "capitalize", required: true, id: "songs"} %>
+    </div>
+  </div>
+
+  <%= f.submit class: "bg-black text-white px-4 py-2 rounded font-semibold cursor-pointer mt-10 lg:w-1/4" %>
+<% end %>
+
+<script>
+  document.addEventListener("turbo:load", () => {
+    const albumSelect = document.getElementById('album');
+    const songSelect = document.getElementById('songs');
+    console.log(songSelect.dataset.content)
+
+    updateSongOptions(albumSelect.value)
+
+    albumSelect.addEventListener('change', () => {
+      const albumId = albumSelect.value;
+      getSongs(albumId)
+    });
+
+    async function getSongs(albumId) {
+      const response = await fetch(`/albums/${albumId}/songs`, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      return data;
+    }
+
+    function updateSongOptions(albumId) {
+
+      songsPromise =  getSongs(albumId)
+
+      songSelect.innerHTML = '';
+      songsPromise.then(songs => {
+        songs.forEach ((song) => {
+          const option = document.createElement('option');
+          option.value = song.id;
+          option.text = song.title;
+          songSelect.appendChild(option);
+
+        })
+      })
+    }
+  });
+</script>

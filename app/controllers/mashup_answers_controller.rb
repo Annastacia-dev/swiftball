@@ -1,6 +1,8 @@
 class MashupAnswersController < ApplicationController
 
   before_action :find_response
+  before_action :find_mashup_answer, only: %i[edit update]
+  before_action :set_question, only: %i[edit update]
 
   def index
     @mashup_answers = @response.mashup_answers
@@ -10,10 +12,38 @@ class MashupAnswersController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    byebug
+    respond_to do |format|
+      if @mashup_answer.update(mashup_params)
+        format.html { redirect_to quiz_path(@question.quiz), notice: "Mashup Answer was successfully updated." }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+      end
+    end
+  end
+
 
   private
 
   def find_response
-    @response = Response.find(params[:response_id])
+    if params[:response_id]
+      @response = Response.find(params[:response_id])
+    end
+  end
+
+  def find_mashup_answer
+    @mashup_answer = MashupAnswer.find(params[:id])
+  end
+
+  def set_question
+    @question = @mashup_answer.question
+  end
+
+  def mashup_params
+    params.require(:mashup_answer).permit(:album_id, :song_id)
   end
 end

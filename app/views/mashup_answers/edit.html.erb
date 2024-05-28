@@ -1,0 +1,15 @@
+<div class="pt-10 px-12 min-h-screen">
+
+  <%= render 'components/breadcrumb', breadcrumbs: [
+    { text: 'quizzes', path: root_path },
+    { text: "#{@question.quiz.title}", path: quiz_path(@question.quiz)},
+    { text: "Questions", path: quiz_questions_path(@question.quiz)},
+    { text: "#{@question.content}", path: quiz_question_path(@question.quiz, @question)},
+    { text:  "Edit Mashup Answer #{@mashup_answer.album.title} - #{@mashup_answer.song.title}"}
+  ] %>
+
+  <h1 class="font-semibold text-xl font-courier capitalize">Edit</h1>
+
+  <%= render "form", mashup_answer: @mashup_answer %>
+
+</div>
