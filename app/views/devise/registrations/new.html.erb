@@ -54,7 +54,9 @@
 
         <div class="flex items-center gap-2 my-4 col-span-2">
         <%= f.check_box :terms_and_conditions, class: 'h-6 w-6 bg-transparent', required: true %>
-        <%= f.label :terms_and_conditions, 'I agree to terms & conditions and privacy policy' %>
+        <%= f.label :terms_and_conditions do %>
+          <p>I agree to <%= link_to 'terms & conditions', terms_and_conditions_path, class: 'font-medium hover:underline' %> and <%= link_to 'privacy policy', privacy_policy_path, class: 'font-medium hover:underline' %></p>
+        <% end %>
       </div>
 
       </div>

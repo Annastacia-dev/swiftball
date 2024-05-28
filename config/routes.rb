@@ -3,6 +3,9 @@ Rails.application.routes.draw do
 
   root "tours#index"
 
+  get 'terms_and_conditions', to: 'tours#terms_and_conditions'
+  get 'privacy_policy', to: 'tours#privacy_policy'
+
   devise_for :users
   resources :tours
   resources :quizzes do

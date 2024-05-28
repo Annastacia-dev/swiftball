@@ -1,4 +1,5 @@
 class ToursController < ApplicationController
+  skip_before_action :authenticate_user!, only: %i[ terms_and_conditions privacy_policy]
   before_action :set_tour, only: %i[ show edit update destroy ]
 
   # GET /tours or /tours.json

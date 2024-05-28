@@ -1,4 +1,4 @@
-<div class="pt-10 px-12 min-h-screen">
+<div class="pt-10 lg:px-12 px-5 min-h-screen">
 
   <div class="flex justify-between items-center">
     <h1 class="font-semibold text-xl font-courier">Quizzes</h1>
@@ -48,9 +48,11 @@
           <% elsif tour.status == 'closed' || tour.status == 'live' %>
             <% if  current_user.has_attempted_quiz?(tour.quiz) %>
               <% attempt = current_user.attempts.find_by(quiz_id: tour.quiz.id) %>
-              <%= link_to attempt_path(attempt), class: 'bg-black px-2 py-2 text-white hover:bg-gray-900 rounded' do %>
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
+              <%= link_to attempt_path(attempt), class: 'lg:bg-black px-2 py-2 lg:text-white lg:hover:bg-gray-900 rounded flex items-center gap-2' do %>
+                <i class="fa-solid fa-wand-magic-sparkles" title="<%= tour.status == 'live' ? 'view progress' : tour.status == 'closed' ? 'view results' : '' %>"></i>
+                <span class="lg:flex hidden">
                 <%= tour.status == 'live' ? 'view progress' : tour.status == 'closed' ? 'view results' : '' %>
+                </span>
               <% end %>
             <% else %>
               <% if tour.status == 'closed' %>
