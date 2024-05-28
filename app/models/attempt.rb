@@ -22,6 +22,7 @@
 class Attempt < ApplicationRecord
   has_paper_trail
 
+  include MashupScores
   include Sluggable
   friendly_slug_scope to_slug: :title
 
@@ -61,34 +62,7 @@ class Attempt < ApplicationRecord
       end
     end
 
-    score + mashup_score
-  end
-
-  def mashup_score
-    m_score = 0
-
-    responses.each do |response|
-
-      question = response.question
-
-      correct_mashups = question.mashup_answers.where(response_id: nil, correct: true)
-      correct_albums = correct_mashups.pluck(:album_id)
-      correct_songs = correct_mashups.pluck(:song_id)
-
-      if response.mashup_answers
-        response.mashup_answers.each do |mashup|
-          if correct_albums.include?(mashup.album_id) && correct_songs.include?(mashup.song_id)
-            m_score += question.points
-          elsif correct_albums.include?(mashup.album_id) && !correct_songs.include?(mashup.song_id)
-            m_score += 1
-          elsif !correct_albums.include?(mashup.album_id) &&correct_songs.include?(mashup.song_id)
-            m_score +=1
-          end
-        end
-      end
-    end
-
-   m_score
+    (score + piano_mashup_score + guitar_mashup_score).to_i
   end
 
   def total_possible_points
@@ -105,6 +79,22 @@ class Attempt < ApplicationRecord
   def single_attempt_per_quiz
     if Attempt.exists?(user_id: user_id, quiz_id: quiz_id)
       errors.add(:base, "You can only attempt this quiz once")
+    end
+  end
+
+  def mashup_max_score(ans)
+    max_points = 0
+    case ans.downcase
+    when 'no mashup'
+      max_points = 3
+    when 'mashup (2 songs) '
+      max_points = 1.5
+    when 'mashup (3 songs)'
+      max_points = 1
+    when 'mashup (4+ songs)'
+      max_points = 0.75
+    else
+      raise 'Not a valid choice'
     end
   end
 end

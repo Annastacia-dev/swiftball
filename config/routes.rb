@@ -31,5 +31,5 @@ Rails.application.routes.draw do
     resources :mashup_answers, only: :index
   end
 
-  resources :mashup_answers, only: %i[edit update]
+  resources :mashup_answers, only: %i[edit update destroy new create]
 end
