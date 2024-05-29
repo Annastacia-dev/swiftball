@@ -21,7 +21,9 @@ module Swiftball
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
+    # timezone config
+    config.time_zone = 'UTC' # Set default time zone to UTC
+    config.active_record.default_timezone = :utc # Store database time in UTC
     # config.eager_load_paths << Rails.root.join("extras")
     # mailing
     config.action_mailer.delivery_method = :smtp

@@ -43,6 +43,10 @@ class Tour < ApplicationRecord
   before_save :downcase_title
   after_create :create_quiz
 
+  def quiz_live_time
+    (self.start_time - 3.hour) + 1.hour
+  end
+
   private
 
   def downcase_title

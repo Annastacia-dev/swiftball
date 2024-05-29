@@ -1,5 +1,10 @@
 <div class="min-h-screen">
-  <h5 class="font-semibold font-courier uppercase text-md p-5"><%= @quiz.title %> </h5>
+  <h5 class="font-semibold font-courier uppercase text-md p-5"><%= @quiz.title %> 
+    <% if @quiz.tour.status == 'open' %>
+      <span> (closes at <%= @quiz.tour.quiz_live_time.in_time_zone(current_user.timezone).strftime('%I:%M %p') %>)
+      </span>
+    <% end %> 
+  </h5>
 
   <%= form_with(url: submit_quiz_path(@quiz.id), method: :post, local: true) do |f| %>
     <% @quiz.questions.order(:era).order(:position).all.group_by(&:era).each do |era, questions| %>
