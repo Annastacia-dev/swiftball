@@ -12,7 +12,7 @@
 
   <%= form_with(model: @attempt, url: attempt_path(@attempt), method: :patch, local: true) do |f| %>
     <% @quiz.questions.order(:era).all.group_by(&:era).each do |era, questions| %>
-      <div class="mt-10">
+      <div class="mt-10 capitalize">
         <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
         <% questions.each_with_index do |question, q_index| %>
           <div class="flex flex-col px-5 py-3 ">
