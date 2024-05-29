@@ -9,7 +9,7 @@ module MashupScores
     piano_mashup_number_question = quiz.questions.find_by(piano_mashup: true)
     piano_mashup_number_choice = responses.find_by(question_id: piano_mashup_number_question.id).choice
 
-    question_content = 'Pick Piano Acoustic Set Album and Song'
+    question_content = 'pick piano acoustic set album and song'
     piano_question = quiz.questions.find_by(content: question_content)
 
     piano_mashup_predictions = responses.flat_map do |response|
@@ -43,7 +43,7 @@ module MashupScores
     guitar_mashup_number_question = quiz.questions.find_by(guitar_mashup: true)
     guitar_mashup_number_choice = responses.find_by(question_id: guitar_mashup_number_question.id).choice
 
-    question_content = 'Pick Guitar Acoustic Set Album and song'
+    question_content = 'pick guitar acoustic set album and song'
     guitar_question = quiz.questions.find_by(content: question_content)
 
     guitar_mashup_predictions = responses.flat_map do |response|

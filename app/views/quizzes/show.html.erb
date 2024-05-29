@@ -18,7 +18,7 @@
       <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
       <% questions.each_with_index do |question, index| %>
         <div class="flex flex-col px-5 py-3 ">
-          <div class="flex justify-between">
+          <div class="flex justify-between capitalize">
             <p class="flex gap-7">
             <span><%= (index + 1).to_s.rjust(2, '0') %>.</span>
             <span><%= question.content %> (worth <%= question.points %> points)</span>
