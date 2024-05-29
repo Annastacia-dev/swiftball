@@ -13,6 +13,7 @@ class ToursController < ApplicationController
         format.html { render :dashboard}
       else
         @tours = Tour.order(date: :desc).where.not(base: true).where(status: [:closed, :open, :live])
+        format.html { render :user_index}
       end
     end
   end
