@@ -4,10 +4,16 @@ class ToursController < ApplicationController
 
   # GET /tours or /tours.json
   def index
-    if current_user.admin?
-      @tours = Tour.order(date: :desc)
-    else
-      @tours = Tour.order(date: :desc).where.not(base: true).where(status: [:closed, :open, :live])
+    respond_to do |format|
+      if current_user.admin?
+        @tours = Tour.order(date: :desc)
+        @quizzes = Tour.order(date: :desc).where.not(base: true)
+        @users = User.order(date: :desc).where.not(role: 'admin')
+
+        format.html { render :dashboard}
+      else
+        @tours = Tour.order(date: :desc).where.not(base: true).where(status: [:closed, :open, :live])
+      end
     end
   end
 
