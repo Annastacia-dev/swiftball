@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
   # GET /questions or /questions.json
   def index
     @questions = Question.all
-    @questions_by_era = Question.all.order(:era).group_by(&:era)
+    @questions_by_era = Question.all.order(:era).order(:position).group_by(&:era)
   end
 
   # GET /questions/1 or /questions/1.json
