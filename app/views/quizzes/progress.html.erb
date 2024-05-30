@@ -3,8 +3,7 @@
   <div class="p-5">
     <%= render 'components/breadcrumb', breadcrumbs: [
       {text: 'Quizzes', path: tours_path},
-      {text: "#{@tour.title}", path: tour_path(@tour)},
-      {text: "#{@tour.title} quiz", path: quiz_path(@tour.quiz)}
+      {text: "#{@tour.title} quiz"}
     ] %>
   </div>
 
