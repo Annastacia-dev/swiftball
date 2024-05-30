@@ -42,8 +42,10 @@
             <% end %>
 
             <% if question.include_album_and_song %>
+              <% correct_mashup_found = false %>
               <% question&.mashup_answers.order(:created_at).where(response_id: nil).each do |mashup| %>
                 <% if mashup.correct %>
+                  <% correct_mashup_found = true %>
                   <div class="flex justify-between">
                     <p class="flex gap-2 items-center font-medium capitalize">
                       <%= mashup.album.title %> - <%= mashup.song.title %>
@@ -51,7 +53,12 @@
                   </div>
                 <% end %>
               <% end %>
+              <% if !correct_mashup_found %>
+                <p class="<%= era_color(era) %> rounded flex justify-center items-center p-3 mt-5">To be determined</p>
+              <% end %>
             <% end %>
+
+
           </div>
           </div>
         <% end %>
