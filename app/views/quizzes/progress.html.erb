@@ -20,18 +20,23 @@
           <div class="flex flex-col px-5 py-3 ">
             <div class="flex justify-between capitalize">
               <p class="flex gap-7">
-                <span><%= (index + 1).to_s.rjust(2, '0') %>.</span>
-                <span><%= question.content %> (worth <%= question.points %> points)</span>
+              <span><%= (index + 1).to_s.rjust(2, '0') %>.</span>
+              <span><%= question.content %> (worth <%= question.points %> points)</span>
               </p>
             </div>
           <div class="flex flex-col lg:justify-start justify-center px-5 py-3 gap-2 capitalize">
               <% question.choices.order(:position).where(correct: true).each_with_index do |choice, index| %>
-              <div class="choice py-3 flex flex-col gap-4 font-medium">
-                <%= image_tag(choice.image, alt: "Option #{index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
-                <div class="flex justify-between items-center capitalize relative">
-                  <%= choice.content %>
-                </div>
-              </div>
+                <%= debug choice.present? %>
+                <% if choice.present? %>
+                  <div class="choice py-3 flex flex-col gap-4 font-medium">
+                    <%= image_tag(choice.image, alt: "Option #{index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
+                    <div class="flex justify-between items-center capitalize relative">
+                      <%= choice.content %>
+                    </div>
+                  </div>
+                <% else %>
+                 
+                <% end %>
             <% end %>
 
             <% if question.include_album_and_song %>

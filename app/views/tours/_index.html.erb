@@ -62,12 +62,17 @@
             <% end %>
           <% else %>
             <% if tour.status == 'closed' %>
+             <i class="fa-solid fa-circle-xmark text-red-600" title="closed"></i>
              <%= link_to results_quiz_path(tour.quiz), class: 'lg:bg-black px-2 py-2 lg:text-white lg:hover:bg-gray-900 rounded flex items-center gap-2' do %>
               <i class="fa-solid fa-square-poll-vertical title="see results"></i>
               <span class="lg:flex hidden">see results </span>
              <% end %>
             <% elsif tour.status == 'live' %>
-              <i class="fa-solid fa-bullseye text-green-600 animate-ping"></i>
+              <i class="fa-solid fa-bullseye text-green-600 animate-ping" title="live"></i>
+              <%= link_to progress_quiz_path(tour.quiz), class: 'lg:bg-black px-2 py-2 lg:text-white lg:hover:bg-gray-900 rounded flex items-center gap-2' do %>
+                <i class="fa-solid fa-square-poll-vertical title="see results"></i>
+                <span class="lg:flex hidden">see live progress </span>
+               <% end %>
             <% end %>
           <% end %>
         <% end %>
