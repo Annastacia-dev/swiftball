@@ -6,7 +6,7 @@
       <h5 class="text-5xl font-courier font-bold"><%= @quizzes.size %></h5>
     <% end %>
 
-    <%= link_to '#', class: "bg-gray-200 shadow-lg p-5 rounded flex lg:flex-row flex-col justify-between items-center"  do %>
+    <%= link_to users_path, class: "bg-gray-200 shadow-lg p-5 rounded flex lg:flex-row flex-col justify-between items-center"  do %>
       <h5 class="text-xl  font-bold uppercase">users</h5>
       <h5 class="text-5xl font-courier font-bold"><%= @users.size %></h5>
     <% end %>

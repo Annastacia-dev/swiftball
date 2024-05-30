@@ -38,4 +38,6 @@ Rails.application.routes.draw do
   end
 
   resources :mashup_answers, only: %i[edit update destroy new create]
+
+  resources :users, only: %i[index]
 end

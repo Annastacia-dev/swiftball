@@ -9,7 +9,7 @@ class ToursController < ApplicationController
       if current_user.admin?
         @tours = Tour.order(date: :desc)
         @quizzes = Tour.order(date: :desc).where.not(base: true)
-        @users = User.order(date: :desc).where.not(role: 'admin')
+        @users = User.order(created_at: :desc).where.not(role: 'admin')
 
         format.html { render :dashboard}
       else
