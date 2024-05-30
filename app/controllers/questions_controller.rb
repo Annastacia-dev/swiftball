@@ -69,7 +69,7 @@ class QuestionsController < ApplicationController
         if @mashup_ans
           format.html { render :pick_surprise_song }
         else
-          format.html { redirect_to quiz_question_path(@quiz,mashup_qn), alert: "Please pick an answer for the mashup question first" }
+          format.html { redirect_to quiz_question_path(@quiz, piano), alert: "Please pick an answer for the mashup question first" }
         end
       end
     elsif @question.content.downcase == 'pick guitar acoustic set album and song'
@@ -78,7 +78,7 @@ class QuestionsController < ApplicationController
         if @mashup_ans
           format.html { render :pick_surprise_song }
         else
-          format.html { redirect_to quiz_question_path(@quiz,mashup_qn), alert: "Please pick an answer for the mashup question first" }
+          format.html { redirect_to quiz_question_path(@quiz,guitar), alert: "Please pick an answer for the mashup question first" }
         end
       end
     end
