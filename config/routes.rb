@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   root "tours#index"
+  get '/manifest.json', to: 'home#manifest'
 
   get 'terms_and_conditions', to: 'tours#terms_and_conditions'
   get 'privacy_policy', to: 'tours#privacy_policy'

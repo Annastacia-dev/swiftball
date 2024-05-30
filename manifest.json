@@ -1,0 +1,16 @@
+{
+  "name": "swiftball",
+  "short_name": "swiftball",
+  "description": "make your eras tour predictions",
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#5a0a0a",
+  "theme_color": "#5a0a0a"
+}
