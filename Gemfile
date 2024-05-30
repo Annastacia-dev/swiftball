@@ -70,7 +70,7 @@ group :test do
 end
 gem 'aws-sdk', require: false
 gem 'cloudinary', '~> 2.1', '>= 2.1.0'
-gem "devise"
+gem 'devise', '~> 4.9', '>= 4.9.3'
 gem "friendly_id"
 gem "paper_trail"
 gem "dotenv-rails"

@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get 'terms_and_conditions', to: 'tours#terms_and_conditions'
   get 'privacy_policy', to: 'tours#privacy_policy'
 
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "registrations" }
   resources :tours
   resources :quizzes do
     post 'submit', on: :member
