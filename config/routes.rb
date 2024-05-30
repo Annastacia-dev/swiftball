@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     post 'submit', on: :member
     post 'take', on: :member
     get 'take', on: :member
+    get 'results', on: :member
     post 'open', on: :member
     post 'close', on: :member
     post 'live', on: :member

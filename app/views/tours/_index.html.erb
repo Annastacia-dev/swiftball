@@ -10,7 +10,7 @@
 
 <div id="tours" class="min-w-full mt-10">
   <% @tours.each_with_index do |tour, index| %>
-    <div class="flex justify-between font-courier">
+    <div class="flex justify-between font-courier md:text-base text-sm">
       <% if current_user.admin? %>
         <%= link_to tour_path(tour), class:"flex gap-4 items-center " do %>
           <%= (tour.number).to_s.rjust(2, '0') %>. <span class="font-semibold uppercase hover:underline"><%= tour.title %></span>
@@ -27,9 +27,9 @@
         <% end %>
       <% else %>
         <div class="flex flex-col gap-2">
-          <p>
-            <%= (tour.number).to_s.rjust(2, '0') %>.
-            <span class="font-semibold uppercase"><%= tour.title %></span>
+          <p class="flex lg:flex-row flex-col">
+            
+            <span class="font-semibold uppercase"><%= (tour.number).to_s.rjust(2, '0') %>. <%= tour.title %></span>
             <% if tour.status == 'open' %>
               <span> (closes at <%= tour.quiz_live_time.in_time_zone(current_user.timezone).strftime('%I:%M %p') %>)</span>
             <% end %>
@@ -45,23 +45,27 @@
           <% if  current_user.has_attempted_quiz?(tour.quiz) %>
             <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: attempt_dropdown_items(tour.quiz) %>
           <% else %>
-            <%= link_to take_quiz_path(tour.quiz), class:"bg-black text-white px-4 py-2 rounded" do %>
-              <i class="fa-solid fa-wand-magic-sparkles"></i>
-              predict
+            <%= link_to take_quiz_path(tour.quiz), class:"lg:bg-black lg:text-white px-4 py-2 rounded flex items-center gap-2" do %>
+              <i class="fa-solid fa-wand-magic-sparkles" title="predict"></i>
+              <span class="lg:flex hidden">predict</span>
             <% end %>
           <% end %>
         <% elsif tour.status == 'closed' || tour.status == 'live' %>
           <% if  current_user.has_attempted_quiz?(tour.quiz) %>
             <% attempt = current_user.attempts.find_by(quiz_id: tour.quiz.id) %>
             <%= link_to attempt_path(attempt), class: 'lg:bg-black px-2 py-2 lg:text-white lg:hover:bg-gray-900 rounded flex items-center gap-2' do %>
-              <i class="fa-solid fa-wand-magic-sparkles" title="<%= tour.status == 'live' ? 'view progress' : tour.status == 'closed' ? 'view results' : '' %>"></i>
+
+              <i class="fa-solid fa-square-poll-vertical" title="<%= tour.status == 'live' ? 'view progress' : tour.status == 'closed' ? 'view results' : '' %>"></i>
               <span class="lg:flex hidden">
-              <%= tour.status == 'live' ? 'view progress' : tour.status == 'closed' ? 'view results' : '' %>
+               <%= tour.status == 'live' ? 'view progress' : tour.status == 'closed' ? 'view results' : '' %>
               </span>
             <% end %>
           <% else %>
             <% if tour.status == 'closed' %>
-              <i class="fa-solid fa-circle-xmark text-red-600" title="closed"></i>
+             <%= link_to results_quiz_path(tour.quiz), class: 'lg:bg-black px-2 py-2 lg:text-white lg:hover:bg-gray-900 rounded flex items-center gap-2' do %>
+              <i class="fa-solid fa-square-poll-vertical title="see results"></i>
+              <span class="lg:flex hidden">see results </span>
+             <% end %>
             <% elsif tour.status == 'live' %>
               <i class="fa-solid fa-bullseye text-green-600 animate-ping"></i>
             <% end %>

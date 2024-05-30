@@ -1,0 +1,58 @@
+<div class="min-h-screen">
+  
+  <div class="p-5">
+    <%= render 'components/breadcrumb', breadcrumbs: [
+      {text: 'Quizzes', path: tours_path},
+      {text: "#{@tour.title}", path: tour_path(@tour)},
+      {text: "#{@tour.title} quiz", path: quiz_path(@tour.quiz)}
+    ] %>
+  </div>
+
+  <div class="flex justify-between items-center px-5">
+    <h5 class="font-semibold font-courier uppercase text-md "><%= @quiz.title %> </h5>
+    <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: quiz_dropdown_items(@quiz) %>
+  </div>
+
+  <% @quiz.questions.order(:era).all.order(:position).group_by(&:era).each do |era, questions| %>
+    <div class="mt-10">
+      <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
+      <div class="grid lg:grid-cols-3">
+        <% questions.each_with_index do |question, index| %>
+          <div class="flex flex-col px-5 py-3 ">
+            <div class="flex justify-between capitalize">
+              <p class="flex gap-7">
+              <span><%= (index + 1).to_s.rjust(2, '0') %>.</span>
+              <span><%= question.content %> (worth <%= question.points %> points)</span>
+              </p>
+              <% if current_user.admin? %>
+                <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: question_dropdown_items(question) %>
+            <% end %>
+            </div>
+          <div class="flex flex-col lg:justify-start justify-center px-5 py-3 gap-2 capitalize">
+              <% question.choices.order(:position).where(correct: true).each_with_index do |choice, index| %>
+              <div class="choice py-3 flex flex-col gap-4 font-medium">
+                <%= image_tag(choice.image, alt: "Option #{index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
+                <div class="flex justify-between items-center capitalize relative">
+                  <%= choice.content %>
+                </div>
+              </div>
+            <% end %>
+
+            <% if question.include_album_and_song %>
+              <% question&.mashup_answers.order(:created_at).where(response_id: nil).each do |mashup| %>
+                <% if mashup.correct %>
+                  <div class="flex justify-between">
+                    <p class="flex gap-2 items-center font-medium capitalize">
+                      <%= mashup.album.title %> - <%= mashup.song.title %>
+                    </p>
+                  </div>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
