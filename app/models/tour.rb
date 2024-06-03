@@ -44,7 +44,11 @@ class Tour < ApplicationRecord
   after_create :create_quiz
 
   def quiz_live_time
-    (self.start_time - 3.hour) + 1.hour
+    self.start_time + 1.hour
+  end
+
+  def quiz_close_time
+    self.start_time + 5.hour
   end
 
   private
