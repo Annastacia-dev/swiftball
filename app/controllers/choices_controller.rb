@@ -97,10 +97,12 @@ class ChoicesController < ApplicationController
     else
       @question.choices.where(correct: true).update(correct: false)
 
-      @choice.update(correct: false)
-
       respond_to do |format|
-        format.html { redirect_to request.referrer, notice: "Choice was marked incorrect." }
+        if @choice.update(correct: false)
+          format.html { redirect_to request.referrer, notice: "Choice was marked incorrect." }
+        else
+          format.html { redirect_to request.referrer, alert: "Something went wrong." }
+        end
       end
     end
   end

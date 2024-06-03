@@ -1,18 +1,34 @@
+<% breadcrumbs = [
+    { text: 'home', path: root_path }
+  ]
+%>
+
+<% if current_user.admin? %>
+   <% breadcrumbs.insert(1, { text: "#{@attempt.quiz.title}", path: tour_path(@attempt.quiz.tour)}) %>
+   <% breadcrumbs << { text: "#{@attempt.user.username} predictions"} %>
+<% else %>
+   <% { text: "#{@attempt.quiz.title} predictions"} %>
+<% end %>
+
+
+
 <div class="min-h-screen relative">
    <div class="p-5">
-    <%= render 'components/breadcrumb', breadcrumbs: [
-      { text: 'home', path: root_path },
-      { text: "#{@attempt.quiz.title} predictions"}
-    ] %>
+    <%= render 'components/breadcrumb', breadcrumbs: breadcrumbs %>
     </div>
 
   <div class="flex justify-between items-center p-5">
     <h5 class="font-semibold font-courier uppercase text-md lg:mt-0 mt-24">
-      your <%= @quiz.title %> predicitions
+      <% if current_user.admin? %>
+        @<%= @attempt.user.username %>'s
+      <% else %>
+        your
+      <% end %>
+      <%= @quiz.title %> predicitions
       <% if @quiz.tour.status == 'open' %>
       <span> (closes at <%= @quiz.tour.quiz_live_time.in_time_zone(current_user.timezone).strftime('%I:%M %p') %>)
       </span>
-    <% end %> 
+    <% end %>
     </h5>
   </div>
 

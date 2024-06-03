@@ -63,7 +63,7 @@ class Choice < ApplicationRecord
 
   def only_one_correct_answer_per_question
     correct_answer = question.choices.find_by(correct: true)
-    if correct_answer
+    if correct_answer && correct === true
       errors.add(:base, "A correct answer already exists mark it as false then choose another one")
     end
   end

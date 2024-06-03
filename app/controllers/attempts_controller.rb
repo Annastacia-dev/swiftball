@@ -34,7 +34,11 @@ class AttemptsController < ApplicationController
   private
 
   def set_attempt
-    @attempt = current_user.attempts.friendly.find(params[:id])
+    if current_user.admin?
+      @attempt = Attempt.friendly.find(params[:id])
+    else
+      @attempt = current_user.attempts.friendly.find(params[:id])
+    end
   end
 
   def set_quiz
