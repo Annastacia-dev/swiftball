@@ -1,5 +1,5 @@
 class ChoicesController < ApplicationController
-  before_action :set_choice, only: %i[ show edit update destroy correct ]
+  before_action :set_choice, only: %i[ show edit update destroy correct incorrect ]
   before_action :find_question, only: %i[new create]
   before_action :set_quiz, only: %i[new create]
 
@@ -90,7 +90,7 @@ class ChoicesController < ApplicationController
   def incorrect
     @question = @choice.question
 
-    if @question.quiz.tour.status != 'closed'
+    if (@question.quiz.tour.status != 'live' && @question.quiz.tour.status != 'closed')
       respond_to do |format|
         format.html { redirect_to request.referrer, alert: 'Please Close this quiz before marking choices' }
       end
