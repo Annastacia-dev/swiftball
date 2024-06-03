@@ -1,5 +1,5 @@
 <div class="min-h-screen">
-  
+
   <div class="p-5">
     <%= render 'components/breadcrumb', breadcrumbs: [
       {text: 'Quizzes', path: tours_path},
@@ -8,7 +8,7 @@
   </div>
 
   <div class="flex justify-between items-center px-5">
-    <h5 class="font-semibold font-courier uppercase text-md "><%= @quiz.title %> </h5>
+    <h5 class="font-semibold font-courier uppercase text-md "><%= @quiz.title %> (You did not take this quiz) </h5>
   </div>
 
   <% @quiz.questions.order(:era).all.order(:position).group_by(&:era).each do |era, questions| %>

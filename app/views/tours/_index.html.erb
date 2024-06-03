@@ -27,9 +27,19 @@
         <% end %>
       <% else %>
         <div class="flex flex-col gap-2">
-          <p class="flex lg:flex-row flex-col">
-            
-            <span class="font-semibold uppercase"><%= (tour.number).to_s.rjust(2, '0') %>. <%= tour.title %></span>
+          <p class="flex lg:flex-row flex-col gap-2">
+            <span class="font-semibold uppercase flex gap-2 items-center">
+              <%= (tour.number).to_s.rjust(2, '0') %>. <%= tour.title %>
+              <% if tour.status == 'open' %>
+                <i class="fa-solid fa-circle-check text-orange-500" title="open"></i>
+              <% elsif tour.status == 'pending' %>
+                <i class="fa-solid fa-spinner text-gray-600" title="pending"></i>
+              <% elsif tour.status == 'live' %>
+                <i class="fa-solid fa-bullseye text-green-600 animate-ping"></i>
+              <% elsif tour.status == 'closed' %>
+                <i class="fa-solid fa-circle-xmark text-red-600" title="closed"></i>
+              <% end %>
+            </span>
             <% if tour.status == 'open' %>
               <span> (closes at <%= tour.quiz_live_time.in_time_zone(current_user.timezone).strftime('%I:%M %p') %>)</span>
             <% end %>
@@ -47,7 +57,7 @@
           <% else %>
             <%= link_to take_quiz_path(tour.quiz), class:"bg-black text-white px-4 py-2 rounded flex items-center gap-2" do %>
               <i class="fa-solid fa-wand-magic-sparkles" title="predict"></i>
-              <span class="lg:flex hidden">predict</span>
+              <span>predict</span>
             <% end %>
           <% end %>
         <% elsif tour.status == 'closed' || tour.status == 'live' %>
@@ -60,16 +70,15 @@
                <%= tour.status == 'live' ? 'view progress' : tour.status == 'closed' ? 'view results' : '' %>
               </span>
               <span class="lg:hidden flex">
-               view
+                <%= tour.status == 'live' ? 'progress' : tour.status == 'closed' ? 'results' : '' %>
               </span>
             <% end %>
           <% else %>
             <% if tour.status == 'closed' %>
-             <i class="fa-solid fa-circle-xmark text-red-600" title="closed"></i>
              <%= link_to results_quiz_path(tour.quiz), class: 'bg-black px-2 py-2 text-white lg:hover:bg-gray-900 rounded flex items-center gap-2' do %>
               <i class="fa-solid fa-square-poll-vertical title="see results"></i>
               <span class="lg:flex hidden">see results </span>
-              <span class="lg:hidden flex">view </span>
+              <span class="lg:hidden flex">results</span>
              <% end %>
             <% elsif tour.status == 'live' %>
               <i class="fa-solid fa-bullseye text-green-600 animate-ping" title="live"></i>

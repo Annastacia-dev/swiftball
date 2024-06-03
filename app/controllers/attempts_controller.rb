@@ -2,6 +2,10 @@ class AttemptsController < ApplicationController
   before_action :set_attempt, only: %i[show edit update]
   before_action :set_quiz, only: %i[show edit update]
 
+  def index
+    @attempts = current_user.attempts.order(created_at: :desc)
+  end
+
   def show
     @questions_by_era = @attempt.responses.group_by { |response| response.question.era }
   end
