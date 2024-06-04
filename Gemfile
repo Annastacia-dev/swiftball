@@ -26,6 +26,7 @@ gem 'turbo-rails', '~> 2.0', '>= 2.0.5'
 gem 'tzinfo', '~> 2.0', '>= 2.0.6', platforms: %i[ windows jruby ]
 
 group :development, :test do
+  gem 'bullet', '~> 7.1', '>= 7.1.6'
   gem 'byebug', '~> 11.1', '>= 11.1.3'
   gem 'debug', '~> 1.9', '>= 1.9.2', platforms: %i[ mri windows ]
 end
