@@ -3,6 +3,8 @@
   ]
 %>
 
+<% tour = @attempt.quiz.tour %>
+
 <% if current_user.admin? %>
    <% breadcrumbs.insert(1, { text: "#{@attempt.quiz.title}", path: tour_path(@attempt.quiz.tour)}) %>
    <% breadcrumbs << { text: "#{@attempt.user.username} predictions"} %>
@@ -17,120 +19,161 @@
     <%= render 'components/breadcrumb', breadcrumbs: breadcrumbs %>
     </div>
 
-  <div class="flex justify-between items-center p-5">
-    <h5 class="font-semibold font-courier uppercase text-md lg:mt-0 mt-24">
-      <% if current_user.admin? %>
-        @<%= @attempt.user.username %>'s
-      <% else %>
-        your
+    <div class="flex justify-between items-center p-5">
+      <h5 class="font-semibold font-courier uppercase text-md lg:mt-0 mt-24">
+        <% if current_user.admin? %>
+          @<%= @attempt.user.username %>'s
+        <% else %>
+          your
+        <% end %>
+        <%= @quiz.title %> predicitions
+        <% if @quiz.tour.status == 'open' %>
+        <span> (closes at <%= @quiz.tour.quiz_live_time.in_time_zone(current_user.timezone).strftime('%I:%M %p') %>)
+        </span>
       <% end %>
-      <%= @quiz.title %> predicitions
-      <% if @quiz.tour.status == 'open' %>
-      <span> (closes at <%= @quiz.tour.quiz_live_time.in_time_zone(current_user.timezone).strftime('%I:%M %p') %>)
-      </span>
-    <% end %>
-    </h5>
-  </div>
-
-
-  <% if  @attempt.quiz.tour.status == 'closed' %>
-    <div class="absolute right-10 lg:top-1 top-10 font-handwriting">
-        <div class="bg-red-500 h-5 w-5 rounded-full absolute top-4 z-10 left-1"></div>
-        <div class="sticky-note p-5 w-40 h-36 m-4 rounded-lg flex flex-col gap-2">
-            <h2 class="text-xl underline tracking-wide font-bold mb-2 uppercase">results</h2>
-            <span class="text-lg">POINTS: <%= @attempt.score %> / <%= @attempt.total_possible_points %> </span>
-            <span class="text-lg"">POSITION: <%= @attempt.position %> / <%= @attempt.quiz.total_attempts %> </span>
-        </div>
+      </h5>
     </div>
-  <% end %>
-
-  <% if  @attempt.quiz.tour.status == 'live' %>
-    <div class="absolute right-10 lg:top-1 top-10 font-handwriting">
-        <div class="bg-green-500 h-5 w-5 rounded-full absolute top-4 z-10 left-1 animate-ping"></div>
-        <div class="sticky-note bg-white p-5 w-44 h-44 m-4 rounded-lg flex flex-col gap-2">
-            <h2 class="text-xl underline tracking-wide font-bold mb-2 uppercase">live progress</h2>
-            <span class="text-lg">QNS: <%= @attempt.correct_attempt_questions %> / <%= @attempt.questions_with_correct_answers %> </span>
-            <span class="text-lg">POINTS: <%= @attempt.score %> / <%= @attempt.total_possible_points %> </span>
-            <span class="text-lg"">POSITION: <%= @attempt.position %> / <%= @attempt.quiz.total_attempts %> </span>
-        </div>
-    </div>
-  <% end %>
 
 
-  <% @questions_by_era.each do |era, responses| %>
-    <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
-    <div class="grid lg:grid-cols-3">
-      <% responses.sort_by { |response| response.question.created_at }.group_by { |response| response.question.id }.each_with_index do |(question_id, grouped_responses), index| %>
-        <% response = grouped_responses.first %>
-        <% choice = response&.choice %>
-        <div class="flex flex-col lg:justify-start justify-center px-5 py-3 gap-2 capitalize">
-          <div class="flex flex-col gap-3">
-            <%= (index + 1).to_s.rjust(2, '0') %>. <%= response.question.content %> (worth <%= response.question.points %> points)
-            <%= image_tag(choice&.image, alt: "Option #{index + 1}", class: 'w-full lg:h-[30rem] object-cover object-center rounded') if choice&.image&.attached? %>
-            <p class="font-medium capitalize flex items-center gap-2">
-              <% if choice&.correct %>
-                <i class="fa-solid fa-circle-check text-green-600"></i>
-              <% end %>
-              <%= choice&.content %>
-            </p>
+    <% if  tour.status == 'closed' %>
+      <div class="absolute right-10 lg:top-1 top-10 font-handwriting">
+          <div class="bg-red-500 h-5 w-5 rounded-full absolute top-4 z-10 left-1"></div>
+          <div class="sticky-note p-5 w-40 h-36 m-4 rounded-lg flex flex-col gap-2">
+              <h2 class="text-xl underline tracking-wide font-bold mb-2 uppercase">results</h2>
+              <span class="text-lg">POINTS: <%= @attempt.score %> / <%= @attempt.total_possible_points %> </span>
+              <span class="text-lg"">POSITION: <%= @attempt.position %> / <%= @attempt.quiz.total_attempts %> </span>
           </div>
+      </div>
+    <% end %>
 
-          <% correct_choice = response.question.choices.find_by(correct: true) %>
-          <% if !choice&.correct && correct_choice.present? %>
-            <p class="text-red-600 text-sm flex gap-3 items-center font-semibold capitalize">
-              <i class="fa-solid fa-xmark"></i>
-              <span> correct choice: <%= correct_choice.content %> </span>
-            </p>
-          <% end %>
-
-          <% mashup_answers = grouped_responses.
-          flat_map(&:mashup_answers) %>
-          <% correct_mashups = response.question.mashup_answers.includes([:album, :song]).where(response_id: nil, correct: true) %>
-          <% correct_albums = correct_mashups.pluck(:album_id) %>
-          <% correct_songs = correct_mashups.pluck(:song_id) %>
+    <% if  tour.status == 'live' %>
+      <div class="absolute right-10 lg:top-1 top-10 font-handwriting">
+          <div class="bg-green-500 h-5 w-5 rounded-full absolute top-4 z-10 left-1 animate-ping"></div>
+          <div class="sticky-note bg-white p-5 w-44 h-44 m-4 rounded-lg flex flex-col gap-2">
+              <h2 class="text-xl underline tracking-wide font-bold mb-2 uppercase">live progress</h2>
+              <span class="text-lg">QNS: <%= @attempt.correct_attempt_questions %> / <%= @attempt.questions_with_correct_answers %> </span>
+              <span class="text-lg">POINTS: <%= @attempt.score %> / <%= @attempt.total_possible_points %> </span>
+              <span class="text-lg"">POSITION: <%= @attempt.position %> / <%= @attempt.quiz.total_attempts %> </span>
+          </div>
+      </div>
+    <% end %>
 
 
-          <% if mashup_answers.present? %>
-            <div class="grid lg:grid-cols-1 gap-5">
-              <div class="flex flex-col gap-3">
-                <% mashup_answers.each do |mashup| %>
-                  <p class="font-medium capitalize flex items-center gap-2">
-                    <%= mashup.album.title %>
-                      <% if correct_albums.present? %>
-                        <% if correct_albums.include?(mashup.album_id) %>
+    <% @questions_by_era.each do |era, responses| %>
+      <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
+      <div class="grid lg:grid-cols-3">
+        <% responses.sort_by { |response| response.question.created_at }.group_by { |response| response.question.id }.each_with_index do |(question_id, grouped_responses), index| %>
+          <% response = grouped_responses.first %>
+          <% choice = response&.choice %>
+          <div class="flex flex-col lg:justify-start justify-center px-5 py-3 gap-2 capitalize">
+            <div class="flex flex-col gap-3">
+              <%= (index + 1).to_s.rjust(2, '0') %>. <%= response.question.content %> (worth <%= response.question.points %> points)
+              <%= image_tag(choice&.image, alt: "Option #{index + 1}", class: 'w-full lg:h-[30rem] object-cover object-center rounded') if choice&.image&.attached? %>
+              <p class="font-medium capitalize flex items-center gap-2">
+                <% if choice&.correct %>
+                  <i class="fa-solid fa-circle-check text-green-600"></i>
+                <% end %>
+                <%= choice&.content %>
+              </p>
+            </div>
+
+            <% correct_choice = response.question.choices.find_by(correct: true) %>
+            <% if !choice&.correct && correct_choice.present? %>
+              <p class="text-red-600 text-sm flex gap-3 items-center font-semibold capitalize">
+                <i class="fa-solid fa-xmark"></i>
+                <span> correct choice: <%= correct_choice.content %> </span>
+              </p>
+            <% end %>
+
+            <% mashup_answers = grouped_responses.
+            flat_map(&:mashup_answers) %>
+            <% correct_mashups = response.question.mashup_answers.includes([:album, :song]).where(response_id: nil, correct: true) %>
+            <% correct_albums = correct_mashups.pluck(:album_id) %>
+            <% correct_songs = correct_mashups.pluck(:song_id) %>
+
+
+            <% if mashup_answers.present? %>
+              <div class="grid lg:grid-cols-1 gap-5">
+                <div class="flex flex-col gap-3">
+                  <% mashup_answers.each do |mashup| %>
+                    <p class="font-medium capitalize flex items-center gap-2">
+                      <%= mashup.album.title %>
+                        <% if correct_albums.present? %>
+                          <% if correct_albums.include?(mashup.album_id) %>
+                            <i class="fa-solid fa-circle-check text-green-600"></i>
+                          <% else %>
+                            <i class="fa-solid fa-xmark text-red-600"></i>
+                          <% end %>
+                        <% end %>
+                      - <%= mashup.song.title %>
+                      <% if correct_songs.present? %>
+                        <% if correct_songs.include?(mashup.song_id) %>
                           <i class="fa-solid fa-circle-check text-green-600"></i>
                         <% else %>
                           <i class="fa-solid fa-xmark text-red-600"></i>
                         <% end %>
                       <% end %>
-                    - <%= mashup.song.title %>
-                    <% if correct_songs.present? %>
-                      <% if correct_songs.include?(mashup.song_id) %>
-                        <i class="fa-solid fa-circle-check text-green-600"></i>
-                      <% else %>
-                        <i class="fa-solid fa-xmark text-red-600"></i>
-                      <% end %>
-                    <% end %>
-                  </p>
-                <% end %>
-              </div>
-
-              <% if correct_mashups.present?  %>
-                <p class="font-medium underline text-orange-500 capitalize"> correct surprise songs </p>
-
-                <div class="flex flex-col gap-3">
-                  <% correct_mashups.each do |mashup| %>
-                    <span class="text-violet-500 capitalize text-sm font-medium"> <%= mashup.album.title %> - <%= mashup.song.title %> </span>
+                    </p>
                   <% end %>
                 </div>
-              <% end %>
 
-            </div>
-          <% end %>
+                <% if correct_mashups.present?  %>
+                  <p class="font-medium underline text-orange-500 capitalize"> correct surprise songs </p>
 
-        </div>
-      <% end %>
-    </div>
-  <% end %>
+                  <div class="flex flex-col gap-3">
+                    <% correct_mashups.each do |mashup| %>
+                      <span class="text-violet-500 capitalize text-sm font-medium"> <%= mashup.album.title %> - <%= mashup.song.title %> </span>
+                    <% end %>
+                  </div>
+                <% end %>
 
+              </div>
+            <% end %>
+
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if  tour.status == 'live' %>
+      <div class="flex justify-center items-end fixed bottom-0 right-1 mb-8">
+        <button class="bg-black hover:bg-gray-900 text-white font-bold lg:py-2 py-4 px-4 rounded flex gap-1 items-center" id="refreshButton" title="refresh progress">
+          <i class="fas fa-rotate-left"></i>
+          <span class="lg:flex hidden">Refresh Progress</span>
+        </button>
+      </div>
+    <% end %>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const button = document.getElementById('refreshButton');
+
+    // Event listener for button click
+    button.addEventListener('click', function() {
+      // Disable button to prevent multiple clicks during loading
+      button.disabled = true;
+
+      // Change button color to gray
+      button.classList.remove('bg-black', 'hover:bg-gray-900');
+      button.classList.add('bg-gray-500', 'hover:bg-gray-700');
+      button.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span class="lg:flex hidden">Loading ...</span>';
+
+      // Simulate loading progress
+      let progress = 0;
+      const interval = setInterval(function() {
+        // Increase loading progress
+        progress += 10;
+        button.style.background = `linear-gradient(to right, #3182CE ${progress}%, #000 ${progress}%)`;
+
+        // Check if loading is complete (at 100% progress)
+        if (progress >= 100) {
+          clearInterval(interval);
+          button.style.background = '#000';
+          button.innerHTML = '<i class="fas fa-rotate-left"></i> <span class="lg:flex hidden">Refresh Progress</span>';
+          button.disabled = false;
+        }
+      }, 200); // Interval time (adjust as needed)
+    });
+  });
+</script>
