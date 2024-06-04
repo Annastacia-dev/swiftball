@@ -11,7 +11,7 @@
   </div>
 
   <div id="songs" class="min-w-full mt-10">
-    <% @album.songs.each_with_index do |song, index| %>
+    <% @album.songs.order(:created_at).each_with_index do |song, index| %>
       <div class="flex justify-between font-courier">
         <p class="flex gap-4 items-center" >
           <%= (index + 1).to_s.rjust(2, '0') %>. <span class="font-semibold uppercase hover:underline"><%= song.title %></span>
