@@ -7,7 +7,7 @@ class AttemptsController < ApplicationController
   end
 
   def show
-    @questions_by_era = @attempt.responses.group_by { |response| response.question.era }
+    @questions_by_era = @attempt.responses.includes([:question, :mashup_answers]).group_by { |response| response.question.era }
   end
 
   def update

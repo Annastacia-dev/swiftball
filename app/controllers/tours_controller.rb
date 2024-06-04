@@ -13,7 +13,7 @@ class ToursController < ApplicationController
 
         format.html { render :dashboard}
       else
-        @tours = Tour.order(date: :desc).where.not(base: true).where(status: [:closed, :open, :live])
+        @tours = Tour.order(date: :desc).where.not(base: true).where(status: [:closed, :open, :live]).includes(:quiz)
         @attempts = current_user.attempts
         format.html { render :user_dashboard}
       end

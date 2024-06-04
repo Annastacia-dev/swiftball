@@ -83,8 +83,9 @@
             </p>
           <% end %>
 
-          <% mashup_answers = grouped_responses.flat_map(&:mashup_answers) %>
-          <% correct_mashups = response.question.mashup_answers.where(response_id: nil, correct: true) %>
+          <% mashup_answers = grouped_responses.
+          flat_map(&:mashup_answers) %>
+          <% correct_mashups = response.question.mashup_answers.includes([:album, :song]).where(response_id: nil, correct: true) %>
           <% correct_albums = correct_mashups.pluck(:album_id) %>
           <% correct_songs = correct_mashups.pluck(:song_id) %>
 

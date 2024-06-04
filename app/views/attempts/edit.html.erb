@@ -13,7 +13,7 @@
     <% if @quiz.tour.status == 'open' %>
       <span> (closes at <%= @quiz.tour.quiz_live_time.in_time_zone(current_user.timezone).strftime('%I:%M %p') %>)
       </span>
-    <% end %> 
+    <% end %>
   </h5>
 
   <%= form_with(model: @attempt, url: attempt_path(@attempt), method: :patch, local: true) do |f| %>
@@ -24,7 +24,7 @@
           <div class="flex flex-col px-5 py-3 ">
             <%= (q_index + 1).to_s.rjust(2, '0') %>. <%= question.content %> (worth <%= question.points %> points)
             <div class="grid <%= question&.choices&.first&.image&.attached? ? 'lg:grid-cols-6 grid-cols-2' : 'grid-cols-1' %> gap-4">
-              <% question.choices.order(:position).each_with_index do |choice, c_index| %>
+              <% question.choices.includes([image_attachment: :blob]).order(:position).each_with_index do |choice, c_index| %>
                 <div class="choice py-3 flex flex-col gap-4">
                   <%= image_tag(choice.image, alt: "Option #{c_index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
                   <div class="flex gap-2 items-center capitalize font-medium">
