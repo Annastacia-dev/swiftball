@@ -3,7 +3,7 @@ class AttemptsController < ApplicationController
   before_action :set_quiz, only: %i[show edit update]
 
   def index
-    @attempts = current_user.attempts.order(created_at: :desc)
+    @attempts = current_user.attempts.order(created_at: :desc).includes([quiz: :tour])
   end
 
   def show

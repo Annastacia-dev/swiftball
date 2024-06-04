@@ -26,7 +26,7 @@
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-200">
-        <% @attempts.each_with_index do |attempt, index| %>
+        <% @attempts.includes([:responses]).each_with_index do |attempt, index| %>
           <% quiz = attempt.quiz %>
           <% tour = quiz.tour %>
         <tr>

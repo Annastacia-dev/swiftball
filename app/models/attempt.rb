@@ -57,7 +57,7 @@ class Attempt < ApplicationRecord
     score = 0
 
     responses.includes([:question, :choice]).each do |response|
-      if response.predicted_correctly?
+      if response.choice&.correct
         score += response.question.points
       end
     end

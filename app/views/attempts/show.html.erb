@@ -168,6 +168,7 @@
 
         // Check if loading is complete (at 100% progress)
         if (progress >= 100) {
+          location.reload();
           clearInterval(interval);
           button.style.background = '#000';
           button.innerHTML = '<i class="fas fa-rotate-left"></i> <span class="lg:flex hidden">Refresh Progress</span>';
