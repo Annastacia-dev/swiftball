@@ -25,7 +25,7 @@ class Choice < ApplicationRecord
   has_one_attached :image
 
   # association
-  belongs_to :question
+  belongs_to :question, counter_cache: true
 
   # validations
   validates :content, presence: true, uniqueness: { scope: :question_id }

@@ -3,6 +3,7 @@
 # Table name: questions
 #
 #  id                     :uuid             not null, primary key
+#  choices_count          :integer          default(0)
 #  content                :text
 #  era                    :integer          default("lover")
 #  guitar_mashup          :boolean          default(FALSE)
@@ -27,7 +28,7 @@ class Question < ApplicationRecord
 
   # associations
   belongs_to :quiz
-  has_many :choices, dependent: :destroy
+  has_many :choices, dependent: :destroy, counter_cache: :choices_count
   has_many :mashup_answers, dependent: :destroy
 
   # validations

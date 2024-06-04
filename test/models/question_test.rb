@@ -3,6 +3,7 @@
 # Table name: questions
 #
 #  id                     :uuid             not null, primary key
+#  choices_count          :integer          default(0)
 #  content                :text
 #  era                    :integer          default("lover")
 #  guitar_mashup          :boolean          default(FALSE)
