@@ -7,9 +7,9 @@
     <meta name="description" content="make your eras tour predictions" />
     <meta name="keywords" content="swiftball, eras tour, eras, taylor swift, taylor, swift, swift ball, ballswift, swftball, swifball, swiftbal, swiftbol, swiftboll, Swiftball, online swiftball, swiftball online, swiftball website">
     <meta name="application-name" content="swiftball">
-    <meta name="generator" content="swiftball">
+    <meta name="generator" content="swiftball, swift ball">
     <meta name="rating" content="general">
-    <meta name="subject" content="swift ball">
+    <meta name="subject" content="swiftball, swift ball">
     <meta name="copyright" content="swiftball">
     <meta name="language" content="English">
     <meta name="designer" content="swiftball">
@@ -27,7 +27,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade"/>
 
     <meta property="og:title" content="swiftball">
-    <meta property="og:description" content="">
+    <meta property="og:description" content="ake your eras tour prediction">
     <meta property="og:url" content="https://www.swiftball.online">
     <meta property="og:image" content="https://res.cloudinary.com/dlahz5ciz/image/upload/v1717085463/swiftball_re7lrk.png">
     <meta property="og:type" content="website">
@@ -62,6 +62,7 @@
           <% flash.keys.each do |k| %>
             <div class="sm:px-20 px-3 py-6 flex justify-center items-center gap-4 border-l-4 text-sm relative <%= notification_class(k) %>">
               <i class="<%= notification_icon(k) %> text-xl"></i>
+              <div id="progress-bar" class="h-1 absolute bottom-0 left-0 <%= progress_bar_background(k)%>"></div>
               <%= flash[k] %>
               <div class="cursor-pointer" onclick="document.getElementById('flash').classList.add('hidden')">
                 <i class="fa-solid fa-square-xmark text-xl"></i>
@@ -76,6 +77,21 @@
     <script>
     document.addEventListener("turbo:load", () => {
       const flash = document.getElementById('flash');
+        const progressBar = document.getElementById('progress-bar');
+        let progress = 100;
+        let intervalId;
+
+        if (flash) {
+          intervalId = setInterval(() => {
+            progress -= 1;
+            progressBar.style.width = `${progress}%`;
+
+            if (progress <= 0) {
+              clearInterval(intervalId);
+              flash.classList.add('hidden');
+            }
+          }, 50);
+        }
 
       function closeFlash() {
         const flash = document.getElementById('flash');
