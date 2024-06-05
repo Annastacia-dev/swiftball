@@ -1,0 +1,32 @@
+<div class="pt-10 px-12 min-h-screen">
+
+  <%= render 'components/breadcrumb', breadcrumbs: [
+    { text: 'home', path: root_path },
+    { text: 'My Stats'}
+  ] %>
+
+  <div class="flex flex-col">
+    <h5 class="uppercase font-bold flex items-center gap-3">
+      <i class="fa-solid fa-chart-simple"></i>
+      Statisctics
+    </h5>
+    <hr class="my-1" />
+    <div class="grid grid-cols-4 items-center mt-10">
+      <div class="flex flex-col gap-2 justify-center items-center">
+        <p class="text-8xl font-bold"><%= @attempts.size %></p>
+        <p class="text-sm uppercase">played</p>
+      </div>
+
+      <div class="flex flex-col gap-2 justify-center items-center">
+        <p class="text-8xl font-bold"><%= current_user.current_streak %></p>
+        <p class="text-sm uppercase">current streak</p>
+      </div>
+
+      <div class="flex flex-col gap-2 justify-center items-center">
+        <p class="text-8xl font-bold"><%= current_user.max_streak %></p>
+        <p class="text-sm uppercase">max streak</p>
+      </div>
+
+    <div>
+  </div>
+</div>

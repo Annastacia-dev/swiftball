@@ -56,7 +56,25 @@ class User < ApplicationRecord
   }
 
   # instance methods
+
   def has_attempted_quiz?(quiz_id)
     attempts.exists?(quiz_id: quiz_id)
+  end
+
+  def current_streak
+    attempts.order(created_at: :desc).each_with_index do |attempt, index|
+      return index + 1 if index == 0 || (attempt.created_at - attempts[index - 1].created_at).to_i <= 1.day.to_i
+    end
+    0
+  end
+
+  def max_streak
+    max_streak = 0
+    current_streak = 0
+    attempts.order(created_at: :desc).each_with_index do |attempt, index|
+      current_streak = (index == 0 || (attempt.created_at - attempts[index - 1].created_at).to_i <= 1.day.to_i) ? current_streak + 1 : 0
+      max_streak = [max_streak, current_streak].max
+    end
+    max_streak
   end
 end

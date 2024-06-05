@@ -3,9 +3,9 @@ Rails.application.routes.draw do
 
   root "tours#index"
   get '/manifest.json', to: 'home#manifest'
-
-  get 'terms_and_conditions', to: 'tours#terms_and_conditions'
-  get 'privacy_policy', to: 'tours#privacy_policy'
+  get '/stats', to: 'home#stats', as: :stats
+  get 'terms_and_conditions', to: 'home#terms_and_conditions'
+  get 'privacy_policy', to: 'home#privacy_policy'
 
   devise_for :users, :controllers => { :registrations => "registrations" }
   resources :tours
