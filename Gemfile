@@ -4,6 +4,7 @@ ruby "3.2.2"
 
 gem 'aws-sdk', require: false
 gem "bootsnap", require: false
+gem 'chartkick', '~> 5.0', '>= 5.0.7'
 gem 'cloudinary', '~> 2.1', '>= 2.1.0'
 gem 'countries', '~> 6.0.1'
 gem 'devise', '~> 4.9', '>= 4.9.4'
