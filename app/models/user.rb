@@ -62,34 +62,41 @@ class User < ApplicationRecord
   end
 
   def current_streak
-    tours = Tour.where.not(base: true)
-    quizzes = tours.each { |tour| tour.quiz}
-    
-    current_streak = 0
-    attempts.each_with_index do |attempt, index|
-      if index == 0 || ((attempt.created_at - attempts[index - 1].created_at) <= 1.day && quizzes.include?(attempt.quiz_id))
-        current_streak += 1
+    tours = Tour.where.not(base: true).includes(:quiz)
+    quizzes = tours.map { |tour| tour.quiz}
+
+    attempts = self.attempts.order(created_at: :desc)
+
+    result = []
+
+    quizzes.each do |quiz|
+      attempt = attempts.find_by(quiz_id: quiz.id)
+      if attempt
+        result << [quiz.created_at, attempt.created_at]
       else
-        break
+        result << [quiz.created_at, nil]
       end
     end
-    current_streak
+
+    result.sort_by! { |quiz_date, attempt_date| quiz_date }.reverse!
+
+    streak = 0
+
+    result.each do |pair|
+      break if pair[1].nil?
+      streak += 1
+    end
+
+    streak
   end
 
   def max_streak
-    tours = Tour.where.not(base: true)
-    quizzes = tours.map { |tour| tour.quiz.id }
-    
-    max_streak = 0
-    current_streak = 0
-    attempts.each_with_index do |attempt, index|
-      if index == 0 || ((attempt.created_at - attempts[index - 1].created_at) <= 1.day && quizzes.include?(attempt.quiz_id))
-        current_streak += 1
-        max_streak = [max_streak, current_streak].max
-      else
-        current_streak = 0
-      end
-    end
-    max_streak
+
+    tours = Tour.where.not(base: true).includes(:quiz)
+    quizzes = tours.each { |tour| tour.quiz}
+
+    attempts = self.attempts.order(created_at: :desc)
+
+    0
   end
 end
