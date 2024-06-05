@@ -1,9 +1,17 @@
 <div class="pt-10 px-12 min-h-screen flex flex-col gap-5">
 
-  <%= render 'components/breadcrumb', breadcrumbs: [
+  <% breadcrumbs = [
     { text: 'home', path: root_path },
-    { text: 'My Stats'}
   ] %>
+
+  <% if current_user.admin? %>
+    <% breadcrumbs << { text: 'Users', path: users_path} %>
+    <% breadcrumbs << { text: "#{@user.username}'s Stats"} %>
+  <% else %>
+    <% breadcrumbs << { text: 'My Stats'} %>
+  <% end %>
+
+  <%= render 'components/breadcrumb', breadcrumbs: breadcrumbs %>
 
   <div class="flex flex-col">
     <h5 class="uppercase font-bold flex gap-3">
@@ -11,36 +19,36 @@
       Statisctics
     </h5>
     <hr class="my-1" />
-    <div class="grid grid-cols-6  mt-10">
+    <div class="grid grid-cols-6 lg:gap-3 gap-12 lg:mt-10 mt-4">
       <div class="flex flex-col gap-2 items-center">
-        <p class="text-7xl font-bold"><%= @attempts.size %></p>
-        <p class="text-sm uppercase">played</p>
+        <p class="lg:text-7xl font-bold"><%= @attempts.size %></p>
+        <p class="lg:text-sm text-xs lg:uppercase capitalize">played</p>
       </div>
 
       <div class="flex flex-col gap-2 items-center">
-        <p class="text-7xl font-bold"><%= current_user.current_streak %></p>
-        <p class="text-sm uppercase">current streak</p>
+        <p class="lg:text-7xl font-bold"><%= @current_streak %></p>
+        <p class="lg:text-sm text-xs lg:uppercase capitalize">current streak</p>
       </div>
 
       <div class="flex flex-col gap-2 items-center">
-        <p class="text-7xl font-bold"><%= current_user.max_streak %></p>
-        <p class="text-sm uppercase">max streak</p>
+        <p class="lg:text-7xl font-bold"><%= @max_streak %></p>
+        <p class="lg:text-sm text-xs lg:uppercase capitalize">max streak</p>
       </div>
 
       <div class="flex flex-col gap-2 items-center">
-        <p class="text-7xl font-bold"><%= @average_score %></p>
-        <p class="text-sm uppercase">average score</p>
+        <p class="lg:text-7xl font-bold"><%= @average_score %></p>
+        <p class="lg:text-sm text-xs lg:uppercase capitalize">average score</p>
       </div>
 
       <div class="flex flex-col gap-2 items-center">
-        <p class="text-7xl font-bold"><%= @average_position %></p>
-        <p class="text-sm uppercase">average position</p>
+        <p class="lg:text-7xl font-bold"><%= @average_position %></p>
+        <p class="lg:text-sm text-xs lg:uppercase capitalize">average position</p>
       </div>
 
     </div>
   </div>
 
-  <div class="flex flex-col mt-20">
+  <div class="flex flex-col lg:mt-20 mt-5">
     <h5 class="uppercase font-bold flex gap-3">
       <i class="fa-solid fa-chart-pie"></i>
       eras distibution

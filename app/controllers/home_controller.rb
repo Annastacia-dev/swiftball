@@ -6,8 +6,12 @@ class HomeController < ApplicationController
   end
 
   def stats
-    @attempts = current_user.attempts
-    @average_score = current_user.attempts.includes([:quiz, :responses]).map(&:score).sum.to_i / current_user.attempts.size rescue nil
-    @average_position = current_user.attempts.map(&:position).sum.to_i / current_user.attempts.size rescue nil
+    @user = current_user.admin? ? User.find(params[:id]) : current_user
+    @attempts = @user.attempts
+    @current_streak = @user.current_streak
+    @max_streak = @user.max_streak
+    attempts_count = @user.attempts.size
+    @average_score = attempts_count.zero? ? 0 : @user.attempts.includes([:quiz, :responses]).map(&:score).sum.to_f / attempts_count
+    @average_position = attempts_count.zero? ? 0 : @user.attempts.map(&:position).sum.to_f / attempts_count
   end
 end
