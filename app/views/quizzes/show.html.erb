@@ -44,21 +44,27 @@
            <% end %>
 
            <% if question.include_album_and_song %>
-             <% question&.mashup_answers.order(:created_at).where(response_id: nil).each do |mashup| %>
+             <% question&.mashup_answers.includes([:album, :song]).order(:created_at).where(response_id: nil).each do |mashup| %>
                <% if mashup.correct %>
                <div class="flex justify-between">
                 <p class="flex gap-2 items-center font-medium capitalize">
                   <i class="fa-solid fa-circle-check text-green-600"></i> <%= mashup.album.title %> - <%= mashup.song.title %>
                 </p>
-               <% if current_user.admin? %>
-                <%= link_to edit_mashup_answer_path(mashup) do %>
-                  <i class="fa-solid fa-pencil px-4"></i>
+                <% if current_user.admin? %>
+                  <div class="flex items-center gap-1">
+                    <%= link_to edit_mashup_answer_path(mashup) do %>
+                      <i class="fa-solid fa-pencil px-4" title="edit mashup"></i>
+                    <% end %>
+                    <%= button_to mashup_answer_path(mashup), method: :delete, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" } do %>
+                      <i class="fa-solid fa-trash" title="delete mashup"></i>
+                    <% end %>
+                  </div>
                 <% end %>
-               <% end %>
                </div>
                <% end %>
              <% end %>
            <% end %>
+
          </div>
         </div>
       <% end %>

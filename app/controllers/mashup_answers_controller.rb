@@ -1,8 +1,8 @@
 class MashupAnswersController < ApplicationController
 
   before_action :find_response
-  before_action :find_mashup_answer, only: %i[edit update]
-  before_action :set_question, only: %i[edit update]
+  before_action :find_mashup_answer, only: %i[edit update destroy]
+  before_action :set_question, only: %i[edit update destroy]
 
   def index
     @mashup_answers = @response.mashup_answers
@@ -23,6 +23,17 @@ class MashupAnswersController < ApplicationController
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def destroy
+    @mashup_answer.destroy!
+
+    path = current_user.admin? ? quiz_path(@question.quiz) : edit_attempt_path(@mashup_answer.response.attempt)
+
+    respond_to do |format|
+      format.html { redirect_to path, notice: "Answer was successfully deleted." }
+      format.json { head :no_content }
     end
   end
 

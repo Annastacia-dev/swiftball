@@ -91,20 +91,34 @@
             <% correct_albums = correct_mashups.pluck(:album_id) %>
             <% correct_songs = correct_mashups.pluck(:song_id) %>
 
+            <% question_content = 'pick piano acoustic set album and song' %>
+            <% piano_question = @attempt.quiz.questions.find_by(content: question_content) %>
+            <% piano_correct_mashups = piano_question.mashup_answers.where(response_id: nil, correct: true) %>
+            <% piano_correct_albums = piano_correct_mashups.pluck(:album_id) %>
+
+            <% question_content = 'pick guitar acoustic set album and song' %>
+            <% guitar_question = @attempt.quiz.questions.find_by(content: question_content) %>
+            <% guitar_correct_mashups = guitar_question.mashup_answers.where(response_id: nil, correct: true) %>
+            <% guitar_correct_albums = guitar_correct_mashups.pluck(:album_id) %>
+
 
             <% if mashup_answers.present? %>
               <div class="grid lg:grid-cols-1 gap-5">
                 <div class="flex flex-col gap-3">
                   <% mashup_answers.each do |mashup| %>
                     <p class="font-medium capitalize flex items-center gap-2">
-                      <%= mashup.album.title %>
                         <% if correct_albums.present? %>
                           <% if correct_albums.include?(mashup.album_id) %>
                             <i class="fa-solid fa-circle-check text-green-600"></i>
+                          <% elsif (response.question.id != piano_question.id) &&piano_correct_albums.include?(mashup.album_id) %>
+                            <i class="fa-solid fa-keyboard text-green-600"></i>
+                          <% elsif (response.question.id != guitar_question.id) &&guitar_correct_albums.include?(mashup.album_id) %>
+                            <i class="fa-solid fa-guitar text-green-600"></i>
                           <% else %>
                             <i class="fa-solid fa-xmark text-red-600"></i>
                           <% end %>
                         <% end %>
+                      <%= mashup.album.abbr %>
                       - <%= mashup.song.title %>
                       <% if correct_songs.present? %>
                         <% if correct_songs.include?(mashup.song_id) %>

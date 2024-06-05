@@ -3,6 +3,7 @@
 # Table name: albums
 #
 #  id         :uuid             not null, primary key
+#  abbr       :string
 #  slug       :string
 #  title      :string
 #  created_at :datetime         not null
