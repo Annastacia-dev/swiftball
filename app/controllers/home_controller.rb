@@ -11,7 +11,7 @@ class HomeController < ApplicationController
     @current_streak = @user.current_streak
     @max_streak = @user.max_streak
     attempts_count = @user.attempts.size
-    @average_score = attempts_count.zero? ? 0 : @user.attempts.includes([:quiz, :responses]).map(&:score).sum.to_f / attempts_count
-    @average_position = attempts_count.zero? ? 0 : @user.attempts.map(&:position).sum.to_f / attempts_count
+    @average_score = attempts_count.zero? ? 0 : @user.attempts.includes([:quiz, :responses]).map(&:score).sum.to_i / attempts_count
+    @average_position = attempts_count.zero? ? 0 : @user.attempts.map(&:position).sum.to_i / attempts_count
   end
 end
