@@ -62,18 +62,33 @@ class User < ApplicationRecord
   end
 
   def current_streak
-    attempts.order(created_at: :desc).each_with_index do |attempt, index|
-      return index + 1 if index == 0 || (attempt.created_at - attempts[index - 1].created_at).to_i <= 1.day.to_i
+    tours = Tour.where.not(base: true)
+    quizzes = tours.each { |tour| tour.quiz}
+    
+    current_streak = 0
+    attempts.each_with_index do |attempt, index|
+      if index == 0 || ((attempt.created_at - attempts[index - 1].created_at) <= 1.day && quizzes.include?(attempt.quiz_id))
+        current_streak += 1
+      else
+        break
+      end
     end
-    0
+    current_streak
   end
 
   def max_streak
+    tours = Tour.where.not(base: true)
+    quizzes = tours.map { |tour| tour.quiz.id }
+    
     max_streak = 0
     current_streak = 0
-    attempts.order(created_at: :desc).each_with_index do |attempt, index|
-      current_streak = (index == 0 || (attempt.created_at - attempts[index - 1].created_at).to_i <= 1.day.to_i) ? current_streak + 1 : 0
-      max_streak = [max_streak, current_streak].max
+    attempts.each_with_index do |attempt, index|
+      if index == 0 || ((attempt.created_at - attempts[index - 1].created_at) <= 1.day && quizzes.include?(attempt.quiz_id))
+        current_streak += 1
+        max_streak = [max_streak, current_streak].max
+      else
+        current_streak = 0
+      end
     end
     max_streak
   end
