@@ -2,3 +2,13 @@ open_quiz:
   cron: "*/15 * * * *"
   class: "OpenQuiz"
   description: "Open Pending Quiz"
+
+live_quiz:
+  cron: "*/20 * * * *"
+  class: "GoLiveQuiz"
+  description: "Go Live Quiz"
+
+close_quiz:
+  cron: "*/30 * * * *"
+  class: "CloseQuiz"
+  description: "Close Live Quiz"
