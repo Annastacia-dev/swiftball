@@ -1,16 +1,13 @@
 # Determine user's streak
 
 module StreakScores
+
   def current_streak
-    tours = Tour.where.not(base: true).includes(:quiz)
-    quizzes = tours.map { |tour| tour.quiz}
-
-    attempts = self.attempts.order(created_at: :desc)
-
+    variables
     result = []
 
-    quizzes.each do |quiz|
-      attempt = attempts.find_by(quiz_id: quiz.id)
+    @quizzes.each do |quiz|
+      attempt = @attempts.find_by(quiz_id: quiz.id)
       if attempt
         result << [quiz.created_at, attempt.created_at]
       else
@@ -31,16 +28,12 @@ module StreakScores
   end
 
   def max_streak
-
-    tours = Tour.where.not(base: true).includes(:quiz)
-    quizzes = tours.map { |tour| tour.quiz}
-
-    attempts = self.attempts.order(created_at: :desc)
+    variables
 
     result = []
 
-    quizzes.each do |quiz|
-      attempt = attempts.find_by(quiz_id: quiz.id)
+    @quizzes.each do |quiz|
+      attempt = @attempts.find_by(quiz_id: quiz.id)
       if attempt
         result << [quiz.created_at, attempt.created_at]
       else
@@ -63,5 +56,14 @@ module StreakScores
     end
 
     longest_streak
+  end
+
+  private
+
+  def variables
+    @tours = Tour.where.not(base: true, status: [:open, :live, :closed]).includes(:quiz)
+    @quizzes = @tours.map { |tour| tour.quiz}
+
+    @attempts = self.attempts.order(created_at: :desc)
   end
 end
