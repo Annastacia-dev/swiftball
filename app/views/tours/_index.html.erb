@@ -13,7 +13,7 @@
     <div class="flex justify-between font-courier md:text-base text-sm">
       <% if current_user.admin? %>
         <%= link_to tour_path(tour), class:"flex gap-4 items-center " do %>
-          <%= (tour.number).to_s.rjust(2, '0') %>. <span class="font-semibold uppercase hover:underline" title=""><%= tour.title %></span>
+          <%= (tour.number).to_s.rjust(2, '0') %>. <span class="font-semibold uppercase hover:underline" title="<%= tour&.start_time&.strftime("%A %d %B %Y %H:%M") %>"><%= tour.title %></span>
           <% if tour.status == 'open' %>
             <i class="fa-solid fa-circle-check text-orange-500" title="open"></i>
             <span> closes at <%= tour.quiz_live_time.in_time_zone(current_user.timezone).strftime('%I:%M %p') %> </span>
@@ -28,7 +28,7 @@
       <% else %>
         <div class="flex flex-col gap-2">
           <p class="flex lg:flex-row flex-col gap-2">
-            <span class="font-semibold uppercase flex gap-2 items-center">
+            <span class="font-semibold uppercase flex gap-2 items-center"  title="<%= tour&.start_time&.strftime("%A %d %B %Y %H:%M") %>">
               <%= (tour.number).to_s.rjust(2, '0') %>. <%= tour.title %>
               <% if tour.status == 'open' %>
                 <i class="fa-solid fa-circle-check text-orange-500" title="open"></i>
