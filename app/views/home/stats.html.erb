@@ -16,33 +16,33 @@
   <div class="flex flex-col">
     <h5 class="uppercase font-bold flex gap-3">
       <i class="fa-solid fa-chart-simple"></i>
-      Statisctics
+      statistics
     </h5>
     <hr class="my-1" />
-    <div class="grid grid-cols-6 lg:gap-3 gap-12 lg:mt-10 mt-4">
-      <div class="flex flex-col gap-2 items-center">
-        <p class="lg:text-7xl font-bold"><%= @attempts.size %></p>
-        <p class="lg:text-sm text-xs lg:uppercase capitalize">played</p>
+    <div class="grid md:grid-cols-6 grid-cols-2 gap-x-3 gap-y-4 lg:mt-10 mt-4">
+      <div class="flex flex-col gap-2 items-center bg-black text-white py-5 rounded shadow">
+        <p class="md:text-7xl text-6xl font-bold"><%= @attempts.size %></p>
+        <p class="lg:text-sm text-xs uppercase">played</p>
       </div>
 
-      <div class="flex flex-col gap-2 items-center">
-        <p class="lg:text-7xl font-bold"><%= @current_streak %></p>
-        <p class="lg:text-sm text-xs lg:uppercase capitalize">current streak</p>
+      <div class="flex flex-col gap-2 items-center bg-black text-white py-5 rounded shadow">
+        <p class="md:text-7xl text-6xl font-bold"><%= @current_streak %></p>
+        <p class="lg:text-sm text-xs uppercase">current streak</p>
       </div>
 
-      <div class="flex flex-col gap-2 items-center">
-        <p class="lg:text-7xl font-bold"><%= @max_streak %></p>
-        <p class="lg:text-sm text-xs lg:uppercase capitalize">max streak</p>
+      <div class="flex flex-col gap-2 items-center bg-black text-white py-5 rounded shadow">
+        <p class="md:text-7xl text-6xl font-bold"><%= @max_streak %></p>
+        <p class="lg:text-sm text-xs uppercase">max streak</p>
       </div>
 
-      <div class="flex flex-col gap-2 items-center">
-        <p class="lg:text-7xl font-bold"><%= @average_score %></p>
-        <p class="lg:text-sm text-xs lg:uppercase capitalize">average score</p>
+      <div class="flex flex-col gap-2 items-center bg-black text-white py-5 rounded shadow">
+        <p class="md:text-7xl text-6xl font-bold"><%= @average_score %></p>
+        <p class="lg:text-sm text-xs uppercase">average score</p>
       </div>
 
-      <div class="flex flex-col gap-2 items-center">
-        <p class="lg:text-7xl font-bold"><%= @average_position %></p>
-        <p class="lg:text-sm text-xs lg:uppercase capitalize">average position</p>
+      <div class="flex flex-col gap-2 items-center bg-black text-white py-5 rounded shadow">
+        <p class="md:text-7xl text-6xl font-bold"><%= @average_position %></p>
+        <p class="lg:text-sm text-xs uppercase">average position</p>
       </div>
 
     </div>
