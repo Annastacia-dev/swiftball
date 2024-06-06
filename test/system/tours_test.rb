@@ -14,7 +14,6 @@ class ToursTest < ApplicationSystemTestCase
     visit tours_url
     click_on "New tour"
 
-    fill_in "Date", with: @tour.date
     fill_in "Number", with: @tour.number
     fill_in "Start time", with: @tour.start_time
     fill_in "Timezone", with: @tour.timezone
@@ -29,7 +28,6 @@ class ToursTest < ApplicationSystemTestCase
     visit tour_url(@tour)
     click_on "Edit this tour", match: :first
 
-    fill_in "Date", with: @tour.date
     fill_in "Number", with: @tour.number
     fill_in "Start time", with: @tour.start_time
     fill_in "Timezone", with: @tour.timezone

@@ -1,0 +1,4 @@
+open_quiz:
+  cron: "*/15 * * * *"
+  class: "OpenQuiz"
+  description: "Open Pending Quiz"

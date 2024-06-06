@@ -8,7 +8,6 @@ gem 'chartkick', '~> 5.0', '>= 5.0.7'
 gem 'cloudinary', '~> 2.1', '>= 2.1.0'
 gem 'countries', '~> 6.0.1'
 gem 'devise', '~> 4.9', '>= 4.9.4'
-gem 'dotenv-rails', '~> 3.1', '>= 3.1.2'
 gem 'font-awesome-sass', '~> 6.5', '>= 6.5.2'
 gem 'friendly_id', '~> 5.5', '>= 5.5.1'
 gem "image_processing", "~> 1.2"
@@ -20,6 +19,8 @@ gem 'puma', '~> 6.4', '>= 6.4.2'
 gem 'rails', '~> 7.1', '>= 7.1.3.3'
 gem 'redis', '~> 5.2'
 gem 'rubocop', '~> 1.64', '>= 1.64.1'
+gem 'sidekiq', '~> 7.2', '>= 7.2.4'
+gem 'sidekiq-cron', '~> 1.12.0'
 gem 'sprockets-rails', '~> 3.4', '>= 3.4.2'
 gem 'stimulus-rails', '~> 1.3', '>= 1.3.3'
 gem 'tailwindcss-rails', '~> 2.6'
@@ -34,6 +35,7 @@ end
 
 group :development do
   gem 'annotate', '~> 3.2'
+  gem 'dotenv-rails', '~> 3.1', '>= 3.1.2'
   gem 'hotwire-livereload', '~> 1.4'
   gem 'web-console', '~> 4.2', '>= 4.2.1'
 end

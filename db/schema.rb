@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_05_192237) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_06_080347) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -142,14 +142,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_05_192237) do
   create_table "tours", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "number"
     t.string "title"
-    t.date "date"
-    t.time "start_time"
     t.string "timezone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "status", default: 0
     t.string "slug"
     t.boolean "base", default: false
+    t.datetime "start_time"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

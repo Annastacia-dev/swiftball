@@ -17,7 +17,7 @@ class ToursControllerTest < ActionDispatch::IntegrationTest
 
   test "should create tour" do
     assert_difference("Tour.count") do
-      post tours_url, params: { tour: { date: @tour.date, number: @tour.number, start_time: @tour.start_time, timezone: @tour.timezone, title: @tour.title } }
+      post tours_url, params: { tour: { number: @tour.number, start_time: @tour.start_time, timezone: @tour.timezone, title: @tour.title } }
     end
 
     assert_redirected_to tour_url(Tour.last)
@@ -34,7 +34,7 @@ class ToursControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update tour" do
-    patch tour_url(@tour), params: { tour: { date: @tour.date, number: @tour.number, start_time: @tour.start_time, timezone: @tour.timezone, title: @tour.title } }
+    patch tour_url(@tour), params: { tour: { number: @tour.number, start_time: @tour.start_time, timezone: @tour.timezone, title: @tour.title } }
     assert_redirected_to tour_url(@tour)
   end
 

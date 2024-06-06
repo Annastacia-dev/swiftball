@@ -7,12 +7,12 @@ class ToursController < ApplicationController
     respond_to do |format|
       if current_user.admin?
         @tours = Tour.includes(:quiz).order(number: :desc)
-        @quizzes = Tour.order(date: :desc).where.not(base: true)
+        @quizzes = Tour.order(number: :desc).where.not(base: true)
         @users = User.order(created_at: :desc).where.not(role: 'admin')
 
         format.html { render :dashboard}
       else
-        @tours = Tour.order(date: :desc).where.not(base: true).where(status: [:closed, :open, :live]).includes(:quiz)
+        @tours = Tour.order(number: :desc).where.not(base: true).where(status: [:closed, :open, :live]).includes(:quiz)
         @attempts = current_user.attempts
         format.html { render :user_dashboard}
       end
@@ -52,7 +52,7 @@ class ToursController < ApplicationController
   def update
     respond_to do |format|
       if @tour.update(tour_params)
-        format.html { redirect_to tour_url(@tour), notice: "Tour was successfully updated." }
+        format.html { redirect_to tours_path, notice: "Tour was successfully updated." }
         format.json { render :show, status: :ok, location: @tour }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -79,6 +79,6 @@ class ToursController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tour_params
-      params.require(:tour).permit(:number, :title, :date, :start_time, :end_time, :timezone)
+      params.require(:tour).permit(:number, :title, :start_time, :end_time, :timezone)
     end
 end

@@ -4,10 +4,9 @@
 #
 #  id         :uuid             not null, primary key
 #  base       :boolean          default(FALSE)
-#  date       :date
 #  number     :integer
 #  slug       :string
-#  start_time :time
+#  start_time :datetime
 #  status     :integer          default("pending")
 #  timezone   :string
 #  title      :string
@@ -18,7 +17,6 @@
 one:
   number: 1
   title: MyString
-  date: 2024-05-20
   start_time: 2024-05-20 13:11:51
   end_time: 2024-05-20 13:11:51
   timezone: MyString
@@ -26,7 +24,6 @@ one:
 two:
   number: 1
   title: MyString
-  date: 2024-05-20
   start_time: 2024-05-20 13:11:51
   end_time: 2024-05-20 13:11:51
   timezone: MyString

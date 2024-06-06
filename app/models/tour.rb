@@ -4,10 +4,9 @@
 #
 #  id         :uuid             not null, primary key
 #  base       :boolean          default(FALSE)
-#  date       :date
 #  number     :integer
 #  slug       :string
-#  start_time :time
+#  start_time :datetime
 #  status     :integer          default("pending")
 #  timezone   :string
 #  title      :string
@@ -26,8 +25,7 @@ class Tour < ApplicationRecord
   # validations
   validates :title, presence: true, uniqueness: true
   validates :number, presence: true, uniqueness: true
-  validates :date, presence: true
-  validates :start_time, presence: true
+  validates :start_time, presence: true, uniqueness: true
   validates :timezone, presence: true
   validate :one_quiz, on: :create
 

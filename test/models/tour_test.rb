@@ -4,10 +4,9 @@
 #
 #  id         :uuid             not null, primary key
 #  base       :boolean          default(FALSE)
-#  date       :date
 #  number     :integer
 #  slug       :string
-#  start_time :time
+#  start_time :datetime
 #  status     :integer          default("pending")
 #  timezone   :string
 #  title      :string

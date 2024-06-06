@@ -45,5 +45,20 @@ module Swiftball
       open_timeout: 5,
       read_timeout: 5
     }
+
+    # Sidekiq
+    Sidekiq.configure_client do |config|
+      config.redis = {
+        url: ENV['REDISCLOUD_URL'],
+        network_timeout: 5
+      }
+    end
+
+    Sidekiq.configure_server do |config|
+      config.redis = {
+        url: ENV['REDISCLOUD_URL'],
+        network_timeout: 5
+      }
+    end
   end
 end

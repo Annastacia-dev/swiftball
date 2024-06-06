@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
-  get "up" => "rails/health#show", as: :rails_health_check
+  require 'sidekiq/web'
+  require 'sidekiq/cron/web'
+
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 
   root "tours#index"
+  get "up" => "rails/health#show", as: :rails_health_check
   get '/manifest.json', to: 'home#manifest'
   get '/stats(/:id)', to: 'home#stats', as: :stats
   get 'terms_and_conditions', to: 'home#terms_and_conditions'
