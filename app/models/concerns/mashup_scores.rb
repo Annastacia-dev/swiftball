@@ -59,11 +59,11 @@ module MashupScores
     @guitar_mashup_predictions.each do |mashup|
 
       if @guitar_correct_albums.include?(mashup.album_id)
-        gm_score += guitar_points
+        gm_score += @guitar_points
       end
 
       if @guitar_correct_songs.include?(mashup.song_id)
-        gm_score += guitar_points
+        gm_score += @guitar_points
       end
     end
 
