@@ -61,7 +61,7 @@ module StreakScores
   private
 
   def variables
-    @tours = Tour.where.not(base: true, status: [:open, :live, :closed]).includes(:quiz)
+    @tours = Tour.where.not(base: true, status: [:pending]).includes(:quiz)
     @quizzes = @tours.map { |tour| tour.quiz}
 
     @attempts = self.attempts.order(created_at: :desc)
