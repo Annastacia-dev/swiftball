@@ -24,7 +24,10 @@ module Swiftball
     # timezone config
     config.time_zone = 'UTC' # Set default time zone to UTC
     config.active_record.default_timezone = :utc # Store database time in UTC
+
     # config.eager_load_paths << Rails.root.join("extras")
+    config.autoload_paths << "#{Rails.root}/db/data"
+
     # mailing
     config.action_mailer.delivery_method = :smtp
     username = Rails.env.production? ? Rails.application.credentials.mail[:prod_username] : Rails.application.credentials.mail[:sandbox_username]
