@@ -21,6 +21,7 @@ class Tour < ApplicationRecord
 
   # associations
   has_one :quiz, dependent: :destroy
+  has_many :attempts, through: :quiz, dependent: :destroy
 
   # validations
   validates :title, presence: true, uniqueness: true
