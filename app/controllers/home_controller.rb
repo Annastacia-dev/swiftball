@@ -6,6 +6,7 @@ class HomeController < ApplicationController
   end
 
   def stats
+    @chart_type = params[:chart_type] || 'bar_chart'
     @user = current_user.admin? ? User.find(params[:id]) : current_user
     @attempts = @user.attempts
     @current_streak = @user.current_streak
@@ -18,7 +19,7 @@ class HomeController < ApplicationController
     @lifetime_points = attempts_for_average.map(&:score).sum
     @best_score = attempts_for_average.map(&:score).max || 0
 
-    @responses = @user.attempts.map(&:responses).flatten.uniq
+    @responses = @attempts.includes([:quiz, :responses]).reject { |attempt| attempt.quiz.tour.status == 'open' }.map(&:responses).flatten.uniq
 
     correct_responses = @responses.select { |response| response&.choice&.correct }
     questions = correct_responses.map(&:question).flatten.sort_by { |question| question.era }

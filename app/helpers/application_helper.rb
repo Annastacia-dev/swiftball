@@ -91,6 +91,20 @@ module ApplicationHelper
     ]
   end
 
+  def chart_types
+    ['line_chart', 'column_chart', 'bar_chart', 'pie_chart']
+  end
+
+  def render_chart(data, title, empty_statement, data_type)
+    @chart_type = params[:chart_type] || 'bar_chart'
+    case @chart_type
+    when 'line_chart', 'column_chart', 'bar_chart', 'pie_chart'
+      send(@chart_type, data, download: { title: title }, empty: empty_statement, legend: false, donut: true, height: @chart_type != 'pie_chart' ? data_type == 'eras' ? '400px' : '1000px' : '', colors: data_type == 'eras' ? eras_bar_chart_colors : questions_bar_chart_colors)
+    else
+      raise ArgumentError, "Invalid chart type: #{@chart_type}"
+    end
+  end
+
   def navbar_items
     items = [
       { path: edit_user_registration_path, icon_class: 'fa-solid fa-user', menu_text: 'Profile' },

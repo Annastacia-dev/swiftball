@@ -55,12 +55,23 @@
 
  <% unless @responses.empty? %>
     <div class="flex flex-col lg:mt-20 mt-5 capitalize">
-      <h5 class="uppercase font-bold flex gap-3">
-        <i class="fa-solid fa-chart-pie"></i>
-          prediction stats by era (%)
-      </h5>
+      <div class="flex justify-between">
+        <h5 class="uppercase font-bold flex gap-3">
+          <i class="fa-solid fa-chart-pie"></i>
+            prediction stats by era (%)
+        </h5>
+        <div class="mt-4 mb-2 flex items-center">
+          <% path = current_user.admin? ? stats_path(@user) : stats_path %>
+          <%= form_tag(path , method: 'get', class: 'flex items-center gap-2') do %>
+            <%= select_tag 'chart_type', options_for_select(chart_types.map { |chart| [chart.humanize, chart] }, @chart_type), class: 'w-40 h-10 capitalize' %>
+            <button type='submit' class='px-4 py-2 rounded bg-black text-white cursor-pointer capitalize'>
+              Render Chart
+            </button>
+          <% end %>
+        </div>
+      </div>
       <hr class="my-1" />
-      <%= bar_chart @questions_predictions_by_era_data, height: '500px', colors: eras_bar_chart_colors   %>
+      <%= render_chart @questions_predictions_by_era_data, 'Eras', 'No data', 'eras'   %>
     </div>
 
     <div class="flex flex-col lg:mt-20 mt-5 capitalize">
@@ -69,7 +80,7 @@
           prediction stats by question (%)
       </h5>
       <hr class="my-1" />
-      <%= bar_chart @questions_predictions_data, height: '1000px', colors: questions_bar_chart_colors  %>
+      <%= render_chart @questions_predictions_data, 'Questions', 'No data', 'questions'  %>
     </div>
   <% end %>
 </div>
