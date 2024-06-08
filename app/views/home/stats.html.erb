@@ -36,13 +36,18 @@
       </div>
 
       <div class="flex flex-col gap-2 items-center bg-gray-100 py-5 rounded shadow-md">
+        <p class="md:text-7xl text-6xl font-bold"><%= @lifetime_points %></p>
+        <p class="lg:text-sm text-xs uppercase">lifetime points</p>
+      </div>
+
+      <div class="flex flex-col gap-2 items-center bg-gray-100 py-5 rounded shadow-md">
         <p class="md:text-7xl text-6xl font-bold"><%= @average_score %></p>
         <p class="lg:text-sm text-xs uppercase">average score</p>
       </div>
 
       <div class="flex flex-col gap-2 items-center bg-gray-100 py-5 rounded shadow-md">
-        <p class="md:text-7xl text-6xl font-bold"><%= @average_position %></p>
-        <p class="lg:text-sm text-xs uppercase">average position</p>
+        <p class="md:text-7xl text-6xl font-bold"><%= @best_score %></p>
+        <p class="lg:text-sm text-xs uppercase">best score</p>
       </div>
 
     </div>
