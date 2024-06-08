@@ -1,0 +1,52 @@
+<div class="pt-10 lg:px-12 px-5 min-h-screen">
+
+  <%= render 'components/breadcrumb', breadcrumbs: [
+    { text: 'home', path: root_path },
+    { text: "Leaderboard" },
+  ]
+  %>
+
+  <div class="flex justify-center items-center gap-5 ">
+    <% if @previous_tour %>
+      <%= link_to  leaderboard_path(tour: @previous_tour), class: "font-semibold font-courier uppercase text-md border-2 border-black bg-black text-white py-2 rounded px-5" do %>
+        <i class="fa-solid fa-circle-arrow-left"></i>
+      <% end %>
+    <% end %>
+
+    <h5 class="font-semibold font-courier uppercase text-md border-2 border-black py-2 rounded px-5"><%= @tour.title %> </h5>
+
+    <% if @next_tour %>
+      <%= link_to leaderboard_path(tour: @next_tour), class: "font-semibold font-courier uppercase text-md border-2 border-black py-2 bg-black text-white rounded px-5" do %>
+        <i class="fa-solid fa-circle-arrow-right"></i>
+      <% end %>
+    <% end %>
+
+  </div>
+
+  <% unless @attempts.blank? %>
+    <div class="flex flex-col mt-16 lg:px-20">
+      <% @attempts.each_with_index do |attempt, index| %>
+        <div class="flex justify-between">
+          <p class="px-6 flex items-center gap-6">
+            <span class="font-bold"><%= (index + 1) %>.</span>
+            @<%= attempt.user.username  %>
+          </p>
+          <p class="px-6">
+              <% if @tour.status == 'closed' || @tour.status == 'live' %>
+                <%= attempt.score %>
+              <% else %>
+                <i class="fa-solid fa-spinner text-gray-600" title="in progress"></i>
+              <% end %>
+          </p>
+        </div>
+        <% if index != (@attempts.length - 1) %>
+          <hr class="border border-black my-4" />
+        <% end %>
+      <% end %>
+    <div>
+  <% else %>
+    <div class="flex justify-center items-center mt-20">
+     No stats yet.
+    </div>
+  <% end %>
+</div>

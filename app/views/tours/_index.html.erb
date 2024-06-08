@@ -1,11 +1,17 @@
-<div class="flex justify-between items-center mt-10">
-  <h1 class="font-semibold text-xl font-courier">Quizzes</h1>
-  <% if current_user.admin? %>
-    <%= link_to new_tour_path, class: "rounded py-2 px-4 bg-black text-white font-medium capitalize flex gap-2 items-center" do %>
-      <i class="fa-solid fa-plus"></i>
-      new quiz
-    <% end %>
-  <% end %>
+<div class="flex justify-between items-center mt-10 mb-10">
+  <h1 class="font-semibold text-xl font-courier"></h1>
+    <div class="flex gap-2 items-center">
+      <% if current_user.admin? %>
+        <%= link_to new_tour_path, class: "rounded py-2 px-4 bg-black text-white font-medium capitalize flex gap-2 items-center" do %>
+          <i class="fa-solid fa-plus"></i>
+          new quiz
+        <% end %>
+      <% end %>
+      <%= link_to leaderboard_path, class: "rounded py-2 px-4 bg-black text-white font-medium capitalize flex gap-2 items-center font-courier" do %>
+          <i class="fa-solid fa-chess-board"></i>
+        leaderboard
+      <% end %>
+    </div>
 </div>
 
 <div id="tours" class="min-w-full mt-10">
