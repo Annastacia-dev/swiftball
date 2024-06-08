@@ -30,6 +30,7 @@ class Question < ApplicationRecord
   belongs_to :quiz
   has_many :choices, dependent: :destroy, counter_cache: :choices_count
   has_many :mashup_answers, dependent: :destroy
+  has_many :responses, through: :choices
 
   # validations
   validates :content, presence: true, uniqueness: { scope: :quiz_id }

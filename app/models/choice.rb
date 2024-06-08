@@ -26,6 +26,7 @@ class Choice < ApplicationRecord
 
   # association
   belongs_to :question, counter_cache: true
+  has_many :responses
 
   # validations
   validates :content, presence: true, uniqueness: { scope: :question_id }

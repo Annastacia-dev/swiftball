@@ -57,6 +57,40 @@ module ApplicationHelper
     end
   end
 
+  def eras_bar_chart_colors
+    [
+      "#f06292",
+      "#ffd54f",
+      "#b71c1c",
+      "#4a148c",
+      "#000",
+      "#ffe0b2",
+      "#bbdefb",
+      "#757575",
+      "#dce775",
+      "#1a237e",
+      "#ff5722",
+      ""
+    ]
+  end
+
+  def questions_bar_chart_colors
+    [
+      "#f06292", "#f06292", "#f06292",
+      "#ffd54f",
+      "#b71c1c",
+      "#4a148c",
+      "#000",
+      "#ffe0b2", "#ffe0b2",
+      "#bbdefb", "#bbdefb",
+      "#757575","#757575", "#757575","#757575",
+      "#dce775","#dce775","#dce775","#dce775","#dce775",
+      "#1a237e", "#1a237e", "#1a237e",
+      "#ff5722", "#ff5722",
+      ""
+    ]
+  end
+
   def navbar_items
     items = [
       { path: edit_user_registration_path, icon_class: 'fa-solid fa-user', menu_text: 'Profile' },

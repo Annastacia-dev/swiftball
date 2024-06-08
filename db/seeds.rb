@@ -107,8 +107,15 @@ puts '1989 Questions ...'
 Question.create!(
   quiz_id: quiz.id,
   era: '1989',
-  points: 6,
-  content: '1989 set'
+  points: 3,
+  content: '1989 top'
+)
+
+Question.create!(
+  quiz_id: quiz.id,
+  era: '1989',
+  points: 3,
+  content: '1989 skirt'
 )
 
 puts 'The Tortured Poets Department Questions ...'
@@ -123,8 +130,22 @@ Question.create!(
 Question.create!(
   quiz_id: quiz.id,
   era: 'the_tortured_poets_department',
-  points: 3,
-  content: 'Broken Heart Set'
+  points: 1,
+  content: 'Broken Heart Top'
+)
+
+Question.create!(
+  quiz_id: quiz.id,
+  era: 'the_tortured_poets_department',
+  points: 1,
+  content: 'Broken Heart Bottom'
+)
+
+Question.create!(
+  quiz_id: quiz.id,
+  era: 'the_tortured_poets_department',
+  points: 1,
+  content: 'Broken Heart jacket'
 )
 
 puts 'Acoustic Set Questions ...'
