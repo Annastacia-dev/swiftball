@@ -1,4 +1,4 @@
-<div class="pt-10 px-12 min-h-screen flex flex-col gap-5">
+<div class="pt-10 lg:px-12 px-5 min-h-screen flex flex-col gap-5">
 
   <% breadcrumbs = [
     { text: 'home', path: root_path },
@@ -21,32 +21,32 @@
     <hr class="my-1" />
     <div class="grid md:grid-cols-6 grid-cols-2 gap-x-3 gap-y-4 lg:mt-10 mt-4">
       <div class="flex flex-col gap-2 items-center bg-gray-100 py-5 rounded shadow-md">
-        <p class="md:text-7xl text-6xl font-bold"><%= @attempts.size %></p>
+        <p class="md:text-7xl text-5xl font-bold"><%= @attempts.size %></p>
         <p class="lg:text-sm text-xs uppercase">played</p>
       </div>
 
       <div class="flex flex-col gap-2 items-center bg-gray-100 py-5 rounded shadow-md">
-        <p class="md:text-7xl text-6xl font-bold"><%= @current_streak %></p>
+        <p class="md:text-7xl text-5xl font-bold"><%= @current_streak %></p>
         <p class="lg:text-sm text-xs uppercase">current streak</p>
       </div>
 
       <div class="flex flex-col gap-2 items-center bg-gray-100 py-5 rounded shadow-md">
-        <p class="md:text-7xl text-6xl font-bold"><%= @max_streak %></p>
+        <p class="md:text-7xl text-5xl font-bold"><%= @max_streak %></p>
         <p class="lg:text-sm text-xs uppercase">max streak</p>
       </div>
 
       <div class="flex flex-col gap-2 items-center bg-gray-100 py-5 rounded shadow-md">
-        <p class="md:text-7xl text-6xl font-bold"><%= @lifetime_points %></p>
+        <p class="md:text-7xl text-5xl font-bold"><%= @lifetime_points %></p>
         <p class="lg:text-sm text-xs uppercase">lifetime points</p>
       </div>
 
       <div class="flex flex-col gap-2 items-center bg-gray-100 py-5 rounded shadow-md">
-        <p class="md:text-7xl text-6xl font-bold"><%= @average_score %></p>
+        <p class="md:text-7xl text-5xl font-bold"><%= @average_score %></p>
         <p class="lg:text-sm text-xs uppercase">average score</p>
       </div>
 
       <div class="flex flex-col gap-2 items-center bg-gray-100 py-5 rounded shadow-md">
-        <p class="md:text-7xl text-6xl font-bold"><%= @best_score %></p>
+        <p class="md:text-7xl text-5xl font-bold"><%= @best_score %></p>
         <p class="lg:text-sm text-xs uppercase">best score</p>
       </div>
 
@@ -55,16 +55,16 @@
 
  <% unless @responses.empty? %>
     <div class="flex flex-col lg:mt-20 mt-5 capitalize">
-      <div class="flex justify-between">
+      <div class="flex lg:flex-row flex-col justify-between">
         <h5 class="uppercase font-bold flex gap-3">
           <i class="fa-solid fa-chart-pie"></i>
             prediction stats by era (%)
         </h5>
-        <div class="mt-4 mb-2 flex items-center">
+        <div class="mt-4 mb-2 flex lg:flex-row flex-col lg:items-center lg:text-base text-sm">
           <% path = current_user.admin? ? stats_path(@user) : stats_path %>
-          <%= form_tag(path , method: 'get', class: 'flex items-center gap-2') do %>
-            <%= select_tag 'chart_type', options_for_select(chart_types.map { |chart| [chart.humanize, chart] }, @chart_type), class: 'w-40 h-10 capitalize' %>
-            <button type='submit' class='px-4 py-2 rounded bg-black text-white cursor-pointer capitalize'>
+          <%= form_tag(path , method: 'get', class: 'flex lg:flex-row flex-col lg:items-center gap-2') do %>
+            <%= select_tag 'chart_type', options_for_select(chart_types.map { |chart| [chart.humanize, chart] }, @chart_type), class: 'w-40 h-10 capitalize lg:text-base text-sm' %>
+            <button type='submit' class='px-4 py-2 rounded bg-black text-white cursor-pointer capitalize lg:w-full w-40'>
               Render Chart
             </button>
           <% end %>
@@ -74,7 +74,7 @@
       <%= render_chart @questions_predictions_by_era_data, 'Eras', 'No data', 'eras'   %>
     </div>
 
-    <div class="flex flex-col lg:mt-20 mt-5 capitalize">
+    <div class="flex flex-col lg:mt-20 mt-5 capitalize overflow-x-scroll">
       <h5 class="uppercase font-bold flex gap-3">
         <i class="fa-solid fa-chart-pie"></i>
           prediction stats by question (%)

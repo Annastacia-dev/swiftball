@@ -1,4 +1,4 @@
-<div class="flex justify-between items-center mt-10 mb-10">
+<div class="flex justify-between items-center mt-10 mb-10 text-xs sm:text-sm">
   <h1 class="font-semibold text-xl font-courier"></h1>
     <div class="flex gap-2 items-center">
       <% if current_user.admin? %>
@@ -14,9 +14,9 @@
     </div>
 </div>
 
-<div id="tours" class="min-w-full mt-10">
+<div id="tours" class="min-w-full mt-10 text-xs sm:text-sm">
   <% @tours.each_with_index do |tour, index| %>
-    <div class="flex justify-between font-courier md:text-base text-sm">
+    <div class="flex justify-between font-courier">
       <% if current_user.admin? %>
         <%= link_to tour_path(tour), class:"flex lg:flex-row flex-col gap-2" do %>
           <span class="font-semibold uppercase flex gap-2 items-center hover:underline" title="<%= tour&.start_time&.strftime("%A %d %B %Y %H:%M") %>">
@@ -35,11 +35,11 @@
 
           <% if tour.status == 'open' %>
             <span> (closes at <%= tour.quiz_live_time.in_time_zone(current_user.timezone).strftime('%I:%M %p') %>)</span>
-        <% end %>
+          <% end %>
         <% end %>
       <% else %>
         <div class="flex flex-col gap-2">
-          <p class="flex lg:flex-row flex-col gap-2">
+          <p class="flex lg:flex-row flex-col gap-2 ">
             <span class="font-semibold uppercase flex gap-2 items-center"  title="<%= tour&.start_time&.strftime("%A %d %B %Y %H:%M") %>">
               <%= (tour.number).to_s.rjust(2, '0') %>. <%= tour.title %>
               <% if tour.status == 'open' %>
@@ -52,9 +52,6 @@
                 <i class="fa-solid fa-circle-xmark text-red-600" title="closed"></i>
               <% end %>
             </span>
-            <% if tour.status == 'open' %>
-              <span> (closes at <%= tour.quiz_live_time.in_time_zone(current_user.timezone).strftime('%I:%M %p') %>)</span>
-            <% end %>
           </p>
         </div>
       <% end %>
@@ -76,7 +73,6 @@
           <% if  current_user.has_attempted_quiz?(tour.quiz) %>
             <% attempt = current_user.attempts.find_by(quiz_id: tour.quiz.id) %>
             <%= link_to attempt_path(attempt), class: 'bg-black px-2 py-2 text-white lg:hover:bg-gray-900 rounded flex items-center gap-2' do %>
-
               <i class="fa-solid fa-square-poll-vertical" title="<%= tour.status == 'live' ? 'view progress' : tour.status == 'closed' ? 'view results' : '' %>"></i>
               <span class="lg:flex hidden">
                <%= tour.status == 'live' ? 'view progress' : tour.status == 'closed' ? 'view results' : '' %>
