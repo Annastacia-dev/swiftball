@@ -27,7 +27,7 @@
     <div class="flex flex-col mt-16 lg:px-20 text-sm">
       <% @attempts.each_with_index do |attempt, index| %>
         <div class="flex justify-between">
-          <p class="px-6 flex items-center gap-6">
+          <p class="px-6 flex items-center gap-6 lowercase">
             <span class="font-bold"><%= (index + 1) %>.</span>
             @<%= attempt.user.username  %>
           </p>
