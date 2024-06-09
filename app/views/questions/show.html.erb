@@ -1,7 +1,7 @@
 <div class="min-h-screen">
   <div class="p-5 my-5">
     <%= render 'components/breadcrumb', breadcrumbs: [
-      {text: 'Quizzes', path: tours_path},
+      {text: 'home', path: root_path},
       {text: "#{@quiz.title}", path: quiz_path(@quiz)},
       {text: "Questions", path: quiz_questions_path(@quiz)},
       {text: "#{@question.content}", path: quiz_question_path(@quiz, @question)},

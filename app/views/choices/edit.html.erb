@@ -1,7 +1,7 @@
 <div class="pt-10 px-12 min-h-screen">
 
   <%= render 'components/breadcrumb', breadcrumbs: [
-    { text: 'quizzes', path: root_path },
+    { text: 'home', path: root_path },
     { text: "#{@choice.question.quiz.tour.title}", path: tour_path(@choice.question.quiz.tour)},
     { text: "#{@choice.question.quiz.tour.title} Quiz", path: quiz_path(@choice.question.quiz)},
     { text: "Questions", path: quiz_questions_path(@choice.question.quiz)},

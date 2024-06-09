@@ -95,11 +95,15 @@
             <% piano_question = @attempt.quiz.questions.find_by(content: question_content) %>
             <% piano_correct_mashups = piano_question.mashup_answers.where(response_id: nil, correct: true) %>
             <% piano_correct_albums = piano_correct_mashups.pluck(:album_id) %>
+            <% piano_correct_songs = piano_correct_mashups.pluck(:song_id) %>
+
 
             <% question_content = 'pick guitar acoustic set album and song' %>
             <% guitar_question = @attempt.quiz.questions.find_by(content: question_content) %>
             <% guitar_correct_mashups = guitar_question.mashup_answers.where(response_id: nil, correct: true) %>
             <% guitar_correct_albums = guitar_correct_mashups.pluck(:album_id) %>
+            <% guitar_correct_songs = guitar_correct_mashups.pluck(:song_id) %>
+
 
 
             <% if mashup_answers.present? %>
@@ -123,6 +127,10 @@
                       <% if correct_songs.present? %>
                         <% if correct_songs.include?(mashup.song_id) %>
                           <i class="fa-solid fa-circle-check text-green-600"></i>
+                        <% elsif (response.question.id != piano_question.id) &&piano_correct_songs.include?(mashup.song_id) %>
+                          <i class="fa-solid fa-keyboard text-green-600"></i>
+                        <% elsif (response.question.id != guitar_question.id) &&guitar_correct_songs.include?(mashup.song_id) %>
+                            <i class="fa-solid fa-guitar text-green-600"></i>
                         <% else %>
                           <i class="fa-solid fa-xmark text-red-600"></i>
                         <% end %>

@@ -2,7 +2,7 @@
 
   <div class="">
     <%= render 'components/breadcrumb', breadcrumbs: [
-      {text: 'Quizzes', path: tours_path},
+      {text: 'home', path: root_path},
       {text: "#{@quiz.title} quiz", path: quiz_path(@quiz)},
       {text: "Questions", path: quiz_questions_path(@quiz)},
       {text: "#{@question.content}"}

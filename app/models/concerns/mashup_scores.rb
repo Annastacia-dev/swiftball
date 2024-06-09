@@ -76,17 +76,30 @@ module MashupScores
     guitar_mashup_predictions_albums = @guitar_mashup_predictions.pluck(:album_id).uniq
     piano_mashup_predictions_albums = @piano_mashup_predictions.pluck(:album_id).uniq
 
-    guitar_mashup_predictions_albums.each do |guitar_album|
-      if @piano_correct_albums.include?(guitar_album)
-        mm_score += 1
+    @guitar_mashup_predictions.each do |mashup|
+      if @piano_correct_songs.include?(mashup.song_id)
+        mm_score += @guitar_points
+      else
+        guitar_mashup_predictions_albums.each do |guitar_album|
+          if @piano_correct_albums.include?(guitar_album)
+            mm_score += 1
+          end
+        end
       end
     end
 
-    piano_mashup_predictions_albums.each do |guitar_album|
-      if @guitar_correct_albums.include?(guitar_album)
-        mm_score += 1
+    @piano_mashup_predictions.each do |mashup|
+      if @guitar_correct_songs.include?(mashup.song_id)
+        mm_score += @piano_points
+      else
+        piano_mashup_predictions_albums.each do |guitar_album|
+          if @guitar_correct_albums.include?(guitar_album)
+            mm_score += 1
+          end
+        end
       end
     end
+
     mm_score
   end
 

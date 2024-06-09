@@ -19,6 +19,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def authenticate_not_admin!
+    if current_user.admin?
+      respond_to do |format|
+      format.html  { redirect_to root_path, alert: "Admin users can't take a quiz" }
+      end
+    end
+  end
+
   def set_variables
     @timezones = ActiveSupport::TimeZone.all.map { |tz| [tz.tzinfo.identifier] }.sort
     @country_options_for_select = ISO3166::Country.all.map { |country| [country.iso_short_name, country.iso_short_name] }.sort
