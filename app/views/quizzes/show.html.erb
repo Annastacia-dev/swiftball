@@ -48,7 +48,7 @@
                <% if mashup.correct %>
                <div class="flex justify-between">
                 <p class="flex gap-2 items-center font-medium capitalize">
-                  <i class="fa-solid fa-circle-check text-green-600"></i> <%= mashup.album.title %> - <%= mashup.song.title %>
+                  <i class="fa-solid fa-circle-check text-green-600"></i> <%= mashup.album.abbr %> - <%= mashup.song.title %>
                 </p>
                 <% if current_user.admin? %>
                   <div class="flex items-center gap-1">

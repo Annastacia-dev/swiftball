@@ -136,7 +136,7 @@
 
                   <div class="flex flex-col gap-3">
                     <% correct_mashups.each do |mashup| %>
-                      <span class="text-violet-500 capitalize text-sm font-medium"> <%= mashup.album.title %> - <%= mashup.song.title %> </span>
+                      <span class="text-violet-500 capitalize text-sm font-medium"> <%= mashup.album.abbr %> - <%= mashup.song.title %> </span>
                     <% end %>
                   </div>
                 <% end %>

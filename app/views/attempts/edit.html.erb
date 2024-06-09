@@ -42,7 +42,7 @@
             <% mashup_answers.each do |mashup| %>
               <div class="flex justify-between px-5 py-3">
                 <p class="flex gap-2 items-center font-medium capitalize">
-                  <%= mashup.album.title %> - <%= mashup.song.title %>
+                  <%= mashup.album.abbr %> - <%= mashup.song.title %>
                 </p>
                 <%= link_to edit_mashup_answer_path(mashup) do %>
                   <i class="fa-solid fa-pencil px-4"></i>
