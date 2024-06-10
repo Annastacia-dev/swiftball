@@ -58,6 +58,6 @@ class HomeController < ApplicationController
     @next_tour = @tours[current_index - 1] if current_index && current_index > 0
     @previous_tour = @tours[current_index + 1] if current_index && current_index < @tours.size - 1
 
-    @attempts = Attempt.where(quiz_id: @tour.quiz.id).paginate(page: params[:page], per_page: 10)
+    @attempts = Attempt.where(quiz_id: @tour.quiz.id).sort_by { |attempt| -attempt.score }
   end
 end
