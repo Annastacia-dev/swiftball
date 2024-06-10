@@ -1,5 +1,30 @@
 module ApplicationHelper
 
+  def navbar_items
+    items = [
+      { path: root_path, icon_class: 'fa-solid fa-house', menu_text: 'home' },
+      { path: edit_user_registration_path, icon_class: 'fa-solid fa-user', menu_text: 'Profile' }
+    ]
+
+    if current_user.admin?
+      items.unshift( { path: albums_path, icon_class: 'fa-solid fa-record-vinyl', menu_text: 'Albums'})
+      items << ( { path: users_path, icon_class: 'fa-solid fa-user', menu_text: 'Users'})
+    else
+      items << ({ path: stats_path, icon_class: 'fa-solid fa-chart-simple', menu_text: 'Statistics' })
+      items << ({ path: 'https://ko-fi.com/annetotoh/goal?g=0', icon_class: 'fa-solid fa-server', menu_text: 'Help Keep Servers Running' })
+    end
+
+    items.push({ path: terms_and_conditions_path, icon_class: 'fa-regular fa-newspaper', menu_text: 'Terms & Conditions'})
+
+    items.push({ path: privacy_policy_path, icon_class: 'fa-solid fa-user-lock', menu_text: 'Privacy Policy'})
+
+    items.push({ path: disclaimer_path, icon_class: 'fa-solid fa-triangle-exclamation', menu_text: 'Disclaimer'})
+
+    items.push({ path: destroy_user_session_path, icon_class: 'fa-solid fa-right-from-bracket', menu_text: 'Logout', type: 'button', method: :delete })
+
+    items
+  end
+
   def notification_class(type)
     case type
     when 'alert'
@@ -103,29 +128,5 @@ module ApplicationHelper
     else
       raise ArgumentError, "Invalid chart type: #{@chart_type}"
     end
-  end
-
-  def navbar_items
-    items = [
-      { path: edit_user_registration_path, icon_class: 'fa-solid fa-user', menu_text: 'Profile' },
-    ]
-
-    if current_user.admin?
-      items.unshift( { path: albums_path, icon_class: 'fa-solid fa-record-vinyl', menu_text: 'Albums'})
-      items << ( { path: users_path, icon_class: 'fa-solid fa-user', menu_text: 'Users'})
-    else
-      items << ({ path: stats_path, icon_class: 'fa-solid fa-chart-simple', menu_text: 'Statistics' })
-      items << ({ path: 'https://ko-fi.com/annetotoh/goal?g=0', icon_class: 'fa-solid fa-server', menu_text: 'Help Keep Servers Running' })
-    end
-
-    items.push({ path: terms_and_conditions_path, icon_class: 'fa-regular fa-newspaper', menu_text: 'Terms & Conditions'})
-
-    items.push({ path: privacy_policy_path, icon_class: 'fa-solid fa-user-lock', menu_text: 'Privacy Policy'})
-
-    items.push({ path: disclaimer_path, icon_class: 'fa-solid fa-triangle-exclamation', menu_text: 'Disclaimer'})
-
-    items.push({ path: destroy_user_session_path, icon_class: 'fa-solid fa-right-from-bracket', menu_text: 'Logout', type: 'button', method: :delete })
-
-    items
   end
 end

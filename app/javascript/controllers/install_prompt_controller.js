@@ -5,7 +5,6 @@ export default class extends Controller {
   static targets = [ "button" ]
 
   connect() {
-    console.log('Install Prompt connected')
     this.deferredPrompt = null
     this.buttonTarget.style.display = 'none'
 

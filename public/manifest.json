@@ -129,12 +129,6 @@
       "short_name": "predictions",
       "description": "View my predictions",
       "url": "/attempts"
-    },
-    {
-      "name": "Keep Servers Running",
-      "short_name": "Keep Servers Running",
-      "description": "Help Keep Servers Running",
-      "url": "https://ko-fi.com/annetotoh/goal?g=0"
     }
   ],
   "theme_color": "#f2f2f2",
