@@ -26,6 +26,34 @@
     transform: rotate(-3deg); /* Slight rotation */
   }
 
+  .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+
+  .pagination a, .pagination span {
+    padding: 10px;
+    margin: 0 2px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+    color: #fff;
+  }
+
+  .pagination .disabled {
+    color: #777;
+  }
+
+  .pagination .current {
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+  }
+
   @media (min-width: 640px) {
     .masonry-grid {
       column-count: 2;
