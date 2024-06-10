@@ -1,0 +1,136 @@
+{
+  "name": "swiftball",
+  "short_name": "swiftball",
+  "description": "Keep record of your swiftball answers & score.",
+  "scope": "/",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "categories": ["entertainment", "games", "music"],
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "type": "image/x-icon",
+      "sizes": "16x16"
+    },
+    {
+      "src": "/icon-48.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "/icon-72.png",
+      "type": "image/png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "/icon-96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "/icon-144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "/icon-168.png",
+      "type": "image/png",
+      "sizes": "168x168"
+    },
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/icon-48-maskable.png",
+      "type": "image/png",
+      "sizes": "48x48",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-72-maskable.png",
+      "type": "image/png",
+      "sizes": "72x72",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-96-maskable.png",
+      "type": "image/png",
+      "sizes": "96x96",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-144-maskable.png",
+      "type": "image/png",
+      "sizes": "144x144",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-168-maskable.png",
+      "type": "image/png",
+      "sizes": "168x168",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-192-maskable.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-512-maskable.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+  {
+  "src": "/desktop.png",
+  "sizes": "1024x768",
+  "type": "image/png",
+  "form_factor": "wide"
+  },
+  {
+  "src": "/mobile.png",
+  "sizes": "640x480",
+  "type": "image/png",
+  "form_factor": "narrow"
+  }
+  ],
+  "shortcuts": [
+  {
+    "name": "View Stats",
+    "short_name": "Stats",
+    "description": "View Statistics",
+    "url": "/stats"
+  },
+  {
+    "name": "View Leaderboard",
+    "short_name": "Leaderboard",
+    "description": "View Leaderboard",
+    "url": "/leaderboard"
+  },
+  {
+    "name": "Profile",
+    "short_name": "profile",
+    "description": "Edit my profile",
+    "url": "/users/edit"
+  },
+  {
+    "name": "Server Donation",
+    "short_name": "contribute",
+    "description": "Help Keep Servers Running",
+    "url": "https://ko-fi.com/annetotoh/goal?g=0"
+  }
+  ],
+  "theme_color": "#f2f2f2",
+  "background_color": "#f2f2f2"
+  }

@@ -25,11 +25,13 @@
     <meta name="distribution" content="global"></meta>
     <meta name="rating" content="general"></meta>
     <meta name="referrer" content="no-referrer-when-downgrade"/>
+    <meta name="next-head-count" content="18">
+    <meta name="theme-color" content="#f2f2f2">
 
     <meta property="og:title" content="swiftball">
     <meta property="og:description" content="Keep record of your swiftball answers & score.">
     <meta property="og:url" content="https://www.swiftball.online">
-    <meta property="og:image" content="https://res.cloudinary.com/dlahz5ciz/image/upload/v1717085463/swiftball_re7lrk.png">
+    <meta property="og:image" content="https://www.swiftball.online/swiftball.jpg">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="swiftball">
     <meta property="og:locale" content="en_US">
@@ -39,11 +41,12 @@
     <meta name="twitter:creator" content="@swiftball">
     <meta name="twitter:title" content="swiftball">
     <meta name="twitter:description" content="">
-    <meta name="twitter:image" content="https://res.cloudinary.com/dlahz5ciz/image/upload/v1717085463/swiftball_re7lrk.png">
+    <meta name="twitter:image" content="https://www.swiftball.online/swiftball.jpg">
 
     <meta name="google-site-verification" content="o7k1ofySYtox3sXmZV3NPITuGzflpXGECyrqhpOuRm0" />
 
     <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -73,8 +76,20 @@
           <% end %>
         </div>
       <% end %>
+      <button class="<%= current_user.present? ? 'bg-black text-white hover:bg-gray-100 hover:text-black' : 'bg-gray-100 hover:bg-gray-300' %>  px-5 py-2 rounded shadow absolute top-2 right-2 capitalize flex items-center gap-2">
+        <i class="fa-solid fa-mobile-screen-button"></i>
+        install app
+      </button>
+      <div data-controller="install-prompt">
+        <button data-action="install-prompt#install" data-install-prompt-target="button" style="display: none;">
+          <i class="fa-solid fa-mobile-screen-button"></i>
+          Install App
+        </button>
+      </div>
+
       <%= yield %>
     </main>
+
 
     <script>
     document.addEventListener("turbo:load", () => {
