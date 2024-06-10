@@ -106,30 +106,36 @@
   }
   ],
   "shortcuts": [
-  {
-    "name": "View Stats",
-    "short_name": "Stats",
-    "description": "View Statistics",
-    "url": "/stats"
-  },
-  {
-    "name": "View Leaderboard",
-    "short_name": "Leaderboard",
-    "description": "View Leaderboard",
-    "url": "/leaderboard"
-  },
-  {
-    "name": "Profile",
-    "short_name": "profile",
-    "description": "Edit my profile",
-    "url": "/users/edit"
-  },
-  {
-    "name": "Server Donation",
-    "short_name": "contribute",
-    "description": "Help Keep Servers Running",
-    "url": "https://ko-fi.com/annetotoh/goal?g=0"
-  }
+    {
+      "name": "Home",
+      "short_name": "Home",
+      "description": "View Upcoming and Past Predictions",
+      "url": "/"
+    },
+    {
+      "name": "View Stats",
+      "short_name": "Stats",
+      "description": "View Statistics",
+      "url": "/stats"
+    },
+    {
+      "name": "View Leaderboard",
+      "short_name": "Leaderboard",
+      "description": "View Leaderboard",
+      "url": "/leaderboard"
+    },
+    {
+      "name": "My Predictions",
+      "short_name": "predictions",
+      "description": "View my predictions",
+      "url": "/attempts"
+    },
+    {
+      "name": "Keep Servers Running",
+      "short_name": "Keep Servers Running",
+      "description": "Help Keep Servers Running",
+      "url": "https://ko-fi.com/annetotoh/goal?g=0"
+    }
   ],
   "theme_color": "#f2f2f2",
   "background_color": "#f2f2f2"

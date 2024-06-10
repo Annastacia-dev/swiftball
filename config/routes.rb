@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/stats(/:id)', to: 'home#stats', as: :stats
   get 'terms_and_conditions', to: 'home#terms_and_conditions'
   get 'privacy_policy', to: 'home#privacy_policy'
+  get 'disclaimer', to: 'home#disclaimer'
   get 'leaderboard', to: 'home#leaderboard'
 
   devise_for :users, :controllers => { :registrations => "registrations" }
