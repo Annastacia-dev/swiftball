@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[ terms_and_conditions privacy_policy manifest]
+  skip_before_action :authenticate_user!, only: %i[ terms_and_conditions privacy_policy]
 
   def stats
     @chart_type = params[:chart_type] || 'bar_chart'
