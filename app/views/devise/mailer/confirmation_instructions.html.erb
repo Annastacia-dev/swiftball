@@ -1,5 +1,29 @@
-<p>Welcome <%= @email %>!</p>
+<div style="font-family: Roboto, sans-serif; padding: 20px; border-radius: 8px; max-width: 600px; margin: 0 auto;">
 
-<p>You can confirm your account email through the link below:</p>
+  <img src="https://swiftball.online/icon-96.png" style="display: flex; justify-content: center; align-items: center;" />
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+  <br />
+
+  <p style="font-weight: bold;">Hello <%= @resource.name %>,</p>
+
+  <br />
+
+  <p>Thank you for signing up for swiftball, where you can keep track of your swiftball answers & score.</p>
+
+  <br />
+
+  <p style="font-size: 16px;">Click on the button below to verify your email</p>
+
+  <br />
+
+  <button style="font-size: 16px; background-color: #000; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+    <%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token), style: 'color: #fff; text-decoration: none;' %>
+  </button>
+
+  <br />
+  <br />
+
+  <p>Best,</p>
+  <p>Swiftball online team</p>
+
+</div>
