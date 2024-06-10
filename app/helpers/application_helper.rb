@@ -10,7 +10,7 @@ module ApplicationHelper
       items.insert(1, { path: albums_path, icon_class: 'fa-solid fa-record-vinyl', menu_text: 'Albums'})
       items << ( { path: users_path, icon_class: 'fa-solid fa-user', menu_text: 'Users'})
     else
-      items << ({ path: stats_path, icon_class: 'fa-solid fa-chart-simple', menu_text: 'Statistics' })
+      items.insert(1, { path: stats_path, icon_class: 'fa-solid fa-chart-simple', menu_text: 'Statistics' })
       items << ({ path: 'https://ko-fi.com/annetotoh/goal?g=0', icon_class: 'fa-solid fa-server', menu_text: 'Help Keep Servers Running' })
     end
 
@@ -21,6 +21,8 @@ module ApplicationHelper
     items.push({ path: disclaimer_path, icon_class: 'fa-solid fa-triangle-exclamation', menu_text: 'Disclaimer'})
 
     items.push({ path: destroy_user_session_path, icon_class: 'fa-solid fa-right-from-bracket', menu_text: 'Logout', type: 'button', method: :delete })
+
+    items.push({ path:  registration_path('user'), icon_class: 'fa-solid fa-delete-left', menu_text: 'Delete my account', type: 'button', method: :delete })
 
     items
   end
