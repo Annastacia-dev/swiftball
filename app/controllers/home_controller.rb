@@ -1,10 +1,6 @@
 class HomeController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[ terms_and_conditions privacy_policy manifest]
 
-  def manifest
-    render file: "#{Rails.root}/manifest.json", content_type: 'application/json'
-  end
-
   def stats
     @chart_type = params[:chart_type] || 'bar_chart'
     @user = current_user.admin? ? User.find(params[:id]) : current_user

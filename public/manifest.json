@@ -1,0 +1,81 @@
+{
+  "name": "swiftball",
+  "short_name": "swiftball",
+  "description": "Keep record of your swiftball answers & score.",
+  "scope": "/",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "categories": ["entertainment", "games", "music"],
+  "icons": [
+  {
+  "src": "/favicon.ico",
+  "type": "image/x-icon",
+  "sizes": "16x16"
+  },
+  {
+  "src": "/images/logo.png",
+  "type": "image/png",
+  "sizes": "192x192"
+  },
+  {
+  "src": "/images/logo.png",
+  "type": "image/png",
+  "sizes": "512x512"
+  },
+  {
+  "src": "/images/icon.png",
+  "type": "image/png",
+  "sizes": "192x192",
+  "purpose": "maskable"
+  },
+  {
+  "src": "/images/icon.png",
+  "type": "image/png",
+  "sizes": "512x512",
+  "purpose": "maskable"
+  }
+  ],
+  "screenshots": [
+  {
+  "src": "/images/desktop.png",
+  "sizes": "1024x768",
+  "type": "image/png",
+  "form_factor": "wide"
+  },
+  {
+  "src": "/images/mobile.png",
+  "sizes": "640x480",
+  "type": "image/png",
+  "form_factor": "narrow"
+  }
+  ],
+  "shortcuts": [
+  {
+    "name": "View Stats",
+    "short_name": "Stats",
+    "description": "View Statistics",
+    "url": "/stats"
+  },
+  {
+    "name": "View Leaderboard",
+    "short_name": "Leaderboard",
+    "description": "View Leaderboard",
+    "url": "/leaderboard"
+  },
+  {
+    "name": "Profile",
+    "short_name": "profile",
+    "description": "Edit my profile",
+    "url": "/users/edit"
+  },
+  {
+    "name": "Server Donation",
+    "short_name": "contribute",
+    "description": "Help Keep Servers Running",
+    "url": "https://ko-fi.com/annetotoh/goal?g=0"
+  }
+  ],
+  "theme_color": "#f2f2f2",
+  "background_color": "#f2f2f2"
+  }
