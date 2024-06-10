@@ -3,6 +3,8 @@ source "https://rubygems.org"
 ruby "3.2.2"
 
 gem 'aws-sdk', require: false
+gem "actionpack", ">= 7.1.3.4"
+gem "actiontext", ">= 7.1.3.4"
 gem "bootsnap", require: false
 gem 'chartkick', '~> 5.0', '>= 5.0.7'
 gem 'cloudinary', '~> 2.1', '>= 2.1.0'
