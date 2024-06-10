@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   def authenticate_not_admin!
     if current_user.admin?
       respond_to do |format|
-      format.html  { redirect_to root_path, alert: "Admin users can't take a quiz" }
+      format.html  { redirect_to root_path, alert: "Admin users can't access this" }
       end
     end
   end

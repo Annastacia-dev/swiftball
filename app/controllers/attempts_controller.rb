@@ -1,4 +1,5 @@
 class AttemptsController < ApplicationController
+  before_action :authenticate_not_admin!, only: %i[index]
   before_action :set_attempt, only: %i[show edit update]
   before_action :set_quiz, only: %i[show edit update]
 

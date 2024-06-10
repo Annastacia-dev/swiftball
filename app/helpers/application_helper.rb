@@ -2,12 +2,12 @@ module ApplicationHelper
 
   def navbar_items
     items = [
-      { path: root_path, icon_class: 'fa-solid fa-house', menu_text: 'home' },
+      { path: root_path, icon_class: 'fa-solid fa-house', menu_text: 'Home' },
       { path: edit_user_registration_path, icon_class: 'fa-solid fa-user', menu_text: 'Profile' }
     ]
 
     if current_user.admin?
-      items.unshift( { path: albums_path, icon_class: 'fa-solid fa-record-vinyl', menu_text: 'Albums'})
+      items.insert(1, { path: albums_path, icon_class: 'fa-solid fa-record-vinyl', menu_text: 'Albums'})
       items << ( { path: users_path, icon_class: 'fa-solid fa-user', menu_text: 'Users'})
     else
       items << ({ path: stats_path, icon_class: 'fa-solid fa-chart-simple', menu_text: 'Statistics' })
