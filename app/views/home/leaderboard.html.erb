@@ -25,7 +25,7 @@
 
   <% unless @attempts.blank? %>
     <div class="flex flex-col mt-16 lg:px-20 text-sm">
-      <% @attempts.each_with_index do |attempt, index| %>
+      <% @attempts.sort_by { |attempt| -attempt.score }.each_with_index do |attempt, index| %>
         <div class="flex justify-between">
           <p class="px-6 flex items-center gap-6 lowercase">
             <span class="font-bold"><%= (index + 1) %>.</span>
@@ -49,4 +49,9 @@
      No stats yet.
     </div>
   <% end %>
+
+  <div class="flex justify-end mt-3">
+    <%= will_paginate @attempts %>
+  </div>
+
 </div>

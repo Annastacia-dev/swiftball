@@ -4,7 +4,7 @@ class QuizzesController < ApplicationController
   before_action :authenticate_admin!, only: %i[show edit destroy open close]
   before_action :authenticate_not_admin!, only: %i[take]
   before_action :check_tour_open, only: %i[take]
-  before_action :set_tour
+  before_action :set_tour, except: %i[index]
 
 
   # GET /quizzes/1 or /quizzes/1.json

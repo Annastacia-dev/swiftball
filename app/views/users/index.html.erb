@@ -9,7 +9,7 @@
     <h5 class="font-semibold font-courier uppercase text-md ">users (<%= @users.size %>) </h5>
   </div>
   <%= render 'table', users: @users %>
-  <div class="flex justify-end t-3">
+  <div class="flex justify-end mt-3">
     <%= will_paginate @users %>
   </div>
 </div>

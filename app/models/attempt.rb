@@ -84,7 +84,7 @@ class Attempt < ApplicationRecord
 
   def mashup_max_score(ans)
     max_points = 0
-    case ans.downcase
+    case ans&.downcase
     when 'no mashup'
       max_points = 3
     when 'mashup (2 songs) '
@@ -94,7 +94,7 @@ class Attempt < ApplicationRecord
     when 'mashup (4+ songs)'
       max_points = 0.75
     else
-      raise 'Not a valid choice'
+      max_points = 0
     end
   end
 end
