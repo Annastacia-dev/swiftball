@@ -4,7 +4,5 @@ class UsersController < ApplicationController
 
   def index
     @users = User.order(created_at: :desc).where.not(role: 'admin')
-    @confirmed_users = @users.select { |user| user.confirmed? }
-    @unconfirmed_users = @users.select { |user| !user.confirmed? }
   end
 end
