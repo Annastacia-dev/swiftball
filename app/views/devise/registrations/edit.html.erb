@@ -5,7 +5,7 @@
     { text: 'edit profile'}
   ] %>
 
-  <div class="flex justify-between mb-10">
+  <div class="flex justify-between">
     <h2 class="font-semibold text-xl font-courier capitalize">Edit profile</h2>
   </div>
 
@@ -68,10 +68,9 @@
         </div>
       </div>
 
-    <div class="actions">
+    <div class="flex flex-col">
       <%= f.submit "Update", class: "px-4 py-2 bg-black text-white mt-4 rounded lg:w-1/2" %>
+      <%= button_to "Delete my account", registration_path(resource_name), data: { confirm: "This will delete all your data on our account. This action is permanent and irreversible.  Are you sure?", turbo_confirm: "This will delete all your data on our account. This action is permanent and irreversible.  Are you sure?" }, method: :delete, class: "bg-red-500 text-white px-4 py-2 rounded mt-5 lg:w-1/2 mb-4" %>
     </div>
   <% end %>
-
-  <%= button_to "Delete my account", registration_path(resource_name), data: { confirm: "This will delete all your data on our account. This action is permanent and irreversible.  Are you sure?", turbo_confirm: "This will delete all your data on our account. This action is permanent and irreversible.  Are you sure?" }, method: :delete, class: "bg-red-500 text-white px-4 py-2 rounded mt-5" %>
 </div>

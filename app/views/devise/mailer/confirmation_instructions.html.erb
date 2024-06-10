@@ -4,11 +4,11 @@
 
   <br />
 
-  <p style="font-weight: bold;">Hello <%= @resource.name %>,</p>
+  <p style="font-weight: bold; font-size: 16px;">Hello <%= @resource.name %>,</p>
 
   <br />
 
-  <p>Thank you for signing up for swiftball.</p>
+  <p style="font-size: 16px;">Thank you for signing up for swiftball.</p>
 
   <button style="font-size: 16px; background-color: #000; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
     <%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token), style: 'color: #fff; text-decoration: none;' %>
