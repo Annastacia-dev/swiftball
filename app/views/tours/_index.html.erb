@@ -2,12 +2,12 @@
   <h1 class="font-semibold text-xl font-courier"></h1>
     <div class="flex gap-2 items-center">
       <% if current_user.admin? %>
-        <%= link_to new_tour_path, class: "rounded py-2 px-4 bg-black/95 dark:bg-gray-50 dark:text-black dark:  font-medium capitalize flex gap-2 items-center" do %>
+        <%= link_to new_tour_path, class: "rounded py-2 px-4 dark:bg-black bg-gray-200  font-medium capitalize flex gap-2 items-center font-courier" do %>
           <i class="fa-solid fa-plus"></i>
           new
         <% end %>
       <% end %>
-      <%= link_to leaderboard_path, class: "rounded py-2 px-4 bg-black/95 dark:bg-gray-50 dark:text-black dark:  font-medium capitalize flex gap-2 items-center font-courier lg:hover:bg-gray-900 lg:dark:hover:bg-gray-200" do %>
+      <%= link_to leaderboard_path, class: "rounded py-2 px-4 dark:bg-black bg-gray-200  font-medium capitalize flex gap-2 items-center font-courier lg:dark:hover:bg-gray-900 lg:hover:bg-gray-100" do %>
           <i class="fa-solid fa-chess-board"></i>
         leaderboard
       <% end %>
@@ -63,7 +63,7 @@
           <% if  current_user.has_attempted_quiz?(tour.quiz) %>
             <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: attempt_dropdown_items(tour.quiz) %>
           <% else %>
-            <%= link_to take_quiz_path(tour.quiz), class:"bg-black/95 dark:bg-gray-50 dark:text-black dark:  px-4 py-2 rounded flex items-center gap-2 lg:hover:bg-gray-900 lg:dark:hover:bg-gray-200" do %>
+            <%= link_to take_quiz_path(tour.quiz), class:"bg-gray-200 dark:bg-black  px-4 py-2 rounded flex items-center gap-2 lg:hover:bg-gray-900 lg:dark:hover:bg-gray-200" do %>
               <i class="fa-solid fa-wand-magic-sparkles" title="predict"></i>
               <span>predict</span>
             <% end %>
@@ -71,7 +71,7 @@
         <% elsif tour.status == 'closed' || tour.status == 'live' %>
           <% if  current_user.has_attempted_quiz?(tour.quiz) %>
             <% attempt = current_user.attempts.find_by(quiz_id: tour.quiz.id) %>
-            <%= link_to attempt_path(attempt), class: 'bg-black/95 dark:bg-gray-50 dark: px-2 py-2  lg:hover:bg-gray-900 lg:dark:hover:bg-gray-200 dark:text-black rounded flex items-center gap-2' do %>
+            <%= link_to attempt_path(attempt), class: 'bg-gray-200 dark:bg-black px-2 py-2  lg:hover:bg-gray-900 lg:dark:hover:bg-gray-200 rounded flex items-center gap-2' do %>
               <i class="fa-solid fa-square-poll-vertical" title="<%= tour.status == 'live' ? 'view progress' : tour.status == 'closed' ? 'view results' : '' %>"></i>
               <span class="lg:flex hidden">
                <%= tour.status == 'live' ? 'view progress' : tour.status == 'closed' ? 'view results' : '' %>
@@ -82,14 +82,14 @@
             <% end %>
           <% else %>
             <% if tour.status == 'closed' %>
-             <%= link_to results_quiz_path(tour.quiz), class: 'bg-black/95 dark:bg-gray-50 dark:text-black dark: px-2 py-2  lg:hover:bg-gray-900 lg:dark:hover:bg-gray-200 rounded flex items-center gap-2' do %>
+             <%= link_to results_quiz_path(tour.quiz), class: 'bg-gray-200 dark:bg-black px-2 py-2  lg:hover:bg-gray-900 lg:dark:hover:bg-gray-200 rounded flex items-center gap-2' do %>
               <i class="fa-solid fa-square-poll-vertical title="see results"></i>
               <span class="lg:flex hidden">see results </span>
               <span class="lg:hidden flex">results</span>
              <% end %>
             <% elsif tour.status == 'live' %>
               <i class="fa-solid fa-bullseye text-green-600 animate-ping" title="live"></i>
-              <%= link_to progress_quiz_path(tour.quiz), class: 'bg-black/95 dark:bg-gray-50 dark:text-black dark: px-2 py-2  lg:hover:bg-gray-900 rounded flex items-center gap-2' do %>
+              <%= link_to progress_quiz_path(tour.quiz), class: 'bg-gray-200 dark:bg-black px-2 py-2  lg:hover:bg-gray-900 rounded flex items-center gap-2' do %>
                 <i class="fa-solid fa-square-poll-vertical title="see results"></i>
                 <span class="lg:flex hidden">see live progress </span>
                 <span class="lg:hidden flex">view</span>
