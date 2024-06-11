@@ -1,4 +1,4 @@
-<ul class="flex-col flex fixed lg:right-3/4 right-1/4 inset-0 bg-black px-5 py-16 gap-6 text-white font-normal text-sm hidden z-50 font-courier" id="sidebar">
+<ul class="flex-col flex fixed lg:right-3/4 right-1/4 inset-0 dark:bg-black bg-gray-50 px-5 py-16 gap-6  font-normal text-sm hidden z-50 font-courier" id="sidebar">
   <i class='fa-solid fa-xmark cursor-pointer absolute right-10 top-5 text-lg' onclick="document.getElementById('sidebar').classList.toggle('hidden')"></i>
   <% items.each_with_index do |item, index| %>
     <% if item[:children] %>
@@ -48,24 +48,17 @@
 
 <script>
   function toggleDropdown(menuId, iconId) {
-
-    var dropdowns = document.querySelectorAll('[id$="_dropdown"]');
-    var icons = document.querySelectorAll('[id$="_icon"]');
-
-
-    dropdowns.forEach(function(dropdown) {
-      dropdown.classList.add('hidden');
-    });
-    icons.forEach(function(icon) {
-      icon.classList.add('rotate-180');
-    });
-
     var dropdown = document.getElementById(menuId + '_dropdown');
     var icon = document.getElementById(iconId + '_icon');
 
-    console.log(menuId, iconId)
-
     if (dropdown.classList.contains('hidden')) {
+      document.querySelectorAll('[id$="_dropdown"]').forEach(function(dd) {
+        dd.classList.add('hidden');
+      });
+      document.querySelectorAll('[id$="_icon"]').forEach(function(ic) {
+        ic.classList.add('rotate-180');
+      });
+
       dropdown.classList.remove('hidden');
       icon.classList.remove('rotate-180');
     } else {

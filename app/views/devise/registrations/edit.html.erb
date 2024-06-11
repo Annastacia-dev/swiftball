@@ -12,64 +12,33 @@
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "flex flex-col gap-3"}) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
 
-    <div class="lg:grid lg:grid-cols-2 gap-4  text-sm mt-5">
-      <div class="lg:w-3/4 flex flex-col gap-5">
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <% end %>
+
+    <div class="lg:grid lg:grid-cols-2 gap-5 text-sm mt-5 lg:w-3/4">
         <div class="flex flex-col gap-1">
           <%= f.label :name %>
-          <%= f.text_field :name, autofocus: true%>
+          <%= f.text_field :name, autofocus: true, class: 'bg-transparent' %>
         </div>
 
         <div class="flex flex-col gap-1">
           <%= f.label :username %>
-          <%= f.text_field :username, autofocus: true%>
-        </div>
-
-        <div class="flex flex-col gap-1">
-          <%= f.label :email %>
-          <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+          <%= f.text_field :username, autofocus: true, class: 'bg-transparent' %>
         </div>
 
         <div class="flex flex-col gap-1">
           <%= f.label :country %>
-          <%= f.select :country, options_for_select(@country_options_for_select, @user.country), {}, class: "", required: true %>
-        </div>
-
-          <div class="flex flex-col gap-1">
-            <%= f.label :timezone %>
-            <%= f.select :timezone, @timezones, {}, required: true, class: "" %>
-          </div>
-      </div>
-
-      <div class="lg:w-3/4 flex flex-col gap-5">
-        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-          <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-        <% end %>
-
-        <div class="flex flex-col gap-1">
-          <div class="flex gap-1 items-center">
-            <%= f.label :password %> <i class="text-xs">(leave blank if you don't want to change it)</i>
-          </div>
-          <%= f.password_field :password, autocomplete: "new-password" %>
-          <% if @minimum_password_length %>
-            <em><%= @minimum_password_length %> characters minimum</em>
-          <% end %>
+          <%= f.select :country, options_for_select(@country_options_for_select, @user.country), {}, class: "", required: true, class: "dark:bg-black" %>
         </div>
 
         <div class="flex flex-col gap-1">
-          <%= f.label :password_confirmation %>
-          <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+          <%= f.label :timezone %>
+          <%= f.select :timezone, @timezones, {}, required: true, class: "dark:bg-black" %>
         </div>
-
-        <div class="flex flex-col gap-1">
-          <div class="flex gap-1">
-            <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i>
-          </div>
-          <%= f.password_field :current_password, autocomplete: "current-password" %>
-        </div>
-      </div>
-
+    </div>
     <div class="flex flex-col">
-      <%= f.submit "Update", class: "px-4 py-2 bg-black text-white mt-4 rounded lg:w-1/2" %>
+      <%= f.submit "Update", class: "px-4 py-2 dark:bg-black bg-gray-200  mt-4 rounded lg:w-40 cursor-pointer" %>
     </div>
   <% end %>
 </div>

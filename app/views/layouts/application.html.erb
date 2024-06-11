@@ -57,13 +57,13 @@
     <%= hotwire_livereload_tags if Rails.env.development? %>
   </head>
 
-  <body>
+  <body class="dark:text-white">
     <% if current_user %>
      <%= render 'layouts/navbar' %>
     <% end %>
-    <main class="bg-gray-50 relative">
+    <main class="bg-gray-50 dark:bg-black/95  dark: relative">
       <% unless flash.empty? %>
-        <div id="flash" class="text-white  absolute top-0 lg:right-40 z-50 lg:w-[50%] w-full shadow-lg rounded">
+        <div id="flash" class="  absolute top-0 lg:right-40 z-50 lg:w-[50%] w-full shadow-lg rounded">
           <% flash.keys.each do |k| %>
             <div class="sm:px-20 px-3 py-6 flex justify-center items-center gap-4 border-l-4 text-sm relative <%= notification_class(k) %>">
               <i class="<%= notification_icon(k) %> text-xl"></i>
@@ -76,12 +76,13 @@
           <% end %>
         </div>
       <% end %>
+
       <div data-controller="install-prompt">
         <button
           data-action="install-prompt#install"
           data-install-prompt-target="button"
           style="display: none;"
-          class="<%= current_user.present? ? 'bg-black text-white hover:bg-gray-100 hover:text-black' : 'bg-gray-100 hover:bg-gray-300' %>  px-5 py-2 rounded shadow absolute top-2 right-2 capitalize flex items-center gap-2"
+          class="<%= current_user.present? ? 'dark:bg-black bg-gray-200 hover:bg-gray-100 hover:' : 'bg-gray-100 hover:bg-gray-300' %>  px-5 py-2 rounded shadow absolute top-2 right-2 capitalize flex items-center gap-2"
           >
           <i class="fa-solid fa-mobile-screen-button"></i>
           Install App
@@ -95,21 +96,21 @@
     <script>
     document.addEventListener("turbo:load", () => {
       const flash = document.getElementById('flash');
-        const progressBar = document.getElementById('progress-bar');
-        let progress = 100;
-        let intervalId;
+      const progressBar = document.getElementById('progress-bar');
+      let progress = 100;
+      let intervalId;
 
-        if (flash) {
-          intervalId = setInterval(() => {
-            progress -= 1;
-            progressBar.style.width = `${progress}%`;
+      if (flash) {
+        intervalId = setInterval(() => {
+          progress -= 1;
+          progressBar.style.width = `${progress}%`;
 
-            if (progress <= 0) {
-              clearInterval(intervalId);
-              flash.classList.add('hidden');
-            }
-          }, 50);
-        }
+          if (progress <= 0) {
+            clearInterval(intervalId);
+            flash.classList.add('hidden');
+          }
+        }, 50);
+      }
 
       function closeFlash() {
         const flash = document.getElementById('flash');
@@ -117,6 +118,46 @@
           flash.classList.add('hidden');
         }
       }
+
+      const toggleButton = document.getElementById('dark-mode-toggle');
+      const htmlElement = document.documentElement;
+      const theme = localStorage.getItem('theme')
+
+      const updateButtonText = (theme) => {
+        if (theme === 'dark') {
+          toggleButton.innerHTML = '<i class="fa-regular fa-lightbulb"></i>';
+        } else {
+          toggleButton.innerHTML = '<i class="fa-solid fa-lightbulb"></i>';
+        }
+      };
+
+      if (theme === 'dark') {
+        htmlElement.classList.add('dark');
+      } else {
+        htmlElement.classList.remove('dark');
+      }
+
+      updateButtonText(theme);
+
+      toggleButton.addEventListener('click', () => {
+        if (htmlElement.classList.contains('dark')) {
+          htmlElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+          updateButtonText('light');
+        } else {
+          htmlElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+          updateButtonText('dark');
+        }
+      });
+
+
+      if (localStorage.getItem('theme') === 'dark') {
+        htmlElement.classList.add('dark');
+      } else {
+        htmlElement.classList.remove('dark');
+      }
+
     });
     </script>
   </body>

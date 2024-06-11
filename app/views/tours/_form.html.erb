@@ -22,12 +22,12 @@
 
     <div class="flex flex-col gap-1">
       <%= form.label :timezone %>
-      <%= form.select :timezone, @timezones, {}, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full", required: true %>
+      <%= form.select :timezone, @timezones, {}, class: "border border-gray-200 outline-none px-3 py-2 dark:bg-black bg-gray-50 w-full", required: true %>
     </div>
 
   </div>
 
   <div class="inline">
-    <%= form.submit class: "rounded py-2 px-4 bg-black text-white  font-medium cursor-pointer" %>
+    <%= form.submit class: "rounded py-2 px-4 dark:bg-black bg-gray-200 font-medium cursor-pointer" %>
   </div>
 <% end %>

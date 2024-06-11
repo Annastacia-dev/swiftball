@@ -7,7 +7,7 @@ module QuizzesHelper
     when 'fearless'
       'bg-yellow-200 text-yellow-900'
     when 'red'
-      'bg-red-600 text-white'
+      'bg-red-600 '
     when 'speak_now'
       'bg-violet-200 text-violet-900'
     when 'folkmore'
@@ -19,19 +19,18 @@ module QuizzesHelper
     when 'acoustic_set'
       'bg-gradient bg-lime-100 text-lime-900'
     when 'midnights'
-      'bg-gradient bg-blue-950 text-white'
+      'bg-gradient bg-blue-950 '
     when 'extra'
-      'bg-gradient bg-orange-500 text-white'
+      'bg-gradient bg-orange-500 '
     else
-      'bg-black text-white'
+      'dark:bg-black bg-gray-200'
     end
   end
 
   def quiz_dropdown_items(quiz)
     items = [
       { path: quiz_path(quiz), icon_class: 'fa-solid fa-circle-question', menu_text: 'View Quiz' },
-      { path: new_quiz_question_path(quiz), icon_class: 'fa-solid fa-clipboard-question', menu_text: 'Add a Question' },
-      { path: quiz_path(quiz), icon_class: 'fa-solid fa-delete-left', menu_text: 'Delete Quiz', type:'button', method: 'delete' },
+      { path: new_quiz_question_path(quiz), icon_class: 'fa-solid fa-clipboard-question', menu_text: 'Add a Question' }
     ]
 
     if quiz.tour.status == 'pending' || quiz.tour.status == 'open'
@@ -49,6 +48,8 @@ module QuizzesHelper
     if quiz.tour.status != 'closed'
       items << { path: close_quiz_path(quiz), icon_class: 'fa-solid fa-xmark', menu_text: 'Close Quiz', type:'button', method: 'post' }
     end
+
+    items.push({ path: quiz_path(quiz), icon_class: 'fa-solid fa-delete-left', menu_text: 'Delete Quiz', type:'button', method: 'delete' })
 
     items
   end
