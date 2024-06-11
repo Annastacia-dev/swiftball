@@ -6,7 +6,7 @@
     </p>
   </button>
 
-  <ul data-dropdown-target="menu" class="hidden text-white rounded mt-2 flex flex-col gap-3 bg-black absolute right-0  text-sm w-60 p-2 z-10 capitalize">
+  <ul data-dropdown-target="menu" class="hidden  rounded mt-2 flex flex-col gap-3 bg-black/95 dark:bg-gray-50 dark:text-black dark: absolute right-0  text-sm w-60 p-2 z-10 capitalize">
     <% items.each_with_index do |item, index| %>
       <li class='p-1'>
         <% if item[:type] == 'drawer' %>

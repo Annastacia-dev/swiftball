@@ -1,7 +1,7 @@
 <div class="pt-10 lg:px-12 px-5 min-h-screen">
 
   <div class="grid lg:grid-cols-4 grid-cols-2 gap-10">
-    <%= link_to attempts_path, class: "bg-gray-200 shadow-lg p-5 rounded flex flex-col gap-1 items-center"  do %>
+    <%= link_to attempts_path, class: "bg-gray-200 dark:bg-black/50 shadow-lg p-5 rounded flex flex-col gap-1 items-center"  do %>
       <h5 class="lg:text-6xl text-3xl font-courier font-bold"><%= @attempts.size %></h5>
       <h5 class="lg:text-xl text-sm  font-bold uppercase">attempts</h5>
     <% end %>

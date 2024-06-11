@@ -20,12 +20,6 @@
     margin-bottom: 0.5rem;
   }
 
-  .sticky-note {
-    background-color: #FFEB3B; /* Yellow background */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transform: rotate(-3deg); /* Slight rotation */
-  }
-
   .pagination {
     display: flex;
     justify-content: center;

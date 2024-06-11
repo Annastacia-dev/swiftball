@@ -38,7 +38,7 @@
     <% if  tour.status == 'closed' %>
       <div class="absolute right-10 lg:top-1 top-10 font-handwriting">
           <div class="bg-red-500 h-5 w-5 rounded-full absolute top-4 z-10 left-1"></div>
-          <div class="sticky-note p-5 w-40 h-36 m-4 rounded-lg flex flex-col gap-2">
+          <div class="-rotate-3 bg-yellow-300 dark:bg-rose-300 shadow-lg p-5 w-40 h-36 m-4 rounded-lg flex flex-col gap-2 dark:text-black">
               <h2 class="text-xl underline tracking-wide font-bold mb-2 uppercase">results</h2>
               <span class="text-lg">POINTS: <%= @attempt.score %> / <%= @attempt.total_possible_points %> </span>
               <span class="text-lg"">POSITION: <%= @attempt.position %> / <%= @attempt.quiz.total_attempts %> </span>
@@ -144,7 +144,7 @@
 
                   <div class="flex flex-col gap-3">
                     <% correct_mashups.each do |mashup| %>
-                      <span class="text-violet-500 capitalize text-sm font-medium"> <%= mashup.album.abbr %> - <%= mashup.song.title %> </span>
+                      <span class="dark:text-violet-200 text-violet-500 capitalize text-sm font-medium"> <%= mashup.album.abbr %> - <%= mashup.song.title %> </span>
                     <% end %>
                   </div>
                 <% end %>
@@ -159,7 +159,7 @@
 
     <% if  tour.status == 'live' %>
       <div class="flex justify-center items-end fixed bottom-0 right-1 mb-8">
-        <button class="bg-black hover:bg-gray-900 text-white font-bold lg:py-2 py-4 px-4 rounded flex gap-1 items-center" id="refreshButton" title="refresh progress">
+        <button class="bg-black/95 dark:bg-gray-50 dark:text-black dark: hover:bg-gray-900  font-bold lg:py-2 py-4 px-4 rounded flex gap-1 items-center" id="refreshButton" title="refresh progress">
           <i class="fas fa-rotate-left"></i>
           <span class="lg:flex hidden">Refresh Progress</span>
         </button>
@@ -177,7 +177,7 @@
       button.disabled = true;
 
       // Change button color to gray
-      button.classList.remove('bg-black', 'hover:bg-gray-900');
+      button.classList.remove('bg-black/95 dark:bg-gray-50 dark:text-black dark:', 'hover:bg-gray-900');
       button.classList.add('bg-gray-500', 'hover:bg-gray-700');
       button.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span class="lg:flex hidden">Loading ...</span>';
 

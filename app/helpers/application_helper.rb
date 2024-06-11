@@ -25,7 +25,7 @@ module ApplicationHelper
         ]
       })
     else
-     items.push({ path: outfits_path, icon_class: 'fa-solid fa-shirt', menu_text: 'Outfits Gallery'})
+     items.insert(2,{ path: outfits_path, icon_class: 'fa-solid fa-shirt', menu_text: 'Outfits Gallery'})
     end
 
     items.push({

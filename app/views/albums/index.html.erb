@@ -2,7 +2,7 @@
   <div class="flex justify-between items-center">
     <h1 class="font-semibold text-xl font-courier">Albums</h1>
     <% if current_user.admin? %>
-      <%= render 'components/drawer', button_icon: 'fa-solid fa-plus', button_text: 'new album', title: 'New Album', id: 'new_album', button_class: 'rounded py-2 px-4 bg-black text-white font-medium capitalize flex gap-2 items-center'  do %>
+      <%= render 'components/drawer', button_icon: 'fa-solid fa-plus', button_text: 'new album', title: 'New Album', id: 'new_album', button_class: 'rounded py-2 px-4 bg-black/95 dark:bg-gray-50 dark:text-black dark:  font-medium capitalize flex gap-2 items-center'  do %>
        <%= render 'form' %>
       <% end %>
     <% end %>
@@ -19,7 +19,7 @@
         <% end %>
       </div>
       <% if index != (@albums.length - 1) %>
-        <hr class="border border-black my-4" />
+        <hr class="border border-black dark:border-gray-100 my-4" />
       <% end %>
     <% end %>
   </div>
