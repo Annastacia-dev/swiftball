@@ -11,7 +11,7 @@ module ApplicationHelper
       items << ( { path: users_path, icon_class: 'fa-solid fa-user', menu_text: 'Users'})
     else
       items.insert(1, { path: stats_path, icon_class: 'fa-solid fa-chart-simple', menu_text: 'Statistics' })
-      items << ({ path: 'https://ko-fi.com/annetotoh/goal?g=0', icon_class: 'fa-solid fa-server', menu_text: 'Help Keep Servers Running' })
+      items << ({ path: 'https://ko-fi.com/swiftballonline', icon_class: 'fa-solid fa-server', menu_text: 'Help Keep Servers Running' })
     end
 
     items.push({ path: terms_and_conditions_path, icon_class: 'fa-regular fa-newspaper', menu_text: 'Terms & Conditions'})
