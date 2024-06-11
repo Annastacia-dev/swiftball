@@ -16,7 +16,7 @@
   <%= form_with(url: surprise_song_answer_quiz_question_path(@quiz.id, @question.id), method: :post, local: true) do |f| %>
     <div id="album-song" class="album-song-fields mt-10 grid grid-cols-2 gap-2 font-light mb-10 lg:w-3/4 px-5 capitalize " data-content="<%= @question.id %>" data-mashup="<%= @mashup_ans.content.downcase %>">
     </div>
-    <%= f.submit 'Submit', class: "bg-black/95 dark:bg-gray-50 dark:text-black dark:  px-4 py-2 rounded font-semibold cursor-pointer mt-10 ml-5 w-1/4" %>
+    <%= f.submit 'Submit', class: "dark:bg-black/95 bg-gray-200 px-4 py-2 rounded font-semibold cursor-pointer mt-10 ml-5 w-1/4" %>
   <% end %>
 </div>
 
@@ -70,6 +70,7 @@
         albumSelect.required = true;
 
         albumSelect.classList.add('capitalize');
+        albumSelect.classList.add('dark:bg-black');
         albumsPromise.then(albums => {
           albums.forEach(album => {
             const option = document.createElement('option');
@@ -97,6 +98,7 @@
         songSelect.appendChild(defaultSongOption);
         songSelect.name = `songs_${i}[${questionId}]`;
         songSelect.classList.add('capitalize');
+        songSelect.classList.add('dark:bg-black');
         songSelect.required = true;
 
         albumSelect.addEventListener('change', async (event) => {

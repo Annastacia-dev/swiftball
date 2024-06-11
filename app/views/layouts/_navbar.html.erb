@@ -2,16 +2,16 @@
   <div class="flex justify-between items-center p-4 ">
     <%= link_to root_path,  class: "flex gap-2 items-center justify-center"  do %>
       <div class="flex lg:flex-row flex-col gap-2 justify-center items-center">
-        <div class="h-10 w-10 dark:bg-white bg-black rounded-full flex justify-center items-center hover:animate-spin">
-          <div class="h-5 w-5 dark:bg-black/95 bg-white rounded-full flex justify-center items-center p-1">
-            <h1 class="text-xs font-courier">13</h1>
+        <div class="lg:h-10 h-6 lg:w-10 w-6 dark:bg-white bg-black rounded-full flex justify-center items-center hover:animate-spin">
+          <div class="lg:h-5 h-3 lg:w-5 w-3 dark:bg-black/95 bg-white rounded-full flex justify-center items-center p-1">
+            <h1 class="lg:text-xs text-[5px] font-courier">13</h1>
           </div>
         </div>
-        <h1 class="lg:text-lg font-courier font-bold uppercase lg:block hidden">swiftball</h1>
+        <h1 class="lg:text-lg text-xs font-courier font-bold uppercase lg:block hidden">swiftball</h1>
       </div>
     <% end %>
 
-    <p class="text-lg font-courier font-bold uppercase">
+    <p class="lg:text-lg text-sm font-courier font-bold uppercase">
       Hello,
       <%= link_to current_user.username, edit_user_registration_path, class: 'hover:underline' %>
     <p>

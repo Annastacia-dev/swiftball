@@ -23,15 +23,14 @@ module QuizzesHelper
     when 'extra'
       'bg-gradient bg-orange-500 '
     else
-      'bg-black/95 dark:bg-gray-50 dark:text-black dark: '
+      'dark:bg-black bg-gray-200'
     end
   end
 
   def quiz_dropdown_items(quiz)
     items = [
       { path: quiz_path(quiz), icon_class: 'fa-solid fa-circle-question', menu_text: 'View Quiz' },
-      { path: new_quiz_question_path(quiz), icon_class: 'fa-solid fa-clipboard-question', menu_text: 'Add a Question' },
-      { path: quiz_path(quiz), icon_class: 'fa-solid fa-delete-left', menu_text: 'Delete Quiz', type:'button', method: 'delete' },
+      { path: new_quiz_question_path(quiz), icon_class: 'fa-solid fa-clipboard-question', menu_text: 'Add a Question' }
     ]
 
     if quiz.tour.status == 'pending' || quiz.tour.status == 'open'
@@ -49,6 +48,8 @@ module QuizzesHelper
     if quiz.tour.status != 'closed'
       items << { path: close_quiz_path(quiz), icon_class: 'fa-solid fa-xmark', menu_text: 'Close Quiz', type:'button', method: 'post' }
     end
+
+    items.push({ path: quiz_path(quiz), icon_class: 'fa-solid fa-delete-left', menu_text: 'Delete Quiz', type:'button', method: 'delete' })
 
     items
   end

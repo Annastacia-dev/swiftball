@@ -20,32 +20,32 @@
     </h5>
     <hr class="my-1" />
     <div class="grid md:grid-cols-6 grid-cols-2 gap-x-3 gap-y-4 lg:mt-10 mt-4">
-      <div class="flex flex-col gap-2 items-center bg-gray-100 py-5 rounded shadow-md">
+      <div class="flex flex-col gap-2 items-center dark:bg-black bg-gray-100 py-5 rounded shadow-md">
         <p class="md:text-7xl text-5xl font-bold"><%= @attempts.size %></p>
         <p class="lg:text-sm text-xs uppercase">played</p>
       </div>
 
-      <div class="flex flex-col gap-2 items-center bg-gray-100 py-5 rounded shadow-md">
+      <div class="flex flex-col gap-2 items-center dark:bg-black bg-gray-100 py-5 rounded shadow-md">
         <p class="md:text-7xl text-5xl font-bold"><%= @current_streak %></p>
         <p class="lg:text-sm text-xs uppercase">current streak</p>
       </div>
 
-      <div class="flex flex-col gap-2 items-center bg-gray-100 py-5 rounded shadow-md">
+      <div class="flex flex-col gap-2 items-center dark:bg-black bg-gray-100 py-5 rounded shadow-md">
         <p class="md:text-7xl text-5xl font-bold"><%= @max_streak %></p>
         <p class="lg:text-sm text-xs uppercase">max streak</p>
       </div>
 
-      <div class="flex flex-col gap-2 items-center bg-gray-100 py-5 rounded shadow-md">
+      <div class="flex flex-col gap-2 items-center dark:bg-black bg-gray-100 py-5 rounded shadow-md">
         <p class="md:text-7xl text-5xl font-bold"><%= @lifetime_points %></p>
         <p class="lg:text-sm text-xs uppercase">lifetime points</p>
       </div>
 
-      <div class="flex flex-col gap-2 items-center bg-gray-100 py-5 rounded shadow-md">
+      <div class="flex flex-col gap-2 items-center dark:bg-black bg-gray-100 py-5 rounded shadow-md">
         <p class="md:text-7xl text-5xl font-bold"><%= @average_score %></p>
         <p class="lg:text-sm text-xs uppercase">average score</p>
       </div>
 
-      <div class="flex flex-col gap-2 items-center bg-gray-100 py-5 rounded shadow-md">
+      <div class="flex flex-col gap-2 items-center dark:bg-black bg-gray-100 py-5 rounded shadow-md">
         <p class="md:text-7xl text-5xl font-bold"><%= @best_score %></p>
         <p class="lg:text-sm text-xs uppercase">best score</p>
       </div>
@@ -63,7 +63,7 @@
         <div class="mt-4 mb-2 flex lg:flex-row flex-col lg:items-center lg:text-base text-sm">
           <% path = current_user.admin? ? stats_path(@user) : stats_path %>
           <%= form_tag(path , method: 'get', class: 'flex lg:flex-row flex-col lg:items-center gap-2', id: 'chartForm') do %>
-            <%= select_tag 'chart_type', options_for_select(chart_types.map { |chart| [chart.humanize, chart] }, @chart_type), class: 'w-40 h-10 capitalize lg:text-base text-sm', id: 'chartTypeSelect'  %>
+            <%= select_tag 'chart_type', options_for_select(chart_types.map { |chart| [chart.humanize, chart] }, @chart_type), class: 'w-40 h-10 capitalize lg:text-base text-sm dark:bg-black bg-gray-50', id: 'chartTypeSelect'  %>
           <% end %>
         </div>
       </div>

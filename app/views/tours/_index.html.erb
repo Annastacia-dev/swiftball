@@ -88,7 +88,6 @@
               <span class="lg:hidden flex">results</span>
              <% end %>
             <% elsif tour.status == 'live' %>
-              <i class="fa-solid fa-bullseye text-green-600 animate-ping" title="live"></i>
               <%= link_to progress_quiz_path(tour.quiz), class: 'bg-gray-200 dark:bg-black px-2 py-2  lg:hover:bg-gray-900 rounded flex items-center gap-2' do %>
                 <i class="fa-solid fa-square-poll-vertical title="see results"></i>
                 <span class="lg:flex hidden">see live progress </span>

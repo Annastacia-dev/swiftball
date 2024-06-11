@@ -29,12 +29,12 @@
 
         <div class="flex flex-col gap-1">
           <%= f.label :country %>
-          <%= f.select :country, options_for_select(@country_options_for_select), {}, class: "bg-black/95 dark:bg-gray-50 dark:text-black dark: ", required: true %>
+          <%= f.select :country, options_for_select(@country_options_for_select), {}, class: "dark:bg-black bg-gray-200", required: true %>
         </div>
 
         <div class="flex flex-col gap-1">
           <%= f.label :timezone %>
-          <%= f.select :timezone, @timezones, {}, required: true, class: "bg-black/95 dark:bg-gray-50 dark:text-black dark: " %>
+          <%= f.select :timezone, @timezones, {}, required: true, class: "dark:bg-black bg-gray-200" %>
         </div>
 
         <div class="flex flex-col gap-1">

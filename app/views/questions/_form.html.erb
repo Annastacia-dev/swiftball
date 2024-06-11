@@ -9,7 +9,7 @@
 
     <div class="flex flex-col gap-1">
       <%= form.label :era %>
-      <%= form.select :era, Question.eras_options, {}, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full" %>
+      <%= form.select :era, Question.eras_options, {}, class: "border border-gray-200 outline-none px-3 py-2  w-full dark:bg-black" %>
     </div>
 
     <div class="flex flex-col gap-1">
@@ -37,6 +37,6 @@
   </div>
 
   <div class="inline">
-    <%= form.submit class: "rounded py-2 px-4 bg-black/95 dark:bg-gray-50 dark:text-black dark:   font-medium cursor-pointer" %>
+    <%= form.submit class: "rounded py-2 px-4 dark:bg-black bg-gray-200 font-medium cursor-pointer" %>
   </div>
 <% end %>
