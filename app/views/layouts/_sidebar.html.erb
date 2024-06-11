@@ -2,18 +2,18 @@
   <i class='fa-solid fa-xmark cursor-pointer absolute right-10 top-5 text-lg' onclick="document.getElementById('sidebar').classList.toggle('hidden')"></i>
   <% items.each_with_index do |item, index| %>
     <% if item[:children] %>
-      <li class="px-4 flex flex-col gap-2 cursor-pointer" onclick="toggleDropdown('<%= item[:title] %>', '<%= item[:title] %>')">
+      <li class="px-4 flex flex-col gap-2 cursor-pointer" onclick="toggleDropdown('<%= item[:menu_text] %>', '<%= item[:menu_text] %>')">
           <div class="flex items-center gap-5">
             <div class="flex items-center gap-4">
               <i class="<%= item[:icon_class] %>"></i>
               <%= item[:menu_text] %>
             </div>
-            <svg id="<%= item[:title] %>_icon" class="h-4 w-4 ml-2 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg id="<%= item[:menu_text] %>_icon" class="h-4 w-4 ml-2 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
             </svg>
           </div>
 
-          <div id="<%= item[:title] %>_dropdown" class="hidden mt-2 flex flex-col gap-2">
+          <div id="<%= item[:menu_text] %>_dropdown" class="hidden mt-2 flex flex-col gap-2">
             <% item[:children].each do |child| %>
               <%= link_to child[:path], class: "block px-1 py-2" do %>
                 <div class="flex gap-2 items-center">
@@ -48,8 +48,22 @@
 
 <script>
   function toggleDropdown(menuId, iconId) {
+
+    var dropdowns = document.querySelectorAll('[id$="_dropdown"]');
+    var icons = document.querySelectorAll('[id$="_icon"]');
+
+
+    dropdowns.forEach(function(dropdown) {
+      dropdown.classList.add('hidden');
+    });
+    icons.forEach(function(icon) {
+      icon.classList.add('rotate-180');
+    });
+
     var dropdown = document.getElementById(menuId + '_dropdown');
     var icon = document.getElementById(iconId + '_icon');
+
+    console.log(menuId, iconId)
 
     if (dropdown.classList.contains('hidden')) {
       dropdown.classList.remove('hidden');
