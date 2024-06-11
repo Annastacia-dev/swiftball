@@ -1,0 +1,26 @@
+<%= form_with(model: outfit, class: "contents") do |form| %>
+  <%= render 'shared/errors', object: outfit %>
+
+  <div class="flex flex-col gap-5 lg:w-1/2 my-5">
+
+    <div class="flex flex-col gap-1">
+      <%= form.label :image %>
+      <%= form.file_field :image, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full" %>
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <%= form.label :era %>
+      <%= form.select :era, Outfit.eras_options, {}, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full" %>
+    </div>
+
+
+
+    <div class="flex gap-5">
+      <%= form.submit class: "rounded py-2 px-4 bg-black text-white  font-medium cursor-pointer" %>
+      <% if action_name == 'new' %>
+        <%= form.submit 'Create Outfit & Add Another', class: "rounded py-2 px-4 border border-black text-black  font-medium cursor-pointer hover:bg-gray-200" %>
+      <% end %>
+    </div>
+
+  </div>
+<% end %>

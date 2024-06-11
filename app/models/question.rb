@@ -26,6 +26,8 @@
 class Question < ApplicationRecord
   has_paper_trail
 
+  include Erable
+
   # associations
   belongs_to :quiz
   has_many :choices, dependent: :destroy, counter_cache: :choices_count
@@ -40,25 +42,6 @@ class Question < ApplicationRecord
 
   # callbacks
   before_validation :set_position
-
-  # enums
-  enum era: {
-    lover: 0,
-    fearless: 1,
-    red: 2,
-    speak_now: 3,
-    reputation: 4,
-    folkmore: 5,
-    '1989': 6,
-    the_tortured_poets_department: 7,
-    acoustic_set: 8,
-    midnights: 9,
-    extra: 10
-  }
-
-  def self.eras_options
-    eras.map { |k, _v| [k.humanize, k] }
-  end
 
   def include_mashup?
     piano_mashup || guitar_mashup

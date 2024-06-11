@@ -8,21 +8,40 @@ module ApplicationHelper
 
     if current_user.admin?
       items.insert(1, { path: albums_path, icon_class: 'fa-solid fa-record-vinyl', menu_text: 'Albums'})
-      items << ( { path: users_path, icon_class: 'fa-solid fa-user', menu_text: 'Users'})
+      items.insert(2, { path: users_path, icon_class: 'fa-solid fa-user', menu_text: 'Users'})
     else
       items.insert(1, { path: stats_path, icon_class: 'fa-solid fa-chart-simple', menu_text: 'Statistics' })
       items << ({ path: 'https://ko-fi.com/swiftballonline', icon_class: 'fa-solid fa-server', menu_text: 'Help Keep Servers Running' })
     end
 
-    items.push({ path: terms_and_conditions_path, icon_class: 'fa-regular fa-newspaper', menu_text: 'Terms & Conditions'})
+    if current_user.admin?
+      items.insert(3,{
+        path: '',
+        icon_class: 'fa-solid fa-shirt',
+        menu_text: 'Outfits',
+        children: [
+          { path: new_outfit_path, icon_class: 'fa-solid fa-plus', menu_text: 'New Outfit'},
+          { path: outfits_path, icon_class: 'fa-solid fa-person-dress', menu_text: 'Gallery'}
+        ]
+      })
+    else
+     items.push({ path: outfits_path, icon_class: 'fa-solid fa-shirt', menu_text: 'Outfits Gallery'})
+    end
 
-    items.push({ path: privacy_policy_path, icon_class: 'fa-solid fa-user-lock', menu_text: 'Privacy Policy'})
-
-    items.push({ path: disclaimer_path, icon_class: 'fa-solid fa-triangle-exclamation', menu_text: 'Disclaimer'})
+    items.push({
+      path: '',
+      icon_class: 'fa-solid fa-gavel',
+      menu_text: 'Legal',
+      children: [
+        { path: terms_and_conditions_path, icon_class: 'fa-regular fa-newspaper', menu_text: 'Terms & Conditions'},
+        { path: privacy_policy_path, icon_class: 'fa-solid fa-user-lock', menu_text: 'Privacy Policy'},
+        { path: disclaimer_path, icon_class: 'fa-solid fa-triangle-exclamation', menu_text: 'Disclaimer'}
+      ]
+    })
 
     items.push({ path: destroy_user_session_path, icon_class: 'fa-solid fa-right-from-bracket', menu_text: 'Logout', type: 'button', method: :delete })
 
-    items.push({ path:  registration_path('user'), icon_class: 'fa-solid fa-delete-left', menu_text: 'Delete my account', type: 'button', method: :delete })
+    items.push({ path:  registration_path('user'), icon_class: 'fa-solid fa-delete-left', menu_text: 'Delete account', type: 'button', method: :delete })
 
     items
   end
