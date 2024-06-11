@@ -1,9 +1,33 @@
-<ul class="flex-col flex fixed lg:right-3/4 right-1/4 inset-0 bg-black px-5 py-16 gap-6  text-white font-normal text-sm hidden z-50 font-courier" id="sidebar">
+<ul class="flex-col flex fixed lg:right-3/4 right-1/4 inset-0 bg-black px-5 py-16 gap-6 text-white font-normal text-sm hidden z-50 font-courier" id="sidebar">
   <i class='fa-solid fa-xmark cursor-pointer absolute right-10 top-5 text-lg' onclick="document.getElementById('sidebar').classList.toggle('hidden')"></i>
-    <% items.each_with_index do |item, index| %>
+  <% items.each_with_index do |item, index| %>
+    <% if item[:children] %>
+      <li class="px-4 flex flex-col gap-2 cursor-pointer" onclick="toggleDropdown('<%= item[:title] %>', '<%= item[:title] %>')">
+          <div class="flex items-center gap-5">
+            <div class="flex items-center gap-4">
+              <i class="<%= item[:icon_class] %>"></i>
+              <%= item[:menu_text] %>
+            </div>
+            <svg id="<%= item[:title] %>_icon" class="h-4 w-4 ml-2 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+            </svg>
+          </div>
+
+          <div id="<%= item[:title] %>_dropdown" class="hidden mt-2 flex flex-col gap-2">
+            <% item[:children].each do |child| %>
+              <%= link_to child[:path], class: "block px-1 py-2" do %>
+                <div class="flex gap-2 items-center">
+                  <i class="<%= child[:icon_class] %>"></i>
+                  <span><%= child[:menu_text] %> </span>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+      </li>
+    <% else %>
       <li class="text-sm">
         <% if item[:type] == 'button' %>
-        <%= button_to item[:path], method: item[:method], class: "px-4 flex items-center gap-4 #{item[:method] == :delete ? 'text-red-500' : ''}", data: (item[:method] == :delete ? { confirm: "Are you sure?", turbo_confirm: "Are you sure?" } : {}) do %>
+          <%= button_to item[:path], method: item[:method], class: "px-4 flex items-center gap-4 #{item[:method] == :delete ? 'text-red-500' : ''}", data: (item[:method] == :delete ? { confirm: "Are you sure?", turbo_confirm: "Are you sure?" } : {}) do %>
             <i class="<%= item[:icon_class] %>"></i>
             <%= item[:menu_text] %>
           <% end %>
@@ -14,8 +38,25 @@
           <% end %>
         <% end %>
       </li>
-      <% if index != (items.length - 1) %>
-       <hr class="border-1" />
-      <% end %>
     <% end %>
+
+    <% if index != (items.length - 1) %>
+      <hr class="border-1" />
+    <% end %>
+  <% end %>
 </ul>
+
+<script>
+  function toggleDropdown(menuId, iconId) {
+    var dropdown = document.getElementById(menuId + '_dropdown');
+    var icon = document.getElementById(iconId + '_icon');
+
+    if (dropdown.classList.contains('hidden')) {
+      dropdown.classList.remove('hidden');
+      icon.classList.remove('rotate-180');
+    } else {
+      dropdown.classList.add('hidden');
+      icon.classList.add('rotate-180');
+    }
+  }
+</script>
