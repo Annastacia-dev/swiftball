@@ -14,6 +14,20 @@ module ApplicationHelper
       items << ({ path: 'https://ko-fi.com/swiftballonline', icon_class: 'fa-solid fa-server', menu_text: 'Help Keep Servers Running' })
     end
 
+    if current_user.admin?
+      items.insert(3,{
+        path: '',
+        icon_class: 'fa-solid fa-shirt',
+        menu_text: 'Outfits',
+        children: [
+          { path: new_outfit_path, icon_class: 'fa-solid fa-plus', menu_text: 'New Outfit'},
+          { path: outfits_path, icon_class: 'fa-solid fa-person-dress', menu_text: 'Gallery'}
+        ]
+      })
+    else
+     items.push({ path: outfits_path, icon_class: 'fa-solid fa-shirt', menu_text: 'Outfits Gallery'})
+    end
+
     items.push({
       path: '',
       icon_class: 'fa-solid fa-gavel',

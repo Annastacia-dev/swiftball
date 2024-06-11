@@ -3,7 +3,7 @@ module AlbumsHelper
     items = [
       { path: album_path(album), icon_class: 'fa-solid fa-record-vinyl', menu_text: 'View Album' },
       { path: edit_album_path(album), icon_class: 'fa-solid fa-pencil', menu_text: 'Edit Album', type: 'drawer', id: 'edit_album', view: 'albums/form' },
-      { path: album_path(album), icon_class: 'fa-solid fa-delete-left', menu_text: 'Delete Album', type: 'button', method: 'delete' },
+      { path: album_path(album), icon_class: 'fa-solid fa-delete-left', menu_text: 'Delete Album', type: 'button', method: 'delete' }
     ]
 
     if action_name == 'show'

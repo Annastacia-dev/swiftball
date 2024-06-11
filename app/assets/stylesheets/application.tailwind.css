@@ -11,13 +11,13 @@
   }
 
   .masonry-grid {
-    column-count: 1;
+    column-count: 2;
     column-gap: 0.5rem;
   }
 
   .masonry-item {
     break-inside: avoid;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 
   .sticky-note {
@@ -52,6 +52,10 @@
     padding: 10px 20px;
     background-color: #000;
     color: #fff;
+  }
+
+  .outfit:hover .outfit-details {
+    display: flex;
   }
 
   @media (min-width: 640px) {

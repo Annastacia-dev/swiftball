@@ -1,0 +1,17 @@
+<div class="p-2 min-h-screen">
+  <div class="masonry-grid">
+    <% @outfits.each do |outfit| %>
+      <div class="masonry-item rounded-lg">
+        <div class="outfit relative">
+          <%= image_tag(outfit.image, alt: "Outfit", class: 'rounded-lg') if outfit.image.attached? %>
+          <div class="outfit-details absolute inset-0 <%= era_color(outfit.era) %> bg-opacity-90 flex items-center justify-center rounded-lg hidden">
+            <span class="text-sm capitalize"><%= outfit.era.humanize %></span>
+            <% if current_user.admin? %>
+              <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: outfit_dropdown_items(outfit) %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

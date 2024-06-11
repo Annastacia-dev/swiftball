@@ -18,7 +18,7 @@
               <%= link_to child[:path], class: "block px-1 py-2" do %>
                 <div class="flex gap-2 items-center">
                   <i class="<%= child[:icon_class] %>"></i>
-                  <span><%= child[:menu_text] %> </span>
+                  <span class="hover:underline"><%= child[:menu_text] %> </span>
                 </div>
               <% end %>
             <% end %>
@@ -29,12 +29,12 @@
         <% if item[:type] == 'button' %>
           <%= button_to item[:path], method: item[:method], class: "px-4 flex items-center gap-4 #{item[:method] == :delete ? 'text-red-500' : ''}", data: (item[:method] == :delete ? { confirm: "Are you sure?", turbo_confirm: "Are you sure?" } : {}) do %>
             <i class="<%= item[:icon_class] %>"></i>
-            <%= item[:menu_text] %>
+            <span class="hover:underline"><%= item[:menu_text] %></span>
           <% end %>
         <% else %>
           <%= link_to item[:path], class: "px-4 flex items-center gap-4" do %>
             <i class="<%= item[:icon_class] %>"></i>
-            <%= item[:menu_text] %>
+            <span class="hover:underline"><%= item[:menu_text] %></span>
           <% end %>
         <% end %>
       </li>
