@@ -21,7 +21,7 @@ module QuizzesHelper
     when 'midnights'
       'bg-gradient bg-blue-950 text-white'
     when 'extra'
-      'bg-gradient bg-orange-500 '
+      'bg-gradient bg-orange-500 text-white'
     else
       'dark:bg-black bg-gray-200'
     end
