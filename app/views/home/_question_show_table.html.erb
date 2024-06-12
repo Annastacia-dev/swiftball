@@ -3,11 +3,11 @@
   <table class="min-w-full divide-y divide-gray-200 relative">
     <thead class="dark:bg-black/10 bg-gray-50">
       <tr>
-        <th scope="col" class="px-6 py-3 text-left lg:text-sm text-xs font-medium uppercase tracking-wider sticky left-0 " >
+        <th scope="col" class="px-6 py-3 text-left lg:text-sm text-xs font-medium uppercase tracking-wider sticky left-0 bg-gray-50" >
           Question
         </th>
         <% tours.each do |tour| %>
-          <th scope="col" class="px-6 py-3 text-left lg:text-sm text-xs font-medium uppercase tracking-wider">
+          <th scope="col" class="p-2 text-left lg:text-sm text-xs font-medium uppercase tracking-wider">
             <%= tour.title %>
           </th>
         <% end %>
@@ -24,7 +24,7 @@
             <% quiz = tour.quiz %>
             <% response = @responses.select { |response| response.question.content == question_content && response.question.quiz.tour_id == tour.id }.first %>
 
-            <td class="px-6 py-4 whitespace-nowrap lg:text-sm text-xs">
+            <td class="p-2 lg:text-sm text-xs">
               <% if response %>
                <% if response.choice.correct %>
                 <i class="fa-solid fa-check text-green-500"></i>
