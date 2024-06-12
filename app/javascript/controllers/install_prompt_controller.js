@@ -27,9 +27,7 @@ export default class extends Controller {
       // Wait for the user to respond to the prompt
       this.deferredPrompt.userChoice.then((choiceResult) => {
         if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted the install prompt')
         } else {
-          console.log('User dismissed the install prompt')
         }
         this.deferredPrompt = null
       })

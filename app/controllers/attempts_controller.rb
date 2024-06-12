@@ -33,9 +33,6 @@ class AttemptsController < ApplicationController
     end
   end
 
-  def update_mashup_answer(response)
-  end
-
   private
 
   def set_attempt

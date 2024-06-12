@@ -81,20 +81,4 @@ class Attempt < ApplicationRecord
       errors.add(:base, "You can only attempt this quiz once")
     end
   end
-
-  def mashup_max_score(ans)
-    max_points = 0
-    case ans&.downcase
-    when 'no mashup'
-      max_points = 3
-    when 'mashup (2 songs) '
-      max_points = 1.5
-    when 'mashup (3 songs)'
-      max_points = 1
-    when 'mashup (4+ songs)'
-      max_points = 0.75
-    else
-      max_points = 0
-    end
-  end
 end
