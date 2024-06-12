@@ -27,29 +27,35 @@
 </nav>
 
 <script>
-  document.addEventListener("turbo:load", () => {
+  function applyStoredTheme() {
     const theme = localStorage.getItem('theme');
-    updateButtonText(theme)
+    const htmlElement = document.documentElement;
 
-  })
+    if (theme === 'dark') {
+      htmlElement.classList.add('dark');
+      updateButtonText('dark');
+    } else {
+      htmlElement.classList.remove('dark');
+      updateButtonText('light');
+    }
+  }
 
-  function toggleTheme(){
-      const theme = localStorage.getItem('theme');
-      const htmlElement = document.documentElement;
+  function toggleTheme() {
+    const theme = localStorage.getItem('theme');
+    const htmlElement = document.documentElement;
 
-      if (theme === 'light'){
-        htmlElement.classList.add('dark');
-        updateButtonText('dark')
-        localStorage.setItem('theme', 'dark')
-      } else {
-        htmlElement.classList.remove('dark');
-        updateButtonText('light')
-        localStorage.setItem('theme', 'light')
-      }
+    if (theme === 'light') {
+      htmlElement.classList.add('dark');
+      updateButtonText('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      htmlElement.classList.remove('dark');
+      updateButtonText('light');
+      localStorage.setItem('theme', 'light');
+    }
   }
 
   function updateButtonText(theme) {
-
     const toggleButton = document.getElementById('dark-mode-toggle');
 
     if (theme === 'dark') {
@@ -57,5 +63,10 @@
     } else {
       toggleButton.innerHTML = '<i class="fa-solid fa-lightbulb"></i>';
     }
-  };
+  }
+
+  document.addEventListener('DOMContentLoaded', applyStoredTheme);
+
+  document.addEventListener('turbo:load', applyStoredTheme);
 </script>
+

@@ -21,10 +21,10 @@ class HomeController < ApplicationController
     questions = correct_responses.map(&:question).flatten.sort_by { |question| question.era }
     all_question_accuracy = questions.group_by { |qn| qn.content }.transform_values(&:count)
     total_responses = @user.attempts.map(&:responses).size
-    all_questions = Question.where.not(include_album_and_song: true).order(:era).order(:position).pluck(:content, :position).to_h
+    @all_questions = Question.where.not(include_album_and_song: true).order(:era).order(:position).pluck(:content, :position).to_h
 
 
-    @questions_predictions_data = all_questions.map do |question_content, position|
+    @questions_predictions_data = @all_questions.map do |question_content, position|
       correct_count = all_question_accuracy[question_content] || 0
       percentage = ((correct_count.to_f / total_responses.to_f) * 100).round(2)
       [question_content, "#{percentage}%"]

@@ -75,7 +75,7 @@
                 <% end %>
                 <%= choice&.content %>
                 <% if choice&.correct %>
-                  <span class="bg-green-600 text-white p-2 rounded text-xs">
+                  <span class="bg-green-600 text-white p-2 rounded text-xs flex items-center gap-2">
                    + <%= choice.question.points %>
                   </span>
                 <% end %>
@@ -153,7 +153,7 @@
 
                       <!-- mashup points -->
                       <% if correct_albums.include?(mashup.album_id) && correct_songs.include?(mashup.song_id) %>
-                        <span class="bg-green-600 text-white p-2 rounded text-xs">
+                        <span class="bg-green-600 text-white p-2 rounded text-xs flex items-center gap-2">
                          <% if response.question.id == guitar_question.id %>
                             + <%= format_score (@guitar_points * 2) %>
                          <% elsif response.question.id == piano_question.id %>
@@ -161,7 +161,7 @@
                          <% end %>
                         </span>
                       <% elsif correct_albums.include?(mashup.album_id) %>
-                        <span class="bg-green-600 text-white p-2 rounded text-xs">
+                        <span class="bg-green-600 text-white p-2 rounded text-xs flex items-center gap-2">
                          <% if response.question.id == guitar_question.id %>
                             + <%= format_score (@guitar_points) %>
                          <% elsif response.question.id == piano_question.id %>
@@ -169,7 +169,7 @@
                          <% end %>
                         </span>
                       <% elsif correct_songs.include?(mashup.song_id) %>
-                        <span class="bg-green-600 text-white p-2 rounded text-xs">
+                        <span class="bg-green-600 text-white p-2 rounded text-xs flex items-center gap-2">
                          <% if response.question.id == guitar_question.id %>
                             + <%= format_score (@guitar_points) %>
                          <% elsif response.question.id == piano_question.id %>
@@ -177,19 +177,19 @@
                          <% end %>
                         </span>
                       <% elsif (response.question.id != piano_question.id) &&piano_correct_albums.include?(mashup.album_id) && piano_correct_songs.include?(mashup.song_id)  %>
-                        <span class="bg-green-600 text-white p-2 rounded text-xs">
+                        <span class="bg-green-600 text-white p-2 rounded text-xs flex items-center gap-2">
                           + <%= format_score (@guitar_points * 2) %>
                         </span>
                       <% elsif (response.question.id != guitar_question.id) &&guitar_correct_albums.include?(mashup.album_id) && guitar_correct_songs.include?(mashup.song_id)  %>
-                        <span class="bg-green-600 text-white p-2 rounded text-xs">
+                        <span class="bg-green-600 text-white p-2 rounded text-xs flex items-center gap-2">
                           + <%= format_score (@piano_points * 2) %>
                         </span>
                       <% elsif (response.question.id != piano_question.id) &&piano_correct_albums.include?(mashup.album_id)  %>
-                        <span class="bg-green-600 text-white p-2 rounded text-xs">
+                        <span class="bg-green-600 text-white p-2 rounded text-xs flex items-center gap-2">
                          + 1
                         </span>
                       <% elsif (response.question.id != guitar_question.id) &&guitar_correct_albums.include?(mashup.album_id)  %>
-                        <span class="bg-green-600 text-white p-2 rounded text-xs">
+                        <span class="bg-green-600 text-white p-2 rounded text-xs flex items-center gap-2">
                          + 1
                         </span>
                       <% end %>
