@@ -7,7 +7,7 @@ module QuizzesHelper
     when 'fearless'
       'bg-yellow-200 text-yellow-900'
     when 'red'
-      'bg-red-600 '
+      'bg-red-600 text-white'
     when 'speak_now'
       'bg-violet-200 text-violet-900'
     when 'folkmore'
@@ -19,7 +19,7 @@ module QuizzesHelper
     when 'acoustic_set'
       'bg-gradient bg-lime-100 text-lime-900'
     when 'midnights'
-      'bg-gradient bg-blue-950 '
+      'bg-gradient bg-blue-950 text-white'
     when 'extra'
       'bg-gradient bg-orange-500 '
     else

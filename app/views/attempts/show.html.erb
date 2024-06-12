@@ -69,11 +69,16 @@
             <div class="flex flex-col gap-3">
               <%= (index + 1).to_s.rjust(2, '0') %>. <%= response.question.content %> (worth <%= response.question.points %> points)
               <%= image_tag(choice&.image, alt: "Option #{index + 1}", class: 'w-full lg:h-[30rem] object-cover object-center rounded') if choice&.image&.attached? %>
-              <p class="font-medium capitalize flex items-center gap-2">
+              <p class="font-medium capitalize flex items-center lg:gap-4 gap-2">
                 <% if choice&.correct %>
                   <i class="fa-solid fa-circle-check text-green-600"></i>
                 <% end %>
                 <%= choice&.content %>
+                <% if choice&.correct %>
+                  <span class="bg-green-600 text-white p-2 rounded text-xs">
+                   + <%= choice.question.points %>
+                  </span>
+                <% end %>
               </p>
             </div>
 
@@ -96,46 +101,100 @@
             <% piano_correct_mashups = piano_question.mashup_answers.where(response_id: nil, correct: true) %>
             <% piano_correct_albums = piano_correct_mashups.pluck(:album_id) %>
             <% piano_correct_songs = piano_correct_mashups.pluck(:song_id) %>
-
+            <% piano_mashup_qn =  response.question.piano_mashup ? response.question : nil  %>
+            <% if piano_mashup_qn %>
+              <% piano_mashup_ans = response.choice.content %>
+              <% @piano_points = mashup_max_score(piano_mashup_ans) %>
+            <% end %>
 
             <% question_content = 'pick guitar acoustic set album and song' %>
             <% guitar_question = @attempt.quiz.questions.find_by(content: question_content) %>
             <% guitar_correct_mashups = guitar_question.mashup_answers.where(response_id: nil, correct: true) %>
             <% guitar_correct_albums = guitar_correct_mashups.pluck(:album_id) %>
             <% guitar_correct_songs = guitar_correct_mashups.pluck(:song_id) %>
-
+            <% guitar_mashup_qn =  response.question.guitar_mashup ? response.question : nil  %>
+            <% if guitar_mashup_qn %>
+              <% guitar_mashup_ans = response.choice.content %>
+              <% @guitar_points = mashup_max_score(guitar_mashup_ans) %>
+            <% end %>
 
 
             <% if mashup_answers.present? %>
               <div class="grid lg:grid-cols-1 gap-5">
                 <div class="flex flex-col gap-3">
                   <% mashup_answers.each do |mashup| %>
-                    <p class="font-medium capitalize flex items-center gap-2">
-                        <% if correct_albums.present? %>
-                          <% if correct_albums.include?(mashup.album_id) %>
+                    <div class="flex items-center gap-4">
+                      <p class="font-medium capitalize flex items-center gap-2">
+                          <% if correct_albums.present? %>
+                            <% if correct_albums.include?(mashup.album_id) %>
+                              <i class="fa-solid fa-circle-check text-green-600"></i>
+                            <% elsif (response.question.id != piano_question.id) &&piano_correct_albums.include?(mashup.album_id) %>
+                              <i class="fa-solid fa-keyboard text-green-600"></i>
+                            <% elsif (response.question.id != guitar_question.id) &&guitar_correct_albums.include?(mashup.album_id) %>
+                              <i class="fa-solid fa-guitar text-green-600"></i>
+                            <% else %>
+                              <i class="fa-solid fa-xmark text-red-600"></i>
+                            <% end %>
+                          <% end %>
+                        <%= mashup.album.abbr %>
+                        - <%= mashup.song.title %>
+                        <% if correct_songs.present? %>
+                          <% if correct_songs.include?(mashup.song_id) %>
                             <i class="fa-solid fa-circle-check text-green-600"></i>
-                          <% elsif (response.question.id != piano_question.id) &&piano_correct_albums.include?(mashup.album_id) %>
+                          <% elsif (response.question.id != piano_question.id) &&piano_correct_songs.include?(mashup.song_id) %>
                             <i class="fa-solid fa-keyboard text-green-600"></i>
-                          <% elsif (response.question.id != guitar_question.id) &&guitar_correct_albums.include?(mashup.album_id) %>
-                            <i class="fa-solid fa-guitar text-green-600"></i>
+                          <% elsif (response.question.id != guitar_question.id) &&guitar_correct_songs.include?(mashup.song_id) %>
+                              <i class="fa-solid fa-guitar text-green-600"></i>
                           <% else %>
                             <i class="fa-solid fa-xmark text-red-600"></i>
                           <% end %>
                         <% end %>
-                      <%= mashup.album.abbr %>
-                      - <%= mashup.song.title %>
-                      <% if correct_songs.present? %>
-                        <% if correct_songs.include?(mashup.song_id) %>
-                          <i class="fa-solid fa-circle-check text-green-600"></i>
-                        <% elsif (response.question.id != piano_question.id) &&piano_correct_songs.include?(mashup.song_id) %>
-                          <i class="fa-solid fa-keyboard text-green-600"></i>
-                        <% elsif (response.question.id != guitar_question.id) &&guitar_correct_songs.include?(mashup.song_id) %>
-                            <i class="fa-solid fa-guitar text-green-600"></i>
-                        <% else %>
-                          <i class="fa-solid fa-xmark text-red-600"></i>
-                        <% end %>
+                      </p>
+
+                      <!-- mashup points -->
+                      <% if correct_albums.include?(mashup.album_id) && correct_songs.include?(mashup.song_id) %>
+                        <span class="bg-green-600 text-white p-2 rounded text-xs">
+                         <% if response.question.id == guitar_question.id %>
+                            + <%= format_score (@guitar_points * 2) %>
+                         <% elsif response.question.id == piano_question.id %>
+                            + <%= format_score (@piano_points * 2) %>
+                         <% end %>
+                        </span>
+                      <% elsif correct_albums.include?(mashup.album_id) %>
+                        <span class="bg-green-600 text-white p-2 rounded text-xs">
+                         <% if response.question.id == guitar_question.id %>
+                            + <%= format_score (@guitar_points) %>
+                         <% elsif response.question.id == piano_question.id %>
+                            + <%= format_score (@piano_points) %>
+                         <% end %>
+                        </span>
+                      <% elsif correct_songs.include?(mashup.song_id) %>
+                        <span class="bg-green-600 text-white p-2 rounded text-xs">
+                         <% if response.question.id == guitar_question.id %>
+                            + <%= format_score (@guitar_points) %>
+                         <% elsif response.question.id == piano_question.id %>
+                            + <%= format_score (@piano_points) %>
+                         <% end %>
+                        </span>
+                      <% elsif (response.question.id != piano_question.id) &&piano_correct_albums.include?(mashup.album_id) && piano_correct_songs.include?(mashup.song_id)  %>
+                        <span class="bg-green-600 text-white p-2 rounded text-xs">
+                          + <%= format_score (@guitar_points * 2) %>
+                        </span>
+                      <% elsif (response.question.id != guitar_question.id) &&guitar_correct_albums.include?(mashup.album_id) && guitar_correct_songs.include?(mashup.song_id)  %>
+                        <span class="bg-green-600 text-white p-2 rounded text-xs">
+                          + <%= format_score (@piano_points * 2) %>
+                        </span>
+                      <% elsif (response.question.id != piano_question.id) &&piano_correct_albums.include?(mashup.album_id)  %>
+                        <span class="bg-green-600 text-white p-2 rounded text-xs">
+                         + 1
+                        </span>
+                      <% elsif (response.question.id != guitar_question.id) &&guitar_correct_albums.include?(mashup.album_id)  %>
+                        <span class="bg-green-600 text-white p-2 rounded text-xs">
+                         + 1
+                        </span>
                       <% end %>
-                    </p>
+                    </div>
+
                   <% end %>
                 </div>
 

@@ -17,10 +17,45 @@
     <p>
 
     <div class="flex items-center gap-4 lg:px-12">
-      <button id="dark-mode-toggle" class="cursor-pointer px-4 "></button>
+      <button id="dark-mode-toggle" class="cursor-pointer px-4 " onclick="toggleTheme()">
+      </button>
       <i class='fa-solid fa-bars cursor-pointer' onclick="document.getElementById('sidebar').classList.toggle('hidden')"></i>
     </div>
   </div>
 
   <%= render 'layouts/sidebar', items: navbar_items %>
 </nav>
+
+<script>
+  document.addEventListener("turbo:load", () => {
+    const theme = localStorage.getItem('theme');
+    updateButtonText(theme)
+
+  })
+
+  function toggleTheme(){
+      const theme = localStorage.getItem('theme');
+      const htmlElement = document.documentElement;
+
+      if (theme === 'light'){
+        htmlElement.classList.add('dark');
+        updateButtonText('dark')
+        localStorage.setItem('theme', 'dark')
+      } else {
+        htmlElement.classList.remove('dark');
+        updateButtonText('light')
+        localStorage.setItem('theme', 'light')
+      }
+  }
+
+  function updateButtonText(theme) {
+
+    const toggleButton = document.getElementById('dark-mode-toggle');
+
+    if (theme === 'dark') {
+      toggleButton.innerHTML = '<i class="fa-regular fa-lightbulb"></i>';
+    } else {
+      toggleButton.innerHTML = '<i class="fa-solid fa-lightbulb"></i>';
+    }
+  };
+</script>

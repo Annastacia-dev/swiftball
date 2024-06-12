@@ -94,71 +94,31 @@
 
 
     <script>
-    document.addEventListener("turbo:load", () => {
-      const flash = document.getElementById('flash');
-      const progressBar = document.getElementById('progress-bar');
-      let progress = 100;
-      let intervalId;
+      document.addEventListener("turbo:load", () => {
+        const flash = document.getElementById('flash');
+        const progressBar = document.getElementById('progress-bar');
+        let progress = 100;
+        let intervalId;
 
-      if (flash) {
-        intervalId = setInterval(() => {
-          progress -= 1;
-          progressBar.style.width = `${progress}%`;
+        if (flash) {
+          intervalId = setInterval(() => {
+            progress -= 1;
+            progressBar.style.width = `${progress}%`;
 
-          if (progress <= 0) {
-            clearInterval(intervalId);
+            if (progress <= 0) {
+              clearInterval(intervalId);
+              flash.classList.add('hidden');
+            }
+          }, 50);
+        }
+
+        function closeFlash() {
+          const flash = document.getElementById('flash');
+          if (flash) {
             flash.classList.add('hidden');
           }
-        }, 50);
-      }
-
-      function closeFlash() {
-        const flash = document.getElementById('flash');
-        if (flash) {
-          flash.classList.add('hidden');
-        }
-      }
-
-      const toggleButton = document.getElementById('dark-mode-toggle');
-      const htmlElement = document.documentElement;
-      const theme = localStorage.getItem('theme')
-
-      const updateButtonText = (theme) => {
-        if (theme === 'dark') {
-          toggleButton.innerHTML = '<i class="fa-regular fa-lightbulb"></i>';
-        } else {
-          toggleButton.innerHTML = '<i class="fa-solid fa-lightbulb"></i>';
-        }
-      };
-
-      if (theme === 'dark') {
-        htmlElement.classList.add('dark');
-      } else {
-        htmlElement.classList.remove('dark');
-      }
-
-      updateButtonText(theme);
-
-      toggleButton.addEventListener('click', () => {
-        if (htmlElement.classList.contains('dark')) {
-          htmlElement.classList.remove('dark');
-          localStorage.setItem('theme', 'light');
-          updateButtonText('light');
-        } else {
-          htmlElement.classList.add('dark');
-          localStorage.setItem('theme', 'dark');
-          updateButtonText('dark');
         }
       });
-
-
-      if (localStorage.getItem('theme') === 'dark') {
-        htmlElement.classList.add('dark');
-      } else {
-        htmlElement.classList.remove('dark');
-      }
-
-    });
     </script>
   </body>
 </html>
