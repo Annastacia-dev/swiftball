@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     post 'close', on: :member
     post 'live', on: :member
     resources :questions do
+      get 'history', on: :member
       get 'pick_surprise_song', on: :member
       post 'surprise_song_answer', on: :member
       resources :choices

@@ -12,22 +12,25 @@
         <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
         <% questions.each_with_index do |question, index| %>
           <div class="flex flex-col px-5 py-3 capitalize font-medium ">
-          <%= (index + 1).to_s.rjust(2, '0') %>. <%= question.content %> (worth <%= question.points %> points)
-          <div class="grid <%= question&.choices&.first&.image&.attached? ? 'lg:grid-cols-6 grid-cols-2' : 'grid-cols-1' %> gap-4">
-            <% question.choices.includes([image_attachment: :blob]).order(:position).each_with_index do |choice, index| %>
-              <div class="choice py-3 flex flex-col gap-4">
-                <%= image_tag(choice.image, alt: "Option #{index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
-                <div class="flex gap-2 items-center capitalize font-light">
-                <%= f.radio_button "selected_options[#{question.id}]", choice.id, required: true, class: (question.include_mashup? ? 'mashup-choice' : ''), data: { content: question.content, choice_content: choice.content, question_id: question.id } %>
-                  <%= choice.content %>
+            <p class="flex justify-between">
+              <%= (index + 1).to_s.rjust(2, '0') %>. <%= question.content %> (worth <%= question.points %> points)
+              <%= link_to 'View History', history_quiz_question_path(question.quiz, question), class: "#{era_text_color(question.era)} underline hover:scale-90" %>
+            </p>
+            <div class="grid <%= question&.choices&.first&.image&.attached? ? 'lg:grid-cols-6 grid-cols-2' : 'grid-cols-1' %> gap-4">
+              <% question.choices.includes([image_attachment: :blob]).order(:position).each_with_index do |choice, index| %>
+                <div class="choice py-3 flex flex-col gap-4">
+                  <%= image_tag(choice.image, alt: "Option #{index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
+                  <div class="flex gap-2 items-center capitalize font-light">
+                  <%= f.radio_button "selected_options[#{question.id}]", choice.id, required: true, class: (question.include_mashup? ? 'mashup-choice' : ''), data: { content: question.content, choice_content: choice.content, question_id: question.id } %>
+                    <%= choice.content %>
+                  </div>
                 </div>
-              </div>
-            <% end %>
-            <% if question.include_album_and_song %>
-              <div class="album-song-fields mt-4 grid grid-cols-2 gap-2 font-light" data-content="<%= question.id %>">
-              </div>
-            <% end %>
-          </div>
+              <% end %>
+              <% if question.include_album_and_song %>
+                <div class="album-song-fields mt-4 grid grid-cols-2 gap-2 font-light" data-content="<%= question.id %>">
+                </div>
+              <% end %>
+            </div>
           </div>
         <% end %>
       </div>
@@ -52,8 +55,9 @@
 
     function updateAlbumsongSelects(selectedElement) {
       const mashupType = selectedElement.dataset.choiceContent.toLowerCase();
-      const container = selectedElement.parentElement.parentElement.parentElement.parentElement.nextElementSibling.children[0].children[0]
+      const container = selectedElement.parentElement.parentElement.parentElement.parentElement.nextElementSibling.children[1].children[0]
       const questionId = container.dataset.content
+      const selectedElementQuestionId = selectedElement.dataset.questionId
       let numberOfFields;
 
       switch (mashupType) {
