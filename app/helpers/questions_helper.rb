@@ -43,4 +43,35 @@ module QuestionsHelper
       'text-blue-500'
     end
   end
+
+  def album_color(album)
+    case album.downcase
+    when 'lover'
+      'text-rose-500'
+    when 'fearless'
+      'text-yellow-600'
+    when 'red'
+      'text-red-600'
+    when 'speak now'
+      'text-violet-500'
+    when 'folklore'
+      'text-gray-500'
+    when 'evermore'
+      'text-brown-300'
+    when '1989'
+      'text-blue-500'
+    when 'ttpd'
+      'text-gray-500'
+    when 'debut'
+      'text-lime-500'
+    when 'midnights'
+      'text-blue-950'
+    when 'non-album'
+      'text-orange-500'
+    when 'reputation'
+      'text-black'
+    else
+      'text-black'
+    end
+  end
 end

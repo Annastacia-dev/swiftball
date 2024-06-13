@@ -4,7 +4,7 @@
   </h5>
 
   <div class="grid lg:grid-cols-6 grid-cols-3 gap-4 mt-5">
-    <% Tour.where.not(base: true).where.not(status: [:pending, :open]).includes(:quiz).order(number: :desc).each do |tour| %>
+    <% Tour.where.not(base: true).where.not(status: [:pending, :open]).includes(quiz: { mashup_answers: [:album, :song] }).order(number: :desc).each do |tour| %>
       <% quiz = tour.quiz %>
       <% question = quiz.questions.find_by(content: @question.content) %>
       <% unless question.include_album_and_song? %>
@@ -18,6 +18,21 @@
           </div>
           </div>
         <% end %>
+      <% else %>
+       <% mashup_answers = quiz.mashup_answers.where(correct: true) %>
+       <% if mashup_answers.present? %>
+        <% mashup_answers.group_by { |mashup| mashup.question.id }.each do |question_id, mashups| %>
+          <% qn = Question.find(question_id) %>
+          <% if qn.content == @question.content %>
+            <div class="flex flex-col gap-1">
+              <p class="text-sm uppercase font-medium mb-1"><%= tour.title %></p>
+              <% mashups.each do |mashup| %>
+                  <p class="text-sm capitalize <%= album_color(mashup.album.abbr) %>"><%= mashup.album.abbr %> - <%= mashup.song.title %></p>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+       <% end %>
       <% end %>
     <% end %>
   </div>

@@ -13,6 +13,13 @@
       <%= form.text_field :content, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full", required: true %>
     </div>
 
+    <% if action_name == 'edit' %>
+      <div class="flex flex-col gap-1">
+        <%= form.label :position %>
+        <%= form.number_field :position, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full", required: true %>
+      </div>
+    <% end %>
+
     <div class="flex items-center gap-2">
       <%= form.check_box :correct, class: "h-8 w-8" %>
       <%= form.label :correct %>

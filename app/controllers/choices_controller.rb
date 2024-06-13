@@ -123,6 +123,6 @@ class ChoicesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def choice_params
-      params.require(:choice).permit(:question_id, :content, :correct, :image, :new_item)
+      params.require(:choice).permit(:question_id, :content, :correct, :image, :new_item, :position)
     end
 end
