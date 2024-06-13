@@ -19,7 +19,6 @@ class AttemptsController < ApplicationController
         response = @attempt.responses.find_by(question_id: question_id)
 
         if response.update(choice_id: choice_id)
-          update_mashup_answer(response)
           next
         else
           redirect_to attempt_path(@attempt), alert: "Something went wrong. Please try again."
