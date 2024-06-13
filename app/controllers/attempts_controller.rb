@@ -8,7 +8,11 @@ class AttemptsController < ApplicationController
   end
 
   def show
-    @questions_by_era = @attempt.responses.includes([:question, :mashup_answers]).group_by { |response| response.question.era }
+    @questions_by_era = @attempt.responses.includes([:question, :mashup_answers, choice:[image_attachment: :blob]])
+                         .group_by { |response| response.question.era }
+                         .transform_values { |responses|
+                           responses.sort_by { |response| response.question.position }
+                         }
   end
 
   def update
