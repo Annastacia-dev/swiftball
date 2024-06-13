@@ -4,12 +4,12 @@
   <div class="mt-10 grid lg:grid-cols-2 gap-2 font-light mb-10 lg:w-3/4 capitalize">
     <div class="flex flex-col gap-1">
       <%= f.label :album_id, 'Album' %>
-      <%= f.select :album_id, options_for_select(@albums, @mashup_answer.album_id), {}, { class: "capitalize", required: true, id: "album" } %>
+      <%= f.select :album_id, options_for_select(@albums, @mashup_answer.album_id), {}, { class: "capitalize lg:w-full w-48", required: true, id: "album" } %>
     </div>
 
     <div class="flex flex-col gap-1">
       <%= f.label :song_id, 'Song' %>
-      <%= f.select :song_id, [], {}, { class: "capitalize", required: true, id: "songs"} %>
+      <%= f.select :song_id, [], {}, { class: "capitalize lg:w-full w-48", required: true, id: "songs"} %>
     </div>
   </div>
 
