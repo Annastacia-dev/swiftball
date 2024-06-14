@@ -24,6 +24,9 @@
           <div class="flex flex-col px-5 py-3 ">
             <p class="flex lg:flex-row flex-col gap-2 justify-between lg:text-base text-sm">
               <%= (q_index + 1).to_s.rjust(2, '0') %>. <%= question.content %> (worth <%= question.points %> points)
+              <%= render 'components/drawer', button_icon: '', button_text: 'view history', title: "#{question.content} history", id: "#{question.id}_history", button_class: "#{era_text_color(question.era)} underline hover:scale-90 ml-7 capitalize font-normal text-xs" do %>
+                <%= render 'questions/history_drawer', question: question %>
+              <% end %>
             </p>
             <div class="grid <%= question&.choices&.first&.image&.attached? ? 'lg:grid-cols-6 grid-cols-2' : 'grid-cols-1' %> gap-4">
               <% question.choices.includes([image_attachment: :blob]).order(:position).each_with_index do |choice, c_index| %>

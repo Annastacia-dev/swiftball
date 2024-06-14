@@ -31,6 +31,8 @@ module QuestionsHelper
       'text-orange-700'
     when '1989'
       'text-blue-500'
+    when 'reputation'
+      'dark:text-red-500 text-black'
     when 'the_tortured_poets_department'
       'text-gray-500'
     when 'acoustic_set'

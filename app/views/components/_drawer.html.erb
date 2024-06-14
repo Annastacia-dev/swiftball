@@ -4,13 +4,13 @@
     <%= button_text %>
   </button>
 
-  <div class="flex flex-col fixed inset-0 lg:left-3/4 bg-white border border-gray-800 h-screen font-normal text-sm z-10 hidden capitalize p-5 overflow-y-scroll w-full sm:w-11/12 lg:max-w-2xl lg:transform lg:-translate-x-1/2" data-drawer-target="drawer" data-id="<%= id %>">
+  <div class="flex flex-col fixed inset-0 lg:left-3/4 dark:bg-black bg-white border border-gray-800 h-screen font-normal text-sm z-10 hidden capitalize p-5 overflow-y-scroll w-full sm:w-11/12 lg:max-w-2xl lg:transform lg:-translate-x-1/2" data-drawer-target="drawer" data-id="<%= id %>">
     <div class="flex gap-4 sm:gap-6 lg:gap-10 items-center">
-      <button data-action="click->drawer#close" class="text-gray-800 text-2xl">
+      <button data-action="click->drawer#close" class="dark:text-gray-200 text-gray-800 text-2xl">
         &times;
       </button>
-      <h2 class="text-gray-800 font-semibold uppercase lg:text-base text-sm">
-      <%= title %>
+      <h2 class="dark:text-gray-200 text-gray-800 font-semibold uppercase lg:text-base text-sm">
+        <%= title %>
       </h2>
     </div>
     <hr class="border border-gray-100">
