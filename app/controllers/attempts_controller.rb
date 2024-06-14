@@ -8,7 +8,10 @@ class AttemptsController < ApplicationController
   end
 
   def show
-    @questions_by_era = @attempt.responses.includes([:question, :mashup_answers]).group_by { |response| response.question.era }
+    responses = @attempt.responses.includes(:question, :mashup_answers, choice:[image_attachment: :blob])
+    ordered_questions = responses.joins(:question).order('questions.era ASC', 'questions.position ASC')
+    @questions_by_era = ordered_questions.group_by { |response| response.question.era }
+
   end
 
   def update
@@ -19,7 +22,6 @@ class AttemptsController < ApplicationController
         response = @attempt.responses.find_by(question_id: question_id)
 
         if response.update(choice_id: choice_id)
-          update_mashup_answer(response)
           next
         else
           redirect_to attempt_path(@attempt), alert: "Something went wrong. Please try again."
