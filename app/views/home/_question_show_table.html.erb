@@ -24,13 +24,23 @@
             <% quiz = tour.quiz %>
             <% response = @responses.select { |response| response.question.content == question_content && response.question.quiz.tour_id == tour.id }.first %>
 
+
             <td class="p-2 lg:text-sm text-xs">
               <% if response %>
-               <% if response.choice.correct %>
-                <i class="fa-solid fa-check text-green-500"></i>
-               <% else %>
-                <i class="fa-solid fa-xmark text-red-500"></i>
-               <% end %>
+                <% correct_response_exists = response.question.choices.find_by(correct: true).present? %>
+                <% if response.choice.correct %>
+                  <i class="fa-solid fa-check text-green-500"></i>
+                <% else %>
+                  <% if tour.status == 'live' %>
+                    <% if correct_response_exists %>
+                      <i class="fa-solid fa-xmark text-red-500"></i>
+                    <% else %>
+                      <i class="fa-solid fa-spinner"></i>
+                    <% end %>
+                  <% else %>
+                    <i class="fa-solid fa-xmark text-red-500"></i>
+                  <% end %>
+                <% end %>
               <% else %>
                 <% if tour.status == 'live' || tour.status == 'open' %>
                   <i class="fa-solid fa-spinner"></i>
