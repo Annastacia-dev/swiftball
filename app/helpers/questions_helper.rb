@@ -57,7 +57,7 @@ module QuestionsHelper
     when 'folklore'
       'text-gray-500'
     when 'evermore'
-      'text-brown-300'
+      'text-yellow-600'
     when '1989'
       'text-blue-500'
     when 'ttpd'

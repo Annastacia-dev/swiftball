@@ -23,8 +23,7 @@
         <% questions.each_with_index do |question, q_index| %>
           <div class="flex flex-col px-5 py-3 ">
             <p class="flex lg:flex-row flex-col gap-2 justify-between lg:text-base text-sm">
-            <%= (q_index + 1).to_s.rjust(2, '0') %>. <%= question.content %> (worth <%= question.points %> points)
-            <%= link_to 'View History', history_quiz_question_path(question.quiz, question), class: "#{era_text_color(question.era)} underline hover:scale-90 lg:ml-0 ml-7" %>
+              <%= (q_index + 1).to_s.rjust(2, '0') %>. <%= question.content %> (worth <%= question.points %> points)
             </p>
             <div class="grid <%= question&.choices&.first&.image&.attached? ? 'lg:grid-cols-6 grid-cols-2' : 'grid-cols-1' %> gap-4">
               <% question.choices.includes([image_attachment: :blob]).order(:position).each_with_index do |choice, c_index| %>
