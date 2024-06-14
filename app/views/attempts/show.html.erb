@@ -49,7 +49,7 @@
     <% if  tour.status == 'live' %>
       <div class="absolute right-10 lg:top-1 top-10 font-handwriting">
           <div class="bg-green-500 h-5 w-5 rounded-full absolute top-4 z-10 left-1 animate-ping"></div>
-          <div class="sticky-note bg-white p-5 w-44 h-44 m-4 rounded-lg flex flex-col gap-2">
+          <div class="sticky-note dark:bg-black bg-white p-5 w-44 h-44 m-4 rounded-lg flex flex-col gap-2">
               <h2 class="text-xl underline tracking-wide font-bold mb-2 uppercase">live progress</h2>
               <span class="text-lg">QNS: <%= @attempt.correct_attempt_questions %> / <%= @attempt.questions_with_correct_answers %> </span>
               <span class="text-lg">POINTS: <%= @attempt.score %> / <%= @attempt.total_possible_points %> </span>
@@ -218,7 +218,7 @@
 
     <% if  tour.status == 'live' %>
       <div class="flex justify-center items-end fixed bottom-0 right-1 mb-8">
-        <button class="dark:bg-black bg-gray-200hover:bg-gray-900  font-bold lg:py-2 py-4 px-4 rounded flex gap-1 items-center" id="refreshButton" title="refresh progress">
+        <button class="dark:bg-black bg-gray-200 hover:dark:bg-gray-900 hover:bg-gray-100  font-bold lg:py-2 py-4 px-4 rounded flex gap-1 items-center" id="refreshButton" title="refresh progress">
           <i class="fas fa-rotate-left"></i>
           <span class="lg:flex hidden">Refresh Progress</span>
         </button>
@@ -236,7 +236,8 @@
       button.disabled = true;
 
       // Change button color to gray
-      button.classList.remove('bg-black/95 dark:bg-gray-50 dark:text-black dark:', 'hover:bg-gray-900');
+      button.classList.remove('dark:bg-black');
+      button.classList.remove('bg-gray-200');
       button.classList.add('bg-gray-500', 'hover:bg-gray-700');
       button.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span class="lg:flex hidden">Loading ...</span>';
 
@@ -251,7 +252,8 @@
         if (progress >= 100) {
           location.reload();
           clearInterval(interval);
-          button.style.background = '#000';
+          button.classList.add('dark:bg-black')
+          button.classList.add('bg-gray-200')
           button.innerHTML = '<i class="fas fa-rotate-left"></i> <span class="lg:flex hidden">Refresh Progress</span>';
           button.disabled = false;
         }

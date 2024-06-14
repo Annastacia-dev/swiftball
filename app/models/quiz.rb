@@ -26,6 +26,7 @@ class Quiz < ApplicationRecord
   belongs_to :tour, dependent: :destroy
   has_many :questions, dependent: :destroy
   has_many :attempts, dependent: :destroy
+  has_many :mashup_answers, through: :questions, dependent: :destroy
 
   def total_attempts
     attempts.size

@@ -16,4 +16,62 @@ module QuestionsHelper
 
     items
   end
+
+  def era_text_color(era)
+    case era.downcase
+    when 'lover'
+      'text-rose-500'
+    when 'fearless'
+      'text-yellow-500'
+    when 'red'
+      'text-red-600'
+    when 'speak_now'
+      'text-violet-500'
+    when 'folkmore'
+      'text-orange-700'
+    when '1989'
+      'text-blue-500'
+    when 'the_tortured_poets_department'
+      'text-gray-500'
+    when 'acoustic_set'
+      'text-lime-500'
+    when 'midnights'
+      'text-blue-950'
+    when 'extra'
+      'text-orange-500'
+    else
+      'text-blue-500'
+    end
+  end
+
+  def album_color(album)
+    case album.downcase
+    when 'lover'
+      'text-rose-500'
+    when 'fearless'
+      'text-yellow-600'
+    when 'red'
+      'text-red-600'
+    when 'speak now'
+      'text-violet-500'
+    when 'folklore'
+      'text-gray-500'
+    when 'evermore'
+      'text-yellow-600'
+    when '1989'
+      'text-blue-500'
+    when 'ttpd'
+      'text-gray-500'
+    when 'debut'
+      'text-lime-500'
+    when 'midnights'
+      'text-blue-950'
+    when 'non-album'
+      'text-orange-500'
+    when 'reputation'
+      'text-black'
+    else
+      'text-black'
+    end
+  end
 end

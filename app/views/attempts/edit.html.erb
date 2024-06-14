@@ -22,7 +22,9 @@
         <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
         <% questions.each_with_index do |question, q_index| %>
           <div class="flex flex-col px-5 py-3 ">
-            <%= (q_index + 1).to_s.rjust(2, '0') %>. <%= question.content %> (worth <%= question.points %> points)
+            <p class="flex lg:flex-row flex-col gap-2 justify-between lg:text-base text-sm">
+              <%= (q_index + 1).to_s.rjust(2, '0') %>. <%= question.content %> (worth <%= question.points %> points)
+            </p>
             <div class="grid <%= question&.choices&.first&.image&.attached? ? 'lg:grid-cols-6 grid-cols-2' : 'grid-cols-1' %> gap-4">
               <% question.choices.includes([image_attachment: :blob]).order(:position).each_with_index do |choice, c_index| %>
                 <div class="choice py-3 flex flex-col gap-4">
