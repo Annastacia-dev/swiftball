@@ -3,14 +3,14 @@ class PushNotificationsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create]
 
   def create
-    subscription = params['subscription']
+    push_subscription = params['push_subscription']
     payload = params['payload']
 
     WebPush.payload_send(
       message: payload,
-      endpoint: subscription['endpoint'],
-      p256dh: subscription['keys']['p256dh'],
-      auth: subscription['keys']['auth'],
+      endpoint: push_subscription['endpoint'],
+      p256dh: push_subscription['keys']['p256dh'],
+      auth: push_subscription['keys']['auth'],
       vapid: {
         subject: "mailto:sender@example.com",
         public_key: ENV['VAPID_PUBLIC_KEY'],

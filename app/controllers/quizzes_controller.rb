@@ -100,6 +100,7 @@ class QuizzesController < ApplicationController
     if @tour.status != 'open'
       respond_to do |format|
         if @tour.update(status: :open)
+          send_push_notification
           format.html { redirect_to tours_path, notice: 'Quiz is now open' }
         else
           format.html { redirect_to tours_path, notice: 'Something went wrong, try again' }
@@ -164,5 +165,9 @@ class QuizzesController < ApplicationController
         end
       end
       merged_hash
+    end
+
+    def send_push_notification
+      OpenQuizPushNotification.perform_async('quiz_id' => @quiz.id)
     end
 end

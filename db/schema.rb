@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_11_070014) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_15_154456) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -101,6 +101,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_11_070014) do
     t.integer "era"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "push_subscriptions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "endpoint"
+    t.jsonb "keys"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_push_subscriptions_on_user_id"
   end
 
   create_table "questions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -194,6 +203,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_11_070014) do
   add_foreign_key "mashup_answers", "questions"
   add_foreign_key "mashup_answers", "responses"
   add_foreign_key "mashup_answers", "songs"
+  add_foreign_key "push_subscriptions", "users"
   add_foreign_key "questions", "quizzes"
   add_foreign_key "quizzes", "tours"
   add_foreign_key "responses", "attempts"
