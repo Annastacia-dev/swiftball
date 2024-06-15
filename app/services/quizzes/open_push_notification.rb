@@ -23,6 +23,7 @@ module Quizzes
     def find_quiz
       return if quiz_id.blank?
 
+
       puts 'Finding quiz...'
       @quiz = Quiz.find(quiz_id)
 
@@ -36,10 +37,12 @@ module Quizzes
     end
 
     def send_push_notification
+      return if quiz.blank?
+
       subscriptions = PushSubscription.all
       subscriptions.each do |subscription|
         payload = {
-          title: "#{quiz.title.titleize} is Open!",
+          title: "#{quiz.title.titleize} Swiftball is Open!",
           body: "Make your predictions before #{quiz.tour.quiz_live_time.strftime("%A %d %B %Y %H:%M")}",
           icon: '/icon-96.png',
           badge: '/icon-96.png',
