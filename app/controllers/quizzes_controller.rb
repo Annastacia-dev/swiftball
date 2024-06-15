@@ -3,6 +3,7 @@ class QuizzesController < ApplicationController
   before_action :set_quiz, only: %i[ show edit destroy take live open close submit results progress]
   before_action :authenticate_admin!, only: %i[show edit destroy open close]
   before_action :authenticate_not_admin!, only: %i[take]
+  before_action :check_attempt_exists, only: %i[take]
   before_action :check_tour_open, only: %i[take]
   before_action :set_tour, except: %i[index]
 
@@ -150,6 +151,17 @@ class QuizzesController < ApplicationController
           format.html { redirect_to root_path, alert: 'Sorry you missed this one, Quiz is closed' }
         elsif  @quiz.tour.status == 'pending'
           format.html { redirect_to root_path, alert: 'Hey early bird, Quiz is not yet open' }
+        else
+         format.html  { render :take }
+        end
+      end
+    end
+
+    def check_attempt_exists
+      attempt = current_user.attempts.find_by(quiz_id: @quiz.id)
+      respond_to do |format|
+        if attempt.present?
+          format.html { redirect_to attempt_path(attempt), notice: 'You have already submitted your predictions.' }
         else
          format.html  { render :take }
         end
