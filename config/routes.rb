@@ -49,6 +49,6 @@ Rails.application.routes.draw do
   resources :users, only: %i[index]
   resources :outfits
 
-  resources :subscriptions, only: [:create]
-  post 'notifications/:id', to: 'notifications#create'
+  resources :push_subscriptions, only: [:create]
+  resources :push_notifications, only: [:create]
 end

@@ -1,15 +1,15 @@
 # == Schema Information
 #
-# Table name: subscriptions
+# Table name: notifications
 #
 #  id         :uuid             not null, primary key
-#  auth       :string
-#  endpoint   :string
-#  p256dh     :string
+#  message    :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class Subscription < ApplicationRecord
-  serialize :keys, Hash
-end
 
+one:
+  message: MyString
+
+two:
+  message: MyString

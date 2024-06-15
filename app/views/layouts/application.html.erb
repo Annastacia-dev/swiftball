@@ -44,8 +44,9 @@
     <meta name="twitter:image" content="https://swiftball.online/swiftball.jpg">
 
     <meta name="google-site-verification" content="o7k1ofySYtox3sXmZV3NPITuGzflpXGECyrqhpOuRm0" />
+    <meta name="vapid-public-key" content="<%= ENV.fetch('VAPID_PUBLIC_KEY') %>">
 
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="/manifest.json" crossorigin="use-credentials">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
     <%= csrf_meta_tags %>
@@ -88,7 +89,6 @@
           Install App
         </button>
       </div>
-
       <%= yield %>
     </main>
 
