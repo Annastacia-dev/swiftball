@@ -12,28 +12,12 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(fetch(event.request));
 });
 
-// self.addEventListener('push', function(event) {
-//   console.log('Push event received:', event);
-//   const data = event.data.json();
-//   const options = {
-//     body: data.body,
-//     icon: data.icon,
-//     badge: data.badge
-//   };
-
-//   console.log(options)
-
-//   event.waitUntil(
-//     self.registration.showNotification(data.title, options)
-//   );
-// });
-
 self.addEventListener('push', function(event) {
-  console.log('Push event received:', event);
+  //console.log('Push event received:', event);
 
   // Retrieve the textual payload from event.data (a PushMessageData object).
   const payload = event.data ? event.data.json() : { body: 'no payload', url: '' };
-  console.log('Push event payload:', payload);
+   //console.log('Push event payload:', payload);
 
   // Define the notification options.
   const options = {
@@ -41,7 +25,8 @@ self.addEventListener('push', function(event) {
     icon: payload.icon,
     badge: payload.badge,
     vibrate: [200, 100, 200],
-    data: { url: payload.url }
+    data: { url: payload.url },
+    requireInteraction: true
   };
 
   // Keep the service worker alive until the notification is created.
@@ -51,7 +36,7 @@ self.addEventListener('push', function(event) {
 });
 
 self.addEventListener('notificationclick', function(event) {
-  console.log('Notification click received:', event);
+  //console.log('Notification click received:', event);
   event.notification.close(); // Close the notification
 
   // Open the URL specified in the data property

@@ -101,8 +101,8 @@ class QuizzesController < ApplicationController
     if @tour.status != 'open'
       respond_to do |format|
         if @tour.update(status: :open)
-          send_emails
           send_push_notifications
+          send_emails
           format.html { redirect_to tours_path, notice: 'Quiz is now open' }
         else
           format.html { redirect_to tours_path, notice: 'Something went wrong, try again' }

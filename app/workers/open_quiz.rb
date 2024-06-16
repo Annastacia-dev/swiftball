@@ -55,6 +55,7 @@ class OpenQuiz
     @tours_to_open.each do |tour|
       tour.update!(status: :open)
       Quizzes::OpenPushNotification.call('quiz_id' => tour.quiz.id)
+      Quizzes::OpenEmail.call('quiz_id' => tour.quiz.id)
 
       logger.info "Opened tour: #{tour.title}"
     end

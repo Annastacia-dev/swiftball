@@ -9,7 +9,7 @@ navigator.serviceWorker.register('service_worker.js');
 
 if ('Notification' in window && navigator.serviceWorker) {
   Notification.requestPermission(status => {
-    console.log('Notification permission status:', status);
+    //console.log('Notification permission status:', status);
   });
 }
 
