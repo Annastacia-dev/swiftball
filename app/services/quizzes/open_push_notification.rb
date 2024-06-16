@@ -1,10 +1,10 @@
-# Open Quiz Pus hNotification
+# Open Quiz Push hNotification
 # frozen_string_literal: true
 require 'web-push'
 
 module Quizzes
   class OpenPushNotification < ApplicationService
-    attr_reader :quiz_id, :quiz
+    include QuizConcern
 
     def initialize(params)
       super()
@@ -14,41 +14,30 @@ module Quizzes
 
     def call
       find_quiz
-      # find_users_without_attempt
+      find_users_without_attempt
       send_push_notification
     end
 
     private
 
-    def find_quiz
-      return if quiz_id.blank?
-
-
-      puts 'Finding quiz...'
-      @quiz = Quiz.find(quiz_id)
-
-      if quiz.present?
-        logger.info("Found #{quiz.title}")
-        return true
-      end
-
-      log_error "Could not find quiz with id: #{quiz_id}"
-      false
-    end
-
     def send_push_notification
-      return if quiz.blank?
+      return if users_without_attempt.blank?
 
-      subscriptions = PushSubscription.all
-      subscriptions.each do |subscription|
-        payload = {
-          title: "#{quiz.title.titleize} Swiftball is Open!",
-          body: "Make your predictions before #{quiz.tour.quiz_live_time.strftime("%A %d %B %Y %H:%M")}",
-          icon: '/icon-96.png',
-          badge: '/icon-96.png',
-          url: take_quiz_url(quiz)
-        }
-        send_push_to_subscription(subscription, payload)
+      subscriptions = users_without_attempt.map(&:push_subscriptions).flatten
+
+      if subscriptions.present?
+        subscriptions.each do |subscription|
+          payload = {
+            title: "#{quiz.title.titleize} Swiftball is Open!",
+            body: "Make your predictions before #{quiz.tour.quiz_live_time.strftime("%A %d %B %Y %H:%M")}",
+            icon: '/icon-96.png',
+            badge: '/icon-96.png',
+            url: take_quiz_url(quiz)
+          }
+          send_push_to_subscription(subscription, payload)
+        end
+      else
+        logger.info 'No user is subscribed to push notifications'
       end
     end
 

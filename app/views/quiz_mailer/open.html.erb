@@ -1,0 +1,16 @@
+<div style="font-family: Roboto, sans-serif; padding: 20px; border-radius: <div style="font-family: Roboto, sans-serif; padding: 20px; border-radius: 8px; max-width: 600px; margin: 0 auto;">
+  <h3>Hello <%= @user.name.titleize %>,</h3>
+
+  <p>
+    <%= @quiz.title.titleize %> quiz is now open!
+    <br />
+    <br />
+    Make your predictions before <%= @quiz.tour.quiz_live_time.strftime("%A %d %B %Y %H:%M") %>.
+  </p>
+
+  <br />
+
+  <%= link_to 'Predict', take_quiz_url(@quiz), target: '_blank', style: "padding: 10px; background-color: #000; color: #fff; text-decoration: none; cursor: pointer;" %>
+
+  <br />
+</div>
