@@ -3,7 +3,6 @@ module ApplicationHelper
   def navbar_items
     items = [
       { path: root_path, icon_class: 'fa-solid fa-house', menu_text: 'Home' },
-      { path: edit_user_registration_path, icon_class: 'fa-solid fa-user', menu_text: 'Profile' }
     ]
 
     if current_user.admin?
@@ -39,10 +38,17 @@ module ApplicationHelper
       ]
     })
 
-    items.push({ path: destroy_user_session_path, icon_class: 'fa-solid fa-right-from-bracket', menu_text: 'Logout', type: 'button', method: :delete })
-
-    items.push({ path:  registration_path('user'), icon_class: 'fa-solid fa-delete-left', menu_text: 'Delete account', type: 'button', method: :delete })
-
+    items.push(
+      path: '',
+      icon_class: 'fa-solid fa-user',
+      menu_text: 'Profile',
+      children: [
+        { path: edit_user_registration_path, icon_class: 'fa-solid fa-pencil', menu_text: 'Edit' },
+        { path: destroy_user_session_path, icon_class: 'fa-solid fa-right-from-bracket', menu_text: 'Logout', type: 'button', method: :delete },
+        { path:  registration_path('user'), icon_class: 'fa-solid fa-delete-left', menu_text: 'Delete account', type: 'button', method: :delete }
+      ]
+    )
+    
     items
   end
 
@@ -129,7 +135,7 @@ module ApplicationHelper
       "#000",
       "#ffe0b2", "#ffe0b2",
       "#bbdefb", "#bbdefb",
-      "#757575","#757575", "#757575","#757575",
+      "#757575","#757575", "#757575","#757575", "#757575",
       "#dce775","#dce775","#dce775","#dce775","#dce775",
       "#1a237e", "#1a237e", "#1a237e",
       "#ff5722", "#ff5722",

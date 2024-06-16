@@ -1,5 +1,20 @@
 <ul class="flex-col flex fixed lg:right-3/4 right-1/4 inset-0 dark:bg-black bg-gray-50 px-5 py-16 gap-6  font-normal text-sm hidden z-50 font-courier" id="sidebar">
   <i class='fa-solid fa-xmark cursor-pointer absolute right-10 top-5 text-lg' onclick="document.getElementById('sidebar').classList.toggle('hidden')"></i>
+
+  <div data-controller="install-prompt">
+    <button
+      data-action="install-prompt#install"
+      data-install-prompt-target="button"
+      style="display: none;"
+      class="px-4 py-4"
+      >
+      <i class="fa-solid fa-mobile-screen-button"></i>
+      Install App
+    </button>
+
+    <hr class="border-1" />
+  </div>
+
   <% items.each_with_index do |item, index| %>
     <% if item[:children] %>
       <li class="px-4 flex flex-col gap-2 cursor-pointer" onclick="toggleDropdown('<%= item[:menu_text] %>', '<%= item[:menu_text] %>')">
@@ -15,11 +30,19 @@
 
           <div id="<%= item[:menu_text] %>_dropdown" class="hidden mt-2 flex flex-col gap-2">
             <% item[:children].each do |child| %>
-              <%= link_to child[:path], class: "block px-1 py-2" do %>
-                <div class="flex gap-2 items-center">
+
+              <% if child[:type] == 'button' %>
+                <%= button_to child[:path], method: child[:method], class: "px-1 py-2 flex items-center gap-4 #{child[:method] == :delete ? 'text-red-500' : ''}", data: (child[:method] == :delete ? { confirm: "Are you sure?", turbo_confirm: "Are you sure?" } : {}) do %>
                   <i class="<%= child[:icon_class] %>"></i>
-                  <span class="hover:underline"><%= child[:menu_text] %> </span>
-                </div>
+                  <span class="hover:underline"><%= child[:menu_text] %></span>
+                <% end %>
+              <% else %>
+                <%= link_to child[:path], class: "block px-1 py-2" do %>
+                  <div class="flex gap-4 items-center">
+                    <i class="<%= child[:icon_class] %>"></i>
+                    <span class="hover:underline"><%= child[:menu_text] %> </span>
+                  </div>
+                <% end %>
               <% end %>
             <% end %>
           </div>
