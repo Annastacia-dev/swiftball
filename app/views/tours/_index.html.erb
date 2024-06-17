@@ -31,9 +31,6 @@
             <% elsif tour.status == 'closed' %>
               <i class="fa-solid fa-circle-xmark text-red-600" title="closed"></i>
             <% end %>
-            <% if tour.status == 'open' %>
-              <span> (closes at <%= time_user_timezone(tour.quiz_live_time, current_user) %>)</span>
-            <% end %>
           </span>
         <% end %>
       <% else %>
