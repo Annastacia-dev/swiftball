@@ -1,7 +1,7 @@
 require_relative "boot"
 
 require "rails/all"
-
+require 'web-push'
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -30,18 +30,17 @@ module Swiftball
 
     # mailing
     config.action_mailer.delivery_method = :smtp
-    username = Rails.env.production? ? Rails.application.credentials.mail[:prod_username] : Rails.application.credentials.mail[:sandbox_username]
-    password = Rails.env.production? ? Rails.application.credentials.mail[:prod_password] : Rails.application.credentials.mail[:sandbox_password]
+    # username = Rails.env.production? ? Rails.application.credentials.mail[:prod_username] : Rails.application.credentials.mail[:sandbox_username]
+    # password = Rails.env.production? ? Rails.application.credentials.mail[:prod_password] : Rails.application.credentials.mail[:sandbox_password]
 
     config.action_mailer.smtp_settings = {
-      user_name: username,
-      password: password,
+      user_name:  Rails.application.credentials.mail[:username],
+      password:  Rails.application.credentials.mail[:password],
       domain: Rails.application.credentials.mail[:domain],
       address: Rails.application.credentials.mail[:address],
       port: Rails.application.credentials.mail[:port],
       authentication: Rails.application.credentials.mail[:authentication],
-      enable_starttls: Rails.application.credentials.mail[:enable_starttls],
-      openssl_verify_mode: Rails.application.credentials.mail[:openssl_verify_mode],
+      enable_starttls_auto: true,
       open_timeout: 5,
       read_timeout: 5
     }

@@ -3,6 +3,7 @@ class QuizzesController < ApplicationController
   before_action :set_quiz, only: %i[ show edit destroy take live open close submit results progress]
   before_action :authenticate_admin!, only: %i[show edit destroy open close]
   before_action :authenticate_not_admin!, only: %i[take]
+  before_action :check_attempt_exists, only: %i[take]
   before_action :check_tour_open, only: %i[take]
   before_action :set_tour, except: %i[index]
 
@@ -100,6 +101,8 @@ class QuizzesController < ApplicationController
     if @tour.status != 'open'
       respond_to do |format|
         if @tour.update(status: :open)
+          send_push_notifications
+          send_emails
           format.html { redirect_to tours_path, notice: 'Quiz is now open' }
         else
           format.html { redirect_to tours_path, notice: 'Something went wrong, try again' }
@@ -155,6 +158,17 @@ class QuizzesController < ApplicationController
       end
     end
 
+    def check_attempt_exists
+      attempt = current_user.attempts.find_by(quiz_id: @quiz.id)
+      respond_to do |format|
+        if attempt.present?
+          format.html { redirect_to attempt_path(attempt), notice: 'You have already submitted your predictions.' }
+        else
+         format.html  { render :take }
+        end
+      end
+    end
+
     def manually_merge_hashes(*hashes)
       merged_hash = {}
       hashes.each do |hash|
@@ -164,5 +178,13 @@ class QuizzesController < ApplicationController
         end
       end
       merged_hash
+    end
+
+    def send_push_notifications
+      OpenQuizPushNotification.perform_async('quiz_id' => @quiz.id)
+    end
+
+    def send_emails
+      OpenQuizEmail.perform_async('quiz_id' => @quiz.id)
     end
 end

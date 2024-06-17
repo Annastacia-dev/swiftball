@@ -32,6 +32,7 @@ class User < ApplicationRecord
 
   # associations
   has_many :attempts, dependent: :destroy
+  has_many :push_subscriptions
 
   # validations
   validates :terms_and_conditions, acceptance: true

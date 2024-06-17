@@ -1,0 +1,11 @@
+Hello <%= @user.name.titleize %>,
+
+
+<%= @quiz.title.titleize %> quiz is now open!
+
+Make your predictions before <%= @quiz.tour.quiz_live_time.strftime("%A %d %B %Y %H:%M") %>
+
+
+Paste the link below in your browser:
+
+<%= take_quiz_url(@quiz) %>

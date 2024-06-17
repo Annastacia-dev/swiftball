@@ -44,8 +44,9 @@
     <meta name="twitter:image" content="https://swiftball.online/swiftball.jpg">
 
     <meta name="google-site-verification" content="o7k1ofySYtox3sXmZV3NPITuGzflpXGECyrqhpOuRm0" />
+    <meta name="vapid-public-key" content="<%= ENV.fetch('VAPID_PUBLIC_KEY') %>">
 
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="/manifest.json" crossorigin="use-credentials">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
     <%= csrf_meta_tags %>
@@ -63,32 +64,11 @@
     <% end %>
     <main class="bg-gray-50 dark:bg-black/95  dark: relative">
       <% unless flash.empty? %>
-        <div id="flash" class="  absolute top-0 lg:right-40 z-50 lg:w-[50%] w-full shadow-lg rounded">
-          <% flash.keys.each do |k| %>
-            <div class="sm:px-20 px-3 py-6 flex justify-center items-center gap-4 border-l-4 text-sm relative <%= notification_class(k) %>">
-              <i class="<%= notification_icon(k) %> text-xl"></i>
-              <div id="progress-bar" class="h-1 absolute bottom-0 left-0 <%= progress_bar_background(k)%>"></div>
-              <%= flash[k] %>
-              <div class="cursor-pointer" onclick="document.getElementById('flash').classList.add('hidden')">
-                <i class="fa-solid fa-square-xmark text-xl"></i>
-              </div>
-            </div>
-          <% end %>
-        </div>
+        <%= render 'layouts/flash' %>
       <% end %>
 
-      <div data-controller="install-prompt">
-        <button
-          data-action="install-prompt#install"
-          data-install-prompt-target="button"
-          style="display: none;"
-          class="<%= current_user.present? ? 'dark:bg-black bg-gray-200 hover:bg-gray-100 hover:' : 'bg-gray-100 hover:bg-gray-300' %>  px-5 py-2 rounded shadow absolute top-2 right-2 capitalize flex items-center gap-2"
-          >
-          <i class="fa-solid fa-mobile-screen-button"></i>
-          Install App
-        </button>
-      </div>
-
+      <%= render 'layouts/install_app_button' %>
+      <%= render 'layouts/allow_notifications' %>
       <%= yield %>
     </main>
 

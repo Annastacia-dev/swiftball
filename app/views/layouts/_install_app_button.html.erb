@@ -1,0 +1,11 @@
+<div data-controller="install-prompt">
+  <button
+    data-action="install-prompt#install"
+    data-install-prompt-target="button"
+    style="display: none;"
+    class="<%= current_user.present? ? 'dark:bg-black bg-gray-200 hover:bg-gray-100 hover:' : 'bg-gray-100 hover:bg-gray-300' %>  px-5 py-2 rounded shadow absolute top-2 right-2 capitalize flex items-center gap-2"
+    >
+    <i class="fa-solid fa-mobile-screen-button"></i>
+    Install App
+  </button>
+</div>

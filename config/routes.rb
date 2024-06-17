@@ -48,4 +48,7 @@ Rails.application.routes.draw do
 
   resources :users, only: %i[index]
   resources :outfits
+
+  resources :push_subscriptions, only: [:create]
+  resources :push_notifications, only: [:create]
 end
