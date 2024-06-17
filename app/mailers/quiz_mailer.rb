@@ -1,4 +1,6 @@
 class QuizMailer < ApplicationMailer
+  helper ApplicationHelper
+
   def open
     @quiz = Quiz.find(params[:quiz_id])
     @user = User.find(params[:user_id])

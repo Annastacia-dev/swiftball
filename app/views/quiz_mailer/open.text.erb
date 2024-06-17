@@ -3,7 +3,7 @@ Hello <%= @user.name.titleize %>,
 
 <%= @quiz.title.titleize %> quiz is now open!
 
-Make your predictions before <%= @quiz.tour.quiz_live_time.strftime("%A %d %B %Y %H:%M") %>
+Make your predictions before <%= datetime_user_timezone( @quiz.tour.quiz_live_time, @user) %>
 
 
 Paste the link below in your browser:

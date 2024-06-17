@@ -29,7 +29,7 @@ module Quizzes
         subscriptions.each do |subscription|
           payload = {
             title: "#{quiz.title.titleize} Swiftball is Open!",
-            body: "Make your predictions before #{quiz.tour.quiz_live_time.strftime("%A %d %B %Y %H:%M")}",
+            body: "Make your predictions before #{datetime_user_timezone( @quiz.tour.quiz_live_time, subscription.user)}",
             icon: '/icon-96.png',
             badge: '/icon-96.png',
             url: take_quiz_url(quiz)

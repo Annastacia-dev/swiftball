@@ -32,7 +32,7 @@
               <i class="fa-solid fa-circle-xmark text-red-600" title="closed"></i>
             <% end %>
             <% if tour.status == 'open' %>
-              <span> (closes at <%= tour.quiz_live_time.in_time_zone(current_user.timezone).strftime('%I:%M %p') %>)</span>
+              <span> (closes at <%= time_user_timezone(tour.quiz_live_time, current_user) %>)</span>
             <% end %>
           </span>
         <% end %>
@@ -43,6 +43,7 @@
               <%= (tour.number).to_s.rjust(2, '0') %>. <%= tour.title %>
               <% if tour.status == 'open' %>
                 <i class="fa-solid fa-circle-check text-orange-500" title="open"></i>
+                (closes at <%= time_user_timezone(tour.quiz_live_time, current_user) %>)
               <% elsif tour.status == 'pending' %>
                 <i class="fa-solid fa-spinner text-gray-600" title="pending"></i>
               <% elsif tour.status == 'live' %>

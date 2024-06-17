@@ -48,7 +48,6 @@ module ApplicationHelper
         { path:  registration_path('user'), icon_class: 'fa-solid fa-delete-left', menu_text: 'Delete account', type: 'button', method: :delete }
       ]
     )
-    
     items
   end
 
@@ -155,5 +154,13 @@ module ApplicationHelper
     else
       raise ArgumentError, "Invalid chart type: #{@chart_type}"
     end
+  end
+
+  def time_user_timezone(datetime, user)
+    datetime.in_time_zone(user.timezone).strftime('%I:%M %p')
+  end
+
+  def datetime_user_timezone(datetime, user)
+    datetime.in_time_zone(user.timezone).strftime("%A %d %B %Y %H:%M")
   end
 end

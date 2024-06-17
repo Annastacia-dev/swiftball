@@ -5,7 +5,7 @@
     <%= @quiz.title.titleize %> quiz is now open!
     <br />
     <br />
-    Make your predictions before <%= @quiz.tour.quiz_live_time.strftime("%A %d %B %Y %H:%M") %>.
+    Make your predictions before <%= datetime_user_timezone( @quiz.tour.quiz_live_time, @user) %>.
   </p>
 
   <br />
