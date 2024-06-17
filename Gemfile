@@ -16,6 +16,7 @@ gem "image_processing", "~> 1.2"
 gem 'importmap-rails', '~> 2.0', '>= 2.0.1'
 gem 'jbuilder', '~> 2.12'
 gem 'paper_trail', '~> 15.1'
+gem 'obscenity', '~> 1.0', '>= 1.0.2'
 gem 'pg', '~> 1.5', '>= 1.5.6'
 gem 'puma', '~> 6.4', '>= 6.4.2'
 gem 'rails', '~> 7.1', '>= 7.1.3.3'

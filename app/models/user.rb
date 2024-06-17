@@ -35,10 +35,10 @@ class User < ApplicationRecord
   has_many :push_subscriptions
 
   # validations
-  validates :email, presence: true, email: true
+  validates :email, presence: true, email: true, obscenity: true, restricted_keywords: true
   validates :terms_and_conditions, acceptance: true
-  validates :name, presence: true
-  validates :username, presence: true, uniqueness: true
+  validates :name, presence: true, length: { minimum: 3, maximum: 50 }, restricted_keywords: true, obscenity: true
+  validates :username, presence: true, uniqueness: true, length: { minimum: 3, maximum: 20 },  restricted_keywords: true, username_format: true, obscenity: true
   validates :timezone, presence: true
   validates :country, presence: true
 
