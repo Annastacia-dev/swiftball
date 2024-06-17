@@ -1,6 +1,6 @@
 class RestrictedKeywordsValidator < ActiveModel::EachValidator
   RESTRICTED_KEYWORDS = [
-    'admin', 'administrator', 'swiftball', 'swiftball online', 'swiftball admin', ''
+    'admin', 'administrator', 'swiftball', 'swiftball online', 'swiftball admin'
   ]
 
   def validate_each(record, attribute, value)
