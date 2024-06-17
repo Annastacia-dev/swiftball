@@ -17,27 +17,35 @@ if ('serviceWorker' in navigator) {
     // Use the PushManager to get the user's subscription to the push service.
     return registration.pushManager.getSubscription()
     .then(async function(subscription) {
-      // If a subscription was found, return it.
+      // check if subscription exists
       if (subscription) {
-        return subscription;
+        console.log('User is already subscribed:', subscription);
+        return subscribeUser(registration);
+      } else {
+        console.log('No existing subscription found, prompting user to subscribe...');
+        // Subscribe the user
+        return subscribeUser(registration);
       }
-
-      // Get the server's public key
-      const vapidPublicKey = document.querySelector('meta[name="vapid-public-key"]').getAttribute('content');
-      // Chrome doesn't accept the base64-encoded (string) vapidPublicKey yet
-      // urlBase64ToUint8Array() is defined in /tools.js
-      const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
-
-      // Otherwise, subscribe the user (userVisibleOnly allows to specify that we don't plan to
-      // send notifications that don't have a visible effect for the user).
-      return registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: convertedVapidKey
-      });
     });
   })
+}
+
+// Function to handle resubscription
+function subscribeUser(registration) {
+  // Get the server's public key
+  const vapidPublicKey = document.querySelector('meta[name="vapid-public-key"]').getAttribute('content');
+  // Chrome doesn't accept the base64-encoded (string) vapidPublicKey yet
+  // urlBase64ToUint8Array() is defined in /tools.js
+  const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
+
+  // Subscribe the user again (userVisibleOnly allows to specify that we don't plan to
+  // send notifications that don't have a visible effect for the user).
+  registration.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: convertedVapidKey
+  })
   .then(function(subscription) {
-    // Send the subscription details to the server using the Fetch API.
+    // Send the new subscription details to the server using the Fetch API.
     fetch('./push_subscriptions', {
       method: 'post',
       headers: {
@@ -49,9 +57,10 @@ if ('serviceWorker' in navigator) {
       }),
     });
   })
-  .catch(function(_error) {
-    //  console.error('User blocked notifications: ', error);
-    // alert('Unable to subscribe to notifications. Please allow notifications in your browser settings.');
+  .catch(function(error) {
+    console.error('Error during resubscription:', error);
+    // Handle the error (e.g., show an alert to the user)
+    // alert('Unable to resubscribe to notifications. Please try again later.');
   });
 }
 

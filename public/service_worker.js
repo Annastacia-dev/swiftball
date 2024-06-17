@@ -55,3 +55,59 @@ self.addEventListener('notificationclick', function(event) {
   );
 });
 
+
+self.addEventListener('pushsubscriptionchange', function(event) {
+  console.log('Push subscription change event detected:', event);
+
+  event.waitUntil(
+    (async () => {
+      const vapidPublicKey = document.querySelector('meta[name="vapid-public-key"]')
+      const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
+
+      try {
+        // Resubscribe the user
+        const newSubscription = await self.registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: convertedVapidKey
+        });
+
+        // Send the new subscription details to the server
+        await fetch('/push_subscriptions', {
+          method: 'post',
+          headers: {
+            'Content-type': 'application/json',
+            'X-CSRF-Token': await getCsrfToken()
+          },
+          body: JSON.stringify({
+            push_subscription: newSubscription
+          }),
+        });
+        console.log('Resubscribed successfully:', newSubscription);
+      } catch (error) {
+        console.error('Error during resubscription:', error);
+      }
+    })()
+  );
+});
+
+function urlBase64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding)
+    .replace(/-/g, '+')
+    .replace(/_/g, '/');
+
+  const rawData = atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+}
+
+// Function to get CSRF token (if needed)
+function getCsrfToken() {
+  return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+}
+
+

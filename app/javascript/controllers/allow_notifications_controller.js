@@ -5,14 +5,21 @@ export default class extends Controller {
   static targets = [ "button", "message", "divider" ]
 
   connect() {
+    // Check for existence of buttonTarget and dividerTarget before accessing them
+    if (this.hasButtonTarget) {
+      this.buttonTarget.style.display = 'none';
+    }
 
-    this.buttonTarget.style.display = 'none'
-    this.dividerTarget.style.display = 'none'
+    if (this.hasDividerTarget) {
+      this.dividerTarget.style.display = 'none';
+    }
 
     // Check if the browser supports notifications
     if (!("Notification" in window)) {
-      document.getElementById('notification-message').classList.remove('hidden')
-      this.messageTarget.textContent = "Notifications are not supported by your browser.";
+      if (this.hasMessageTarget) {
+        this.messageTarget.classList.remove('hidden');
+        this.messageTarget.textContent = "Notifications are not supported by your browser.";
+      }
       return;
     }
 
@@ -20,7 +27,7 @@ export default class extends Controller {
     if (Notification.permission === "granted") {
       this.hideButton();
     } else {
-      this.showButton()
+      this.showButton();
     }
   }
 
@@ -29,19 +36,31 @@ export default class extends Controller {
       if (permission === "granted") {
         this.hideButton();
       } else {
-        document.getElementById('allow-notifications-instructions').classList.remove('hidden')
-        return;
+        const instructionsElement = document.getElementById('allow-notifications-instructions');
+        if (instructionsElement) {
+          instructionsElement.classList.remove('hidden');
+        }
       }
     });
   }
 
-  showButton(){
-    this.buttonTarget.style.display = 'block'
-    this.dividerTarget.style.display = 'block'
+  showButton() {
+    // Check for existence of buttonTarget and dividerTarget before accessing them
+    if (this.hasButtonTarget) {
+      this.buttonTarget.style.display = 'block';
+    }
+    if (this.hasDividerTarget) {
+      this.dividerTarget.style.display = 'block';
+    }
   }
 
   hideButton() {
-    this.buttonTarget.style.display = 'none'
-    this.dividerTarget.style.display = 'none'
+    // Check for existence of buttonTarget and dividerTarget before accessing them
+    if (this.hasButtonTarget) {
+      this.buttonTarget.style.display = 'none';
+    }
+    if (this.hasDividerTarget) {
+      this.dividerTarget.style.display = 'none';
+    }
   }
 }

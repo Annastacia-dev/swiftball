@@ -6,8 +6,14 @@ export default class extends Controller {
 
   connect() {
     this.deferredPrompt = null
-    this.buttonTarget.style.display = 'none'
-    this.dividerTarget.style.display = 'none'
+
+    if (this.hasButtonTarget) {
+      this.buttonTarget.style.display = 'none'
+    }
+
+    if (this.hasDividerTarget) {
+      this.dividerTarget.style.display = 'none'
+    }
 
     window.addEventListener('beforeinstallprompt', (e) => {
       // Prevent the mini-infobar from appearing on mobile
@@ -15,26 +21,35 @@ export default class extends Controller {
       // Save the event so it can be triggered later.
       this.deferredPrompt = e
       // Update UI notify the user they can install the PWA
-      this.buttonTarget.style.display = 'block'
-      this.dividerTarget.style.display = 'block'
+      if (this.hasButtonTarget) {
+        this.buttonTarget.style.display = 'block'
+      }
+      if (this.hasDividerTarget) {
+        this.dividerTarget.style.display = 'block'
+      }
     })
   }
 
   install() {
     if (this.deferredPrompt) {
       // Hide the install button
-      this.buttonTarget.style.display = 'none'
-      this.dividerTarget.style.display = 'none'
+      if (this.hasButtonTarget) {
+        this.buttonTarget.style.display = 'none'
+      }
+      if (this.hasDividerTarget) {
+        this.dividerTarget.style.display = 'none'
+      }
       // Show the install prompt
       this.deferredPrompt.prompt()
       // Wait for the user to respond to the prompt
       this.deferredPrompt.userChoice.then((choiceResult) => {
         if (choiceResult.outcome === 'accepted') {
+          // Handle the user's acceptance
         } else {
+          // Handle the user's rejection
         }
         this.deferredPrompt = null
       })
     }
   }
-
 }
