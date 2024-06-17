@@ -157,7 +157,11 @@ module ApplicationHelper
   end
 
   def time_user_timezone(datetime, user)
-    datetime.in_time_zone(user.timezone).strftime('%I:%M %p')
+     if Date.today.in_time_zone(user.timezone).to_date < datetime.to_date
+       datetime_user_timezone(datetime, user)
+     else
+       datetime.in_time_zone(user.timezone).strftime('%I:%M %p')
+     end
   end
 
   def datetime_user_timezone(datetime, user)

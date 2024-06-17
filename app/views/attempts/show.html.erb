@@ -28,7 +28,7 @@
         <% end %>
         <%= @quiz.title %> predicitions
         <% if @quiz.tour.status == 'open' %>
-        <span> (closes at <%= time_user_timezone(@quiz.tour.quiz_live_time, current_user) %>)
+        <span> (closes <%= time_user_timezone(@quiz.tour.quiz_live_time, current_user) %>)
         </span>
       <% end %>
       </h5>

@@ -7,13 +7,6 @@ import "Chart.bundle"
 // Register a Service Worker.
 navigator.serviceWorker.register('service_worker.js');
 
-if ('Notification' in window && navigator.serviceWorker) {
-  Notification.requestPermission(status => {
-    console.log('Notification permission status:', status);
-  });
-}
-
-
 navigator.serviceWorker.ready
 .then(function(registration) {
   // Use the PushManager to get the user's subscription to the push service.
