@@ -4,65 +4,52 @@ import "controllers"
 import "chartkick"
 import "Chart.bundle"
 
+// Register a Service Worker.
+navigator.serviceWorker.register('service_worker.js');
+
 if ('Notification' in window && navigator.serviceWorker) {
-  Notification.requestPermission(_status => {
-    //console.log('Notification permission status:', status);
+  Notification.requestPermission(status => {
+    console.log('Notification permission status:', status);
   });
 }
 
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/service_worker.js')
-  .then(function(registration) {
-    // Use the PushManager to get the user's subscription to the push service.
-    return registration.pushManager.getSubscription()
-    .then(async function(subscription) {
-      // check if subscription exists
-      if (subscription) {
-        console.log('User is already subscribed:', subscription);
-        return subscribeUser(registration);
-      } else {
-        console.log('No existing subscription found, prompting user to subscribe...');
-        // Subscribe the user
-        return subscribeUser(registration);
-      }
-    });
-  })
-}
+navigator.serviceWorker.ready
+.then(function(registration) {
+  // Use the PushManager to get the user's subscription to the push service.
+  return registration.pushManager.getSubscription()
+  .then(async function(subscription) {
+    // If a subscription was found, return it.
+    if (subscription) {
+      return subscription;
+    }
 
-// Function to handle resubscription
-function subscribeUser(registration) {
-  // Get the server's public key
-  const vapidPublicKey = document.querySelector('meta[name="vapid-public-key"]').getAttribute('content');
-  // Chrome doesn't accept the base64-encoded (string) vapidPublicKey yet
-  // urlBase64ToUint8Array() is defined in /tools.js
-  const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
+    // Get the server's public key
+    const vapidPublicKey = document.querySelector('meta[name="vapid-public-key"]').getAttribute('content');
+    // Chrome doesn't accept the base64-encoded (string) vapidPublicKey yet
+    // urlBase64ToUint8Array() is defined in /tools.js
+    const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
 
-  // Subscribe the user again (userVisibleOnly allows to specify that we don't plan to
-  // send notifications that don't have a visible effect for the user).
-  registration.pushManager.subscribe({
-    userVisibleOnly: true,
-    applicationServerKey: convertedVapidKey
-  })
-  .then(function(subscription) {
-    // Send the new subscription details to the server using the Fetch API.
-    fetch('./push_subscriptions', {
-      method: 'post',
-      headers: {
-        'Content-type': 'application/json',
-        'X-CSRF-Token': getCsrfToken()
-      },
-      body: JSON.stringify({
-        push_subscription: subscription
-      }),
+    // Otherwise, subscribe the user (userVisibleOnly allows to specify that we don't plan to
+    // send notifications that don't have a visible effect for the user).
+    return registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: convertedVapidKey
     });
-  })
-  .catch(function(error) {
-    console.error('Error during resubscription:', error);
-    // Handle the error (e.g., show an alert to the user)
-    // alert('Unable to resubscribe to notifications. Please try again later.');
   });
-}
+}).then(function(subscription) {
+  // Send the subscription details to the server using the Fetch API.
+  fetch('./push_subscriptions', {
+    method: 'post',
+    headers: {
+      'Content-type': 'application/json',
+      'X-CSRF-Token': getCsrfToken()
+    },
+    body: JSON.stringify({
+      push_subscription: subscription
+    }),
+  });
+});
 
 function urlBase64ToUint8Array(base64String) {
   var padding = '='.repeat((4 - base64String.length % 4) % 4);
@@ -82,6 +69,3 @@ function urlBase64ToUint8Array(base64String) {
 function getCsrfToken() {
   return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 }
-
-
-
