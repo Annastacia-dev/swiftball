@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get 'disclaimer', to: 'home#disclaimer'
   get 'leaderboard', to: 'home#leaderboard'
 
-  devise_for :users, :controllers => { :registrations => "registrations" }
+  devise_for :users, :controllers => {:registrations => "registrations" }
   resources :tours
   resources :quizzes do
     post 'submit', on: :member

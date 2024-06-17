@@ -11,6 +11,7 @@
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  role                   :integer          default("user")
+#  status                 :integer          default("active")
 #  terms_and_conditions   :boolean
 #  timezone               :string
 #  username               :string
@@ -51,6 +52,12 @@ class User < ApplicationRecord
   enum role: {
     user: 0,
     admin: 1
+  }
+
+  enum status: {
+    active: 0,
+    inactive: 1,
+    blocked: 2
   }
 
   # instance methods

@@ -11,6 +11,7 @@
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  role                   :integer          default("user")
+#  status                 :integer          default("active")
 #  terms_and_conditions   :boolean
 #  timezone               :string
 #  username               :string
