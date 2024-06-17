@@ -35,6 +35,7 @@ class User < ApplicationRecord
   has_many :push_subscriptions
 
   # validations
+  validates :email, presence: true, email: true
   validates :terms_and_conditions, acceptance: true
   validates :name, presence: true
   validates :username, presence: true, uniqueness: true
