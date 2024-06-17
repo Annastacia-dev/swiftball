@@ -8,11 +8,21 @@
       style="display: none;"
       class="px-4 py-4"
       >
-      <i class="fa-solid fa-mobile-screen-button"></i>
-      Install App
+        <i class="fa-solid fa-mobile-screen-button"></i>
+        Install App
     </button>
+    <hr class="border-1" data-install-prompt-target="divider" />
+  </div>
 
-    <hr class="border-1" />
+  <div data-controller="allow-notifications">
+    <button data-allow-notifications-target="button" data-action="click->allow-notifications#requestPermission"
+    style="display: none;"
+    class="px-4 py-4"
+    >
+      <i class="fa-solid fa-bell"></i>
+      Enable Notifications
+    </button>
+    <hr class="border-1" data-allow-notifications-target="divider" />
   </div>
 
   <% items.each_with_index do |item, index| %>

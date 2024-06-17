@@ -48,6 +48,10 @@ if ('serviceWorker' in navigator) {
         push_subscription: subscription
       }),
     });
+  })
+  .catch(function(_error) {
+    //  console.error('User blocked notifications: ', error);
+    // alert('Unable to subscribe to notifications. Please allow notifications in your browser settings.');
   });
 }
 

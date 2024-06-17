@@ -109,7 +109,7 @@
             albumSelect.appendChild(option);
           });
         }).catch(error => {
-          console.error('Error fetching albums:', error);
+          // console.error('Error fetching albums:', error);
         });
 
         const songSelect = document.createElement('select');
@@ -138,7 +138,7 @@
               const songs = await getSongs(selectedAlbumId);
               updateSongOptions(songs, songSelect);
             } catch (error) {
-              console.error('Error fetching songs:', error);
+              // console.error('Error fetching songs:', error);
             }
           } else {
             // Clear songSelect options if no album is selected
@@ -173,7 +173,7 @@
             return data;
           })
           .catch(error => {
-            console.error('Error fetching albums:', error);
+            // console.error('Error fetching albums:', error);
           });
       }
 

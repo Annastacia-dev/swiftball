@@ -1,0 +1,29 @@
+<div data-controller="allow-notifications">
+  <div id="notification-message" class="absolute top-0 lg:right-40 z-50 lg:w-[50%] w-full shadow-lg rounded hidden">
+    <div class="sm:px-20 px-3 py-6 flex justify-center items-center gap-4 border-l-4 border-blue-500 text-sm relative bg-blue-50 text-blue-500 capitalize  %>" >
+      <p data-allow-notifications-target="message"> </p>
+      <div class="cursor-pointer" onclick="document.getElementById('notification-message').classList.add('hidden')">
+        <i class="fa-solid fa-square-xmark text-xl"></i>
+      </div>
+    </div>
+  </div>
+<div>
+
+
+<div id="allow-notifications-instructions" class="absolute top-0 lg:right-40 z-50 lg:w-[50%] w-full shadow-lg rounded hidden">
+  <div class="sm:px-20 px-3 py-6 border-l-4 border-blue-500 text-sm bg-blue-50 text-blue-500 %>" >
+    <div class="flex justify-center items-center gap-4 flex-col">
+      <p class="flex items-center gap-10">
+        <span>It looks like you have denied notifications. To enable them:</span>
+        <i class="fa-solid fa-square-xmark text-xl cursor-pointer" onclick="document.getElementById('allow-notifications-instructions').classList.add('hidden')"></i>
+      </p>
+      <ol class="list-decimal list-inside flex flex-col gap-2">
+          <li>Go to your browser settings.</li>
+          <li>Find the "Privacy and Security" section.</li>
+          <li>Look for "Site Settings" or "Content Settings".</li>
+          <li>Find "Notifications".</li>
+          <li>Find https://swiftball.online and change the setting to "Allow".</li>
+      </ol>
+    </div>
+  </div>
+</div>
