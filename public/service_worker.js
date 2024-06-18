@@ -6,7 +6,7 @@ self.addEventListener('install', (event) => {
 
   event.waitUntil(async function() {
     const cache = await caches.open('offline.html');
-    await cache.addAll(['offline.html']);
+    await cache.addAll(['offline.html', 'icon-144.png']);
   }());
 
 });
