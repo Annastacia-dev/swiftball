@@ -4,24 +4,19 @@ self.addEventListener('install', (event) => {
   // Add a call to skipWaiting here if you want to immediately activate the service worker
   self.skipWaiting();
 
-  // Put `offline.html` page into cache
-  var offlineRequest = new Request('offline.html');
-  event.waitUntil(
-    fetch(offlineRequest).then(function(response) {
-      return caches.open('offline').then(function(cache) {
-        console.log('[oninstall] Cached offline page', response.url);
-        return cache.put(offlineRequest, response);
-      });
-    })
-  );
+  event.waitUntil(async function() {
+    const cache = await caches.open('offline.html');
+    await cache.addAll(['offline.html']);
+  }());
+
 });
 
 self.addEventListener('activate', (_event) => {
 });
 
-self.addEventListener('fetch', (event) => {
-  event.respondWith(fetch(event.request));
-});
+// self.addEventListener('fetch', (event) => {
+//   event.respondWith(fetch(event.request));
+// });
 
 self.addEventListener('push', function(event) {
   //console.log('Push event received:', event);
@@ -66,84 +61,29 @@ self.addEventListener('notificationclick', function(event) {
   );
 });
 
-self.addEventListener('fetch', function(event) {
-  // Only fall back for HTML documents.
-  var request = event.request;
-  // && request.headers.get('accept').includes('text/html')
-  if (request.method === 'GET') {
-    // `fetch()` will use the cache when possible, to this examples
-    // depends on cache-busting URL parameter to avoid the cache.
-    event.respondWith(
-      fetch(request).catch(function(error) {
-        // `fetch()` throws an exception when the server is unreachable but not
-        // for valid HTTP responses, even `4xx` or `5xx` range.
-        console.error(
-          '[onfetch] Failed. Serving cached offline fallback ' +
-          error
-        );
-        return caches.open('offline').then(function(cache) {
-          return cache.match('offline.html');
-        });
-      })
-    );
-  }
-  // Any other handlers come here. Without calls to `event.respondWith()` the
-  // request will be handled without the ServiceWorker.
-});
+self.addEventListener('fetch', (event) => {
+  const { request } = event;
 
+  // Always bypass for range requests, due to browser bugs
+  if (request.headers.has('range')) return;
+  event.respondWith(async function() {
+    // Try to get from the cache:
+    const cachedResponse = await caches.match(request);
+    if (cachedResponse) return cachedResponse;
 
-self.addEventListener('pushsubscriptionchange', function(event) {
-  console.log('Push subscription change event detected:', event);
-
-  event.waitUntil(
-    (async () => {
-      const vapidPublicKey = document.querySelector('meta[name="vapid-public-key"]')
-      const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
-
-      try {
-        // Resubscribe the user
-        const newSubscription = await self.registration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: convertedVapidKey
-        });
-
-        // Send the new subscription details to the server
-        await fetch('/push_subscriptions', {
-          method: 'post',
-          headers: {
-            'Content-type': 'application/json',
-            'X-CSRF-Token': await getCsrfToken()
-          },
-          body: JSON.stringify({
-            push_subscription: newSubscription
-          }),
-        });
-        console.log('Resubscribed successfully:', newSubscription);
-      } catch (error) {
-        console.error('Error during resubscription:', error);
+    try {
+      // Otherwise, get from the network
+      return await fetch(request);
+    } catch (err) {
+      // If this was a navigation, show the offline page:
+      if (request.mode === 'navigate') {
+        return caches.match('offline.html');
       }
-    })()
-  );
+
+      // Otherwise throw
+      throw err;
+    }
+  }());
 });
-
-function urlBase64ToUint8Array(base64String) {
-  const padding = '='.repeat((4 - base64String.length % 4) % 4);
-  const base64 = (base64String + padding)
-    .replace(/-/g, '+')
-    .replace(/_/g, '/');
-
-  const rawData = atob(base64);
-  const outputArray = new Uint8Array(rawData.length);
-
-  for (let i = 0; i < rawData.length; ++i) {
-    outputArray[i] = rawData.charCodeAt(i);
-  }
-  return outputArray;
-}
-
-// Function to get CSRF token (if needed)
-function getCsrfToken() {
-  return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-}
 
 

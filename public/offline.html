@@ -1,24 +1,71 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Not Connected</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-      body {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        font-family: monospace;
-      }
-    </style>
-  </head>
-  <body>
-      <img src="/icon-96.png" style="margin-bottom: 20px;" />
-      <h2>Oh no, swiftball online can't come to the phone right now :(</h2>
-      <p style="font-size: larger;">
+<head>
+  <title>Not Connected</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    }
+    .error-page {
+      background-color: #fff;
+      color: #2E2F30;
+      text-align: center;
+      font-family: 'Courier New', Courier, monospace;
+      margin: 0;
+    }
+
+    .error-page div.dialog {
+      width: 95%;
+      max-width: 33em;
+      margin: 2em auto 0;
+    }
+
+    .error-page div.dialog > div {
+      border-right-color: #999;
+      border-left-color: #999;
+      border-bottom-color: #BBB;
+      border-top: #000 solid 4px;
+      border-top-left-radius: 9px;
+      border-top-right-radius: 9px;
+      background-color: white;
+      padding: 7px 12% 0;
+      box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
+    }
+
+    .error-page h1 {
+      font-size: 100%;
+      line-height: 1.5em;
+    }
+
+    .error-page button {
+      font-size: 100%;
+      line-height: 1.5em;
+      padding: 15px 20px;
+      margin-top: 1em;
+      margin-bottom: 2em;
+      font-family: 'Courier New', Courier, monospace;
+      border: none;
+      background-color: #000;
+      color: #fff;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+
+<body class="error-page">
+  <img src="icon-144.png" style="margin-top: 2em;" />
+  <div class="dialog">
+    <div>
+      <h1>Oh no, swiftball can't come to the phone right now :(</h1>
+      <p style="padding-bottom: 1rem;">
         Why ? You seem to be offline, check your internet connection and refresh.
       </p>
-  </body>
+    </div>
+  </div>
+</body>
 </html>
