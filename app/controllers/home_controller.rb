@@ -11,7 +11,7 @@ class HomeController < ApplicationController
 
     attempts_for_average = @attempts.includes([:quiz, :responses]).reject { |attempt| attempt.quiz.tour.status == 'open' }
 
-    @average_score = attempts_count.zero? ? 0 : attempts_for_average.map(&:score).sum.to_i / attempts_for_average.size
+    @average_score = attempts_for_average.size.zero? ? 0 : attempts_for_average.map(&:score).sum.to_i / attempts_for_average.size
     @lifetime_points = attempts_for_average.map(&:score).sum
     @best_score = attempts_for_average.map(&:score).max || 0
 
