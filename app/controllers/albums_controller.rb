@@ -3,7 +3,7 @@ class AlbumsController < ApplicationController
   before_action :find_album, only: %i[show update destroy]
 
   def index
-    @albums = Album.all.order(:created_at)
+    @albums = Album.active.order(:created_at)
     @album = Album.new
 
     respond_to do |format|
@@ -52,6 +52,6 @@ class AlbumsController < ApplicationController
   end
 
   def album_params
-    params.require(:album).permit(:title)
+    params.require(:album).permit(:title, :status)
   end
 end
