@@ -30,7 +30,7 @@
       <%= form.label :new_item %>
     </div>
 
-    <div class="flex gap-5">
+    <div class="flex lg:flex-row flex-col gap-5">
       <%= form.submit class: "rounded py-2 px-4 bg-black/95 bg-gray-200 dark:bg-black font-medium cursor-pointer" %>
       <% if action_name == 'new' %>
         <%= form.submit 'Create Choice & Add Another', class: "rounded py-2 px-4 border border-gray-200 dark:border-black font-medium cursor-pointer hover:bg-gray-200" %>
