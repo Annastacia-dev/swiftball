@@ -24,7 +24,7 @@ class Song < ApplicationRecord
   has_many :mashup_answers, dependent: :destroy
 
   # validations
-  validates :title, presence: true, uniqueness: true
+  validates :title, presence: true, uniqueness: { scope: :album_id }
 
   # callbacks
   before_save :downcase_title
