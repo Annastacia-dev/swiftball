@@ -6,6 +6,11 @@
     </div>
 
     <div class="flex flex-col gap-1">
+      <%= form.label :abbr %>
+      <%= form.text_field :abbr, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full ", required: true %>
+    </div>
+
+    <div class="flex flex-col gap-1">
       <%= form.label :status %>
       <%= form.select :status, Album.status_options, {}, required: true, class: "dark:bg-black" %>
     </div>
