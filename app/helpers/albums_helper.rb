@@ -2,13 +2,14 @@ module AlbumsHelper
   def album_dropdown_items(album)
     items = [
       { path: album_path(album), icon_class: 'fa-solid fa-record-vinyl', menu_text: 'View Album' },
-      { path: edit_album_path(album), icon_class: 'fa-solid fa-pencil', menu_text: 'Edit Album', type: 'drawer', id: 'edit_album', view: 'albums/form' },
-      { path: album_path(album), icon_class: 'fa-solid fa-delete-left', menu_text: 'Delete Album', type: 'button', method: 'delete' }
+      { path: edit_album_path(album), icon_class: 'fa-solid fa-pencil', menu_text: 'Edit Album', type: 'drawer', id: 'edit_album', view: 'albums/form' }
     ]
 
     if action_name == 'show'
       items <<  { path: new_album_song_path(album), icon_class: 'fa-solid fa-guitar', menu_text: 'Add a Song', type: 'drawer', id: 'new_song', view: 'albums/new_song' }
     end
+
+    items.push << { path: album_path(album), icon_class: 'fa-solid fa-delete-left', menu_text: 'Delete Album', type: 'button', method: 'delete' }
 
     items
   end
