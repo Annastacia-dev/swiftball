@@ -1,10 +1,11 @@
 class AlbumsController < ApplicationController
 
-  before_action :find_album, only: %i[show update destroy]
+  before_action :find_album, only: %i[show update destroy edit update]
 
   def index
     @albums = Album.active.order(:created_at)
     @album = Album.new
+    @inactive_albums = Album.where(status: :inactive).order(:created_at)
 
     respond_to do |format|
       format.html { render :index }
@@ -18,6 +19,16 @@ class AlbumsController < ApplicationController
     respond_to do |format|
       if @album.save
         format.html { redirect_to albums_path, notice: "Album was successfully created." }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update
+    respond_to do |format|
+      if @album.save
+        format.html { redirect_to album_path(@album), notice: "Album was successfully updated." }
       else
         format.html { render :new, status: :unprocessable_entity }
       end

@@ -23,4 +23,24 @@
       <% end %>
     <% end %>
   </div>
+
+  <h1 class="font-semibold text-xl font-courier lg:mt-20 mt-10">Inactive Albums</h1>
+  <div id="inactive-albums" class="min-w-full mt-10">
+    <% @inactive_albums.each_with_index do |album, index| %>
+      <div class="flex justify-between font-courier">
+        <%= link_to album_path(album), class:"flex gap-4 items-center " do %>
+          <%= (index + 1).to_s.rjust(2, '0') %>. <span class="font-semibold uppercase hover:underline"><%= album.title %></span>
+        <% end %>
+        <% if current_user.admin? %>
+          <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: album_dropdown_items(album) %>
+        <% end %>
+      </div>
+      <% if index != (@albums.length - 1) %>
+        <hr class="border border-black dark:border-gray-100 my-4" />
+      <% end %>
+    <% end %>
+  </div>
+
+
+
 </div>
