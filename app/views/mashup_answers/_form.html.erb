@@ -26,6 +26,7 @@
     albumSelect.addEventListener('change', () => {
       const albumId = albumSelect.value;
       getSongs(albumId)
+      updateSongOptions(albumSelect.value)
     });
 
     async function getSongs(albumId) {
@@ -42,20 +43,20 @@
       return data;
     }
 
-    function updateSongOptions(albumId) {
-
-      songsPromise =  getSongs(albumId)
-
-      songSelect.innerHTML = '';
-      songsPromise.then(songs => {
-        songs.forEach ((song) => {
+    async function updateSongOptions(albumId) {
+      try {
+        const songs = await getSongs(albumId);
+        songSelect.innerHTML = '';
+        songs.forEach(song => {
           const option = document.createElement('option');
           option.value = song.id;
           option.text = song.title;
           songSelect.appendChild(option);
-
-        })
-      })
+        });
+      } catch (error) {
+        console.error('Error updating song options:', error);
+      }
     }
+
   });
 </script>
