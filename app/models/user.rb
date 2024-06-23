@@ -35,6 +35,7 @@ class User < ApplicationRecord
   # associations
   has_many :attempts, dependent: :destroy
   has_many :push_subscriptions
+  has_many :feedbacks
 
   # validations
   validates :email, presence: true, email: true, obscenity: true, restricted_keywords: true

@@ -7,14 +7,13 @@ module ApplicationHelper
 
     if current_user.admin?
       items.insert(1, { path: albums_path, icon_class: 'fa-solid fa-record-vinyl', menu_text: 'Albums'})
-      items.insert(2, { path: users_path, icon_class: 'fa-solid fa-user', menu_text: 'Users'})
     else
       items.insert(1, { path: stats_path, icon_class: 'fa-solid fa-chart-simple', menu_text: 'Statistics' })
       items << ({ path: 'https://ko-fi.com/swiftballonline', icon_class: 'fa-solid fa-server', menu_text: 'Help Keep Servers Running' })
     end
 
     if current_user.admin?
-      items.insert(3,{
+      items.insert(2,{
         path: '',
         icon_class: 'fa-solid fa-shirt',
         menu_text: 'Outfits',
@@ -23,8 +22,10 @@ module ApplicationHelper
           { path: outfits_path, icon_class: 'fa-solid fa-person-dress', menu_text: 'Gallery'}
         ]
       })
+      items.insert(3, { path: feedbacks_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'})
     else
      items.insert(2,{ path: outfits_path, icon_class: 'fa-solid fa-shirt', menu_text: 'Outfits Gallery'})
+     items.insert(3, { path: new_feedback_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'})
     end
 
     items.push({

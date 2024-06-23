@@ -1,0 +1,33 @@
+<%= form_with(model: @feedback , class: "contents") do |form| %>
+
+  <% if @feedback.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@feedback.errors.count, "error") %> prohibited this feedback from being saved:</h2>
+      <ul>
+        <% @feedback.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  
+
+  <div class="flex flex-col gap-5 lg:w-1/2 my-5">
+
+    <div class="flex flex-col gap-1">
+      <%= form.label :subject %>
+      <%= form.text_field :subject, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full", required: true %>
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <%= form.label :message %>
+      <%= form.text_area :message, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full", required: true, rows: 6 %>
+    </div>
+
+    <div class="flex lg:flex-row flex-col gap-5">
+      <%= form.submit 'Submit Feedback', class: "rounded py-2 px-4 bg-black/95 bg-gray-200 dark:bg-black font-medium cursor-pointer" %>
+    </div>
+
+  </div>
+<% end %>

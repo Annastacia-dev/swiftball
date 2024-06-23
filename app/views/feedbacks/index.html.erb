@@ -1,0 +1,41 @@
+<div class="pt-10 px-12 min-h-screen">
+  <div class="flex justify-between items-center">
+    <h1 class="font-medium text-xl font-courier uppercase">Unread Feedback(<%= @unread_feedbacks.size %>)</h1>
+  </div>
+
+  <div id="feedback" class="min-w-full mt-10">
+    <% @unread_feedbacks.each_with_index do |feedback, index| %>
+      <div class="flex justify-between font-courier">
+        <%= link_to feedback_path(feedback), class:"flex gap-4 items-center " do %>
+          <%= (index + 1).to_s.rjust(2, '0') %>. <span class="font-semibold uppercase hover:underline"><%= feedback.user.name %>: <%= feedback.subject %></span>
+        <% end %>
+      </div>
+      <% if index != (@unread_feedbacks.length - 1) %>
+        <hr class="border border-black dark:border-gray-100 my-4" />
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="flex justify-between items-center mt-10">
+  <h1 class="font-medium text-xl font-courier uppercase">read feedback(<%= @read_feedbacks.size %>)</h1>
+  </div>
+
+  <div id="feedback" class="min-w-full mt-10">
+    <% @read_feedbacks.each_with_index do |feedback, index| %>
+      <div class="flex justify-between font-courier">
+        <%= link_to feedback_path(feedback), class:"flex gap-4 items-center " do %>
+          <%= (index + 1).to_s.rjust(2, '0') %>. <span class="font-semibold uppercase hover:underline"><%= feedback.user.name %>: <%= feedback.subject %></span>
+        <% end %>
+        <%= button_to feedback_path(feedback), method: :delete, class: 'text-red-500', data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" } do %>
+          <i class="fa-solid fa-trash"></i>
+        <% end %>
+      </div>
+      <% if index != (@read_feedbacks.length - 1) %>
+        <hr class="border border-black dark:border-gray-100 my-4" />
+      <% end %>
+    <% end %>
+  </div>
+
+
+
+</div>
