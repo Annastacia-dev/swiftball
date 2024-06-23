@@ -24,9 +24,11 @@ module Quizzes
       return if users_without_attempt.blank?
 
       users_without_attempt.each do |user|
-        QuizMailer.with(user_id: user.id, quiz_id: quiz.id)
+        if user.notify_me
+          QuizMailer.with(user_id: user.id, quiz_id: quiz.id)
                   .open
                   .deliver_later(wait: 2.seconds)
+        end
       end
     end
 

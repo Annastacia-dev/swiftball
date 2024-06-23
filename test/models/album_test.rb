@@ -5,7 +5,7 @@
 #  id         :uuid             not null, primary key
 #  abbr       :string
 #  slug       :string
-#  status     :integer          default(0)
+#  status     :integer          default("active")
 #  title      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

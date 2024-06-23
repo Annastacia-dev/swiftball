@@ -46,7 +46,10 @@ Rails.application.routes.draw do
 
   resources :mashup_answers, only: %i[edit update destroy new create]
 
-  resources :users, only: %i[index]
+  resources :users do
+    get 'unsubscribe', on: :member
+    get 'subscribe', on: :member
+  end
   resources :outfits
 
   resources :push_subscriptions, only: [:create]
