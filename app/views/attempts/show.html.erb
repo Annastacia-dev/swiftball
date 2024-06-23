@@ -62,7 +62,7 @@
     <% @questions_by_era.each do |era, responses| %>
       <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
       <div class="grid lg:grid-cols-3">
-        <% responses.sort_by { |response| response.question.created_at }.group_by { |response| response.question.id }.each_with_index do |(question_id, grouped_responses), index| %>
+        <% responses.group_by { |response| response.question.id }.each_with_index do |(question_id, grouped_responses), index| %>
           <% response = grouped_responses.first %>
           <% choice = response&.choice %>
           <div class="flex flex-col lg:justify-start justify-center px-5 py-3 gap-2 capitalize">
