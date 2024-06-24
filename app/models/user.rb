@@ -12,6 +12,7 @@
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  role                   :integer          default("user")
+#  slug                   :string
 #  status                 :integer          default("active")
 #  terms_and_conditions   :boolean
 #  timezone               :string
@@ -28,6 +29,8 @@ class User < ApplicationRecord
   has_paper_trail
 
   include StreakScores
+  include Sluggable
+  friendly_slug_scope to_slug: :username
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable

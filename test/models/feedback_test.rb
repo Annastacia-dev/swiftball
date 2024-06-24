@@ -4,7 +4,7 @@
 #
 #  id         :uuid             not null, primary key
 #  message    :text
-#  status     :integer          default(0)
+#  status     :integer          default("unread")
 #  subject    :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

@@ -1,0 +1,35 @@
+<% statistics = [
+  {
+    title: 'played',
+    value: @attempts.size
+  },
+  {
+    title: 'current streak',
+    value: @current_streak
+  },
+  {
+    title: 'max streak',
+    value: @max_streak
+  },
+  {
+    title: 'lifetime points',
+    value: @lifetime_points
+  },
+  {
+    title: 'average score',
+    value: @average_score
+  },
+  {
+    title: 'best score',
+    value: @best_score
+  }
+] %>
+
+<div class="grid md:grid-cols-6 grid-cols-2 gap-x-3 gap-y-4 lg:mt-10 mt-4">
+  <% statistics.each do |stat| %>
+    <div class="flex flex-col gap-2 items-center dark:bg-black bg-gray-100 py-5 rounded shadow-md">
+      <p class="md:text-7xl text-5xl font-bold"><%= stat[:value] %></p>
+      <p class="lg:text-sm text-xs uppercase"><%= stat[:title] %></p>
+    </div>
+  <% end %>
+</div>

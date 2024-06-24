@@ -1,10 +1,23 @@
 class UsersController < ApplicationController
 
   before_action :authenticate_admin!, only: %i[index]
-  before_action :find_user, only: %i[unsubscribe subscribe]
+  before_action :find_user, only: %i[unsubscribe subscribe show]
 
   def index
     @users = User.order(created_at: :desc).where.not(role: 'admin').paginate(page: params[:page], per_page: 10)
+  end
+
+  def show
+    @attempts = @user.attempts
+    @current_streak = @user.current_streak
+    @max_streak = @user.max_streak
+    attempts_count = @user.attempts.size
+
+    attempts_for_average = @attempts.includes([:quiz, :responses]).reject { |attempt| attempt.quiz.tour.status == 'open' }
+
+    @average_score = attempts_for_average.size.zero? ? 0 : attempts_for_average.map(&:score).sum.to_i / attempts_for_average.size
+    @lifetime_points = attempts_for_average.map(&:score).sum
+    @best_score = attempts_for_average.map(&:score).max || 0
   end
 
   def unsubscribe
@@ -38,6 +51,6 @@ class UsersController < ApplicationController
   private
 
   def find_user
-    @user = User.find(params[:id])
+    @user = User.friendly.find(params[:id])
   end
 end

@@ -1,0 +1,38 @@
+<% unless @attempts.empty? %>
+  <div class="flex flex-col mt-10">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="dark:bg-black/10 bg-gray-50">
+        <tr>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+            Quiz
+          </th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+            score
+          </th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <% @attempts.order(created_at: :desc).each_with_index do |attempt, index| %>
+          <% quiz = attempt.quiz %>
+          <% tour = quiz.tour %>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm capitalize">
+            <%= quiz.title %>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <% if tour.status == 'closed' || tour.status == 'live' %>
+              <%= attempt.score %>
+            <% else %>
+              <i class="fa-solid fa-spinner text-gray-600" title="in progress"></i>
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <div>
+<% else %>
+   <div class="flex justify-start items-center font-medium text-sm lg:mt-20">
+    No attempts
+   </div>
+<% end %>

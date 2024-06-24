@@ -3,7 +3,7 @@ class HomeController < ApplicationController
 
   def stats
     @chart_type = params[:chart_type] || 'bar_chart'
-    @user = current_user.admin? ? User.find(params[:id]) : current_user
+    @user = current_user.admin? ? User.friendly.find(params[:id]) : current_user
     @attempts = @user.attempts
     @current_streak = @user.current_streak
     @max_streak = @user.max_streak

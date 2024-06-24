@@ -1,0 +1,15 @@
+<div class="pt-10 lg:px-12 px-5 min-h-screen">
+
+  <%= render 'components/breadcrumb', breadcrumbs: [
+    { text: 'home', path: root_path },
+    { text: @user.username },
+  ]
+  %>
+
+  <div data-controller='tabs'>
+    <%= render 'components/tabs', tabs: [
+      { id: 'stats', label: 'stats', partial: 'stats' },
+      { id: 'score_history', label: 'score history', partial: 'score_history' }
+    ] %>
+  </div>
+</div>
