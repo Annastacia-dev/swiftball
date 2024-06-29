@@ -2,6 +2,7 @@ class AttemptsController < ApplicationController
   before_action :authenticate_not_admin!, only: %i[index]
   before_action :set_attempt, only: %i[show edit update]
   before_action :set_quiz, only: %i[show edit update]
+  before_action :check_tour_open, only: %i[edit update]
 
   def index
     @attempts = current_user.attempts.order(created_at: :desc).includes([quiz: :tour])
@@ -49,5 +50,17 @@ class AttemptsController < ApplicationController
 
   def set_quiz
     @quiz = @attempt.quiz
+  end
+
+  def check_tour_open
+    respond_to do |format|
+      if @attempt.quiz.tour.status == 'closed' || @attempt.quiz.tour.status == 'live'
+        format.html { redirect_to attempt_path(@attempt), alert: "Quiz is closed & can't be edited" }
+      elsif  @attempt.quiz.tour.status == 'pending'
+        format.html { redirect_to root_path, alert: 'Hey early bird, Quiz is not yet open' }
+      else
+       format.html  { render :take }
+      end
+    end
   end
 end
