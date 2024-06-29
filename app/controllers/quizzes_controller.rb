@@ -131,6 +131,15 @@ class QuizzesController < ApplicationController
     end
   end
 
+  def notify
+    byebug
+    send_push_notifications
+    send_emails
+    respond_to do |format|
+      format.html { redirect_to tours_path, notice: 'Notifications send' }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz

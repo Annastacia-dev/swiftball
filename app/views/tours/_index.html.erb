@@ -31,6 +31,9 @@
             <% elsif tour.status == 'closed' %>
               <i class="fa-solid fa-circle-xmark text-red-600" title="closed"></i>
             <% end %>
+            <span>
+             (<%= tour.attempts.size %>)
+            </span>
           </span>
         <% end %>
       <% else %>

@@ -4,7 +4,7 @@ class QuizMailer < ApplicationMailer
   def open
     @quiz = Quiz.find(params[:quiz_id])
     @user = User.friendly.find(params[:user_id])
-    subject = "[Action Required] #{@quiz.title.titleize} Quiz is now open!"
+    subject = "[Action Required] #{@quiz.title.titleize} Quiz is  open!"
 
     mail(
       subject: subject,

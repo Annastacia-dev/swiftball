@@ -2,7 +2,7 @@
   <h3>Oh Hi! <%= @user.name.titleize %>,</h3>
 
   <p>
-    <%= @quiz.title.titleize %> quiz is now open!
+    <%= @quiz.title.titleize %> quiz is open!
     <br />
     <br />
     Make your predictions before <%= datetime_user_timezone( @quiz.tour.quiz_live_time, @user) %>.
