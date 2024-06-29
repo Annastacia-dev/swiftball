@@ -132,7 +132,6 @@ class QuizzesController < ApplicationController
   end
 
   def notify
-    byebug
     send_push_notifications
     send_emails
     respond_to do |format|
