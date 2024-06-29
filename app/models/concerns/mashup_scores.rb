@@ -2,7 +2,9 @@
 
 module MashupScores
 
-  def piano_mashup
+  def piano_mashup_score
+
+    pm_score = 0
 
     @piano_mashup_number_question = quiz.questions.find_by(piano_mashup: true)
     @piano_mashup_number_choice = responses.find_by(question_id: @piano_mashup_number_question.id)&.choice
@@ -21,10 +23,22 @@ module MashupScores
     @piano_points = mashup_max_score(@piano_mashup_number_choice&.content)
 
     @piano_mashup_predictions.each do |mashup|
+
+      if @piano_correct_albums.include?(mashup.album_id)
+        pm_score += @piano_points
+      end
+
+      if @piano_correct_songs.include?(mashup.song_id)
+        pm_score += @piano_points
+      end
     end
+
+    pm_score
   end
 
-  def guitar_mashup
+  def guitar_mashup_score
+
+    gm_score = 0
 
     @guitar_mashup_number_question = quiz.questions.find_by(guitar_mashup: true)
     @guitar_mashup_number_choice = responses.find_by(question_id: @guitar_mashup_number_question.id)&.choice
@@ -42,12 +56,21 @@ module MashupScores
 
     @guitar_points = mashup_max_score(@guitar_mashup_number_choice&.content)
 
+    @guitar_mashup_predictions.each do |mashup|
+
+      if @guitar_correct_albums.include?(mashup.album_id)
+        gm_score += @guitar_points
+      end
+
+      if @guitar_correct_songs.include?(mashup.song_id)
+        gm_score += @guitar_points
+      end
+    end
+
+    gm_score
   end
 
   def mixup_mashup_score
-    piano_mashup
-    guitar_mashup
-    
     mm_score = 0
 
     guitar_mashup_predictions_albums = @guitar_mashup_predictions.pluck(:album_id).uniq
@@ -56,18 +79,11 @@ module MashupScores
     @guitar_mashup_predictions.each do |mashup|
       if @piano_correct_songs.include?(mashup.song_id)
         mm_score += @guitar_points
-      elsif
+      else
         guitar_mashup_predictions_albums.each do |guitar_album|
           if @piano_correct_albums.include?(guitar_album)
             mm_score += 1
           end
-        end
-      else
-        if @guitar_correct_albums.include?(mashup.album_id)
-          mm_score += @guitar_points
-        end
-        if @guitar_correct_songs.include?(mashup.song_id)
-          mm_score += @guitar_points
         end
       end
     end
@@ -75,19 +91,11 @@ module MashupScores
     @piano_mashup_predictions.each do |mashup|
       if @guitar_correct_songs.include?(mashup.song_id)
         mm_score += @piano_points
-      elsif
+      else
         piano_mashup_predictions_albums.each do |guitar_album|
           if @guitar_correct_albums.include?(guitar_album)
             mm_score += 1
           end
-        end
-      else
-        if @piano_correct_albums.include?(mashup.album_id)
-          mm_score += @piano_points
-        end
-  
-        if @piano_correct_songs.include?(mashup.song_id)
-          mm_score += @piano_points
         end
       end
     end
