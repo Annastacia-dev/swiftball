@@ -62,7 +62,7 @@ class Attempt < ApplicationRecord
       end
     end
 
-    (score + piano_mashup_score + guitar_mashup_score + mixup_mashup_score).to_i
+    (score  + mixup_mashup_score).to_i
   end
 
   def total_possible_points

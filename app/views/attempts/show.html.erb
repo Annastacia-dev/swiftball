@@ -160,6 +160,14 @@
                             + <%= format_score (@piano_points * 2) %>
                          <% end %>
                         </span>
+                      <% elsif (response.question.id != piano_question.id) &&piano_correct_albums.include?(mashup.album_id) && piano_correct_songs.include?(mashup.song_id)  %>
+                        <span class="bg-green-600 text-white p-2 rounded text-xs flex items-center gap-2">
+                          + <%= format_score (@guitar_points * 2) %>
+                        </span>
+                      <% elsif (response.question.id != guitar_question.id) &&guitar_correct_albums.include?(mashup.album_id) && guitar_correct_songs.include?(mashup.song_id)  %>
+                        <span class="bg-green-600 text-white p-2 rounded text-xs flex items-center gap-2">
+                          + <%= format_score (@piano_points * 2) %>
+                        </span>
                       <% elsif correct_albums.include?(mashup.album_id) %>
                         <span class="bg-green-600 text-white p-2 rounded text-xs flex items-center gap-2">
                          <% if response.question.id == guitar_question.id %>
@@ -175,14 +183,6 @@
                          <% elsif response.question.id == piano_question.id %>
                             + <%= format_score (@piano_points) %>
                          <% end %>
-                        </span>
-                      <% elsif (response.question.id != piano_question.id) &&piano_correct_albums.include?(mashup.album_id) && piano_correct_songs.include?(mashup.song_id)  %>
-                        <span class="bg-green-600 text-white p-2 rounded text-xs flex items-center gap-2">
-                          + <%= format_score (@guitar_points * 2) %>
-                        </span>
-                      <% elsif (response.question.id != guitar_question.id) &&guitar_correct_albums.include?(mashup.album_id) && guitar_correct_songs.include?(mashup.song_id)  %>
-                        <span class="bg-green-600 text-white p-2 rounded text-xs flex items-center gap-2">
-                          + <%= format_score (@piano_points * 2) %>
                         </span>
                       <% elsif (response.question.id != piano_question.id) &&piano_correct_albums.include?(mashup.album_id)  %>
                         <span class="bg-green-600 text-white p-2 rounded text-xs flex items-center gap-2">
