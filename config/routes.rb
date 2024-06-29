@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     post 'open', on: :member
     post 'close', on: :member
     post 'live', on: :member
-    get 'send_notification', on: :member
+    post 'send_notification', on: :member
     resources :questions do
       get 'pick_surprise_song', on: :member
       post 'surprise_song_answer', on: :member

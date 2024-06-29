@@ -1,6 +1,6 @@
 class QuizzesController < ApplicationController
 
-  before_action :set_quiz, only: %i[ show edit destroy take live open close submit results progress]
+  before_action :set_quiz, only: %i[ show edit destroy take live open close submit results progress send_notification]
   before_action :authenticate_admin!, only: %i[show edit destroy open close]
   before_action :authenticate_not_admin!, only: %i[take]
   before_action :check_attempt_exists, only: %i[take]
@@ -131,7 +131,7 @@ class QuizzesController < ApplicationController
     end
   end
 
-  def notify
+  def send_notification
     send_push_notifications
     send_emails
     respond_to do |format|
