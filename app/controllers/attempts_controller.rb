@@ -2,7 +2,7 @@ class AttemptsController < ApplicationController
   before_action :authenticate_not_admin!, only: %i[index]
   before_action :set_attempt, only: %i[show edit update]
   before_action :set_quiz, only: %i[show edit update]
-  before_action :check_tour_open, only: %i[edit update]
+  before_action :check_tour_open, only: %i[edit]
 
   def index
     @attempts = current_user.attempts.order(created_at: :desc).includes([quiz: :tour])
@@ -10,8 +10,6 @@ class AttemptsController < ApplicationController
 
   def show
     responses = @attempt.responses.includes(:question, :mashup_answers, choice: { image_attachment: :blob, question: :choices })
-    # ordered_questions = responses.joins(:question).order('questions.era ASC', 'questions.position ASC')
-    # @questions_by_era = ordered_questions.group_by { |response| response.question.era }
     @questions_by_era = responses.joins(:question)
                              .order('questions.position ASC')
                              .group_by { |response| response.question.era }
@@ -33,7 +31,7 @@ class AttemptsController < ApplicationController
       end
 
       redirect_to attempt_path(@attempt), notice: "Your answers have been updated!"
-    elsif @quiz.tour.status == 'closed'
+    elsif @quiz.tour.status == 'closed' || @quiz.tour.status == 'live'
       redirect_to attempt_path(@attempt), alert: "Sorry this quiz has been closed!"
     end
   end
@@ -59,7 +57,7 @@ class AttemptsController < ApplicationController
       elsif  @attempt.quiz.tour.status == 'pending'
         format.html { redirect_to root_path, alert: 'Hey early bird, Quiz is not yet open' }
       else
-       format.html  { render :take }
+       format.html  { render :edit }
       end
     end
   end
