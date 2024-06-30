@@ -8,10 +8,6 @@ class QuizzesController < ApplicationController
   before_action :set_tour, except: %i[index]
 
 
-  # GET /quizzes/1 or /quizzes/1.json
-  def show
-  end
-
   # GET /quizzes/1/edit
   def edit
   end

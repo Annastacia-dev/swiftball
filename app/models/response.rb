@@ -26,7 +26,7 @@ class Response < ApplicationRecord
 
   # associations
   belongs_to :question
-  belongs_to :choice, optional: :true
+  belongs_to :choice, optional: :true, counter_cache: :true
   belongs_to :attempt
   has_many :mashup_answers, dependent: :destroy
 

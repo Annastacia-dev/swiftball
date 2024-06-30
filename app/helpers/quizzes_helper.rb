@@ -10,6 +10,8 @@ module QuizzesHelper
       'bg-red-600 text-white'
     when 'speak_now'
       'bg-violet-200 text-violet-900'
+    when 'reputation'
+      'bg-black text-white'
     when 'folkmore'
       'bg-gray-200 text-orange-700'
     when '1989'

@@ -27,9 +27,10 @@
           <% end %>
           </div>
          <div class="grid <%= question&.choices&.first&.image&.attached? ? 'lg:grid-cols-6 grid-cols-2' : 'grid-cols-1' %> gap-4">
-           <% question.choices.includes([image_attachment: :blob]).order(:position).each_with_index do |choice, index| %>
+           <% question.choices.includes([:responses, image_attachment: :blob]).order(:position).each_with_index do |choice, index| %>
             <div class="choice py-3 flex flex-col gap-4 font-medium">
               <%= image_tag(choice.image, alt: "Option #{index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
+
               <div class="flex justify-between items-center capitalize relative">
                 <% if choice.correct %>
                   <i class="fa-solid fa-circle-check text-green-600 absolute -top-3"></i>
@@ -38,6 +39,12 @@
                 <% if current_user.admin? %>
                   <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: choice_dropdown_items(choice) %>
                 <% end %>
+              </div>
+
+              <span class="text-xs leading-none text-center"><%= choice.percentage_of_total_responses %>%</span>
+              <div class="w-full bg-gray-200 h-2 overflow-hidden -mt-4 text-center">
+                <div class="<%= era_color(era) %> h-full text-center"  style="width: <%= choice.percentage_of_total_responses %>%;">
+                </div>
               </div>
             </div>
            <% end %>

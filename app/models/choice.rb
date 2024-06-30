@@ -2,14 +2,15 @@
 #
 # Table name: choices
 #
-#  id          :uuid             not null, primary key
-#  content     :string
-#  correct     :boolean          default(FALSE)
-#  new_item    :boolean          default(FALSE)
-#  position    :integer
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  question_id :uuid             not null
+#  id              :uuid             not null, primary key
+#  content         :string
+#  correct         :boolean          default(FALSE)
+#  new_item        :boolean          default(FALSE)
+#  position        :integer
+#  responses_count :integer          default(0)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  question_id     :uuid             not null
 #
 # Indexes
 #
@@ -25,8 +26,8 @@ class Choice < ApplicationRecord
   has_one_attached :image
 
   # association
-  belongs_to :question, counter_cache: true
-  has_many :responses
+  belongs_to :question, counter_cache: true, dependent: :destroy
+  has_many :responses, counter_cache: :responses_count, dependent: :destroy
 
   # validations
   validates :content, presence: true, uniqueness: { scope: :question_id }
@@ -36,6 +37,15 @@ class Choice < ApplicationRecord
 
   # callbacks
   before_validation :set_position
+
+  # instance methods
+  def percentage_of_total_responses
+    total_responses = question.responses.count
+    choice_responses = responses.count
+    return 0 if total_responses.zero?
+
+    ((choice_responses.to_f / total_responses) * 100).round
+  end
 
   private
 
