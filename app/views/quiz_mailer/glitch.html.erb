@@ -1,0 +1,19 @@
+<div style="font-family: Roboto, sans-serif; padding: 20px; border-radius: 8px; max-width: 600px; margin: 0 auto;">
+  <h3>Hi <%= @user.name.titleize %>,</h3>
+
+  <p>
+    There was a glitch in our system and your responses for <%= @quiz.title.titleize %> weren't submitted!
+    <br />
+    This glitch has now been fixed and you will be able to submit your predictions for the next quiz.
+    <br />
+    <br />
+  </p>
+
+  <hr style="margin-top: 40px;margin-top: 40px" />
+  <% if @user.notify_me %>
+    <%= link_to 'unsubscribe', unsubscribe_user_url(@user), style: "display: flex; align-items: center; justify-content: center; text-align: center; margin-top: 20px; text-decoration: none;" %>
+  <% else %>
+    <%= link_to 'subscribe', subscribe_user_url(@user), style: "display: flex; align-items: center; justify-content: center; text-align: center; margin-top: 20px; text-decoration: none;" %>
+  <% end %>
+</div>
+

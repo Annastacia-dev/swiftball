@@ -31,12 +31,12 @@ module Swiftball
 
     # mailing
     config.action_mailer.delivery_method = :smtp
-    # username = Rails.env.production? ? Rails.application.credentials.mail[:prod_username] : Rails.application.credentials.mail[:sandbox_username]
-    # password = Rails.env.production? ? Rails.application.credentials.mail[:prod_password] : Rails.application.credentials.mail[:sandbox_password]
+     username = Rails.env.production? ? Rails.application.credentials.mail[:prod_username] : Rails.application.credentials.mail[:sandbox_username]
+     password = Rails.env.production? ? Rails.application.credentials.mail[:prod_password] : Rails.application.credentials.mail[:sandbox_password]
 
     config.action_mailer.smtp_settings = {
-      user_name:  Rails.application.credentials.mail[:username],
-      password:  Rails.application.credentials.mail[:password],
+      user_name:  username,
+      password:  password,
       domain: Rails.application.credentials.mail[:domain],
       address: Rails.application.credentials.mail[:address],
       port: Rails.application.credentials.mail[:port],

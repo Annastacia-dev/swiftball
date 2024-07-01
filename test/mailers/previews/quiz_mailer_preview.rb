@@ -6,4 +6,9 @@ class QuizMailerPreview < ActionMailer::Preview
     QuizMailer.with(user_id: user.id, quiz_id: quiz.id).open
   end
 
+  def glitch
+    user = User.first
+    quiz = Quiz.first
+    QuizMailer.with(user_id: user.id, quiz_id: quiz.id).glitch
+  end
 end
