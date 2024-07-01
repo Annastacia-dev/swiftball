@@ -44,7 +44,7 @@ class QuizzesController < ApplicationController
 
         update_mashup_answers(attempt)
 
-        format.html { redirect_to tours_path, notice: "Your answers have been submitted!" }
+        format.html { redirect_to attempt_path(attempt), notice: "Your answers have been submitted!" }
         else
           format.html { render :take, status: :unprocessable_entity }
         end

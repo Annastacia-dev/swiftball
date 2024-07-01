@@ -41,11 +41,14 @@ module QuizzesHelper
 
     if quiz.tour.status != 'live'
       items << { path: live_quiz_path(quiz), icon_class: 'fa-solid fa-bullseye', menu_text: 'Go Live', type:'button', method: 'post' }
-      items << { path: send_notification_quiz_path(quiz), icon_class: 'fa-solid fa-bell', menu_text: 'Notify', type:'button', method: 'post' }
     end
 
     if quiz.tour.status != 'open'
       items << { path: open_quiz_path(quiz), icon_class: 'fa-solid fa-wand-magic-sparkles', menu_text: 'Open Quiz', type:'button', method: 'post' }
+    end
+
+    if quiz.tour.status == 'open'
+      items << { path: send_notification_quiz_path(quiz), icon_class: 'fa-solid fa-bell', menu_text: 'Notify', type:'button', method: 'post' }
     end
 
     if quiz.tour.status != 'closed'

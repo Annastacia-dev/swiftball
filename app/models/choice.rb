@@ -2,15 +2,14 @@
 #
 # Table name: choices
 #
-#  id              :uuid             not null, primary key
-#  content         :string
-#  correct         :boolean          default(FALSE)
-#  new_item        :boolean          default(FALSE)
-#  position        :integer
-#  responses_count :integer          default(0)
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  question_id     :uuid             not null
+#  id          :uuid             not null, primary key
+#  content     :string
+#  correct     :boolean          default(FALSE)
+#  new_item    :boolean          default(FALSE)
+#  position    :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  question_id :uuid             not null
 #
 # Indexes
 #
@@ -27,12 +26,12 @@ class Choice < ApplicationRecord
 
   # association
   belongs_to :question, counter_cache: true, dependent: :destroy
-  has_many :responses, counter_cache: :responses_count, dependent: :destroy
+  has_many :responses, dependent: :destroy
 
   # validations
   validates :content, presence: true, uniqueness: { scope: :question_id }
   validates :position, presence: true, uniqueness: { scope: :question_id }
-  validate :tour_is_closed_before_marking_correct
+  validate :tour_is_closed_before_marking_correct,  if: :correct_changed?
   validate :only_one_correct_answer_per_question, if: :correct_changed?
 
   # callbacks
