@@ -29,11 +29,11 @@
         <div class="flex justify-between">
           <%= link_to user_path(attempt.user), class: "px-6 flex items-center gap-6 lowercase hover:underline" do %>
             <span class="font-bold"><%= (index + 1) %>.</span>
-            @<%= attempt.user.username  %>
+            <span class="<%= current_user.id == attempt.user.id ? 'font-semibold' : '' %>">@<%= attempt.user.username  %></span>
           <% end %>
           <p class="px-6">
               <% if @tour.status == 'closed' || @tour.status == 'live' %>
-                <%= attempt.score %>
+                <span class="<%= current_user.id == attempt.user.id ? 'font-semibold' : '' %>"><%= attempt.score %></span>
               <% else %>
                 <i class="fa-solid fa-spinner text-gray-600" title="in progress"></i>
               <% end %>
