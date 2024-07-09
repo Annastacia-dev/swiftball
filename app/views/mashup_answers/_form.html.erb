@@ -29,6 +29,10 @@
       updateSongOptions(albumSelect.value)
     });
 
+
+    albumSelect.classList.add('dark:bg-black')
+    songSelect.classList.add('dark:bg-black')
+
     async function getSongs(albumId) {
       const response = await fetch(`/albums/${albumId}/songs`, {
         headers: {
