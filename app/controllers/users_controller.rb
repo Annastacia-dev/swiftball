@@ -8,6 +8,7 @@ class UsersController < ApplicationController
 
     @users_by_country = User.where.not(role: 'admin').order(:country).group(:country).count
 
+
     @chart_data = @users_by_country.map do |country, count|
       [country, count]
     end
