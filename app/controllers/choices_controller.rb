@@ -2,6 +2,7 @@ class ChoicesController < ApplicationController
   before_action :set_choice, only: %i[ show edit update destroy correct incorrect ]
   before_action :find_question, only: %i[new create]
   before_action :set_quiz, only: %i[new create]
+  before_action :authenticate_admin!, only: %i[new edit create update destroy]
 
 
   # GET /choices or /choices.json
