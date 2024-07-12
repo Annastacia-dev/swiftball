@@ -5,6 +5,12 @@ class UsersController < ApplicationController
 
   def index
     @users = User.order(created_at: :desc).where.not(role: 'admin').paginate(page: params[:page], per_page: 10)
+
+    @users_by_country = User.where.not(role: 'admin').order(:country).group(:country).count
+
+    @chart_data = @users_by_country.map do |country, count|
+      [country, count]
+    end
   end
 
   def show
