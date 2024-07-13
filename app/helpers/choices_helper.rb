@@ -15,6 +15,30 @@ module ChoicesHelper
   end
 
   def label_description(label)
+    case label.downcase
+    when 'vulnarable'
+      5
+    when 'on_alert'
+      7
+    when 'endangered'
+      10
+    when 'critical'
+      17
+    when 'hibernating'
+      30
+    when 'extinct'
+      50
+    when 'retired'
+      'previous setlist'
+    end
+  end
+
+  def label_title(label)
+    if label != 'retired'
+      "Missing for #{label_description(label)} + shows"
+    else
+      label_description(label)
+    end
   end
 
   def label_color(label)

@@ -34,7 +34,7 @@
                  <% if choice.image.attached? %>
                   <%= image_tag(choice.image, alt: choice.content, class: 'w-full h-72 object-cover object-center rounded')%>
                   <% if choice.new_item == false && choice.label != 'no_label' %>
-                    <div class="label-tag absolute px-4 py-1 rounded text-xs -top-0 -right-1 rotate-360 <%= label_color (choice.label)%>">
+                    <div class="label-tag absolute px-4 py-1 rounded text-xs -top-0 -right-1 rotate-360 <%= label_color (choice.label)%>" title=" <%=label_title(choice.label) %>">
                       <span class="font-medium"><%= choice.label.humanize %></span>
                     </div>
                   <% end %>

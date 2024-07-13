@@ -10,6 +10,11 @@ class OutfitsController < ApplicationController
     @outfit = Outfit.new
   end
 
+  def tracker
+    labels = Choice.labels.select {|k, v| k != 'no_label'}
+    @labels = labels.map { |label| label[0]}
+  end
+
   def create
     @outfit = Outfit.new(outfit_params)
 

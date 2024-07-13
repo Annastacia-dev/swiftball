@@ -50,6 +50,9 @@ class Choice < ApplicationRecord
     retired: 7
   }
 
+  # scopes
+  scope :with_label, ->(label) { where(label: labels[label.to_sym]) }
+
   # class methods
   def self.labels_options
     labels.map { |k, _v| [k.humanize, k] }
