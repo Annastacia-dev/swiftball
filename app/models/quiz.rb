@@ -25,6 +25,7 @@ class Quiz < ApplicationRecord
   # associations
   belongs_to :tour, dependent: :destroy
   has_many :questions, dependent: :destroy
+  has_many :choices, through: :questions, dependent: :destroy
   has_many :attempts, dependent: :destroy
   has_many :mashup_answers, through: :questions, dependent: :destroy
 

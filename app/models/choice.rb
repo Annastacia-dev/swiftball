@@ -51,11 +51,16 @@ class Choice < ApplicationRecord
   }
 
   # scopes
-  scope :with_label, ->(label) { where(label: labels[label.to_sym]) }
 
   # class methods
   def self.labels_options
     labels.map { |k, _v| [k.humanize, k] }
+  end
+
+  def self.with_label(label)
+    tour = Tour.order(number: :desc).first
+    quiz = tour.quiz
+    quiz.choices.where(label: labels[label.to_sym])
   end
 
   # instance methods
