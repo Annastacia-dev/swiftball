@@ -19,13 +19,15 @@ module ApplicationHelper
         menu_text: 'Outfits',
         children: [
           { path: new_outfit_path, icon_class: 'fa-solid fa-plus', menu_text: 'New Outfit'},
-          { path: outfits_path, icon_class: 'fa-solid fa-person-dress', menu_text: 'Gallery'}
+          { path: outfits_path, icon_class: 'fa-regular fa-images', menu_text: 'Gallery'},
+          { path: tracker_outfits_path, icon_class: 'fa-solid fa-person-dress', menu_text: 'Tracker'}
         ]
       })
       items.insert(3, { path: feedbacks_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'})
     else
-     items.insert(2,{ path: outfits_path, icon_class: 'fa-solid fa-shirt', menu_text: 'Outfits Gallery'})
-     items.insert(3, { path: new_feedback_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'})
+     items.insert(2,{ path: tracker_outfits_path, icon_class: 'fa-solid fa-shirt', menu_text: 'Outfits Tracker'})
+     items.insert(3,{ path: outfits_path, icon_class: 'fa-regular fa-images', menu_text: 'Outfits Gallery'})
+     items.insert(4, { path: new_feedback_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'})
     end
 
     items.push({
@@ -46,7 +48,7 @@ module ApplicationHelper
       children: [
         { path: edit_user_registration_path, icon_class: 'fa-solid fa-pencil', menu_text: 'Edit' },
         { path: destroy_user_session_path, icon_class: 'fa-solid fa-right-from-bracket', menu_text: 'Logout', type: 'button', method: :delete },
-        { path:  registration_path('user'), icon_class: 'fa-solid fa-delete-left', menu_text: 'Delete account', type: 'button', method: :delete }
+        { path:  registration_path('user'), icon_class: 'fa-solid fa-delete-left', menu_text: 'Delete account', type: 'button', method: :delete, class: 'mt-10' }
       ]
     )
     items

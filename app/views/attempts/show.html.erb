@@ -20,7 +20,7 @@
     </div>
 
     <div class="flex justify-between items-center p-5">
-      <h5 class="font-semibold font-courier uppercase text-md lg:mt-0 mt-24">
+      <h5 class="font-semibold font-courier uppercase text-md lg:mt-0 <%= @quiz.tour.status == 'live' || @quiz.tour.status == 'closed' ? 'mt-24' : 'mt-0' %>">
         <% if current_user.admin? %>
           @<%= @attempt.user.username %>'s
         <% else %>

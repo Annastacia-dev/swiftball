@@ -51,7 +51,10 @@ Rails.application.routes.draw do
     get 'unsubscribe', on: :member
     get 'subscribe', on: :member
   end
-  resources :outfits
+
+  resources :outfits do
+    get 'tracker', on: :collection
+  end
 
   resources :push_subscriptions, only: [:create]
   resources :push_notifications, only: [:create]

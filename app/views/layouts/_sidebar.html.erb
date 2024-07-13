@@ -38,11 +38,15 @@
             </svg>
           </div>
 
-          <div id="<%= item[:menu_text] %>_dropdown" class="hidden mt-2 flex flex-col gap-2">
-            <% item[:children].each do |child| %>
+          <div id="<%= item[:menu_text] %>_dropdown" class="hidden mt-2 flex flex-col gap-3">
+            <% item[:children].each_with_index do |child, child_index| %>
+
+              <% if child_index == 0 %>
+                <hr class="border-1" />
+              <% end %>
 
               <% if child[:type] == 'button' %>
-                <%= button_to child[:path], method: child[:method], class: "px-1 py-2 flex items-center gap-4 #{child[:method] == :delete ? 'text-red-500' : ''}", data: (child[:method] == :delete ? { confirm: "Are you sure?", turbo_confirm: "Are you sure?" } : {}) do %>
+                <%= button_to child[:path], method: child[:method], class: "px-1 py-2 flex items-center gap-4 #{child[:class]}  #{child[:method] == :delete ? 'text-red-500' : ''}", data: (child[:method] == :delete ? { confirm: "Are you sure?", turbo_confirm: "Are you sure?" } : {}) do %>
                   <i class="<%= child[:icon_class] %>"></i>
                   <span class="hover:underline"><%= child[:menu_text] %></span>
                 <% end %>
@@ -54,6 +58,11 @@
                   </div>
                 <% end %>
               <% end %>
+
+              <% if child_index != (item[:children].length - 1) %>
+                <hr class="border-1" />
+              <% end %>
+
             <% end %>
           </div>
       </li>

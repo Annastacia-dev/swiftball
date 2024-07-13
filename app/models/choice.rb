@@ -5,6 +5,7 @@
 #  id          :uuid             not null, primary key
 #  content     :string
 #  correct     :boolean          default(FALSE)
+#  label       :integer          default(0)
 #  new_item    :boolean          default(FALSE)
 #  position    :integer
 #  created_at  :datetime         not null
@@ -36,6 +37,26 @@ class Choice < ApplicationRecord
 
   # callbacks
   before_validation :set_position
+
+  # enums
+  enum label: {
+    no_label: 0,
+    vulnarable: 1,
+    on_alert: 2,
+    endangered: 3,
+    critical: 4,
+    hibernating: 5,
+    extinct: 6,
+    retired: 7
+  }
+
+  # scopes
+  scope :with_label, ->(label) { where(label: labels[label.to_sym]) }
+
+  # class methods
+  def self.labels_options
+    labels.map { |k, _v| [k.humanize, k] }
+  end
 
   # instance methods
   def percentage_of_total_responses
