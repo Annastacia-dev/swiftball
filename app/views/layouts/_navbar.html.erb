@@ -12,16 +12,18 @@
     <% end %>
 
     <p class="lg:text-lg xs:text-sm text-xs font-courier font-bold uppercase">
-      Hi,
+      <%= t('hi') %>,
       <%= link_to current_user.username, edit_user_registration_path, class: 'hover:underline' %>
     <p>
 
-    <div class="flex items-center gap-4 lg:px-12">
-      <button id="dark-mode-toggle" class="cursor-pointer px-4 " onclick="toggleTheme()">
-      </button>
-      <i class='fa-solid fa-bars cursor-pointer' onclick="document.getElementById('sidebar').classList.toggle('hidden')"></i>
-
-    </div>
+    <div class="flex  items-center gap-5 lg:px-12">
+        <button id="dark-mode-toggle" class="cursor-pointer" onclick="toggleTheme()">
+        </button>
+        <i class='fa-solid fa-bars cursor-pointer' onclick="document.getElementById('sidebar').classList.toggle('hidden')"></i>
+      </div>
+      <div class="">
+        <%= render 'layouts/locale_select' %>
+      </div>
   </div>
 
   <%= render 'layouts/sidebar', items: navbar_items %>

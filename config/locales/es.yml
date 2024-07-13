@@ -1,0 +1,9 @@
+es:
+  hi: "Hola"
+  tours: "Tours"
+  users:
+    one: "Usuario"
+    other: "Usuarios"
+  leaderboard: "Tabla de clasificación"
+  new: "Nuevo"
+  close: "Cerrar"

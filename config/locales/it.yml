@@ -1,0 +1,9 @@
+it:
+  hi: "Ciao"
+  tours: "Tour"
+  users:
+    one: "Utente"
+    other: "Utenti"
+  leaderboard: "Classifica"
+  new: "Nuovo"
+  closes: "Chiudi"
