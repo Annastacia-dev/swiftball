@@ -40,18 +40,19 @@ class Choice < ApplicationRecord
 
   # enums
   enum label: {
-    vulnarable: 0,
-    on_alert: 1,
-    endangered: 2,
-    critical: 3,
-    hibernating: 4,
-    extinct: 5,
-    retired: 6
+    no_label: 0,
+    vulnarable: 1,
+    on_alert: 2,
+    endangered: 3,
+    critical: 4,
+    hibernating: 5,
+    extinct: 6,
+    retired: 7
   }
 
   # class methods
-  def self.eras_options
-    eras.map { |k, _v| [k.humanize, k] }
+  def self.labels_options
+    labels.map { |k, _v| [k.humanize, k] }
   end
 
   # instance methods
