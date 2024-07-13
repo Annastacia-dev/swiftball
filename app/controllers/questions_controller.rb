@@ -52,6 +52,7 @@ class QuestionsController < ApplicationController
 
   # DELETE /questions/1 or /questions/1.json
   def destroy
+    @question.choices.each { |choice| choice.delete }
     @question.destroy!
 
     respond_to do |format|
