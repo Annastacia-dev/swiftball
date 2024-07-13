@@ -16,7 +16,9 @@ module Erable
       the_tortured_poets_department: 7,
       acoustic_set: 8,
       midnights: 9,
-      extra: 10
+      extra: 10,
+      folklore: 11,
+      evermore: 12
     }
 
     def self.eras_options

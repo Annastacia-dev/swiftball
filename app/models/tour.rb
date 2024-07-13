@@ -39,7 +39,8 @@ class Tour < ApplicationRecord
   }
 
   # callbacks
-  before_save :downcase_title
+  before_validation :downcase_title
+  before_validation :set_timezone
   after_create :create_quiz
 
   def quiz_live_time
@@ -56,8 +57,13 @@ class Tour < ApplicationRecord
     self.title = title.downcase
   end
 
+  def set_timezone
+    self.timezone = "Africa/Nairobi"
+  end
+
   def create_quiz
-    quiz = Quiz.order(created_at: :desc).first
+    tour = Tour.where.not(id: self.id).order(number: :desc).first
+    quiz = tour.quiz
     if quiz
       duplicate_quiz(quiz)
     else

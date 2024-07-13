@@ -64,7 +64,6 @@ class ToursController < ApplicationController
   # DELETE /tours/1 or /tours/1.json
   def destroy
     @tour.destroy!
-
     respond_to do |format|
       format.html { redirect_to tours_url, notice: "Tour was successfully destroyed." }
       format.json { head :no_content }
