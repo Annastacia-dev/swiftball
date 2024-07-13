@@ -18,7 +18,11 @@ module Swiftball
     config.autoload_lib(ignore: %w(assets tasks))
 
     # Configuration for the application, engines, and railties goes here.
-    #
+    # locale
+    config.i18n.default_locale = :en
+    config.i18n.available_locales = [:en, :fr, :es, :it]
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #

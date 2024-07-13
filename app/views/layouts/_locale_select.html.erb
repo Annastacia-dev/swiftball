@@ -1,0 +1,6 @@
+<select id="language-select" class="block w-full mt-1 bg-gray-50 dark:bg-black rounded shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+  <option value="<%= url_for(locale: :en) %>" <%= 'selected' if I18n.locale == :en %>>English</option>
+  <option value="<%= url_for(locale: :fr) %>" <%= 'selected' if I18n.locale == :fr %>>Français</option>
+  <option value="<%= url_for(locale: :es) %>" <%= 'selected' if I18n.locale == :es %>>Español</option>
+  <option value="<%= url_for(locale: :it) %>" <%= 'selected' if I18n.locale == :it %>>Italiano</option>
+</select>
