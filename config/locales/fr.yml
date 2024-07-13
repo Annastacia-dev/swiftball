@@ -1,2 +1,9 @@
 fr:
   hi: "Salut"
+  tours: "Tours"
+  users:
+    one: "Utilisateur"
+    other: "Utilisateurs"
+  leaderboard: "Classement"
+  new: "Nouveau"
+  closes: "Fermer"

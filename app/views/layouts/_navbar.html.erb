@@ -16,16 +16,14 @@
       <%= link_to current_user.username, edit_user_registration_path, class: 'hover:underline' %>
     <p>
 
-    <div class="flex items-center gap-5 lg:px-12">
-      <button id="dark-mode-toggle" class="cursor-pointer px-4 " onclick="toggleTheme()">
-      </button>
-      <i class='fa-solid fa-bars cursor-pointer' onclick="document.getElementById('sidebar').classList.toggle('hidden')"></i>
-
-      <div class="md:flex hidden">
+    <div class="flex  items-center gap-5 lg:px-12">
+        <button id="dark-mode-toggle" class="cursor-pointer" onclick="toggleTheme()">
+        </button>
+        <i class='fa-solid fa-bars cursor-pointer' onclick="document.getElementById('sidebar').classList.toggle('hidden')"></i>
+      </div>
+      <div class="">
         <%= render 'layouts/locale_select' %>
       </div>
-
-    </div>
   </div>
 
   <%= render 'layouts/sidebar', items: navbar_items %>
@@ -69,19 +67,6 @@
       toggleButton.innerHTML = '<i class="fa-solid fa-lightbulb"></i>';
     }
   }
-
-
-  const selectElement = document.getElementById('language-select');
-  const storedLocale = localStorage.getItem('locale');
-
-  if (storedLocale) {
-    selectElement.value = storedLocale;
-  }
-
-  selectElement.addEventListener('change', function() {
-    localStorage.setItem('locale', this.value);
-    window.location.href = this.value;
-  });
 
   document.addEventListener('DOMContentLoaded', applyStoredTheme);
 

@@ -1,7 +1,7 @@
 <div class="min-h-screen">
   <h5 class="font-semibold font-courier uppercase text-md px-5 pt-10"><%= @quiz.title %>
     <% if @quiz.tour.status == 'open' %>
-      <span> (closes <%= time_user_timezone(@quiz.tour.quiz_live_time, current_user) %>)
+      <span> (<%= t ('closes') %> <%= time_user_timezone(@quiz.tour.quiz_live_time, current_user) %>)
       </span>
     <% end %>
   </h5>

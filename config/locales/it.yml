@@ -1,3 +1,9 @@
 it:
   hi: "Ciao"
-  welcome: "Benvenuto"
+  tours: "Tour"
+  users:
+    one: "Utente"
+    other: "Utenti"
+  leaderboard: "Classifica"
+  new: "Nuovo"
+  closes: "Chiudi"

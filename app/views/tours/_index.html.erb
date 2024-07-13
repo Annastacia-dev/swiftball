@@ -4,12 +4,12 @@
       <% if current_user.admin? %>
         <%= link_to new_tour_path, class: "rounded py-2 px-4 dark:bg-black bg-gray-200  font-medium capitalize flex gap-2 items-center font-courier" do %>
           <i class="fa-solid fa-plus"></i>
-          new
+          <%= t 'new' %>
         <% end %>
       <% end %>
       <%= link_to leaderboard_path, class: "rounded py-2 px-4 dark:bg-black bg-gray-200  font-medium capitalize flex gap-2 items-center font-courier lg:dark:hover:bg-gray-900 lg:hover:bg-gray-100" do %>
           <i class="fa-solid fa-chess-board"></i>
-        leaderboard
+        <%= t 'leaderboard' %>
       <% end %>
     </div>
 </div>
@@ -99,7 +99,7 @@
       <% end %>
     </div>
       <% if tour.status == 'open' %>
-        <span class="text-[10px] font-courier">(closes <%= time_user_timezone(tour.quiz_live_time, current_user) %>)</span>
+        <span class="text-[10px] font-courier">(<%= t ('closes') %> <%= time_user_timezone(tour.quiz_live_time, current_user) %>)</span>
       <% end %>
     <% if index != (@tours.length - 1) %>
       <hr class="border border-black dark:border-gray-100 my-4" />
