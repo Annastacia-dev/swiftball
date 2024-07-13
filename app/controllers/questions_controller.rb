@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :find_quiz
-  before_action :set_question, only: %i[ show edit update destroy pick_surprise_song ]
+  before_action :set_question, except: %i[ index new create ]
   before_action :authenticate_admin!, only: %i[new edit create update destroy]
 
   # GET /questions or /questions.json

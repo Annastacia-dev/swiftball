@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     post 'send_notification', on: :member
     resources :questions do
       get 'pick_surprise_song', on: :member
+      get 'history', on: :member
       post 'surprise_song_answer', on: :member
       resources :choices
     end
