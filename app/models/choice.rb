@@ -38,6 +38,22 @@ class Choice < ApplicationRecord
   # callbacks
   before_validation :set_position
 
+  # enums
+  enum label: {
+    vulnarable: 0,
+    on_alert: 1,
+    endangered: 2,
+    critical: 3,
+    hibernating: 4,
+    extinct: 5,
+    retired: 6
+  }
+
+  # class methods
+  def self.eras_options
+    eras.map { |k, _v| [k.humanize, k] }
+  end
+
   # instance methods
   def percentage_of_total_responses
     total_responses = question.responses.count
