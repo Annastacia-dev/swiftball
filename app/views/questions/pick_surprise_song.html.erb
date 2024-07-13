@@ -14,7 +14,7 @@
   </div>
 
   <%= form_with(url: surprise_song_answer_quiz_question_path(@quiz.id, @question.id), method: :post, local: true) do |f| %>
-    <div id="album-song" class="album-song-fields mt-10 grid grid-cols-2 gap-2 font-light mb-10 lg:w-3/4 px-5 capitalize " data-content="<%= @question.id %>" data-mashup="<%= @mashup_ans.content.downcase %>">
+    <div id="album-song" class="album-song-fields mt-10 grid grid-cols-2 gap-2 font-light mb-10 lg:w-3/4 px-5 capitalize " data-content="<%= @question.id %>" data-mashup="<%= @mashup_ans %>">
     </div>
     <%= f.submit 'Submit', class: "dark:bg-black/95 bg-gray-200 px-4 py-2 rounded font-semibold cursor-pointer mt-10 ml-5 w-1/4" %>
   <% end %>
