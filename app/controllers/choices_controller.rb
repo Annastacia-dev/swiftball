@@ -58,11 +58,15 @@ class ChoicesController < ApplicationController
 
   # DELETE /choices/1 or /choices/1.json
   def destroy
-    @choice.destroy!
 
     respond_to do |format|
-      format.html { redirect_to quiz_question_choices_path(@choice.question.quiz, @choice.question), notice: "Choice was successfully destroyed." }
-      format.json { head :no_content }
+      if  @choice.delete
+        format.html { redirect_to quiz_question_choices_path(@choice.question.quiz, @choice.question), notice: "Choice was successfully destroyed." }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to quiz_question_choices_path(@choice.question.quiz, @choice.question), alert: "Couldn't delete choice. #{@choice.errors.full_messages}" }
+        format.json { render json: @choice.errors, status: :unprocessable_entity }
+      end
     end
   end
 
