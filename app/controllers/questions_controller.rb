@@ -53,7 +53,7 @@ class QuestionsController < ApplicationController
   # DELETE /questions/1 or /questions/1.json
   def destroy
     @question.choices.each { |choice| choice.delete }
-    @question.destroy!
+    @question.delete
 
     respond_to do |format|
       format.html { redirect_to quiz_questions_path(@quiz), notice: "Question was successfully destroyed." }
