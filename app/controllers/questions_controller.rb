@@ -66,7 +66,7 @@ class QuestionsController < ApplicationController
     piano = @quiz.questions.find_by(piano_mashup: true)
 
     if @question.content.downcase == 'pick piano acoustic set album and song'
-      @mashup_ans = piano.choices.find_by(correct: true)&.content&.downcase || 'no mashup'
+      @mashup_ans = piano&.choices&.find_by(correct: true)&.content&.downcase || 'no mashup'
       respond_to do |format|
         if @mashup_ans
           format.html { render :pick_surprise_song }
@@ -75,7 +75,7 @@ class QuestionsController < ApplicationController
         end
       end
     elsif @question.content.downcase == 'pick guitar acoustic set album and song'
-      @mashup_ans = guitar.choices.find_by(correct: true)&.content&.downcase || 'no mashup'
+      @mashup_ans = guitar&.choices&.find_by(correct: true)&.content&.downcase || 'no mashup'
       respond_to do |format|
         if @mashup_ans
           format.html { render :pick_surprise_song }
