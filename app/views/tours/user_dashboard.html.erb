@@ -5,13 +5,8 @@
       <h5 class="lg:text-xl text-xs  font-bold uppercase">attempts</h5>
     <% end %>
 
-    <%= link_to tracker_outfits_path, class: "bg-gray-200 dark:bg-black/50 shadow-lg p-5 rounded flex flex-col gap-1 items-center"  do %>
-      <div class="grid grid-cols-2 lg:gap-2 gap-1">
-        <% Choice.labels.each do |k, v| %>
-          <div class="h-2 w-2 rounded-full <%= label_color(k) %>">
-          </div>
-        <% end %>
-      </div>
+    <%= link_to tracker_outfits_path, class: "bg-gray-200 dark:bg-black/50 shadow-lg p-5 rounded flex flex-col gap-2 items-center"  do %>
+      <i class="fa-solid fa-wand-magic-sparkles lg:text-6xl text-3xl"></i>
       <h5 class="lg:text-xl text-xs  font-bold uppercase">outfits tracker</h5>
     <% end %>
   </div>

@@ -58,47 +58,21 @@
     <%= hotwire_livereload_tags if Rails.env.development? %>
   </head>
 
-  <body class="dark:text-white">
+  <body class="dark:text-white" data-controller="main">
     <% if current_user %>
-     <%= render 'layouts/navbar' %>
+      <%= render 'layouts/navbar' %>
     <% end %>
-    <main class="bg-gray-50 dark:bg-black/95  dark: relative">
+    <main class="bg-gray-50 dark:bg-black/95 relative">
       <% unless flash.empty? %>
-        <%= render 'layouts/flash' %>
+        <div id="flash" data-main-target="flash">
+          <%= render 'layouts/flash' %>
+          <div id="progress-bar" data-main-target="progressBar" class="progress-bar"></div>
+        </div>
       <% end %>
-
       <%= render 'layouts/install_app_button' %>
       <%= render 'layouts/allow_notifications' %>
       <%= yield %>
     </main>
-
-
-    <script>
-      document.addEventListener("turbo:load", () => {
-        const flash = document.getElementById('flash');
-        const progressBar = document.getElementById('progress-bar');
-        let progress = 100;
-        let intervalId;
-
-        if (flash) {
-          intervalId = setInterval(() => {
-            progress -= 1;
-            progressBar.style.width = `${progress}%`;
-
-            if (progress <= 0) {
-              clearInterval(intervalId);
-              flash.classList.add('hidden');
-            }
-          }, 50);
-        }
-
-        function closeFlash() {
-          const flash = document.getElementById('flash');
-          if (flash) {
-            flash.classList.add('hidden');
-          }
-        }
-      });
-    </script>
   </body>
+
 </html>

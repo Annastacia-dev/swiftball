@@ -13,8 +13,7 @@
 <% end %>
 
 
-
-<div class="min-h-screen relative">
+<div class="min-h-screen relative" data-controller="confetti" data-attempt-position="<%= @attempt.position %>" data-quiz-status="<%= @quiz.tour.status %>">
    <div class="p-5">
     <%= render 'components/breadcrumb', breadcrumbs: breadcrumbs %>
     </div>
@@ -37,8 +36,16 @@
 
     <% if  tour.status == 'closed' %>
       <div class="absolute right-10 lg:top-1 top-10 font-handwriting">
-          <div class="bg-red-500 h-5 w-5 rounded-full absolute top-4 z-10 left-1"></div>
-          <div class="-rotate-3 bg-yellow-300 dark:bg-rose-300 shadow-lg p-5 w-40 h-36 m-4 rounded-lg flex flex-col gap-2 dark:text-black">
+
+          <% if (@attempt.position <= 3) %>
+            <div class="absolute -top-2 z-10 -left-5">
+              <%= image_tag attempt_badge(@attempt.position), class: 'w-16' %>
+            </div>
+          <% else %>
+            <div class="bg-red-500 h-5 w-5 rounded-full absolute top-4 z-10 left-1"></div>
+          <% end %>
+
+          <div class="-rotate-3 bg-fuchsia-800 dark:bg-rose-300 shadow-lg p-5 w-40 h-36 m-4 rounded-lg flex flex-col gap-2 dark:text-black text-white">
               <h2 class="text-xl underline tracking-wide font-bold mb-2 uppercase">results</h2>
               <span class="text-lg">POINTS: <%= @attempt.score %> / <%= @attempt.total_possible_points %> </span>
               <span class="text-lg"">POSITION: <%= @attempt.position %> / <%= @attempt.quiz.total_attempts %> </span>
@@ -215,49 +222,5 @@
         <% end %>
       </div>
     <% end %>
-
-    <% if  tour.status == 'live' %>
-      <div class="flex justify-center items-end fixed bottom-0 right-1 mb-8">
-        <button class="dark:bg-black bg-gray-200 hover:dark:bg-gray-900 hover:bg-gray-100  font-bold lg:py-2 py-4 px-4 rounded flex gap-1 items-center" id="refreshButton" title="refresh progress">
-          <i class="fas fa-rotate-left"></i>
-          <span class="lg:flex hidden">Refresh Progress</span>
-        </button>
-      </div>
-    <% end %>
 </div>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const button = document.getElementById('refreshButton');
-
-    // Event listener for button click
-    button.addEventListener('click', function() {
-      // Disable button to prevent multiple clicks during loading
-      button.disabled = true;
-
-      // Change button color to gray
-      button.classList.remove('dark:bg-black');
-      button.classList.remove('bg-gray-200');
-      button.classList.add('bg-gray-500', 'hover:bg-gray-700');
-      button.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span class="lg:flex hidden">Loading ...</span>';
-
-      // Simulate loading progress
-      let progress = 0;
-      const interval = setInterval(function() {
-        // Increase loading progress
-        progress += 10;
-        button.style.background = `linear-gradient(to right, #3182CE ${progress}%, #000 ${progress}%)`;
-
-        // Check if loading is complete (at 100% progress)
-        if (progress >= 100) {
-          location.reload();
-          clearInterval(interval);
-          button.classList.add('dark:bg-black')
-          button.classList.add('bg-gray-200')
-          button.innerHTML = '<i class="fas fa-rotate-left"></i> <span class="lg:flex hidden">Refresh Progress</span>';
-          button.disabled = false;
-        }
-      }, 200); // Interval time (adjust as needed)
-    });
-  });
-</script>

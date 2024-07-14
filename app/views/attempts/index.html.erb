@@ -15,7 +15,7 @@
       <thead class="dark:bg-black/10 bg-gray-50">
         <tr>
           <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-            #
+            position
           </th>
           <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
             Quiz
@@ -31,7 +31,13 @@
           <% tour = quiz.tour %>
         <tr>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
-            <%= (index + 1).to_s.rjust(2, '0') %>.
+            <% if attempt.quiz.tour.status == 'closed' %>
+              <% if (attempt.position <= 3) %>
+                <%= image_tag attempt_badge(attempt.position), class: attempt_badge_class(attempt.position), title: "#{attempt.position}" %>
+              <% end %>
+            <% else %>
+              <%= attempt.position %>
+            <% end %>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm capitalize hover:underline">
             <%= link_to quiz.title, attempt_path(attempt)  %>
