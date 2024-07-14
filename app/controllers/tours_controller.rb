@@ -21,7 +21,15 @@ class ToursController < ApplicationController
 
   # GET /tours/1 or /tours/1.json
   def show
-    @attempts = Attempt.includes([:quiz, :responses, :user]).where(quiz_id: @tour.quiz.id).sort_by { |attempt| -attempt.score }
+    @attempts = Attempt.includes([:quiz, :responses, :user])
+                   .where(quiz_id: @tour.quiz.id)
+                   .sort_by do |attempt|
+                     if @tour.closed?
+                       attempt.final_position || Float::INFINITY
+                     else
+                       -attempt.score
+                     end
+                   end
   end
 
   # GET /tours/new
