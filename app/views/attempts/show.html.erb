@@ -13,8 +13,7 @@
 <% end %>
 
 
-
-<div class="min-h-screen relative">
+<div class="min-h-screen relative" data-controller="confetti" data-attempt-position="<%= @attempt.position %>" data-quiz-status="<%= @quiz.tour.status %>">
    <div class="p-5">
     <%= render 'components/breadcrumb', breadcrumbs: breadcrumbs %>
     </div>
@@ -215,49 +214,5 @@
         <% end %>
       </div>
     <% end %>
-
-    <% if  tour.status == 'live' %>
-      <div class="flex justify-center items-end fixed bottom-0 right-1 mb-8">
-        <button class="dark:bg-black bg-gray-200 hover:dark:bg-gray-900 hover:bg-gray-100  font-bold lg:py-2 py-4 px-4 rounded flex gap-1 items-center" id="refreshButton" title="refresh progress">
-          <i class="fas fa-rotate-left"></i>
-          <span class="lg:flex hidden">Refresh Progress</span>
-        </button>
-      </div>
-    <% end %>
 </div>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const button = document.getElementById('refreshButton');
-
-    // Event listener for button click
-    button.addEventListener('click', function() {
-      // Disable button to prevent multiple clicks during loading
-      button.disabled = true;
-
-      // Change button color to gray
-      button.classList.remove('dark:bg-black');
-      button.classList.remove('bg-gray-200');
-      button.classList.add('bg-gray-500', 'hover:bg-gray-700');
-      button.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span class="lg:flex hidden">Loading ...</span>';
-
-      // Simulate loading progress
-      let progress = 0;
-      const interval = setInterval(function() {
-        // Increase loading progress
-        progress += 10;
-        button.style.background = `linear-gradient(to right, #3182CE ${progress}%, #000 ${progress}%)`;
-
-        // Check if loading is complete (at 100% progress)
-        if (progress >= 100) {
-          location.reload();
-          clearInterval(interval);
-          button.classList.add('dark:bg-black')
-          button.classList.add('bg-gray-200')
-          button.innerHTML = '<i class="fas fa-rotate-left"></i> <span class="lg:flex hidden">Refresh Progress</span>';
-          button.disabled = false;
-        }
-      }, 200); // Interval time (adjust as needed)
-    });
-  });
-</script>
