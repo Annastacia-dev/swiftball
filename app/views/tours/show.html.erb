@@ -30,8 +30,12 @@
         <% @attempts.each_with_index do |attempt, index| %>
         <tr>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
-              <% if attempt.quiz.tour.status == 'closed' && attempt.position <= 3 %>
-                <%= image_tag attempt_badge(attempt.final_position), class: attempt_badge_class(attempt.final_position) %>
+              <% if attempt.quiz.tour.status == 'closed' %>
+               <% if attempt.position <= 3 %>
+                  <%= image_tag attempt_badge(attempt.final_position), class: attempt_badge_class(attempt.final_position) %>
+               <% else %>
+                  <%= attempt.final_position %>
+              <% end %>
               <% else %>
                 <%= (index + 1).to_s.rjust(2, '0') %>.
               <% end %>
