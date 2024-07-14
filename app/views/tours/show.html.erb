@@ -30,13 +30,11 @@
         <% @attempts.each_with_index do |attempt, index| %>
         <tr>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
-            <% if @tour.status == 'closed' && attempt.position <= 3 %>
-              <% if attempt.position == 1 %>
-              <%= image_tag 'trophy.png', class: 'w-8 -ml-2' %>
+              <% if attempt.quiz.tour.status == 'closed' && attempt.position <= 3 %>
+                <%= image_tag attempt_badge(attempt.final_position), class: attempt_badge_class(attempt.final_position) %>
+              <% else %>
+                <%= (index + 1).to_s.rjust(2, '0') %>.
               <% end %>
-            <% else %>
-              <%= (index + 1).to_s.rjust(2, '0') %>.
-            <% end %>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm lowercase hover:underline">
             <%= link_to "@#{attempt.user.username}", attempt_path(attempt)  %>

@@ -32,12 +32,9 @@ module QuizzesHelper
   def quiz_dropdown_items(quiz)
     items = [
       { path: quiz_path(quiz), icon_class: 'fa-solid fa-circle-question', menu_text: 'View Quiz' },
-      { path: new_quiz_question_path(quiz), icon_class: 'fa-solid fa-clipboard-question', menu_text: 'Add a Question' }
+      { path: new_quiz_question_path(quiz), icon_class: 'fa-solid fa-clipboard-question', menu_text: 'Add a Question' },
+      { path: edit_tour_path(quiz.tour), icon_class: 'fa-solid fa-pencil', menu_text: 'Edit Quiz' }
     ]
-
-    if quiz.tour.status == 'pending' || quiz.tour.status == 'open'
-      items << { path: edit_tour_path(quiz.tour), icon_class: 'fa-solid fa-pencil', menu_text: 'Edit Quiz' }
-    end
 
     if quiz.tour.status != 'live'
       items << { path: live_quiz_path(quiz), icon_class: 'fa-solid fa-bullseye', menu_text: 'Go Live', type:'button', method: 'post' }

@@ -117,6 +117,7 @@ class QuizzesController < ApplicationController
     if @tour.status != 'closed'
       respond_to do |format|
         if @tour.update(status: :closed)
+          update_attempts_final_position
           format.html { redirect_to tours_path, notice: 'Quiz is now closed' }
         else
           format.html { redirect_to tours_path, alert: "#{@tour.errors.join(',')}", status: :unprocessable_entity }
@@ -192,5 +193,11 @@ class QuizzesController < ApplicationController
 
     def send_emails
       OpenQuizEmail.perform_async('quiz_id' => @quiz.id)
+    end
+
+    def update_attempts_final_position
+      @quiz.attempts.each do |attempt|
+        attempt.update!(final_position: attempt.position)
+      end
     end
 end

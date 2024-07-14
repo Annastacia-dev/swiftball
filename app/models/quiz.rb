@@ -29,12 +29,12 @@ class Quiz < ApplicationRecord
   has_many :attempts, dependent: :destroy
   has_many :mashup_answers, through: :questions, dependent: :destroy
 
-  def total_attempts
-    attempts.size
-  end
-
   # instance methods
   def title
     tour.title
+  end
+
+  def total_attempts
+    attempts.size
   end
 end

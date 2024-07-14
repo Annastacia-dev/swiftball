@@ -5,7 +5,7 @@
 #  id          :uuid             not null, primary key
 #  content     :string
 #  correct     :boolean          default(FALSE)
-#  label       :integer          default(0)
+#  label       :integer          default("no_label")
 #  new_item    :boolean          default(FALSE)
 #  position    :integer
 #  created_at  :datetime         not null

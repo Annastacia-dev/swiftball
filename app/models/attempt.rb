@@ -2,12 +2,13 @@
 #
 # Table name: attempts
 #
-#  id         :uuid             not null, primary key
-#  slug       :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  quiz_id    :uuid             not null
-#  user_id    :uuid             not null
+#  id             :uuid             not null, primary key
+#  final_position :integer
+#  slug           :string
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  quiz_id        :uuid             not null
+#  user_id        :uuid             not null
 #
 # Indexes
 #
@@ -33,7 +34,7 @@ class Attempt < ApplicationRecord
   has_many :questions, through: :responses, dependent: :destroy
 
   # validations
-  validate :single_attempt_per_quiz
+  validate :single_attempt_per_quiz, on: :create
 
   # instance methods
 
