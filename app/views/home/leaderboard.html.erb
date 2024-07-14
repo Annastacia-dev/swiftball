@@ -25,28 +25,50 @@
 
   <% unless @attempts.blank? %>
     <div class="flex flex-col mt-16 lg:px-20 text-sm">
-      <% @attempts.each_with_index do |attempt, index| %>
-        <div class="flex justify-between">
-          <%= link_to user_path(attempt.user), class: "px-6 flex items-center gap-6 lowercase hover:underline" do %>
-            <span class="font-bold"><%= (index + 1) %>.</span>
-            <span class="<%= current_user.id == attempt.user.id ? 'font-semibold' : '' %>">@<%= attempt.user.username  %></span>
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="dark:bg-black/10 bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 relative">
+          <% @attempts.each_with_index do |attempt, index| %>
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <span class="font-bold">
+                  <% if attempt.quiz.tour.status == 'closed' && attempt.position <= 3 %>
+                    <%= image_tag attempt_badge(attempt.position), class: attempt_badge_class(attempt.position) %>
+                  <% else %>
+                    <%= (index + 1) %>.
+                  <% end %>
+                </span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm lowercase">
+                <%= link_to user_path(attempt.user), class: "flex items-center gap-6 hover:underline w-full" do %>
+                  <span class="<%= current_user.id == attempt.user.id ? 'font-semibold' : '' %>">@<%= attempt.user.username %></span>
+                <% end %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <% if @tour.status == 'closed' || @tour.status == 'live' %>
+                  <span class="<%= current_user.id == attempt.user.id ? 'font-semibold' : '' %>"><%= attempt.score %></span>
+                <% else %>
+                  <i class="fa-solid fa-spinner text-gray-600" title="in progress"></i>
+                <% end %>
+              </td>
+            </tr>
           <% end %>
-          <p class="px-6">
-              <% if @tour.status == 'closed' || @tour.status == 'live' %>
-                <span class="<%= current_user.id == attempt.user.id ? 'font-semibold' : '' %>"><%= attempt.score %></span>
-              <% else %>
-                <i class="fa-solid fa-spinner text-gray-600" title="in progress"></i>
-              <% end %>
-          </p>
-        </div>
-        <% if index != (@attempts.length - 1) %>
-          <hr class="border border-black dark:border-gray-100 my-4" />
-        <% end %>
-      <% end %>
-    <div>
+        </tbody>
+      </table>
+    </div>
   <% else %>
     <div class="flex justify-center items-center mt-20">
-     No stats yet.
+      No stats yet.
     </div>
   <% end %>
+
 </div>

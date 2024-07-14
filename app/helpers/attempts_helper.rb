@@ -14,4 +14,26 @@ module AttemptsHelper
 
     items
   end
+
+  def attempt_badge(position)
+    case position
+    when 1
+      'trophy.png'
+    when 2
+      'badge2.png'
+    when 3
+      'badge3.png'
+    end
+  end
+
+  def attempt_badge_class(position)
+    case position
+    when 1
+      'w-8  -ml-2'
+    when 2
+      'w-6 -ml-1'
+    when 3
+      'w-6 -ml-1'
+    end
+  end
 end
