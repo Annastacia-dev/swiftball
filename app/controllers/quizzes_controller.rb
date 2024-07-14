@@ -138,6 +138,16 @@ class QuizzesController < ApplicationController
     end
   end
 
+  def update_positions
+    @quiz.attempts.each do |attempt|
+      attempt.update!(final_position: attempt.position)
+    end
+
+    respond_to do |format|
+      format.html { redirect_to tours_path, success: 'Successfully updated final positions for all attempts' }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz

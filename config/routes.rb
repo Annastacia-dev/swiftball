@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     post 'close', on: :member
     post 'live', on: :member
     post 'send_notification', on: :member
+    post 'update_positions', on: :member
     resources :questions do
       get 'pick_surprise_song', on: :member
       get 'history', on: :member

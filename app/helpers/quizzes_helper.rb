@@ -48,6 +48,10 @@ module QuizzesHelper
       items << { path: send_notification_quiz_path(quiz), icon_class: 'fa-solid fa-bell', menu_text: 'Notify', type:'button', method: 'post' }
     end
 
+    if quiz.tour.status == 'closed'
+      items << { path: update_positions_quiz_path(quiz), icon_class: 'fa-solid fa-ranking-star', menu_text: 'Update Positions', type:'button', method: 'post' }
+    end
+
     if quiz.tour.status != 'closed'
       items << { path: close_quiz_path(quiz), icon_class: 'fa-solid fa-xmark', menu_text: 'Close Quiz', type:'button', method: 'post' }
     end
