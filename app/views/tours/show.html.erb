@@ -31,7 +31,9 @@
         <tr>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
             <% if @tour.status == 'closed' && attempt.position <= 3 %>
-              <%= image_tag attempt_badge(attempt.position), class: attempt_badge_class(attempt.position) %>
+              <% if attempt.position == 1 %>
+              <%= image_tag 'trophy.png', class: 'w-8 -ml-2' %>
+              <% end %>
             <% else %>
               <%= (index + 1).to_s.rjust(2, '0') %>.
             <% end %>
