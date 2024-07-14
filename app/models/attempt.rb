@@ -71,8 +71,8 @@ class Attempt < ApplicationRecord
   end
 
   def position
-    attempt_scores = quiz.attempts.order(:created_at).map(&:score).compact.sort.reverse
-    attempt_scores.index(score)&.+(1)
+    sorted_attempts = quiz.attempts.compact.sort_by { |attempt| [-attempt.score, attempt.created_at] }
+    sorted_attempts.index { |attempt| attempt.id == id } + 1
   end
 
   private
