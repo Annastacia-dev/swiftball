@@ -1,6 +1,6 @@
 class ToursController < ApplicationController
-  before_action :set_tour, only: %i[ show edit update destroy ]
-  before_action :authenticate_admin!, only: %i[ show new create edit update destroy]
+  before_action :set_tour, only: %i[show edit update destroy ]
+  before_action :authenticate_admin!, only: %i[show new create edit update destroy]
 
   # GET /tours or /tours.json
   def index
@@ -21,8 +21,7 @@ class ToursController < ApplicationController
 
   # GET /tours/1 or /tours/1.json
   def show
-    @attempts = Attempt.includes([:quiz, :responses, :user])
-                   .where(quiz_id: @tour.quiz.id)
+    @attempts = @tour.attempts
                    .sort_by do |attempt|
                      if @tour.closed?
                        attempt.final_position || Float::INFINITY
