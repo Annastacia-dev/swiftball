@@ -144,7 +144,7 @@ class QuizzesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to tours_path, success: 'Successfully updated final positions for all attempts' }
+      format.html { redirect_to tours_path, notice: 'Successfully updated final positions for all attempts' }
     end
   end
 
