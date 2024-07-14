@@ -40,7 +40,7 @@ class AttemptsController < ApplicationController
 
   def set_attempt
     if current_user.admin?
-      @attempt = Attempt.friendly.find(params[:id])
+      @attempt = Attempt.includes([:responses]).friendly.find(params[:id])
     else
       @attempt = current_user.attempts.friendly.find(params[:id])
     end
