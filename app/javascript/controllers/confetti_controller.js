@@ -4,7 +4,6 @@ import { Controller } from "@hotwired/stimulus";
 import confetti from 'canvas-confetti';
 
 export default class extends Controller {
-  static targets = ["confettiButton"]
 
   connect() {
     this.checkConditionsAndTriggerConfetti()
@@ -13,19 +12,27 @@ export default class extends Controller {
   checkConditionsAndTriggerConfetti() {
     const attemptPosition = parseInt(this.element.dataset.attemptPosition, 10)
     const quizStatus = this.element.dataset.quizStatus
+    const size = this.element.dataset.size
 
     if (quizStatus === 'closed') {
-      if (attemptPosition === 1) {
-        this.fireworkConfetti()
-        this.rapidConfetti()
-        this.starsConfetti()
-        this.emojiConfetti()
-      } else if (attemptPosition === 2 ){
-        this.fireworkConfetti()
-        this.emojiConfetti()
-      } else if (attemptPosition === 3 ){
-        this.basicConfetti()
-        this.emojiConfetti()
+
+      if (size == 'mini') {
+        if (attemptPosition === 1) {
+          this.miniConfetti()
+        }
+      } else {
+        if (attemptPosition === 1) {
+          this.fireworkConfetti()
+          this.rapidConfetti()
+          this.starsConfetti()
+          this.emojiConfetti()
+        } else if (attemptPosition === 2 ){
+          this.fireworkConfetti()
+          this.emojiConfetti()
+        } else if (attemptPosition === 3 ){
+          this.basicConfetti()
+          this.emojiConfetti()
+        }
       }
     }
   }
@@ -161,6 +168,44 @@ export default class extends Controller {
     setTimeout(shoot, 0);
     setTimeout(shoot, 100);
     setTimeout(shoot, 200);
+  }
+
+  miniConfetti () {
+    var canvas = document.getElementById('leaderboardConfetti');
+    if (canvas && canvas.getContext) {
+
+      var ctx = canvas.getContext('2d');
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, 0, canvas.width, canvas.height);
+      ctx.clip();
+
+      var myConfetti = confetti.create(canvas, {
+        resize: true
+      });
+
+      var end = Date.now() + (15 * 1000);
+      var colors = ['#ec4899', '#eab308'];
+
+      (function frame() {
+        myConfetti({
+          particleCount: 10,
+          angle: 90, // Adjusted angle for top to bottom
+          spread: 55,
+          origin: { x: Math.random(), y: 0 }, // Adjusted origin for top
+          colors: colors,
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        } else {
+          canvas.style.display = 'none';
+        }
+      }());
+
+    } else {
+      console.error('The element is not a canvas or it does not support getContext.');
+    }
   }
 
 }

@@ -4,7 +4,7 @@ import { Controller } from "@hotwired/stimulus";
 import confetti from 'canvas-confetti';
 
 export default class extends Controller {
-  static targets = ["flash", "progressBar", "confettiButton"]
+  static targets = ["flash", "progressBar"]
 
   connect() {
     this.startFlashTimer()
