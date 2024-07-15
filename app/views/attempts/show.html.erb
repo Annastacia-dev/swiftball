@@ -37,7 +37,7 @@
     <% if  tour.status == 'closed' %>
       <div class="absolute right-10 lg:top-1 top-10 font-handwriting">
 
-          <% if (@attempt.position <= 3) %>
+          <% if (@attempt.final_position <= 3) %>
             <div class="absolute -top-2 z-10 -left-5">
               <%= image_tag attempt_badge(@attempt.final_position), class: 'w-16' %>
             </div>
@@ -48,7 +48,7 @@
           <div class="-rotate-3 bg-yellow-300 dark:bg-rose-300 shadow-lg p-5 w-40 h-36 m-4 rounded-lg flex flex-col gap-2 dark:text-black">
               <h2 class="text-xl underline tracking-wide font-bold mb-2 uppercase">results</h2>
               <span class="text-lg">POINTS: <%= @attempt.score %> / <%= @attempt.total_possible_points %> </span>
-              <span class="text-lg"">POSITION: <%= @attempt.position %> / <%= @attempt.quiz.total_attempts %> </span>
+              <span class="text-lg"">POSITION: <%= @attempt.final_position %> / <%= @attempt.quiz.total_attempts %> </span>
           </div>
       </div>
     <% end %>
