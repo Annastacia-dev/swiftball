@@ -198,8 +198,6 @@ export default class extends Controller {
 
         if (Date.now() < end) {
           requestAnimationFrame(frame);
-        } else {
-          canvas.style.display = 'none';
         }
       }());
 
