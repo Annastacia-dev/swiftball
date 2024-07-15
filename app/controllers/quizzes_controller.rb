@@ -139,12 +139,10 @@ class QuizzesController < ApplicationController
   end
 
   def update_positions
-    @quiz.attempts.each do |attempt|
-      attempt.update!(final_position: attempt.position)
-    end
+    update_attempts_final_position
 
     respond_to do |format|
-      format.html { redirect_to tours_path, notice: 'Successfully updated final positions for all attempts' }
+      format.html { redirect_to tour_path(@quiz.tour), notice: 'Successfully updated final positions for all attempts' }
     end
   end
 
@@ -206,8 +204,8 @@ class QuizzesController < ApplicationController
     end
 
     def update_attempts_final_position
-      @quiz.attempts.each do |attempt|
-        attempt.update!(final_position: attempt.position)
+      @quiz.attempts.sort_by { |attempt| [-attempt.score, attempt.created_at] }.each_with_index do |attempt, index|
+        attempt.update!(final_position: index + 1 )
       end
     end
 end
