@@ -6,6 +6,15 @@
   ]
   %>
 
+  <div class="flex flex-col gap-5 mt-16">
+    <h5 class="font-semibold font-courier uppercase text-md ">users (<%= @users.size %>) </h5>
+    <%= render 'table', users: @users %>
+  </div>
+
+  <div class="flex justify-end mt-3 overflow-x-scroll">
+    <%= will_paginate @users %>
+  </div>
+
   <div class="flex flex-col gap-5 mt-10">
     <div class="flex lg:flex-row flex-col justify-between">
       <h5 class="font-semibold font-courier uppercase text-md ">
@@ -18,15 +27,6 @@
       </div>
     </div>
     <%= render_chart @chart_data, 'Users by Country', 'No data', 'users' %>
-  </div>
-
-  <div class="flex flex-col gap-5 mt-16">
-    <h5 class="font-semibold font-courier uppercase text-md ">users (<%= @users.size %>) </h5>
-    <%= render 'table', users: @users %>
-  </div>
-
-  <div class="flex justify-end mt-3">
-    <%= will_paginate @users %>
   </div>
 </div>
 
