@@ -7,7 +7,7 @@
   %>
 
   <div class="flex justify-between items-center">
-    <h5 class="font-semibold font-courier uppercase text-md "><%= @tour.title %> attempts ( <%=@attempts.size %> ) </h5>
+    <h5 class="font-semibold font-courier uppercase text-md "><%= @tour.title %> attempts (<%=@attempts.size %>) </h5>
     <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: quiz_dropdown_items(@tour.quiz) %>
   </div>
 
