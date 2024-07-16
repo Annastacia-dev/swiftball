@@ -39,7 +39,7 @@
         <tbody class="divide-y divide-gray-200 relative">
           <% @attempts.each_with_index do |attempt, index| %>
             <tr data-controller="confetti"  data-attempt-position = "<%= attempt.final_position %>" data-quiz-status="<%= attempt.quiz.tour.status %>" data-size="mini" id="targetRow">
-              <canvas id="leaderboardConfetti" class="absolute h-[62px] lg:w-3/4 top-[230px]" data-confetti-target="canvas"></canvas>
+              <canvas id="leaderboardConfetti" class="absolute h-[62px] lg:w-3/4 w-11/12 top-[230px]" data-confetti-target="canvas"></canvas>
               <td class="px-6 py-4 whitespace-nowrap text-sm">
                 <span class="font-bold">
                   <% if attempt.quiz.tour.status == 'closed' %>
