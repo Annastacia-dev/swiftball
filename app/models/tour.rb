@@ -4,6 +4,7 @@
 #
 #  id         :uuid             not null, primary key
 #  base       :boolean          default(FALSE)
+#  era_order  :integer          default(0)
 #  number     :integer
 #  slug       :string
 #  start_time :datetime
@@ -38,6 +39,11 @@ class Tour < ApplicationRecord
     closed: 3
   }
 
+  enum era_order: {
+    new_order: 0,
+    old_order: 1
+  }
+
   # callbacks
   before_validation :downcase_title
   before_validation :set_timezone
@@ -49,6 +55,10 @@ class Tour < ApplicationRecord
 
   def quiz_close_time
     self.start_time + 5.hour
+  end
+
+  def self.era_order_options
+    era_orders.map { |k, _v| [k.humanize, k] }
   end
 
   private

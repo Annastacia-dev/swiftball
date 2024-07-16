@@ -1,12 +1,14 @@
 class QuizzesController < ApplicationController
 
+  include OrderQuestions
+
   before_action :set_quiz
+  before_action :order_questions, only: %i[show take progress results]
   before_action :authenticate_admin!, only: %i[show edit destroy open close]
   before_action :authenticate_not_admin!, only: %i[take]
   before_action :check_attempt_exists, only: %i[take]
   before_action :check_tour_open, only: %i[take]
   before_action :set_tour, except: %i[index]
-
 
   # GET /quizzes/1/edit
   def edit
@@ -15,6 +17,7 @@ class QuizzesController < ApplicationController
   # DELETE /quizzes/1 or /quizzes/1.json
   def destroy
     @quiz.questions.each  { |qn| qn.choices.each { |choice| choice.delete }}
+    @quiz.questions.each  { |qn| qn.mashup_answers.each { |answer| answer.delete }}
     @quiz.questions.each { |qn| qn.delete }
     @quiz.destroy!
 

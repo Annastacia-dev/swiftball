@@ -44,7 +44,7 @@ class ChoicesController < ApplicationController
 
   # PATCH/PUT /choices/1 or /choices/1.json
   def update
-    path = quiz_question_path(@choice.question.quiz, @choice.question)
+    path = quiz_path(@choice.question.quiz)
     respond_to do |format|
       if @choice.update(choice_params)
         format.html { redirect_to path, notice: "Choice was successfully updated." }

@@ -35,13 +35,17 @@ module QuestionsHelper
     when 'reputation'
       'dark:text-red-500 text-black'
     when 'the_tortured_poets_department'
-      'text-gray-500'
+      'text-gray-500 dark:text-gray-100'
     when 'acoustic_set'
       'text-lime-500'
     when 'midnights'
       'text-blue-950'
     when 'extra'
       'text-orange-500'
+    when 'folklore'
+      'text-gray-500 dark:text-gray-100'
+    when 'evermore'
+      'text-orange-900 dark:text-orange-300'
     else
       'text-blue-500'
     end

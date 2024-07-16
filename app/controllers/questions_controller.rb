@@ -1,13 +1,13 @@
 class QuestionsController < ApplicationController
+
+  include OrderQuestions
+
   before_action :find_quiz
-  before_action :set_question, except: %i[ index new create ]
+  before_action :order_questions, only: %i[index]
+  before_action :set_question, except: %i[index new create ]
   before_action :authenticate_admin!, only: %i[new edit create update destroy]
 
   # GET /questions or /questions.json
-  def index
-    @questions = Question.all
-    @questions_by_era = @quiz.questions.order(:era).order(:position).group_by(&:era)
-  end
 
   # GET /questions/1 or /questions/1.json
   def show

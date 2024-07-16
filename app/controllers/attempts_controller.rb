@@ -1,7 +1,10 @@
 class AttemptsController < ApplicationController
+  include OrderQuestions
+
   before_action :authenticate_not_admin!, only: %i[index]
   before_action :set_attempt, only: %i[show edit update]
   before_action :set_quiz, only: %i[show edit update]
+  before_action :order_questions, only: %i[edit]
   before_action :check_tour_open, only: %i[edit]
 
   def index
@@ -10,9 +13,18 @@ class AttemptsController < ApplicationController
 
   def show
     responses = @attempt.responses.includes(:question, :mashup_answers, choice: { image_attachment: :blob, question: :choices })
-    @questions_by_era = responses.joins(:question)
-                             .order('questions.position ASC')
-                             .group_by { |response| response.question.era }
+    if @quiz.tour.era_order == 'new_order'
+      @questions_by_era = responses.joins(:question)
+                                   .order('questions.position ASC')
+                                   .group_by { |response| response.question.era }
+    else
+      order_clause = "CASE questions.era #{Arel.sql(Question.old_era_order)} END"
+      @questions_by_era = responses
+                            .joins(:question)
+                            .order(Arel.sql(order_clause))
+                            .order('questions.position ASC')
+                            .group_by { |response| response.question.era }
+    end
   end
 
   def update

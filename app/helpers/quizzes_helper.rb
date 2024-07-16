@@ -24,6 +24,10 @@ module QuizzesHelper
       'bg-gradient bg-blue-950 text-white'
     when 'extra'
       'bg-orange-500 text-white'
+    when 'folklore'
+      'bg-gray-200'
+    when 'evermore'
+      'bg-orange-900 text-white'
     else
       'dark:bg-black bg-gray-200'
     end

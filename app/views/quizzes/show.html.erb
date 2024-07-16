@@ -12,7 +12,7 @@
     <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: quiz_dropdown_items(@quiz) %>
   </div>
 
-  <% @quiz.questions.order(:era).all.order(:position).group_by(&:era).each do |era, questions| %>
+  <% @questions_by_era.each do |era, questions| %>
     <div class="mt-10">
       <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
       <% questions.each_with_index do |question, index| %>

@@ -4,6 +4,7 @@
 #
 #  id         :uuid             not null, primary key
 #  base       :boolean          default(FALSE)
+#  era_order  :integer          default(0)
 #  number     :integer
 #  slug       :string
 #  start_time :datetime

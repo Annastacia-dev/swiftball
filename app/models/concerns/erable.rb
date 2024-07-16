@@ -24,5 +24,29 @@ module Erable
     def self.eras_options
       eras.map { |k, _v| [k.humanize, k] }
     end
+
+    def self.old_order
+      [
+        'lover',
+        'fearless',
+        'evermore',
+        'reputation',
+        'speak_now',
+        'red',
+        'folklore',
+        '1989',
+        'acoustic_set',
+        'midnights',
+        'extra'
+      ]
+    end
+
+    def self.old_era_order
+      old_order.map do |era|
+        era_value = eras[era]
+        "WHEN #{era_value} THEN #{old_order.index(era)}"
+      end.join(' ')
+    end
+
   end
 end

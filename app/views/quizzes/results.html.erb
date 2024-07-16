@@ -11,7 +11,7 @@
     <h5 class="font-semibold font-courier uppercase text-md "><%= @quiz.title %> (You did not take this quiz) </h5>
   </div>
 
-  <% @quiz.questions.order(:era).all.order(:position).group_by(&:era).each do |era, questions| %>
+  <% @questions_by_era.each do |era, questions| %>
     <div class="mt-10">
       <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
       <div class="grid lg:grid-cols-3">
