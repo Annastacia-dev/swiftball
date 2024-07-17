@@ -8,7 +8,12 @@ class AttemptsController < ApplicationController
   before_action :check_tour_open, only: %i[edit]
 
   def index
-    @attempts = current_user.attempts.order(created_at: :desc).includes([quiz: :tour])
+    @attempts = current_user.attempts
+                            .includes(quiz: :tour)
+                            .joins(quiz: :tour)
+                            .order('tours.number DESC, attempts.created_at DESC')
+                            .paginate(page: params[:page], per_page: 10)
+
   end
 
   def show

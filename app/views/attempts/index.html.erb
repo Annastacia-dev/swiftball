@@ -32,15 +32,18 @@
         <tr>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
             <% if attempt.quiz.tour.status == 'closed' %>
-              <% if (attempt.final_position <= 3) %>
-                <%= image_tag attempt_badge(attempt.final_position), class: attempt_badge_class(attempt.final_position), title: "#{attempt.final_position}" %>
-              <% end %>
+              <%= attempt.final_position %>
             <% else %>
               <%= index + 1 %>
             <% end %>
           </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm capitalize hover:underline">
+          <td class="px-6 py-4 whitespace-nowrap text-sm capitalize hover:underline flex items-center gap-2">
             <%= link_to quiz.title, attempt_path(attempt)  %>
+            <% if attempt.quiz.tour.status == 'closed' %>
+              <% if (attempt.final_position <= 3) %>
+                <%= image_tag attempt_badge(attempt.final_position), class: attempt_badge_class(attempt.final_position), title: "#{attempt.final_position}" %>
+              <% end %>
+            <% end %>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
              <% if tour.status == 'closed' || tour.status == 'live' %>
@@ -54,4 +57,8 @@
       </tbody>
     </table>
   <div>
+
+  <div class="flex justify-end mt-3 overflow-x-scroll">
+  <%= will_paginate @attempts %>
+</div>
 </div>
