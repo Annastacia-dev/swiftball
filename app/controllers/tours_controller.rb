@@ -22,10 +22,10 @@ class ToursController < ApplicationController
   # GET /tours/1 or /tours/1.json
   def show
     @attempts = @tour.attempts
-                     .sort_by do |attempt|
+                     .sort_by { |attempt|
                        primary_sort = @tour.closed? ? (attempt.final_position || Float::INFINITY) : -attempt.score
                        [primary_sort, attempt.created_at]
-                     end
+                      }
   end
 
   # GET /tours/new
