@@ -4,6 +4,8 @@
 #
 #  id          :uuid             not null, primary key
 #  correct     :boolean          default(FALSE)
+#  guest       :string
+#  instrument  :integer          default(0)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  album_id    :uuid             not null

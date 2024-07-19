@@ -4,6 +4,8 @@
 #
 #  id          :uuid             not null, primary key
 #  correct     :boolean          default(FALSE)
+#  guest       :string
+#  instrument  :integer          default(0)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  album_id    :uuid             not null
@@ -26,8 +28,19 @@
 #  fk_rails_...  (song_id => songs.id)
 #
 class MashupAnswer < ApplicationRecord
+  # --- associations ---
   belongs_to :question
   belongs_to :response, optional: true
   belongs_to :album
   belongs_to :song
+
+  # --- enums ---
+  enum instrument: {
+    guitar: 0,
+    piano: 1
+  }
+
+  def self.instrument_options
+    instruments.map { |k, _v| [k.humanize, k] }
+  end
 end

@@ -55,6 +55,6 @@ class MashupAnswersController < ApplicationController
   end
 
   def mashup_params
-    params.require(:mashup_answer).permit(:album_id, :song_id)
+    params.require(:mashup_answer).permit(:album_id, :song_id, :instrument, :guest)
   end
 end

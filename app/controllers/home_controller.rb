@@ -71,4 +71,8 @@ class HomeController < ApplicationController
     @attempts = Attempt.where(quiz_id: @tour.quiz.id)
                        .sort_by { |attempt| [-attempt.score, attempt.created_at] }
   end
+
+  def surprise_songs
+    @tours = Tour.all.where.not(base: true).order(number: :desc)
+  end
 end

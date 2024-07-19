@@ -3,6 +3,7 @@ module ApplicationHelper
   def navbar_items
     items = [
       { path: root_path, icon_class: 'fa-solid fa-house', menu_text: 'Home' },
+      { path: surprise_songs_path, icon_class: 'fa-solid fa-guitar', menu_text: 'Surprise Songs' },
     ]
 
     if current_user.admin?
@@ -13,7 +14,7 @@ module ApplicationHelper
     end
 
     if current_user.admin?
-      items.insert(2,{
+      items.insert(3,{
         path: '',
         icon_class: 'fa-solid fa-shirt',
         menu_text: 'Outfits',
@@ -23,11 +24,18 @@ module ApplicationHelper
           { path: tracker_outfits_path, icon_class: 'fa-solid fa-person-dress', menu_text: 'Tracker'}
         ]
       })
-      items.insert(3, { path: feedbacks_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'})
+      items.insert(4, { path: feedbacks_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'})
     else
-     items.insert(2,{ path: tracker_outfits_path, icon_class: 'fa-solid fa-shirt', menu_text: 'Outfits Tracker'})
-     items.insert(3,{ path: outfits_path, icon_class: 'fa-regular fa-images', menu_text: 'Outfits Gallery'})
-     items.insert(4, { path: new_feedback_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'})
+      items.insert(3,{
+        path: '',
+        icon_class: 'fa-solid fa-shirt',
+        menu_text: 'Outfits',
+        children: [
+          { path: tracker_outfits_path, icon_class: 'fa-solid fa-person-dress', menu_text: 'Tracker'},
+          { path: outfits_path, icon_class: 'fa-regular fa-images', menu_text: 'Gallery'}
+        ]
+      })
+      items.insert(4, { path: new_feedback_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'})
     end
 
     items.push({

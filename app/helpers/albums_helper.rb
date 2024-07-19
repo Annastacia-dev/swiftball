@@ -22,4 +22,33 @@ module AlbumsHelper
     ]
     items
   end
+
+  def album_bg_color(album)
+    case album.downcase
+    when 'debut'
+      'bg-emerald-600 text-white'
+    when 'fearless'
+      'bg-amber-400'
+    when 'speak now'
+      'bg-violet-900 text-white'
+    when 'red'
+      'bg-red-600 text-white'
+    when '1989'
+      'bg-blue-400'
+    when 'reputation'
+      'bg-black text-white'
+    when 'lover'
+      'bg-pink-300'
+    when 'folklore'
+      'bg-gray-200'
+    when 'evermore'
+      'bg-amber-950 text-white'
+    when 'midnights'
+      'bg-blue-950 text-white'
+    when 'ttpd'
+      'bg-zinc-600 text-white'
+    when 'non-album'
+      'bg-white'
+    end
+  end
 end

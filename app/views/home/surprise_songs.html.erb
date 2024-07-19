@@ -1,0 +1,45 @@
+<div class="pt-10 px-12 min-h-screen">
+  <%= render 'components/breadcrumb', breadcrumbs: [
+    { text: 'home', path: root_path },
+    { text: 'surprise songs'}
+  ] %>
+
+  <div class="grid lg:grid-cols-4 md:grid-cols-2">
+    <% @tours.all.each do |tour| %>
+      <div class="p-2">
+        <h5 class="capitalize font-semibold bg-slate-950 dark:bg-gray-50 text-white dark:text-black text-center py-2"> <%= tour.title %> </h5>
+        <div class="py-2 flex flex-col gap-2">
+          <% tour.mashup_answers.where(correct: true).includes(:album, :song).group_by(&:instrument).each do |instrument, mashup_answers| %>
+            <div class="py-1 text-xs flex justify-center items-center gap-2">
+              <% if instrument == 'guitar' %>
+                <%= image_tag 'icons/guitar.png', class: 'w-4' %>
+              <% else %>
+                <%= image_tag 'icons/piano.png', class: 'w-4' %>
+              <% end %>
+              <h6 class="font-medium uppercase"><%= instrument %></h6>
+            </div>
+            <% mashup_answers.each do |mashup_answer| %>
+              <p class="<%= album_bg_color(mashup_answer.album.abbr) %> px-2 py-1 capitalize text-sm font-normal flex justify-between items-center">
+                <%= mashup_answer.album.abbr %> - <%= mashup_answer.song.title %>
+                <span class="flex items-center gap-4 relative">
+                 <% if mashup_answer.guest %>
+                  <button onclick="document.getElementById('tooltip-<%= mashup_answer.id %>').classList.toggle('hidden')">
+                    <i class="fa-solid fa-user text-xs"></i>
+                  </button>
+                  <span id="tooltip-<%= mashup_answer.id %>" class="hidden bg-slate-950 dark:bg-gray-50 text-white dark:text-black px-2 py-1 rounded text-white absolute left-4 bottom-2 text-xs w-40"> Special Guest: <%= mashup_answer.guest %> </span>
+                 <% end %>
+
+                  <% if current_user.admin? %>
+                    <%= link_to edit_mashup_answer_path(mashup_answer) do %>
+                    <i class="fa-solid fa-pencil text-xs"></i>
+                    <% end %>
+                  <% end %>
+                </span>
+              </p>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

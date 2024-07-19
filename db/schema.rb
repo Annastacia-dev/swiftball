@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_19_065320) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_19_083518) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -104,6 +104,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_19_065320) do
     t.uuid "song_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "instrument", default: 0
+    t.string "guest"
     t.index ["album_id"], name: "index_mashup_answers_on_album_id"
     t.index ["question_id"], name: "index_mashup_answers_on_question_id"
     t.index ["response_id"], name: "index_mashup_answers_on_response_id"
