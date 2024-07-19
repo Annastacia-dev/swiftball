@@ -22,4 +22,13 @@ module MashupHelper
       number.to_s
     end
   end
+
+  def mashup_dropdown_items(mashup)
+    switch = mashup.instrument == 'guitar' ? 'piano' : 'guitar'
+    items = [
+      { path: edit_mashup_answer_path(mashup), icon_class: 'fa-solid fa-pencil', menu_text: 'Edit' },
+      { path: switch_instrument_mashup_answer_path(mashup), icon_class: 'fa-solid fa-toggle-on', menu_text: "Switch to #{switch}", type:'button', method: 'patch' },
+      { path: add_guest_mashup_answer_path(mashup), icon_class: 'fa-solid fa-user', menu_text: "Add Guest" }
+    ]
+  end
 end

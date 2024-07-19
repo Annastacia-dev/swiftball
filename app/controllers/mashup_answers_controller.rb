@@ -1,7 +1,7 @@
 class MashupAnswersController < ApplicationController
 
   before_action :find_response
-  before_action :find_mashup_answer, only: %i[edit update destroy]
+  before_action :find_mashup_answer, except: %i[index]
   before_action :set_question, only: %i[edit update destroy]
 
   def index
@@ -34,6 +34,18 @@ class MashupAnswersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to path, notice: "Answer was successfully deleted." }
       format.json { head :no_content }
+    end
+  end
+
+  def switch_instrument
+    if @mashup_answer.instrument == 'guitar'
+      @mashup_answer.update(instrument: :piano)
+    elsif @mashup_answer.instrument == 'piano'
+        @mashup_answer.update(instrument: :guitar)
+    end
+
+    respond_to do |format|
+      format.html { redirect_to surprise_songs_path, notice: "Switched instrument successfully" }
     end
   end
 

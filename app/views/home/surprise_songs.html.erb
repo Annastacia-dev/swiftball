@@ -19,23 +19,22 @@
               <h6 class="font-medium uppercase"><%= instrument %></h6>
             </div>
             <% mashup_answers.each do |mashup_answer| %>
-              <p class="<%= album_bg_color(mashup_answer.album.abbr) %> px-2 py-1 capitalize text-sm font-normal flex justify-between items-center">
-                <%= mashup_answer.album.abbr %> - <%= mashup_answer.song.title %>
-                <span class="flex items-center gap-4 relative">
+              <div class="<%= album_bg_color(mashup_answer.album.abbr) %> px-2 py-1 capitalize text-sm font-normal flex justify-between items-center">
+                 <span><%= mashup_answer.album.abbr %> - <%= mashup_answer.song.title %> </span>
+                <span class="flex flex-row items-center gap-4 relative">
                  <% if mashup_answer.guest %>
                   <button onclick="document.getElementById('tooltip-<%= mashup_answer.id %>').classList.toggle('hidden')">
                     <i class="fa-solid fa-user text-xs"></i>
                   </button>
-                  <span id="tooltip-<%= mashup_answer.id %>" class="hidden bg-slate-950 dark:bg-gray-50 text-white dark:text-black px-2 py-1 rounded text-white absolute left-4 bottom-2 text-xs w-40"> Special Guest: <%= mashup_answer.guest %> </span>
+                  <span id="tooltip-<%= mashup_answer.id %>" class="hidden bg-slate-950 dark:bg-gray-50 text-white dark:text-black px-2 py-1 rounded text-white absolute left-4 bottom-2 text-xs w-40"> S  pecial Guest: <%= mashup_answer.guest %>
+                  </span>
                  <% end %>
 
                   <% if current_user.admin? %>
-                    <%= link_to edit_mashup_answer_path(mashup_answer) do %>
-                    <i class="fa-solid fa-pencil text-xs"></i>
-                    <% end %>
+                    <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: mashup_dropdown_items(mashup_answer) %>
                   <% end %>
                 </span>
-              </p>
+              </div>
             <% end %>
           <% end %>
         </div>
