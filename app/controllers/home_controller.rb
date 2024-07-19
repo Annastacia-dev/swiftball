@@ -73,6 +73,6 @@ class HomeController < ApplicationController
   end
 
   def surprise_songs
-    @tours = Tour.all.where.not(base: true).order(number: :desc)
+    @tours = Tour.all.where.not(base: true).order(number: :desc).where(status: [:closed, :live])
   end
 end
