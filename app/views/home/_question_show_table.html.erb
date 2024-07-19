@@ -1,4 +1,4 @@
-<% tours = Tour.where.not(base: true).where.not(status: :pending).order(:number)%>
+<% tours = Tour.where.not(base: true).where.not(status: :pending).where.not(preapp: true).order(:number)%>
 <div class="flex flex-col mt-10 overflow-x-scroll">
   <table class="min-w-full divide-y divide-gray-200 relative">
     <thead class="dark:bg-black/10 bg-gray-50">
