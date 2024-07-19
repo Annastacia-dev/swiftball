@@ -7,7 +7,7 @@
         <% choice = question.choices.find_by(correct: true) %>
         <% if choice %>
           <div class="flex flex-col gap-3">
-          <%= image_tag(choice.image, alt: "#{choice.content}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
+          <%= image_tag(choice.image, alt: "#{choice.content}", class: 'w-full lg:h-72 object-cover object-center rounded') if choice.image.attached? %>
           <div class="flex flex-col gap-1">
             <p class="text-sm capitalize font-semibold"><%=choice.content %></p>
             <p class="text-sm capitalize font-medium"><%=tour.title %></p>

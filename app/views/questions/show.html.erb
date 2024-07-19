@@ -16,7 +16,7 @@
     <div class="grid lg:grid-cols-6 gap-4 px-5 py-3">
       <% @question.choices.includes(image_attachment: :blob).order(:position).each_with_index do |choice, index| %>
         <div class="choice py-3 flex flex-col gap-4 font-medium">
-        <%= image_tag(choice.image, alt: "Option #{index + 1}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
+        <%= image_tag(choice.image, alt: "Option #{index + 1}", class: 'w-full lg:h-72 object-cover object-center rounded') if choice.image.attached? %>
         <div class="flex justify-between items-center capitalize">
           <% if choice.correct %>
             <i class="fa-solid fa-circle-check text-green-600"></i>

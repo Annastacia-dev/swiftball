@@ -22,7 +22,7 @@
               <% question.choices.includes([image_attachment: :blob]).order(:position).each_with_index do |choice, index| %>
                 <div class="choice py-3 flex flex-col gap-4 relative">
                   <% if choice.image.attached? %>
-                    <%= image_tag(choice.image, alt: choice.content, class: 'w-full h-72 object-cover object-center rounded')%>
+                    <%= image_tag(choice.image, alt: choice.content, class: 'w-full lg:h-72 object-cover object-center rounded')%>
                     <% if choice.new_item == false && choice.label != 'no_label' %>
                       <button type="button" class="label-tag absolute px-4 py-1 rounded text-xs -top-0 -right-1 rotate-360 <%= label_color (choice.label)%>" onclick="document.getElementById('tooltip-<%= choice.id %>').classList.toggle('hidden')" >
                         <span class="font-medium"><%= choice.label.humanize %></span>
