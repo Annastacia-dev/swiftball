@@ -15,7 +15,9 @@ Rails.application.routes.draw do
   get 'leaderboard', to: 'home#leaderboard'
 
   devise_for :users, :controllers => {:registrations => "registrations" }
-  resources :tours
+  resources :tours do
+    post 'copy', on: :member
+  end
   resources :quizzes do
     post 'submit', on: :member
     post 'take', on: :member

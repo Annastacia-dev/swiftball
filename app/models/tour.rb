@@ -48,7 +48,7 @@ class Tour < ApplicationRecord
   # callbacks
   before_validation :downcase_title
   before_validation :set_timezone
-  after_create :create_quiz
+  after_create :create_quiz, if: :not_preapp?
 
   def quiz_live_time
     self.start_time + 1.hour + 15.minutes
@@ -63,6 +63,10 @@ class Tour < ApplicationRecord
   end
 
   private
+
+  def not_preapp?
+    !preapp
+  end
 
   def downcase_title
     self.title = title.downcase

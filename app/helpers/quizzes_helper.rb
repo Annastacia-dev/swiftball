@@ -37,7 +37,8 @@ module QuizzesHelper
     items = [
       { path: quiz_path(quiz), icon_class: 'fa-solid fa-circle-question', menu_text: 'View Quiz' },
       { path: new_quiz_question_path(quiz), icon_class: 'fa-solid fa-clipboard-question', menu_text: 'Add a Question' },
-      { path: edit_tour_path(quiz.tour), icon_class: 'fa-solid fa-pencil', menu_text: 'Edit Quiz' }
+      { path: edit_tour_path(quiz.tour), icon_class: 'fa-solid fa-pencil', menu_text: 'Edit Quiz' },
+      { path: copy_tour_path(quiz.tour), icon_class: 'fa-solid fa-copy', menu_text: 'Duplicate', type:'button', method: 'post' }
     ]
 
     if quiz.tour.status != 'live'
