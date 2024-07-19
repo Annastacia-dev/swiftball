@@ -21,7 +21,13 @@ class HomeController < ApplicationController
     questions = correct_responses.map(&:question).flatten.sort_by { |question| question.era }
     all_question_accuracy = questions.group_by { |qn| qn.content }.transform_values(&:count)
     total_responses = @user.attempts.map(&:responses).size
-    @all_questions = Question.where.not(include_album_and_song: true).order(:era).order(:position).pluck(:content, :position).to_h
+    @all_questions = Question.joins(quiz: :tour)
+                             .where.not(tours: { preapp: true })
+                             .where.not(include_album_and_song: true)
+                             .order(:era)
+                             .order(:position)
+                             .pluck(:content, :position)
+                             .to_h
 
 
     @questions_predictions_data = @all_questions.map do |question_content, position|
@@ -32,7 +38,11 @@ class HomeController < ApplicationController
 
     custom_era_order = Question.eras.keys
 
-    @questions_predictions_by_era_data = Question.where.not(include_album_and_song: true).group_by(&:era).sort_by { |era, _| custom_era_order.index(era) }.map do |era, era_questions|
+    @questions_predictions_by_era_data = Question.joins(quiz: :tour)
+                                                 .where.not(tours: { preapp: true })
+                                                 .where.not(include_album_and_song: true)
+                                                 .group_by(&:era).sort_by { |era, _| custom_era_order.index(era) }
+                                                 .map do |era, era_questions|
       era_questions_accuracy = era_questions.map(&:content).map do |content|
         all_question_accuracy[content] || 0
       end.first
@@ -46,7 +56,7 @@ class HomeController < ApplicationController
   end
 
   def leaderboard
-    @tours = Tour.where.not(status: :pending).where.not(base: true).order(number: :desc)
+    @tours = Tour.where.not(status: :pending).where.not(base: true).where.not(preapp: true).order(number: :desc)
     @users = User.where.not(role: :admin)
     if params[:tour]
       @tour = Tour.friendly.find(params[:tour])
