@@ -34,7 +34,7 @@ module AlbumsHelper
     when 'red'
       'bg-red-600 text-white'
     when '1989'
-      'bg-blue-400'
+      'bg-blue-400 text-white'
     when 'reputation'
       'bg-black text-white'
     when 'lover'
