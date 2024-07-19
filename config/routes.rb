@@ -54,7 +54,6 @@ Rails.application.routes.draw do
   resources :mashup_answers  do
     patch 'switch_instrument', on: :member
     get 'add_guest', on: :member
-    patch 'add_guest', on: :member
   end
 
   resources :users do
