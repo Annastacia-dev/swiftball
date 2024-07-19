@@ -20,10 +20,17 @@
       <%= form.datetime_field :start_time, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full", required: true %>
     </div>
 
-    <div class="flex flex-col gap-1">
-      <%= form.label :era_order %>
-      <%= form.select :era_order, Tour.era_order_options, {}, required: true, class: "dark:bg-black" %>
-    </div>
+    <% if action_name == 'edit' %>
+      <div class="flex flex-col gap-1">
+        <%= form.label :era_order %>
+        <%= form.select :era_order, Tour.era_order_options, {}, required: true, class: "dark:bg-black" %>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <%= form.check_box :preapp, class: "h-8 w-8" %>
+        <%= form.label :preapp %>
+      </div>
+    <% end %>
   </div>
 
   <div class="inline">
