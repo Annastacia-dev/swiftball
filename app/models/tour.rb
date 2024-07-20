@@ -17,6 +17,7 @@
 #
 class Tour < ApplicationRecord
   has_paper_trail
+  has_one_attached :city_image
 
   include Sluggable
   friendly_slug_scope to_slug: :title

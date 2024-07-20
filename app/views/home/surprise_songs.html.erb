@@ -1,44 +1,22 @@
-<div class="pt-10 lg:px-12 px-6 min-h-screen">
+<div class="pt-10 pb-5 lg:px-12 px-6 min-h-screen">
   <%= render 'components/breadcrumb', breadcrumbs: [
     { text: 'home', path: root_path },
     { text: 'surprise songs'}
   ] %>
 
-  <div class="grid lg:grid-cols-2">
-    <% @tours.all.each do |tour| %>
-      <div class="p-2">
-        <h5 class="capitalize font-semibold border border-slate-950 dark:border-gray-50  text-center py-2"> <%= tour.title %> </h5>
-        <div class="py-2 flex flex-col gap-2">
-          <% tour.mashup_answers.order(:created_at).where(correct: true).includes(:album, :song).group_by(&:instrument).each do |instrument, mashup_answers| %>
-            <div class="py-1 text-xs flex justify-center items-center gap-2">
-              <% if instrument == 'guitar' %>
-                <%= image_tag 'icons/guitar.png', class: 'w-4' %>
-              <% else %>
-                <%= image_tag 'icons/piano.png', class: 'w-4' %>
-              <% end %>
-              <h6 class="font-medium uppercase"><%= instrument %></h6>
-            </div>
-            <% mashup_answers.each do |mashup_answer| %>
-              <div class="<%= album_bg_color(mashup_answer.album.abbr) %> px-2 py-1 capitalize text-sm font-normal flex justify-between items-center">
-                 <span><%= mashup_answer.album.abbr %> - <%= mashup_answer.song.title %> </span>
-                <span class="flex flex-row items-center gap-2 relative">
-                 <% if mashup_answer.guest.present? %>
-                  <button onclick="document.getElementById('tooltip-<%= mashup_answer.id %>').classList.toggle('hidden')">
-                    <i class="fa-solid fa-user text-xs"></i>
-                  </button>
-                  <span id="tooltip-<%= mashup_answer.id %>" class="hidden bg-slate-950 dark:bg-gray-50 text-white dark:text-black px-2 py-1 rounded text-white absolute right-10 bottom-6 text-xs w-40 z-50"> Special Guest: <%= mashup_answer.guest %>
-                  </span>
-                 <% end %>
-
-                  <% if current_user.admin? %>
-                    <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: mashup_dropdown_items(mashup_answer) %>
-                  <% end %>
-                </span>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
+  <%= form_with url: surprise_songs_path, method: :get, local: true, data: { controller: 'view-switcher' } do %>
+    <div class="mb-4 flex justify-end">
+      <div class="flex items-center space-x-2">
+        <select id="view-switch" name="view" data-view-switcher-target="select" class="w-32 pl-3 pr-10 py-2 text-base bg-gray-50 dark:bg-black sm:text-sm rounded">
+          <option value="table_view" <%= 'selected' if params[:view] == 'table_view' %>>Table View</option>
+          <option value="card_view" <%= 'selected' if params[:view] == 'card_view' %>>Card View</option>
+        </select>
       </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
+
+  <%= render partial: params[:view] || 'card_view' %>
 </div>
+
+
+

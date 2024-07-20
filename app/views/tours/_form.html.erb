@@ -20,6 +20,11 @@
       <%= form.datetime_field :start_time, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full", required: true %>
     </div>
 
+    <div class="flex flex-col gap-1">
+      <%= form.label :city_image %>
+      <%= form.file_field :city_image, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full", required: true %>
+    </div>
+
     <% if action_name == 'edit' %>
       <div class="flex flex-col gap-1">
         <%= form.label :era_order %>

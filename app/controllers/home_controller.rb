@@ -74,5 +74,7 @@ class HomeController < ApplicationController
 
   def surprise_songs
     @tours = Tour.all.where.not(base: true).order(number: :desc).where(status: [:closed, :live])
+    @view = params[:view] || 'card_view'
   end
+
 end

@@ -98,7 +98,7 @@ class ToursController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tour_params
-      params.require(:tour).permit(:number, :title, :start_time, :end_time, :timezone, :era_order, :preapp)
+      params.require(:tour).permit(:number, :title, :start_time, :end_time, :timezone, :era_order, :preapp, :city_image)
     end
 
     def duplicate_tour_quiz(original_quiz, new_tour)
