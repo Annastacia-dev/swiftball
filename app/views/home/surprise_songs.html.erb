@@ -4,16 +4,32 @@
     { text: 'surprise songs'}
   ] %>
 
-  <%= form_with url: surprise_songs_path, method: :get, local: true, data: { controller: 'view-switcher' } do %>
-    <div class="mb-4 flex justify-end">
-      <div class="flex items-center space-x-2">
-        <select id="view-switch" name="view" data-view-switcher-target="select" class="w-32 pl-3 pr-10 py-2 text-base bg-gray-50 dark:bg-black sm:text-sm rounded">
-          <option value="card_view" <%= 'selected' if params[:view] == 'card_view' %>>Card View</option>
-          <option value="table_view" <%= 'selected' if params[:view] == 'table_view' %>>Table View</option>
-        </select>
+  <div class="flex justify-end gap-2 items-center">
+    <%= form_with url: surprise_songs_path, method: :get, local: true, data: { controller: 'view-switcher' } do %>
+      <div class="mb-4 flex justify-end">
+        <div class="flex items-center space-x-2">
+          <select id="view-switch" name="view" data-view-switcher-target="select" class="w-32 pl-3 pr-10 py-2 text-base bg-gray-50 dark:bg-black sm:text-sm rounded">
+            <option value="card_view" <%= 'selected' if params[:view] == 'card_view' %>>Card View</option>
+            <option value="table_view" <%= 'selected' if params[:view] == 'table_view' %>>Table View</option>
+          </select>
+        </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+
+    <% if params[:view] == 'table_view' %>
+      <%= form_with url: surprise_songs_path, method: :get, local: true, data: { controller: 'view-switcher' } do %>
+        <div class="mb-4 flex justify-end">
+          <div class="flex items-center space-x-2 capitalize">
+            <input type="hidden" name="view" value="table_view">
+            <select id="view-switch" name="table_view" data-view-switcher-target="select" class="w-32 pl-3 pr-10 py-2 text-base bg-gray-50 dark:bg-black sm:text-sm rounded">
+              <option value="by_instrument" <%= 'selected' if params[:table_view] == 'by_instrument' %>>By Instrument</option>
+              <option value="by_tour" <%= 'selected' if params[:table_view] == 'by_tour' %>>By  Tour</option>
+            </select>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 
   <%= render partial: params[:view] || 'card_view' %>
 </div>

@@ -1,0 +1,68 @@
+<div class="overflow-x-auto">
+  <table class="min-w-full divide-y divide-gray-200 border border-gray-200 dark:border-gray-700">
+    <thead class="dark:bg-black/10 bg-gray-50 border border-gray-200 dark:border-gray-700">
+      <tr>
+        <th class="sticky left-0 px-6 py-3 text-left text-xs font-medium uppercase tracking-wider border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-black/10 ">Tour</th>
+        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider  border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-black/10 ">
+          <div class="flex items-center  gap-2">
+            <%= image_tag 'icons/guitar.png', class: 'w-5' %>
+            Guitar
+          </div>
+        </th>
+        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider  border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-black/10 ">
+          <div class="flex items-center gap-2">
+            <%= image_tag 'icons/piano.png', class: 'w-5' %>
+            piano
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200 border border-gray-200 dark:border-gray-700">
+      <% @tours.all.each do |tour| %>
+        <tr class="border border-gray-200 dark:border-gray-700">
+          <td class="sticky left-0 bg-gray-50 dark:bg-black/10 px-6 py-4 whitespace-nowrap uppercase text-xs font-medium border border-gray-200 dark:border-gray-700 w-5"><%= tour.title %></td>
+          <td class="px-6 py-4 whitespace-nowrap capitalize text-xs border border-gray-200 dark:border-gray-700">
+            <div class="flex flex-col gap-2">
+              <% tour.mashup_answers.order(:created_at).where(correct: true).includes(:album, :song).group_by(&:instrument)['guitar']&.each do |mashup_answer| %>
+                <div class="<%= album_bg_color(mashup_answer.album.abbr) %> px-2 py-1 capitalize font-normal flex justify-between items-center">
+                  <span><%= mashup_answer.album.abbr %> - <%= mashup_answer.song.title %></span>
+                  <span class="flex flex-row items-center gap-2 relative">
+                    <% if mashup_answer.guest.present? %>
+                      <button onclick="document.getElementById('tooltip-<%= mashup_answer.id %>').classList.toggle('hidden')">
+                        <i class="fa-solid fa-user text-xs"></i>
+                      </button>
+                      <span id="tooltip-<%= mashup_answer.id %>" class="hidden bg-slate-950 dark:bg-gray-50 text-white dark:text-black px-2 py-1 rounded absolute right-10 bottom-6 text-xs w-44 z-50">Special Guest: <%= mashup_answer.guest %></span>
+                    <% end %>
+                    <% if current_user.admin? %>
+                      <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: mashup_dropdown_items(mashup_answer) %>
+                    <% end %>
+                  </span>
+                </div>
+              <% end %>
+            </div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap capitalize text-xs border border-gray-200 dark:border-gray-700">
+            <div class="flex flex-col gap-2">
+              <% tour.mashup_answers.order(:created_at).where(correct: true).includes(:album, :song).group_by(&:instrument)['piano']&.each do |mashup_answer| %>
+                <div class="<%= album_bg_color(mashup_answer.album.abbr) %> px-2 py-1 capitalize font-normal flex justify-between items-center">
+                  <span><%= mashup_answer.album.abbr %> - <%= mashup_answer.song.title %></span>
+                  <span class="flex flex-row items-center gap-2 relative">
+                    <% if mashup_answer.guest.present? %>
+                      <button onclick="document.getElementById('tooltip-<%= mashup_answer.id %>').classList.toggle('hidden')">
+                        <i class="fa-solid fa-user text-xs"></i>
+                      </button>
+                      <span id="tooltip-<%= mashup_answer.id %>" class="hidden bg-slate-950 dark:bg-gray-50 text-white dark:text-black px-2 py-1 rounded absolute right-10 bottom-6 text-xs w-40 z-50">Special Guest: <%= mashup_answer.guest %></span>
+                    <% end %>
+                    <% if current_user.admin? %>
+                      <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: mashup_dropdown_items(mashup_answer) %>
+                    <% end %>
+                  </span>
+                </div>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
