@@ -20,7 +20,7 @@
     <tbody class="divide-y divide-gray-200 border border-gray-200 dark:border-gray-700">
       <% @tours.all.each do |tour| %>
         <tr class="border border-gray-200 dark:border-gray-700">
-          <td class="sticky left-0 bg-gray-50 dark:bg-black/10 px-6 py-4 whitespace-nowrap uppercase text-xs font-medium border border-gray-200 dark:border-gray-700 w-5"><%= tour.title %></td>
+          <td class="sticky left-0 bg-gray-50 dark:bg-black/10 px-6 py-4 uppercase text-xs font-medium border border-gray-200 dark:border-gray-700 w-5 break-words"><%= tour.title %></td>
           <td class="px-6 py-4 whitespace-nowrap capitalize text-xs border border-gray-200 dark:border-gray-700">
             <div class="flex flex-col gap-2">
               <% tour.mashup_answers.order(:created_at).where(correct: true).includes(:album, :song).group_by(&:instrument)['guitar']&.each do |mashup_answer| %>
