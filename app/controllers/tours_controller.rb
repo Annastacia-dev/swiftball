@@ -1,5 +1,5 @@
 class ToursController < ApplicationController
-  before_action :set_tour, except: %i[index ]
+  before_action :set_tour, except: %i[index new create ]
   before_action :authenticate_admin!, only: %i[show new create edit update destroy]
 
   # GET /tours or /tours.json
