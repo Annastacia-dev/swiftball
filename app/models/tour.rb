@@ -51,6 +51,7 @@ class Tour < ApplicationRecord
   before_validation :downcase_title
   before_validation :set_timezone
   after_create :create_quiz, if: :not_preapp?
+  after_update :update_quiz_slug, if: :saved_change_to_title?
 
   def quiz_live_time
     self.start_time + 1.hour + 15.minutes
@@ -123,5 +124,9 @@ class Tour < ApplicationRecord
 
   def should_generate_new_friendly_id?
     title_changed?
+  end
+
+  def update_quiz_slug
+    quiz.regenerate_slug if quiz.present?
   end
 end

@@ -37,4 +37,9 @@ class Quiz < ApplicationRecord
   def total_attempts
     attempts.size
   end
+
+  def regenerate_slug
+    self.slug = nil
+    save
+  end
 end
