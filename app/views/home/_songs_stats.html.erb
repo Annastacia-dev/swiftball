@@ -1,0 +1,53 @@
+<div class="mt-5">
+  <div class="flex lg:flex-row flex-col lg:gap-40 gap-10">
+    <!-- Guitar Section -->
+    <div class="flex flex-col gap-2">
+      <div class="flex items-center gap-2">
+        <%= image_tag 'icons/guitar.png', class: 'w-5' %>
+        <span class="text-xs font-medium uppercase">Guitar</span>
+      </div>
+      <hr class="mb-2" />
+      <div class="grid grid-cols-12">
+        <% @tours.all.each do |tour| %>
+          <% tour.mashup_answers.order(:created_at).where(correct: true).includes(:album, :song).group_by(&:instrument)['guitar']&.each do |mashup_answer| %>
+            <div class="relative group">
+              <div class="<%= album_bg_color(mashup_answer.album.abbr) %> w-4 h-4 m-0.5 rounded shadow cursor-pointer"></div>
+              <div class="absolute hidden group-hover:flex flex-col gap-2 items-start bg-white dark:bg-gray-800 text-black dark:text-white p-2 rounded shadow-lg z-10 text-xs w-48">
+                <div><%= tour.title %></div>
+                <div><%= mashup_answer.album.abbr %> - <%= mashup_answer.song.title %> </div>
+                <% if mashup_answer.guest.present? %>
+                  <div><strong>Special Guest:</strong> <%= mashup_answer.guest %></div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Piano Section -->
+    <div class="flex flex-col gap-2">
+      <div class="flex items-center gap-2">
+        <%= image_tag 'icons/piano.png', class: 'w-5' %>
+        <span class="text-xs font-medium uppercase">Piano</span>
+      </div>
+      <hr class="mb-2" />
+      <div class="grid grid-cols-12">
+        <% @tours.all.each do |tour| %>
+          <% tour.mashup_answers.order(:created_at).where(correct: true).includes(:album, :song).group_by(&:instrument)['piano']&.each do |mashup_answer| %>
+            <div class="relative group">
+              <div class="<%= album_bg_color(mashup_answer.album.abbr) %> w-4 h-4 m-0.5 rounded shadow cursor-pointer"></div>
+              <div class="absolute hidden group-hover:flex flex-col gap-2 items-start bg-white dark:bg-gray-800 text-black dark:text-white p-2 rounded shadow-lg z-10 text-xs w-48">
+                <div><%= tour.title %></div>
+                <div><%= mashup_answer.album.abbr %> - <%= mashup_answer.song.title %> </div>
+                <% if mashup_answer.guest.present? %>
+                  <div><strong>Special Guest:</strong> <%= mashup_answer.guest %></div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
