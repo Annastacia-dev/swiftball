@@ -48,7 +48,7 @@ module AlbumsHelper
     when 'ttpd'
       'bg-zinc-600 text-white'
     when 'non-album'
-      'bg-fuchsia-600'
+      'bg-fuchsia-600 text-white'
     end
   end
 end
