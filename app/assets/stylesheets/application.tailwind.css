@@ -69,6 +69,14 @@
     display: block;
   }
 
+  .collapse {
+    display: none;
+  }
+  
+  .collapse-show {
+    display: block;
+  }
+
   @media (min-width: 640px) {
     .masonry-grid {
       column-count: 2;

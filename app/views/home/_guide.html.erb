@@ -1,0 +1,14 @@
+<div class="flex flex-col mt-5 gap-5">
+    <h5 class="text-sm font-bold uppercase">
+      Guide
+      <hr class="mb-2" />
+    </h5>
+
+  <div class="flex flex-col gap-4">
+      <% @albums.each do |album| %>
+        <div class="flex gap-2 text-xs font-medium">
+          <div class="h-5 w-5 <%= album_bg_color(album.abbr) %>"> </div> - <%= album.title %>
+        </div>
+      <% end %>
+  </div>
+</div>

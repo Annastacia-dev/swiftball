@@ -1,0 +1,34 @@
+<div class="flex lg:flex-row flex-col lg:gap-10 gap-5 mt-5">
+  <div class="flex flex-col gap-2 text-xs">
+    <h4 class="text-sm font-bold uppercase">Most Frequent Song</h4>
+    <div class="<%= album_bg_color(@most_frequent_song.album.abbr) %> p-4 rounded shadow-md flex flex-col gap-3">
+      <h5 class="text-sm font-bold"><%= @most_frequent_song.title %></h5>
+      <p class="font-medium">Total: <%= @most_frequent_song_count %></p>
+      <% @song_performance_counts.each do |instrument, count| %>
+        <p class="flex flex-col gap-1 font-normal">
+          <span><%= instrument.capitalize %>: <%= count %></span>
+          <% if count >= 2 %>
+            (Tours: <%= @tours_for_instruments[instrument][:tours].join(', ') %>)
+          <% end %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-2 text-xs">
+    <h4 class="text-sm font-bold uppercase">Most Frequent Album</h4>
+    <div class="<%= album_bg_color(@most_frequent_album.abbr) %> p-4 rounded shadow-md flex flex-col gap-3">
+      <h5 class="text-sm font-bold"><%= @most_frequent_album.title %></h5>
+      <p class="font-medium">Total: <%= @most_frequent_album_count %></p>
+      <% @album_performance_counts.each do |instrument, count| %>
+        <p class="flex flex-col gap-1 font-normal">
+          <span><%= instrument.capitalize %>: <%= count %></span>
+          <% if count >= 2 %>
+            (Tours: <%= @tours_for_instruments[instrument][:tours].join(', ') %>)
+          <% end %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,96 @@
+<div class="flex flex-col gap-2 mt-5">
+  <% @albums.each_with_index do |album, index| %>
+
+    <% album_guitar = @correct_mashups.where(album_id: album.id).where(instrument: :guitar) %>
+    <% album_piano = @correct_mashups.where(album_id: album.id).where(instrument: :piano) %>
+
+    <div class="accordion" data-controller="accordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header mb-0">
+          <button class="accordion-button relative flex items-center w-full py-2 px-5 <%= album_bg_color(album.abbr) %> text-xs uppercase font-medium text-left rounded-none transition" type="button" data-action="click->accordion#toggle" data-accordion-target="header">
+          <div class="flex gap-3">
+            <span><%= album.title %></span>
+            •
+            <span> TOTAL (<%= album_guitar.size + album_piano.size %>)</span>
+            •
+            <span> GUITAR (<%= album_guitar.size %>)</span>
+            •
+            <span> PIANO (<%= album_piano.size %>)</span>
+          </div>
+            <i class="fa fa-chevron-down ml-auto" data-accordion-target="icon"></i>
+          </button>
+        </h2>
+        <div class="accordion-collapse <%= index == 0 ? '' : 'collapsed' %>" data-accordion-target="content">
+          <div class="accordion-body py-4 px-2 overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 overflow-x-auto">
+              <thead class="dark:bg-black/10 bg-gray-50 border">
+                <tr>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider border sticky left-0 bg-gray-50 dark:bg-black">
+                    Song
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider border ">
+                    <div class="flex items-center gap-1">
+                      <%= image_tag 'icons/guitar.png', class: 'w-4' %>
+                      <span>guitar</span>
+                    </div>
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider border">
+                    <div class="flex items-center gap-1">
+                      <%= image_tag 'icons/piano.png', class: 'w-4' %>
+                      <span>piano</span>
+                    </div>
+                  </th>
+
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider border">
+                    total
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 text-xs border">
+                <% album.songs.each_with_index do |song, s_index| %>
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap border sticky left-0 bg-gray-50 dark:bg-black">
+                      <%= song.title %>
+                    </td>
+                    <td class=" whitespace-nowrap border">
+                      <% guitar = @correct_mashups.where(song_id: song.id).where(instrument: :guitar) %>
+                      <div class="py-2 <%= guitar.size.positive? ? 'border-b' : '' %> px-6">
+                        <%= guitar.size %>
+                      </div>
+
+                      <% if guitar.size.positive? %>
+                        <div class=" py-2 px-6 ">
+                          <%= guitar.map { |mashup| mashup.question.quiz.tour.title }.join(', ') %>
+                        </div>
+                      <% end %>
+                    </td>
+
+                    <td class=" whitespace-nowrap border">
+                      <% piano = @correct_mashups.where(song_id: song.id).where(instrument: :piano) %>
+                      <div class="py-2 <%= piano.size.positive? ? 'border-b' : '' %> px-6">
+                        <%= piano.size %>
+                      </div>
+
+                      <% if piano.size.positive? %>
+                        <div class=" py-2 px-6 ">
+                          <%= piano.map { |mashup| mashup.question.quiz.tour.title }.join(', ') %>
+                        </div>
+                      <% end %>
+                    </td>
+
+                    <td class=" whitespace-nowrap border">
+                      <div class="py-2 px-6">
+                        <%= piano.size + guitar.size %>
+                      </div>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

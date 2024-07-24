@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   def set_variables
     @timezones = ActiveSupport::TimeZone.all.map { |tz| [tz.tzinfo.identifier] }.sort
     @country_options_for_select = ISO3166::Country.all.map { |country| [country.iso_short_name, country.iso_short_name] }.sort
-    @albums = Album.all.order(:created_at).map { |album| [album.title, album.id] }
+    @albums = Album.where(status: :active).order(:created_at).map { |album| [album.title, album.id] }
   end
 
   def configure_permitted_parameters

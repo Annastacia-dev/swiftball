@@ -36,7 +36,7 @@ module AlbumsHelper
     when '1989'
       'bg-blue-400 text-blue-50'
     when 'reputation'
-      'bg-black text-white'
+      'bg-zinc-950 text-white'
     when 'lover'
       'bg-rose-200 text-rose-900'
     when 'folklore'
@@ -48,7 +48,7 @@ module AlbumsHelper
     when 'ttpd'
       'bg-zinc-600 text-white'
     when 'non-album'
-      'bg-white text-black'
+      'bg-fuchsia-600'
     end
   end
 end

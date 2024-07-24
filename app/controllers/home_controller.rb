@@ -75,6 +75,52 @@ class HomeController < ApplicationController
   def surprise_songs
     @tours = Tour.all.where.not(base: true).order(number: :desc).where(status: [:closed, :live])
     @view = params[:view] || 'card_view'
+    @albums = Album.includes(:songs).where(status: :active)
+    @correct_mashups = MashupAnswer.includes([question: [quiz: :tour]]).where(correct: true)
+    records
   end
+
+  private
+
+  def records
+    @correct_mashups = MashupAnswer.includes(question: [quiz: :tour]).where(correct: true)
+    
+    # Process song counts
+    @song_counts = @correct_mashups.group(:song_id).count
+    @most_frequent_song_id, @most_frequent_song_count = @song_counts.max_by { |_song_id, count| count }
+    @most_frequent_song = Song.find(@most_frequent_song_id)
+    
+    @song_performance_counts = @correct_mashups
+      .where(song_id: @most_frequent_song_id)
+      .group(:instrument)
+      .count
+    
+    # Process album counts
+    @album_counts = @correct_mashups.group(:album_id).count
+    @most_frequent_album_id, @most_frequent_album_count = @album_counts.max_by { |_album_id, count| count }
+    @most_frequent_album = Album.find(@most_frequent_album_id)
+
+    @album_performance_counts = @correct_mashups
+      .where(album_id: @most_frequent_album_id)
+      .group(:instrument)
+      .count
+
+    # Find tours with specific conditions
+    @tours_for_instruments = {}
+    @correct_mashups.each do |mashup|
+      next unless mashup.correct
+
+      tour_title = mashup.question.quiz.tour.title
+      instrument = mashup.instrument
+      
+      if @tours_for_instruments[instrument].nil?
+        @tours_for_instruments[instrument] = { count: 0, tours: [] }
+      end
+
+      @tours_for_instruments[instrument][:count] += 1
+      @tours_for_instruments[instrument][:tours] << tour_title if @tours_for_instruments[instrument][:count] <= 3
+    end
+  end
+
 
 end
