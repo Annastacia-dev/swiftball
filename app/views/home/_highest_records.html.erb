@@ -7,9 +7,6 @@
       <% @song_performance_counts.each do |instrument, count| %>
         <p class="flex flex-col gap-1 font-normal">
           <span><%= instrument.capitalize %>: <%= count %></span>
-          <% if count >= 2 %>
-            (Tours: <%= @tours_for_instruments[instrument][:tours].join(', ') %>)
-          <% end %>
         </p>
       <% end %>
     </div>
@@ -23,9 +20,6 @@
       <% @album_performance_counts.each do |instrument, count| %>
         <p class="flex flex-col gap-1 font-normal">
           <span><%= instrument.capitalize %>: <%= count %></span>
-          <% if count >= 2 %>
-            (Tours: <%= @tours_for_instruments[instrument][:tours].join(', ') %>)
-          <% end %>
         </p>
       <% end %>
     </div>
