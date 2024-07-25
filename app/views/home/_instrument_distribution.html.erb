@@ -32,7 +32,7 @@
   </div>
   <div class="grid lg:flex lg:flex-wrap grid-cols-12">
     <% @tours.all.each do |tour| %>
-      <% tour.mashup_answers.order(:created_at).where(correct: true).includes(:album, :song).group_by(&:instrument)['piano']&.each do |mashup_answer| %>
+      <% tour.mashup_answers.order(created_at: :desc).where(correct: true).includes(:album, :song).group_by(&:instrument)['piano']&.each do |mashup_answer| %>
         <div class="relative group">
           <div class="<%= album_bg_color(mashup_answer.album.abbr) %> w-4 h-4 m-0.5 rounded shadow cursor-pointer"></div>
           <div class="absolute hidden group-hover:flex flex-col gap-2 items-start bg-white dark:bg-gray-800 text-black dark:text-white p-2 rounded shadow-lg z-10 text-xs w-48">

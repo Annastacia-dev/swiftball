@@ -49,10 +49,10 @@
               <tbody class="divide-y divide-gray-200 text-xs border">
                 <% album.songs.each_with_index do |song, s_index| %>
                   <tr>
-                    <td class="px-6 py-4 whitespace-nowrap border sticky left-0 bg-gray-50 dark:bg-black">
+                    <td class="px-6 py-4 break-words border sticky left-0 bg-gray-50 dark:bg-black lg:w-60 w-5">
                       <%= song.title %>
                     </td>
-                    <td class=" whitespace-nowrap border">
+                    <td class="break-words lg:w-60 w-5 border">
                       <% guitar = @correct_mashups.where(song_id: song.id).where(instrument: :guitar) %>
                       <div class="py-2 <%= guitar.size.positive? ? 'border-b' : '' %> px-6">
                         <%= guitar.size %>
@@ -65,7 +65,7 @@
                       <% end %>
                     </td>
 
-                    <td class=" whitespace-nowrap border">
+                    <td class="break-words lg:w-60 w-5 border">
                       <% piano = @correct_mashups.where(song_id: song.id).where(instrument: :piano) %>
                       <div class="py-2 <%= piano.size.positive? ? 'border-b' : '' %> px-6">
                         <%= piano.size %>
@@ -78,7 +78,7 @@
                       <% end %>
                     </td>
 
-                    <td class=" whitespace-nowrap border">
+                    <td class="break-words lg:w-60 w-5 border">
                       <div class="py-2 px-6">
                         <%= piano.size + guitar.size %>
                       </div>
