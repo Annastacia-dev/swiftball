@@ -22,7 +22,7 @@
       <% Choice.select('DISTINCT ON (content) *').includes([image_attachment: :blob]).with_label(label).each do |choice| %>
           <div class="py-3 flex flex-col gap-4 relative">
           <% if choice.image.attached? %>
-              <%= image_tag(choice.image, alt: choice.content, class: 'w-full lg:h-72 object-cover object-center rounded')%>
+              <%= image_tag(choice.image, alt: choice.content, class: 'w-full h-72 object-cover object-center rounded')%>
             <% end %>
             <%= choice.content %>
           </div>
