@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get 'privacy_policy', to: 'home#privacy_policy'
   get 'disclaimer', to: 'home#disclaimer'
   get 'leaderboard', to: 'home#leaderboard'
+  get 'credits', to: 'home#credits'
   get 'surprise_songs', to: 'home#surprise_songs'
 
 

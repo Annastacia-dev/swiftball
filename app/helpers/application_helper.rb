@@ -45,7 +45,8 @@ module ApplicationHelper
       children: [
         { path: terms_and_conditions_path, icon_class: 'fa-regular fa-newspaper', menu_text: 'Terms & Conditions'},
         { path: privacy_policy_path, icon_class: 'fa-solid fa-user-lock', menu_text: 'Privacy Policy'},
-        { path: disclaimer_path, icon_class: 'fa-solid fa-triangle-exclamation', menu_text: 'Disclaimer'}
+        { path: disclaimer_path, icon_class: 'fa-solid fa-triangle-exclamation', menu_text: 'Disclaimer'},
+        { path: credits_path, icon_class: 'fa-solid fa-clapperboard', menu_text: 'Credits'}
       ]
     })
 
