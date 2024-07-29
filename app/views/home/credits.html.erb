@@ -1,0 +1,23 @@
+<div class="pt-10 px-12 min-h-screen">
+
+  <%= render 'components/breadcrumb', breadcrumbs: [
+    { text: 'home', path: root_path },
+    { text: 'credits'}
+  ] %>
+
+  <hr />
+
+
+  <div class="flex flex-col justify-center p-3  gap-4 lg:w-3/4 text-sm">
+    <h5 class="font-courier uppercase">Credits</h5>
+    <ul class="list-disc flex flex-col gap-4">
+     <li>
+      Swiftball concept - <a href="https://x.com/swiftballers" target="_blank" class="font-medium hover:underline">@swiftballers</a>.
+     </li>
+     <li>
+      Outfit tracker system - <a href="https://x.com/nicksversion" target="_blank" class="font-medium hover:underline">@nicksversion</a>.
+     </li>
+    </ul>
+  </div>
+
+</div>
