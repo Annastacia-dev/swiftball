@@ -4,6 +4,7 @@ module ApplicationHelper
     items = [
       { path: root_path, icon_class: 'fa-solid fa-house', menu_text: 'Home' },
       { path: surprise_songs_path, icon_class: 'fa-solid fa-guitar', menu_text: 'Surprise Songs' },
+      { path: setlists_path, icon_class: 'fa-solid fa-record-vinyl', menu_text: 'Setlists'}
     ]
 
     if current_user.admin?
@@ -14,7 +15,6 @@ module ApplicationHelper
     end
 
     if current_user.admin?
-      items.insert(3, { path: setlists_path, icon_class: 'fa-solid fa-record-vinyl', menu_text: 'Setlists'})
       items.insert(4,{
         path: '',
         icon_class: 'fa-solid fa-shirt',
@@ -27,7 +27,7 @@ module ApplicationHelper
       })
       items.insert(5, { path: feedbacks_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'})
     else
-      items.insert(3,{
+      items.insert(4,{
         path: '',
         icon_class: 'fa-solid fa-shirt',
         menu_text: 'Outfits',
@@ -36,7 +36,7 @@ module ApplicationHelper
           { path: outfits_path, icon_class: 'fa-regular fa-images', menu_text: 'Gallery'}
         ]
       })
-      items.insert(4, { path: new_feedback_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'})
+      items.insert(5, { path: new_feedback_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'})
     end
 
     items.push({

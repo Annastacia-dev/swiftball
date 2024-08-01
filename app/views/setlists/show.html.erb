@@ -3,7 +3,7 @@
     <%= render 'components/breadcrumb', breadcrumbs: [
       { text: 'home', path: root_path },
       { text: 'setlists', path: setlists_path },
-      { text: "#{@setlist.league}" },
+      { text: "setlist #{@setlist.league}" },
     ] %>
   </div>
 
@@ -12,7 +12,9 @@
       setlist <%= @setlist.league %>
       <span class="text-xs capitalize font-normal">(<span class="text-red-500"> * </span> detonates shortened songs)</span>
     </h5>
-    <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: setlist_dropdown_items(@setlist) %>
+    <% if current_user.admin? %>
+      <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: setlist_dropdown_items(@setlist) %>
+    <% end %>
   </div>
 
   <div id="songs" class="min-w-full mt-10">

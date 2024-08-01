@@ -15,6 +15,6 @@ module SetlistsHelper
   end
 
   def is_in_setlist?(song)
-    Setlist.find_by(status: :previous)&.setlist_songs.find_by(song_id: song.id)&.present?
+    Setlist.find_by(status: :current)&.setlist_songs.find_by(song_id: song.id)&.present?
   end
 end
