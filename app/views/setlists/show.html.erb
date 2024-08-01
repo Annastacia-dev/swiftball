@@ -1,0 +1,31 @@
+<div class="pt-10  min-h-screen">
+  <div class="px-12">
+    <%= render 'components/breadcrumb', breadcrumbs: [
+      { text: 'home', path: root_path },
+      { text: 'setlists', path: setlists_path },
+      { text: "#{@setlist.league}" },
+    ] %>
+  </div>
+
+  <div class="flex justify-between items-center px-12">
+    <h5 class="font-semibold font-courier uppercase text-md ">setlist <%= @setlist.league %> </h5>
+    <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: setlist_dropdown_items(@setlist) %>
+  </div>
+
+  <div id="songs" class="min-w-full mt-10">
+    <% @songs.each do |era, songs| %>
+      <h1 class="<%= era_color(era) %> font-bold uppercase text-lg p-2 flex justify-center items-center"><%= era.humanize %></h1>
+      <% songs.each_with_index do |song, index| %>
+        <div class="flex justify-between font-courier px-12 py-5">
+          <p class="flex gap-4 items-center" >
+            <%= (index + 1).to_s.rjust(2, '0') %>. <span class="font-semibold uppercase"><%= song.song.title %></span>
+            <% if song.shortened? %>
+             <span class="text-red-500"> * </span>
+            <% end %>
+          </p>
+
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

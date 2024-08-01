@@ -1,0 +1,13 @@
+<div class="pt-10 px-12 min-h-screen">
+
+  <%= render 'components/breadcrumb', breadcrumbs: [
+    { text: 'home', path: root_path },
+    { text: "Setlists", path: setlists_path},
+    { text: "setlist #{@setlist.league}", path: setlist_path(@setlist) },
+    { text: "Edit Setlist"}
+  ] %>
+
+  <h1 class="font-semibold text-xl font-courier capitalize">Edit setlist</h1>
+
+  <%= render "form", setlist: @setlist %>
+</div>

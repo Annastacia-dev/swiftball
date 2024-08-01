@@ -14,7 +14,8 @@ module ApplicationHelper
     end
 
     if current_user.admin?
-      items.insert(3,{
+      items.insert(3, { path: setlists_path, icon_class: 'fa-solid fa-record-vinyl', menu_text: 'Setlists'})
+      items.insert(4,{
         path: '',
         icon_class: 'fa-solid fa-shirt',
         menu_text: 'Outfits',
@@ -24,7 +25,7 @@ module ApplicationHelper
           { path: tracker_outfits_path, icon_class: 'fa-solid fa-person-dress', menu_text: 'Tracker'}
         ]
       })
-      items.insert(4, { path: feedbacks_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'})
+      items.insert(5, { path: feedbacks_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'})
     else
       items.insert(3,{
         path: '',

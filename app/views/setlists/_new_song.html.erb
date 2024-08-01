@@ -1,0 +1,154 @@
+<%= form_with(url: setlist_setlists_songs_path(@setlist)) do |f| %>
+
+
+  <div class="flex flex-col gap-5 lg:w-3/4">
+    <div id="album-song" class="album-song-fields grid grid-cols-2 gap-2 font-light mt-5  capitalize">
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <%= f.label :era %>
+      <%= f.select :era, SetlistSong.eras_options, {}, class: "dark:bg-black" %>
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <%= f.label :length %>
+      <%= f.select :length, SetlistSong.length_options, {}, class: "dark:bg-black" %>
+    </div>
+
+  </div>
+
+  <%= f.submit 'Submit', class: "dark:bg-black/95 bg-gray-200 px-4 py-2 rounded font-semibold cursor-pointer mt-10  w-1/4" %>
+<% end %>
+
+<script>
+  document.addEventListener("turbo:load", () => {
+
+      const element = document.getElementById("album-song")
+
+      updateAlbumsongSelects(element)
+
+      function updateAlbumsongSelects(selectedElement) {
+        const container = selectedElement
+        let numberOfFields;
+
+        container.innerHTML = '';
+
+        const albumsPromise = getAlbums()
+
+
+          const albumSelect = document.createElement('select');
+          albumSelect.name = `album`;
+
+          const defaultOption = document.createElement('option');
+          defaultOption.value = '';
+
+          defaultOption.text = 'Select  Album'
+
+          defaultOption.disabled = true;
+          defaultOption.selected = true;
+          albumSelect.appendChild(defaultOption);
+          albumSelect.required = true;
+
+          albumSelect.classList.add('capitalize');
+          albumSelect.classList.add('dark:bg-black');
+          albumsPromise.then(albums => {
+            albums.forEach(album => {
+              const option = document.createElement('option');
+              option.value = album.id;
+              option.text = album.title;
+              albumSelect.appendChild(option);
+            });
+          }).catch(error => {
+            // console.error('Error fetching albums:', error);
+          });
+
+          const songSelect = document.createElement('select');
+
+          const defaultSongOption = document.createElement('option');
+          defaultSongOption.value = '';
+
+
+          defaultSongOption.text = 'Select  Song'
+
+          defaultSongOption.disabled = true;
+          defaultSongOption.selected = true;
+
+          songSelect.appendChild(defaultSongOption);
+          songSelect.name = `song_id`;
+          songSelect.classList.add('capitalize');
+          songSelect.classList.add('dark:bg-black');
+          songSelect.required = true;
+
+          albumSelect.addEventListener('change', async (event) => {
+            const selectedAlbumId = event.target.value;
+            if (selectedAlbumId) {
+              try {
+                const songs = await getSongs(selectedAlbumId);
+                updateSongOptions(songs, songSelect);
+              } catch (error) {
+                // console.error('Error fetching songs:', error);
+              }
+            } else {
+              // Clear songSelect options if no album is selected
+              songSelect.innerHTML = '';
+              songSelect.appendChild(defaultSongOption);
+            }
+          });
+
+          container.appendChild(albumSelect);
+          container.appendChild(songSelect);
+
+
+      }
+
+
+
+      function getAlbums() {
+        return fetch('/albums', {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            return data;
+          })
+          .catch(error => {
+            // console.error('Error fetching albums:', error);
+          });
+      }
+
+
+      async function getSongs(albumId) {
+        const response = await fetch(`/albums/${albumId}/songs`, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          }
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data;
+      }
+
+
+      function updateSongOptions(songs, songSelect) {
+        songSelect.innerHTML = '';
+        songs.forEach(song => {
+          const option = document.createElement('option');
+          option.value = song.id;
+          option.text = song.title;
+          songSelect.appendChild(option);
+        });
+      }
+
+  });
+</script>

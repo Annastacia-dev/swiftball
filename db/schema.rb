@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_19_083518) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_01_062101) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -161,6 +161,26 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_19_083518) do
     t.index ["question_id"], name: "index_responses_on_question_id"
   end
 
+  create_table "setlist_songs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "setlist_id", null: false
+    t.uuid "song_id", null: false
+    t.integer "era", default: 0
+    t.integer "length", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["setlist_id"], name: "index_setlist_songs_on_setlist_id"
+    t.index ["song_id"], name: "index_setlist_songs_on_song_id"
+  end
+
+  create_table "setlists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "tour_id"
+    t.string "league"
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tour_id"], name: "index_setlists_on_tour_id"
+  end
+
   create_table "songs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "album_id", null: false
     t.string "title"
@@ -230,5 +250,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_19_083518) do
   add_foreign_key "responses", "attempts"
   add_foreign_key "responses", "choices"
   add_foreign_key "responses", "questions"
+  add_foreign_key "setlist_songs", "setlists"
+  add_foreign_key "setlist_songs", "songs"
+  add_foreign_key "setlists", "tours"
   add_foreign_key "songs", "albums"
 end
