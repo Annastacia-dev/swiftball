@@ -48,9 +48,14 @@
               </thead>
               <tbody class="divide-y divide-gray-200 text-xs border">
                 <% album.songs.each_with_index do |song, s_index| %>
-                  <tr>
-                    <td class="px-6 py-4 break-words border sticky left-0 bg-gray-50 dark:bg-black lg:w-60 w-5">
-                      <%= song.title %>
+                  <tr class="<%= is_in_setlist?(song) ? album_bg_color(album.abbr) : '' %>">
+                    <td class="px-6 py-4 break-words border sticky left-0 lg:w-60 w-5 <%= is_in_setlist?(song) ? album_bg_color(album.abbr) : 'bg-gray-50 dark:bg-black' %>">
+                      <p class="flex  gap-3">
+                        <%= song.title %>
+                        <% if is_in_setlist?(song) %>
+                        <span class="text-8px">[setlist]</span>
+                        <% end %>
+                      </p>
                     </td>
                     <td class="break-words lg:w-60 w-5 border">
                       <% guitar = @correct_mashups.where(song_id: song.id).where(instrument: :guitar) %>
