@@ -8,7 +8,10 @@
   </div>
 
   <div class="flex justify-between items-center px-12">
-    <h5 class="font-semibold font-courier uppercase text-md ">setlist <%= @setlist.league %> </h5>
+    <h5 class="font-semibold font-courier uppercase text-md flex flex-col gap-3 ">
+      setlist <%= @setlist.league %>
+      <span class="text-xs capitalize font-normal">(<span class="text-red-500"> * </span> detonates shortened songs)</span>
+    </h5>
     <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: setlist_dropdown_items(@setlist) %>
   </div>
 
