@@ -98,7 +98,8 @@ class QuestionsController < ApplicationController
             question_id: question_id,
             album_id: album_id,
             song_id: song_id,
-            correct: true
+            correct: true,
+            instrument: params[:instrument]
           )
         end
       end
