@@ -12,7 +12,7 @@ class ToursController < ApplicationController
 
         format.html { render :dashboard}
       else
-        @tours = Tour.order(number: :desc).where.not(base: true).where(status: [:closed, :open, :live]).includes(:quiz).paginate(page: params[:page], per_page: 15)
+        @tours = Tour.order(number: :desc).where.not(base: true).where(status: [:closed, :open, :live]).includes(:quiz).paginate(page: params[:page], per_page: 20)
         @attempts = current_user.attempts
         format.html { render :user_dashboard}
       end
