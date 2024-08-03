@@ -26,6 +26,15 @@ class SetlistsSongsController < ApplicationController
     end
   end
 
+  def destroy
+    @setlist_song.destroy!
+
+    respond_to do |format|
+      format.html { redirect_to setlist_path(@setlist), notice: "Song was successfully removed from setlist." }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
   def find_setlist

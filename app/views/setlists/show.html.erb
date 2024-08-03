@@ -29,6 +29,10 @@
             <% end %>
           </p>
 
+          <% if current_user.admin? %>
+            <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: setlist_song_dropdown_items(song) %>
+          <% end %>
+
         </div>
       <% end %>
     <% end %>

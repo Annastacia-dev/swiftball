@@ -14,6 +14,11 @@ module SetlistsHelper
     items
   end
 
+  def setlist_song_dropdown_items(song)
+
+    [{ path: setlist_setlists_song_path(song.setlist, song), icon_class: 'fa-solid fa-delete-left', menu_text: 'Remove Song', type: 'button', method: 'delete' }]
+  end
+
   def is_in_setlist?(song)
     Setlist.find_by(status: :current)&.setlist_songs.find_by(song_id: song.id)&.present?
   end
