@@ -31,8 +31,8 @@ module Swiftball
 
     # mailing
     config.action_mailer.delivery_method = :smtp
-     username = Rails.env.production? ? Rails.application.credentials.mail[:prod_username] : Rails.application.credentials.mail[:sandbox_username]
-     password = Rails.env.production? ? Rails.application.credentials.mail[:prod_password] : Rails.application.credentials.mail[:sandbox_password]
+     username =  Rails.application.credentials.mail[:username]
+     password =  Rails.application.credentials.mail[:password]
 
     config.action_mailer.smtp_settings = {
       user_name:  username,
@@ -41,9 +41,7 @@ module Swiftball
       address: Rails.application.credentials.mail[:address],
       port: Rails.application.credentials.mail[:port],
       authentication: Rails.application.credentials.mail[:authentication],
-      enable_starttls_auto: true,
-      open_timeout: 5,
-      read_timeout: 5
+      enable_starttls_auto: true
     }
 
     # Sidekiq
