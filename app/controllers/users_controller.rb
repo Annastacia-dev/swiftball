@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :find_user, only: %i[unsubscribe subscribe show]
 
   def index
-    @users = User.order(created_at: :desc).where.not(role: 'admin').paginate(page: params[:page], per_page: 10)
+    @users = User.order(created_at: :desc).where.not(role: 'admin').paginate(page: params[:page], per_page: 20)
 
     @users_by_country = User.where.not(role: 'admin').order(:country).group(:country).count
 
