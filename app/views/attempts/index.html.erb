@@ -10,6 +10,26 @@
     <h5 class="font-semibold font-courier uppercase text-md ">attempts (<%= @attempts.size %>) </h5>
   </div>
 
+  <% unless @attempts.empty? %>
+    <div class="flex flex-col lg:mt-20 mt-5 capitalize overflow-x-scroll">
+        <div class="flex lg:flex-row flex-col justify-between">
+          <h5 class="uppercase font-bold flex items-center gap-3">
+            <i class="fa-solid fa-chart-pie"></i>
+              attempts stats
+          </h5>
+          <div class="mt-4 mb-2 flex lg:flex-row flex-col lg:items-center lg:text-base text-sm">
+            <%= form_tag(attempts_path , method: 'get', class: 'flex lg:flex-row flex-col lg:items-center gap-2', id: 'attemptsChartForm') do %>
+              <%= select_tag 'chart_type', options_for_select(chart_types.map { |chart| [chart.humanize, chart] }, @chart_type), class: 'w-40 h-10 capitalize lg:text-base text-sm dark:bg-black bg-gray-50', id: 'attemptsChartTypeSelect'  %>
+            <% end %>
+          </div>
+        </div>
+        <hr class="my-1" />
+        <div class="mt-10">
+          <%= render_chart @attempts_stats, 'Attempts', 'No data', 'attempts', chart_type: 'column_chart', height: '600px'   %>
+        </div>
+    </div>
+  <% end %>
+
   <div class="flex flex-col mt-10">
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="dark:bg-black/10 bg-gray-50">
@@ -62,3 +82,9 @@
     <%= will_paginate @attempts %>
   </div>
 </div>
+
+<script>
+  document.getElementById('attemptsChartTypeSelect').addEventListener('change', function() {
+    document.getElementById('attemptsChartForm').submit();
+  });
+</script>

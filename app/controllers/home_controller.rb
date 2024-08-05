@@ -9,6 +9,8 @@ class HomeController < ApplicationController
     @max_streak = @user.max_streak
     attempts_count = @user.attempts.size
 
+    @attempts_stats = @attempts.includes(:responses, quiz: :tour).map { |attempt| [attempt.quiz.tour.title.capitalize, attempt.score]}
+
     attempts_for_average = @attempts.includes([:quiz, :responses]).reject { |attempt| attempt.quiz.tour.status == 'open' }
 
     @average_score = attempts_for_average.size.zero? ? 0 : attempts_for_average.map(&:score).sum.to_i / attempts_for_average.size
@@ -84,17 +86,17 @@ class HomeController < ApplicationController
 
   def records
     @correct_mashups = MashupAnswer.includes(question: [quiz: :tour]).where(correct: true)
-    
+
     # Process song counts
     @song_counts = @correct_mashups.group(:song_id).count
     @most_frequent_song_id, @most_frequent_song_count = @song_counts.max_by { |_song_id, count| count }
     @most_frequent_song = Song.find(@most_frequent_song_id)
-    
+
     @song_performance_counts = @correct_mashups
       .where(song_id: @most_frequent_song_id)
       .group(:instrument)
       .count
-    
+
     # Process album counts
     @album_counts = @correct_mashups.group(:album_id).count
     @most_frequent_album_id, @most_frequent_album_count = @album_counts.max_by { |_album_id, count| count }
@@ -112,7 +114,7 @@ class HomeController < ApplicationController
 
       tour_title = mashup.question.quiz.tour.title
       instrument = mashup.instrument
-      
+
       if @tours_for_instruments[instrument].nil?
         @tours_for_instruments[instrument] = { count: 0, tours: [] }
       end

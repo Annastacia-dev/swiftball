@@ -1,14 +1,14 @@
 open_quiz:
-  cron: "* * * * *"
+  cron: "*/30 * * * *"
   class: "OpenQuiz"
   description: "Open Pending Quiz"
 
 live_quiz:
-  cron: "* * * * *"
+  cron: "*/30 * * * *"
   class: "GoLiveQuiz"
   description: "Go Live Quiz"
 
 close_quiz:
-  cron: "* * * * *"
+  cron: "*/30 * * * *"
   class: "CloseQuiz"
   description: "Close Live Quiz"

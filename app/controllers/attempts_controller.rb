@@ -14,6 +14,8 @@ class AttemptsController < ApplicationController
                             .order('tours.number DESC, attempts.created_at DESC')
                             .paginate(page: params[:page], per_page: 10)
 
+    @attempts_stats = current_user.attempts.includes(:responses, quiz: :tour).map { |attempt| [attempt.quiz.tour.title.capitalize, attempt.score]}
+
   end
 
   def show

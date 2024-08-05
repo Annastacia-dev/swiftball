@@ -159,11 +159,11 @@ module ApplicationHelper
     ['line_chart', 'column_chart', 'bar_chart', 'pie_chart']
   end
 
-  def render_chart(data, title, empty_statement, data_type)
-    @chart_type = params[:chart_type] || 'bar_chart'
+  def render_chart(data, title, empty_statement, data_type, chart_type: 'bar_chart', height: '1000px')
+    @chart_type = params[:chart_type] || chart_type
     case @chart_type
     when 'line_chart', 'column_chart', 'bar_chart', 'pie_chart'
-      send(@chart_type, data, download: { title: title }, empty: empty_statement, legend: false, donut: true, height: @chart_type != 'pie_chart' ? data_type == 'questions' ? '1000px' : '800px' : '', colors: data_type == 'eras' ? eras_bar_chart_colors : questions_bar_chart_colors)
+      send(@chart_type, data, download: { title: title }, empty: empty_statement, legend: false, donut: true, height: height , colors: data_type == 'eras' ? eras_bar_chart_colors : questions_bar_chart_colors)
     else
       raise ArgumentError, "Invalid chart type: #{@chart_type}"
     end
