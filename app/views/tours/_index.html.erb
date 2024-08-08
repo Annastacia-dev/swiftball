@@ -16,7 +16,7 @@
 
 <div id="tours" class="min-w-full mt-10 text-xs sm:text-base">
   <% @tours.each_with_index do |tour, index| %>
-    <div class="flex justify-between font-courier py-4 px-2 <%= tour.status == 'cancelled' ? 'bg-red-500 text-white' : '' %>">
+    <div class="flex justify-between font-courier py-4 px-2 <%= tour.status == 'cancelled' ? 'bg-red-500 text-gray-50' : '' %>">
       <% if current_user.admin? %>
         <%= link_to tour_path(tour), class:"flex lg:flex-row flex-col gap-2" do %>
           <span class="font-semibold uppercase flex gap-2 items-center hover:underline" title="<%= tour&.start_time&.strftime("%A %d %B %Y %H:%M") %>">
@@ -31,7 +31,7 @@
             <% elsif tour.status == 'closed' %>
               <i class="fa-solid fa-circle-xmark text-red-600" title="closed"></i>
             <% elsif tour.status == 'cancelled' %>
-              <i class="fa-solid fa-calendar-xmark" title="closed"></i>
+              <i class="fa-solid fa-calendar-xmark" title="cancelled"></i>
             <% end %>
             <span>
              (<%= tour.attempts.size %>)
@@ -52,7 +52,7 @@
               <% elsif tour.status == 'closed' %>
                 <i class="fa-solid fa-circle-xmark text-red-600" title="closed"></i>
               <% elsif tour.status == 'cancelled' %>
-                <i class="fa-solid fa-calendar-xmark" title="closed"></i>
+                <i class="fa-solid fa-calendar-xmark" title="cancelled"></i>
               <% end %>
             </span>
           </p>
@@ -81,7 +81,7 @@
                <%= tour.status == 'live' ? 'view progress' : tour.status == 'closed' ? 'view results' : tour.status == 'cancelled' ? 'view predictions' : '' %>
               </span>
               <span class="lg:hidden flex">
-                <%= tour.status == 'live' ? 'progress' : tour.status == 'closed' ? 'results' : '' %>
+                <%= tour.status == 'live' ? 'progress' : tour.status == 'closed' ? 'results' : tour.status == 'cancelled' ? 'predictions' : '' %>
               </span>
             <% end %>
           <% else %>
