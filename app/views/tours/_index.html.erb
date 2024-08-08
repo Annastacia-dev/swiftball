@@ -16,7 +16,7 @@
 
 <div id="tours" class="min-w-full mt-10 text-xs sm:text-base">
   <% @tours.each_with_index do |tour, index| %>
-    <div class="flex justify-between font-courier">
+    <div class="flex justify-between font-courier py-4 <%= tour.status == 'cancelled' ? 'bg-red-500 text-white' : '' %>">
       <% if current_user.admin? %>
         <%= link_to tour_path(tour), class:"flex lg:flex-row flex-col gap-2" do %>
           <span class="font-semibold uppercase flex gap-2 items-center hover:underline" title="<%= tour&.start_time&.strftime("%A %d %B %Y %H:%M") %>">
@@ -30,6 +30,8 @@
               <i class="fa-solid fa-bullseye text-green-600 animate-ping"></i>
             <% elsif tour.status == 'closed' %>
               <i class="fa-solid fa-circle-xmark text-red-600" title="closed"></i>
+            <% elsif tour.status == 'cancelled' %>
+              <i class="fa-solid fa-calendar-xmark" title="closed"></i>
             <% end %>
             <span>
              (<%= tour.attempts.size %>)
@@ -49,6 +51,8 @@
                 <i class="fa-solid fa-bullseye text-green-600 animate-ping"></i>
               <% elsif tour.status == 'closed' %>
                 <i class="fa-solid fa-circle-xmark text-red-600" title="closed"></i>
+              <% elsif tour.status == 'cancelled' %>
+                <i class="fa-solid fa-calendar-xmark" title="closed"></i>
               <% end %>
             </span>
           </p>
@@ -102,7 +106,7 @@
         <span class="text-[10px] font-courier">(closes <%= time_user_timezone(tour.quiz_live_time, current_user) %>)</span>
       <% end %>
     <% if index != (@tours.length - 1) %>
-      <hr class="border border-black dark:border-gray-100 my-4" />
+      <hr class="border border-black dark:border-gray-100" />
     <% end %>
   <% end %>
 </div>

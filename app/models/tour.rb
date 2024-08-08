@@ -39,7 +39,8 @@ class Tour < ApplicationRecord
     pending: 0,
     open: 1,
     live: 2,
-    closed: 3
+    closed: 3,
+    cancelled: 4
   }
 
   enum era_order: {
@@ -64,6 +65,11 @@ class Tour < ApplicationRecord
   def self.era_order_options
     era_orders.map { |k, _v| [k.humanize, k] }
   end
+
+  def self.status_options
+    statuses.map { |k, _v| [k.humanize, k] }
+  end
+
 
   private
 

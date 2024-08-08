@@ -12,7 +12,7 @@ class ToursController < ApplicationController
 
         format.html { render :dashboard}
       else
-        @tours = Tour.order(number: :desc).where.not(base: true).where(status: [:closed, :open, :live]).includes(:quiz).paginate(page: params[:page], per_page: 20)
+        @tours = Tour.order(number: :desc).where.not(base: true).where.not(status: [:pending]).includes(:quiz).paginate(page: params[:page], per_page: 20)
         @attempts = current_user.attempts
         format.html { render :user_dashboard}
       end
@@ -98,7 +98,7 @@ class ToursController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tour_params
-      params.require(:tour).permit(:number, :title, :start_time, :end_time, :timezone, :era_order, :preapp, :city_image)
+      params.require(:tour).permit(:number, :title, :start_time, :end_time, :timezone, :era_order, :preapp, :city_image, :status)
     end
 
     def duplicate_tour_quiz(original_quiz, new_tour)

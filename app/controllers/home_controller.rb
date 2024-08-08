@@ -58,7 +58,7 @@ class HomeController < ApplicationController
   end
 
   def leaderboard
-    @tours = Tour.where.not(status: :pending).where.not(base: true).where.not(preapp: true).order(number: :desc)
+    @tours = Tour.where.not(status: [:pending, :cancelled]).where.not(base: true).where.not(preapp: true).order(number: :desc)
     @users = User.where.not(role: :admin)
     if params[:tour]
       @tour = Tour.friendly.find(params[:tour])
