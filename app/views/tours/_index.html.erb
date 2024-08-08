@@ -16,7 +16,7 @@
 
 <div id="tours" class="min-w-full mt-10 text-xs sm:text-base">
   <% @tours.each_with_index do |tour, index| %>
-    <div class="flex justify-between font-courier py-4 <%= tour.status == 'cancelled' ? 'bg-red-500 text-white' : '' %>">
+    <div class="flex justify-between font-courier py-4 px-2 <%= tour.status == 'cancelled' ? 'bg-red-500 text-white' : '' %>">
       <% if current_user.admin? %>
         <%= link_to tour_path(tour), class:"flex lg:flex-row flex-col gap-2" do %>
           <span class="font-semibold uppercase flex gap-2 items-center hover:underline" title="<%= tour&.start_time&.strftime("%A %d %B %Y %H:%M") %>">
@@ -72,13 +72,13 @@
               <span>predict</span>
             <% end %>
           <% end %>
-        <% elsif tour.status == 'closed' || tour.status == 'live' %>
+        <% elsif tour.status == 'closed' || tour.status == 'live' || tour.status == 'cancelled' %>
           <% if  current_user.has_attempted_quiz?(tour.quiz) %>
             <% attempt = current_user.attempts.find_by(quiz_id: tour.quiz.id) %>
             <%= link_to attempt_path(attempt), class: 'bg-gray-200 dark:bg-black px-2 py-2 dark:hover:bg-gray-900 hover:bg-gray-100 rounded flex items-center gap-2' do %>
               <i class="fa-solid fa-square-poll-vertical" title="<%= tour.status == 'live' ? 'view progress' : tour.status == 'closed' ? 'view results' : '' %>"></i>
               <span class="lg:flex hidden">
-               <%= tour.status == 'live' ? 'view progress' : tour.status == 'closed' ? 'view results' : '' %>
+               <%= tour.status == 'live' ? 'view progress' : tour.status == 'closed' ? 'view results' : tour.status == 'cancelled' ? 'view predictions' : '' %>
               </span>
               <span class="lg:hidden flex">
                 <%= tour.status == 'live' ? 'progress' : tour.status == 'closed' ? 'results' : '' %>
