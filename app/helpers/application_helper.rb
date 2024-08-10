@@ -20,9 +20,9 @@ module ApplicationHelper
         icon_class: 'fa-solid fa-shirt',
         menu_text: 'Outfits',
         children: [
+          { path: tracker_outfits_path, icon_class: 'fa-solid fa-chart-line', menu_text: 'Tracker & Stats'},
           { path: new_outfit_path, icon_class: 'fa-solid fa-plus', menu_text: 'New Outfit'},
-          { path: outfits_path, icon_class: 'fa-regular fa-images', menu_text: 'Gallery'},
-          { path: tracker_outfits_path, icon_class: 'fa-solid fa-person-dress', menu_text: 'Tracker'}
+          { path: outfits_path, icon_class: 'fa-regular fa-images', menu_text: 'Gallery'}
         ]
       })
       items.insert(5, { path: feedbacks_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'})
@@ -32,7 +32,7 @@ module ApplicationHelper
         icon_class: 'fa-solid fa-shirt',
         menu_text: 'Outfits',
         children: [
-          { path: tracker_outfits_path, icon_class: 'fa-solid fa-person-dress', menu_text: 'Tracker'},
+          { path: tracker_outfits_path, icon_class: 'fa-solid fa-chart-line', menu_text: 'Tracker & Stats'},
           { path: outfits_path, icon_class: 'fa-regular fa-images', menu_text: 'Gallery'}
         ]
       })
