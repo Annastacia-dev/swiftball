@@ -73,6 +73,32 @@ class Choice < ApplicationRecord
     ((choice_responses.to_f / total_responses) * 100).round
   end
 
+  def outfits
+    Choice.where(outfit_codename: self.outfit_codename)
+  end
+
+  def first_seen
+    earliest_choice = outfits.where(correct: true)
+           .joins(question: { quiz: :tour })
+            .order('tours.start_time ASC')
+            .first
+
+    earliest_choice&.question&.quiz&.tour
+  end
+
+  def last_seen
+    earliest_choice = outfits.where(correct: true)
+           .joins(question: { quiz: :tour })
+            .order('tours.start_time DESC')
+            .first
+
+    earliest_choice&.question&.quiz&.tour
+  end
+
+  def times_worn
+    outfits.where(correct: true).count
+  end
+
   private
 
   def set_position
