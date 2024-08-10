@@ -6,13 +6,13 @@ class ToursController < ApplicationController
   def index
     respond_to do |format|
       if current_user.admin?
-        @tours = Tour.includes(:quiz).order(number: :desc).paginate(page: params[:page], per_page: 20)
+        @tours = Tour.includes(:quiz).order(start_time: :desc).paginate(page: params[:page], per_page: 20)
         @quizzes = Tour.order(number: :desc).where.not(base: true)
         @users = User.order(created_at: :desc).where.not(role: 'admin')
 
         format.html { render :dashboard}
       else
-        @tours = Tour.order(number: :desc).where.not(base: true).where.not(status: [:pending]).includes(:quiz).paginate(page: params[:page], per_page: 20)
+        @tours = Tour.order(start_time: :desc).where.not(base: true).where.not(status: [:pending]).includes(:quiz).paginate(page: params[:page], per_page: 20)
         @attempts = current_user.attempts
         format.html { render :user_dashboard}
       end
