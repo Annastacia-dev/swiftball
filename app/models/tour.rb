@@ -29,7 +29,7 @@ class Tour < ApplicationRecord
 
   # validations
   validates :title, presence: true, uniqueness: true
-  validates :number, presence: true, uniqueness: true
+  validates :number, presence: { unless: :is_cancelled?}, uniqueness: true
   validates :start_time, presence: true, uniqueness: true
   validates :timezone, presence: true
   validate :one_quiz, on: :create
@@ -72,6 +72,10 @@ class Tour < ApplicationRecord
 
 
   private
+
+  def is_cancelled?
+    self.status == 'cancelled'
+  end
 
   def not_preapp?
     !preapp

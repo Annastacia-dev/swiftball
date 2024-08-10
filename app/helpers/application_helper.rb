@@ -155,6 +155,24 @@ module ApplicationHelper
     ]
   end
 
+  def album_chart_colors
+     [
+      "#059669",
+      "#fef08a",
+      "#5b21b6",
+      "#dc2626",
+      "#60a5fa",
+      "#000000",
+      "#fecdd3",
+      "#e5e7eb",
+      "#451a03",
+      "#172554",
+      "#52525b",
+      "#c026d3",
+      ""
+     ]
+  end
+
   def chart_types
     ['line_chart', 'column_chart', 'bar_chart', 'pie_chart']
   end
@@ -163,9 +181,20 @@ module ApplicationHelper
     @chart_type = params[:chart_type] || chart_type
     case @chart_type
     when 'line_chart', 'column_chart', 'bar_chart', 'pie_chart'
-      send(@chart_type, data, download: { title: title }, empty: empty_statement, legend: false, donut: true, height: height , colors: data_type == 'eras' ? eras_bar_chart_colors : questions_bar_chart_colors)
+      send(@chart_type, data, download: { title: title }, empty: empty_statement, legend: false, donut: true, height: height , colors: determine_chart_colors(data_type))
     else
       raise ArgumentError, "Invalid chart type: #{@chart_type}"
+    end
+  end
+
+  def determine_chart_colors (data_type)
+    case data_type
+    when 'eras'
+      eras_bar_chart_colors
+    when 'albums'
+      album_chart_colors
+    else
+      questions_bar_chart_colors
     end
   end
 

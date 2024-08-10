@@ -9,7 +9,7 @@ class HomeController < ApplicationController
     @max_streak = @user.max_streak
     attempts_count = @user.attempts.size
 
-    @attempts_stats = @attempts.includes(:responses, quiz: :tour).map { |attempt| [attempt.quiz.tour.title.capitalize, attempt.score]}
+    @attempts_stats = @attempts.includes(:responses, quiz: :tour).map { |attempt| [attempt.quiz.tour.title.titleize, attempt.score]}
 
     attempts_for_average = @attempts.includes([:quiz, :responses]).reject { |attempt| attempt.quiz.tour.status == 'open' }
 
@@ -80,6 +80,12 @@ class HomeController < ApplicationController
     @albums = Album.includes(:songs).where(status: :active)
     @correct_mashups = MashupAnswer.includes([question: [quiz: :tour]]).where(correct: true)
     records
+    @album_song_stats = @correct_mashups.group_by { |mashup| mashup.album_id }.map do |album_id, mashups|
+      album = Album.find(album_id)
+      album_title = album.abbr.titleize
+      count = mashups.size
+      [album_title, count, album.created_at]
+    end.sort_by { |_, _, created_at| created_at }
   end
 
   private

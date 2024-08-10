@@ -20,7 +20,11 @@
       <% if current_user.admin? %>
         <%= link_to tour_path(tour), class:"flex lg:flex-row flex-col gap-2" do %>
           <span class="font-semibold uppercase flex gap-2 items-center hover:underline" title="<%= tour&.start_time&.strftime("%A %d %B %Y %H:%M") %>">
-            <%= (tour.number).to_s.rjust(2, '0') %>.
+            <% if tour.number? %>
+              <span><%= (tour.number).to_s.rjust(2, '0') %>.</span>
+            <% else %>
+             <span class="text-red-500"><%= (0).to_s.rjust(2, '0') %>.</span>
+            <% end %>
             <%= tour.title %>
             <% if tour.status == 'open' %>
               <i class="fa-solid fa-circle-check text-orange-500" title="open"></i>
@@ -42,7 +46,11 @@
         <div class="flex flex-col gap-2">
           <p class="flex lg:flex-row flex-col gap-2 ">
             <span class="font-semibold uppercase flex gap-2 items-center"  title="<%= tour&.start_time&.strftime("%A %d %B %Y %H:%M") %>">
-              <%= (tour.number).to_s.rjust(2, '0') %>. <%= tour.title %>
+              <% if tour.number? %>
+                <span><%= (tour.number).to_s.rjust(2, '0') %>.</span>
+              <% else %>
+              <span class="text-red-500"><%= (tour.number).to_s.rjust(2, '0') %>.</span>
+              <% end %> <%= tour.title %>
               <% if tour.status == 'open' %>
                 <i class="fa-solid fa-circle-check text-orange-500" title="open"></i>
               <% elsif tour.status == 'pending' %>
