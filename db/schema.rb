@@ -120,8 +120,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_11_101045) do
   end
 
   create_table "openers_tours", id: false, force: :cascade do |t|
-    t.bigint "tour_id", null: false
-    t.bigint "opener_id", null: false
+    t.uuid "tour_id", null: false
+    t.uuid "opener_id", null: false
     t.index ["opener_id"], name: "index_openers_tours_on_opener_id"
     t.index ["tour_id"], name: "index_openers_tours_on_tour_id"
   end
