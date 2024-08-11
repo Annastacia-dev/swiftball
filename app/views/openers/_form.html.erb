@@ -1,0 +1,12 @@
+<%= form_with(model: [@opener], class: "contents") do |form| %>
+  <div class="flex flex-col gap-5 lg:w-1/2 my-5">
+    <div class="flex flex-col gap-1">
+      <%= form.label :name %>
+      <%= form.text_field :name, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full ", required: true %>
+    </div>
+
+    <div class="flex gap-5">
+      <%= form.submit class: "rounded py-2 px-4 dark:bg-black bg-gray-200  font-medium cursor-pointer" %>
+    </div>
+  </div>
+<% end %>

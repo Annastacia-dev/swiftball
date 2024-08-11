@@ -28,7 +28,7 @@ class AlbumsController < ApplicationController
   def update
     respond_to do |format|
       if @album.save
-        format.html { redirect_to album_path(@album), notice: "Album was successfully updated." }
+        format.html { redirect_to albums_path, notice: "Album was successfully updated." }
       else
         format.html { render :new, status: :unprocessable_entity }
       end

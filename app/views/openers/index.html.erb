@@ -1,0 +1,26 @@
+<div class="pt-10 px-12 min-h-screen">
+  <div class="flex justify-between items-center">
+    <h1 class="font-semibold text-xl font-courier">Openers</h1>
+    <% if current_user.admin? %>
+      <%= render 'components/drawer', button_icon: 'fa-solid fa-plus', button_text: 'new opener', title: 'New opener', id: 'new_opener', button_class: 'rounded py-2 px-4 dark:bg-black bg-gray-200 font-medium capitalize flex gap-2 items-center'  do %>
+       <%= render 'form' %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div id="openers" class="min-w-full mt-10">
+    <% @openers.each_with_index do |opener, index| %>
+      <div class="flex justify-between font-courier">
+        <%= link_to opener_path(opener), class:"flex gap-4 items-center " do %>
+          <%= (index + 1).to_s.rjust(2, '0') %>. <span class="font-semibold uppercase hover:underline"><%= opener.name %></span>
+        <% end %>
+        <% if current_user.admin? %>
+          <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: opener_dropdown_items(opener) %>
+        <% end %>
+      </div>
+      <% if index != (@openers.length - 1) %>
+        <hr class="border border-black dark:border-gray-100 my-4" />
+      <% end %>
+    <% end %>
+  </div>
+</div>
