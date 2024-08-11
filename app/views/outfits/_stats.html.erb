@@ -20,7 +20,7 @@
       <% @outfits.each do |era, era_outfits| %>
         <tr>
           <td colspan="4" class="text-center py-3 font-medium capitalize <%= era_color(era) %>">
-            <%= era %>
+            <%= era.humanize %>
           </td>
         </tr>
 
