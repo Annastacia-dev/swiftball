@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_10_180248) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_11_101045) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -111,6 +111,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_10_180248) do
     t.index ["question_id"], name: "index_mashup_answers_on_question_id"
     t.index ["response_id"], name: "index_mashup_answers_on_response_id"
     t.index ["song_id"], name: "index_mashup_answers_on_song_id"
+  end
+
+  create_table "openers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "openers_tours", id: false, force: :cascade do |t|
+    t.bigint "tour_id", null: false
+    t.bigint "opener_id", null: false
+    t.index ["opener_id"], name: "index_openers_tours_on_opener_id"
+    t.index ["tour_id"], name: "index_openers_tours_on_tour_id"
   end
 
   create_table "outfits", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

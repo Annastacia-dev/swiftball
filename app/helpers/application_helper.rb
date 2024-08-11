@@ -1,21 +1,21 @@
 module ApplicationHelper
 
   def navbar_items
-    items = [
-      { path: root_path, icon_class: 'fa-solid fa-house', menu_text: 'Home' },
-      { path: surprise_songs_path, icon_class: 'fa-solid fa-guitar', menu_text: 'Surprise Songs' },
-      { path: setlists_path, icon_class: 'fa-solid fa-record-vinyl', menu_text: 'Setlists'}
-    ]
+    items = [ { path: root_path, icon_class: 'fa-solid fa-house', menu_text: 'Home' } ]
 
     if current_user.admin?
-      items.insert(1, { path: albums_path, icon_class: 'fa-solid fa-record-vinyl', menu_text: 'Albums'})
-    else
-      items.insert(1, { path: stats_path, icon_class: 'fa-solid fa-chart-simple', menu_text: 'Statistics' })
-      items << ({ path: 'https://ko-fi.com/swiftballonline', icon_class: 'fa-solid fa-server', menu_text: 'Help Keep Servers Running' })
-    end
-
-    if current_user.admin?
-      items.insert(4,{
+      items.push(
+        path: '',
+        icon_class: 'fa-solid fa-music',
+        menu_text: 'Music',
+        children: [
+          { path: albums_path, icon_class: 'fa-solid fa-record-vinyl', menu_text: 'Albums'},
+          { path: surprise_songs_path, icon_class: 'fa-solid fa-guitar', menu_text: 'Surprise Songs' },
+          { path: setlists_path, icon_class: 'fa-solid fa-record-vinyl', menu_text: 'Setlists'},
+          { path: openers_path, icon_class: 'fa-solid fa-microphone', menu_text: 'Openers'}
+        ]
+      )
+      items.push(
         path: '',
         icon_class: 'fa-solid fa-shirt',
         menu_text: 'Outfits',
@@ -24,10 +24,20 @@ module ApplicationHelper
           { path: new_outfit_path, icon_class: 'fa-solid fa-plus', menu_text: 'New Outfit'},
           { path: outfits_path, icon_class: 'fa-regular fa-images', menu_text: 'Gallery'}
         ]
-      })
-      items.insert(5, { path: feedbacks_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'})
+      )
+      items << { path: feedbacks_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'}
     else
-      items.insert(4,{
+      items.insert(1, { path: stats_path, icon_class: 'fa-solid fa-chart-simple', menu_text: 'Statistics' })
+      items.push(
+        path: '',
+        icon_class: 'fa-solid fa-music',
+        menu_text: 'Music',
+        children: [
+          { path: surprise_songs_path, icon_class: 'fa-solid fa-guitar', menu_text: 'Surprise Songs' },
+          { path: setlists_path, icon_class: 'fa-solid fa-record-vinyl', menu_text: 'Setlists'}
+        ]
+      )
+      items << {
         path: '',
         icon_class: 'fa-solid fa-shirt',
         menu_text: 'Outfits',
@@ -35,11 +45,10 @@ module ApplicationHelper
           { path: tracker_outfits_path, icon_class: 'fa-solid fa-chart-line', menu_text: 'Tracker & Stats'},
           { path: outfits_path, icon_class: 'fa-regular fa-images', menu_text: 'Gallery'}
         ]
-      })
-      items.insert(5, { path: new_feedback_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'})
+      }
     end
 
-    items.push({
+    items.push(
       path: '',
       icon_class: 'fa-solid fa-gavel',
       menu_text: 'Legal',
@@ -49,7 +58,7 @@ module ApplicationHelper
         { path: disclaimer_path, icon_class: 'fa-solid fa-triangle-exclamation', menu_text: 'Disclaimer'},
         { path: credits_path, icon_class: 'fa-solid fa-clapperboard', menu_text: 'Credits'}
       ]
-    })
+    )
 
     items.push(
       path: '',
@@ -61,6 +70,12 @@ module ApplicationHelper
         { path:  registration_path('user'), icon_class: 'fa-solid fa-delete-left', menu_text: 'Delete account', type: 'button', method: :delete, class: 'mt-10' }
       ]
     )
+
+    if !current_user.admin?
+      items << { path: 'https://ko-fi.com/swiftballonline', icon_class: 'fa-solid fa-mug-hot', menu_text: 'Buy A coffee' }
+      items << { path: new_feedback_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'}
+    end
+
     items
   end
 
