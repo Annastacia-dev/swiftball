@@ -25,7 +25,7 @@
         </tr>
 
 
-        <% era_outfits.sort_by { |outfit| outfit.question.position }.group_by{ |outfit| outfit.question.content }.each do |question, outfits| %>
+        <% era_outfits.sort_by { |outfit| outfit.question.position }.group_by{ |outfit| outfit.question.content.downcase }.each do |question, outfits| %>
 
           <tr>
             <td colspan="4" class="text-center py-3 text-xs capitalize <%= era_color(era) %>">
