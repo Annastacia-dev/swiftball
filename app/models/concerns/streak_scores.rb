@@ -61,7 +61,7 @@ module StreakScores
   private
 
   def variables
-    @tours = Tour.where.not(base: true).where.not(status: :pending).where.not(preapp: true)
+    @tours = Tour.where.not(base: true).where.not(status: [:pending, :cancelled]).where.not(preapp: true)
                .left_joins(:attempts)
                .where('tours.status != ? OR attempts.id IS NOT NULL', 1)
                .distinct
