@@ -13,11 +13,11 @@ class OutfitsController < ApplicationController
   def tracker
     labels = Choice.labels.select {|k, v| k != 'no_label'}
     @labels = labels.map { |label| label[0]}
-    @outfits = Choice.includes([image_attachment: :blob])
-                     .joins(:question) # Ensure you join the Question model
+    @outfits = Choice.includes([:question, image_attachment: :blob])
                      .where.not(outfit_codename: nil)
-                     .order('outfit_codename, questions.era', 'position')
                      .select('DISTINCT ON (outfit_codename) choices.*')
+                     .group_by { |outfit| outfit.question.era}
+                     .transform_values { |choices| choices.sort_by(&:position) }
   end
 
   def create

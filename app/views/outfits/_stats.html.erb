@@ -17,26 +17,33 @@
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-200 border">
-      <% @outfits.each do |outfit| %>
-        <tr class="border">
-          <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black w-40 border break-words w-5" >
-            <div class="flex flex-col gap-3">
-              <% if outfit.image.attached? %>
-                <%= image_tag(outfit.image, alt: outfit.content, class: 'w-20 object-cover object-center rounded')%>
-              <% end %>
-              <%= outfit.content %>
-            </div>
-          </td>
-          <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black w-40 border" >
-            <%= outfit.first_seen.title %>
-          </td>
-          <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black w-40 border" >
-            <%= outfit.last_seen.title %>
-          </td>
-          <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black w-40 border" >
-            <%= outfit.times_worn %>
+      <% @outfits.each do |era, outfits| %>
+        <tr>
+          <td colspan="4" class="text-center py-3 font-medium capitalize <%= era_color(era) %>">
+            <%= era %>
           </td>
         </tr>
+        <% outfits.each do |outfit| %>
+          <tr class="border">
+            <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black w-40 border break-words w-5 z-50" >
+              <div class="flex flex-col gap-3">
+                <% if outfit.image.attached? %>
+                  <%= image_tag(outfit.image, alt: outfit.content, class: 'w-20 object-cover object-center rounded')%>
+                <% end %>
+                <%= outfit.content %>
+              </div>
+            </td>
+            <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black w-40 border" >
+              <%= outfit.first_seen.title %>
+            </td>
+            <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black w-40 border" >
+              <%= outfit.last_seen.title %>
+            </td>
+            <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black w-40 border" >
+              <%= outfit.times_worn %>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>
