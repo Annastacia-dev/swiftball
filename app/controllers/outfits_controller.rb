@@ -14,9 +14,12 @@ class OutfitsController < ApplicationController
     labels = Choice.labels.select {|k, v| k != 'no_label'}
     @labels = labels.map { |label| label[0]}
     @outfits = Choice.includes([:question, image_attachment: :blob])
-                     .where.not(outfit_codename: nil)
-                     .select('DISTINCT ON (outfit_codename) choices.*')
-                     .group_by { |outfit| outfit.question.era}
+                 .joins(:question)
+                 .where.not(outfit_codename: nil)
+                 .select('DISTINCT ON (choices.outfit_codename) choices.*, questions.era')
+                 .order('choices.outfit_codename, questions.era')
+                 .to_a
+                 .group_by { |outfit| outfit.question.era }
   end
 
   def create
