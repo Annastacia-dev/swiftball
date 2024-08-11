@@ -16,10 +16,12 @@ class OutfitsController < ApplicationController
     @outfits = Choice.includes([:question, image_attachment: :blob])
                  .joins(:question)
                  .where.not(outfit_codename: nil)
-                 .select('DISTINCT ON (choices.outfit_codename) choices.*, questions.era')
-                 .order('choices.outfit_codename, questions.era')
-                 .to_a
+                 .select('DISTINCT ON (choices.outfit_codename) choices.*, questions.*, questions.era AS era_order')
+                 .order('choices.outfit_codename, era_order')
                  .group_by { |outfit| outfit.question.era }
+                 .sort_by { |era, outfits|
+                    Question.eras[era]
+                  }
   end
 
   def create

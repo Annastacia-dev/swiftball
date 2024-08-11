@@ -19,10 +19,11 @@
     <tbody class="divide-y divide-gray-200 border">
       <% @outfits.each do |era, era_outfits| %>
         <tr>
-          <td colspan="4" class="text-center py-3 font-medium capitalize <%= era_color(era) %>">
+          <td colspan="4" class="text-center py-3 font-medium uppercase text-sm <%= era_color(era) %>">
             <%= era.humanize %>
           </td>
         </tr>
+
 
         <% era_outfits.sort_by { |outfit| outfit.question.position }.group_by{ |outfit| outfit.question.content }.each do |question, outfits| %>
 
@@ -39,17 +40,17 @@
                   <% if outfit.image.attached? %>
                     <%= image_tag(outfit.image, alt: outfit.content, class: 'w-20 object-cover object-center rounded')%>
                   <% end %>
-                  <%= outfit.content %>
+                  <%= outfit&.content %>
                 </div>
               </td>
               <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black w-40 border" >
-                <%= outfit.first_seen.title %>
+                <%= outfit&.first_seen&.title %>
               </td>
               <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black w-40 border" >
-                <%= outfit.last_seen.title %>
+                <%= outfit&.last_seen&.title %>
               </td>
               <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black w-40 border" >
-                <%= outfit.times_worn %>
+                <%= outfit&.times_worn %>
               </td>
             </tr>
           <% end %>
