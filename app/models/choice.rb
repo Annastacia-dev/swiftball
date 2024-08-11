@@ -2,15 +2,16 @@
 #
 # Table name: choices
 #
-#  id          :uuid             not null, primary key
-#  content     :string
-#  correct     :boolean          default(FALSE)
-#  label       :integer          default("no_label")
-#  new_item    :boolean          default(FALSE)
-#  position    :integer
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  question_id :uuid             not null
+#  id              :uuid             not null, primary key
+#  content         :string
+#  correct         :boolean          default(FALSE)
+#  label           :integer          default("no_label")
+#  new_item        :boolean          default(FALSE)
+#  outfit_codename :string
+#  position        :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  question_id     :uuid             not null
 #
 # Indexes
 #
@@ -70,6 +71,32 @@ class Choice < ApplicationRecord
     return 0 if total_responses.zero?
 
     ((choice_responses.to_f / total_responses) * 100).round
+  end
+
+  def outfits
+    Choice.where(outfit_codename: self.outfit_codename)
+  end
+
+  def first_seen
+    earliest_choice = outfits.where(correct: true)
+           .joins(question: { quiz: :tour })
+            .order('tours.start_time ASC')
+            .first
+
+    earliest_choice&.question&.quiz&.tour
+  end
+
+  def last_seen
+    earliest_choice = outfits.where(correct: true)
+           .joins(question: { quiz: :tour })
+            .order('tours.start_time DESC')
+            .first
+
+    earliest_choice&.question&.quiz&.tour
+  end
+
+  def times_worn
+    outfits.where(correct: true).count
   end
 
   private

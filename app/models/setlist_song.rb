@@ -3,8 +3,8 @@
 # Table name: setlist_songs
 #
 #  id         :uuid             not null, primary key
-#  era        :integer          default(0)
-#  length     :integer          default(0)
+#  era        :integer          default("lover")
+#  length     :integer          default("full")
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  setlist_id :uuid             not null

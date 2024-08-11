@@ -26,6 +26,7 @@ class Tour < ApplicationRecord
   has_one :quiz, dependent: :destroy
   has_many :attempts, through: :quiz, dependent: :destroy
   has_many :mashup_answers, through: :quiz, dependent: :destroy
+  has_and_belongs_to_many :openers
 
   # validations
   validates :title, presence: true, uniqueness: true

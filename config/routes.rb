@@ -72,4 +72,6 @@ Rails.application.routes.draw do
   resources :setlists do
     resources :setlists_songs
   end
+
+  resources :openers
 end

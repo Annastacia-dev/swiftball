@@ -2,15 +2,16 @@
 #
 # Table name: choices
 #
-#  id          :uuid             not null, primary key
-#  content     :string
-#  correct     :boolean          default(FALSE)
-#  label       :integer          default("no_label")
-#  new_item    :boolean          default(FALSE)
-#  position    :integer
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  question_id :uuid             not null
+#  id              :uuid             not null, primary key
+#  content         :string
+#  correct         :boolean          default(FALSE)
+#  label           :integer          default("no_label")
+#  new_item        :boolean          default(FALSE)
+#  outfit_codename :string
+#  position        :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  question_id     :uuid             not null
 #
 # Indexes
 #

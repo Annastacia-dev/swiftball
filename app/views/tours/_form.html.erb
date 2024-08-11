@@ -25,6 +25,11 @@
       <%= form.file_field :city_image, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full" %>
     </div>
 
+    <div class="flex flex-col gap-1 capitalize">
+      <%= form.label :opener_ids, "Openers" %>
+      <%= form.collection_select :opener_ids, Opener.all, :id, :name, {}, { multiple: true, class: 'capitalize' } %>
+    </div>
+
     <% if action_name == 'edit' %>
       <div class="flex flex-col gap-1">
         <%= form.label :era_order %>
