@@ -40,7 +40,8 @@
                   <% if outfit.image.attached? %>
                     <%= image_tag(outfit.image, alt: outfit.content, class: 'w-20 object-cover object-center rounded')%>
                   <% end %>
-                  <%= outfit&.content %>
+                  <%= debug outfit.class %>
+                  <%= outfit.outfit_codename.humanize %>
                 </div>
               </td>
               <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black w-40 border" >
