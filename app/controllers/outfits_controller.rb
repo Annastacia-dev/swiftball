@@ -17,7 +17,6 @@ class OutfitsController < ApplicationController
                      .where.not(outfit_codename: nil)
                      .select('DISTINCT ON (outfit_codename) choices.*')
                      .group_by { |outfit| outfit.question.era}
-                     .transform_values { |choices| choices.sort_by(&:position) }
   end
 
   def create
