@@ -16,7 +16,7 @@ class OutfitsController < ApplicationController
     @outfits = Choice.includes([image_attachment: :blob])
                      .joins(:question) # Ensure you join the Question model
                      .where.not(outfit_codename: nil)
-                     .order('outfit_codename, questions.era')
+                     .order('outfit_codename, questions.era', 'position')
                      .select('DISTINCT ON (outfit_codename) choices.*')
   end
 

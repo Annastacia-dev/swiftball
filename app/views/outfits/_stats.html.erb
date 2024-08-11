@@ -17,7 +17,7 @@
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-200 border">
-      <% @outfits.order(:position).reverse.each do |outfit| %>
+      <% @outfits.each do |outfit| %>
         <tr class="border">
           <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black w-40 border break-words w-5" >
             <div class="flex flex-col gap-3">
