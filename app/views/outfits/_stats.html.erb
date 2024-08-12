@@ -35,10 +35,10 @@
 
           <% outfits.sort_by(&:position).each do |outfit| %>
             <tr class="border">
-              <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black w-40 border break-words w-5 z-50" >
+              <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black border break-words w-5 z-50" >
                 <div class="flex flex-col gap-3">
                   <% if outfit.image.attached? %>
-                    <%= image_tag(outfit.image, alt: outfit.content, class: 'w-20 object-cover object-center rounded')%>
+                    <%= image_tag(outfit.image, alt: outfit.content, class: 'w-20 lg:h-40 object-cover object-center rounded')%>
                   <% end %>
                   <%= outfit.outfit_codename.humanize %>
                 </div>

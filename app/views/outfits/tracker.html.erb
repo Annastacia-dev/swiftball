@@ -1,13 +1,13 @@
 <div class="min-h-screen pt-10">
 
-  <div class="px-10">
+  <div class="lg:px-10 px-2">
     <%= render 'components/breadcrumb', breadcrumbs: [
       {text: 'home', path: root_path},
       {text: "Outfits Tracker & Stats"},
     ] %>
   </div>
 
-  <div data-controller='tabs' class="px-10">
+  <div data-controller='tabs' class="lg:px-10 px-2">
     <%= render 'components/tabs', tabs: [
       { id: 'stats', label: 'stats', partial: 'stats' },
       { id: 'tracker', label: 'tracker', partial: 'tracker' }
