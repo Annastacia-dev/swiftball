@@ -79,6 +79,19 @@ module ApplicationHelper
     items
   end
 
+  def bottom_nav_links
+    items = [
+      { path: root_path, icon_class: 'fa-solid fa-house', menu_text: 'Home' },
+      { path: leaderboard_path, icon_class: 'fa-solid fa-chess-board', menu_text: 'Leaderboard' },
+    ]
+
+    if current_user.admin?
+      items << { path: new_tour_path, icon_class: 'fa-solid fa-plus', menu_text: 'New Tour' }
+    end
+
+    items
+  end
+
   def notification_class(type)
     case type
     when 'alert'
