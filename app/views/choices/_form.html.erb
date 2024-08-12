@@ -20,6 +20,11 @@
       </div>
     <% end %>
 
+      <div class="flex flex-col gap-1">
+        <%= form.label :outfit_codename %>
+        <%= form.text_field :outfit_codename, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full" %>
+      </div>
+
     <div class="flex flex-col gap-1">
       <%= form.label :label %>
       <%= form.select :label, Choice.labels_options, {}, class: "border border-gray-200 outline-none px-3 py-2  w-full dark:bg-black" %>
