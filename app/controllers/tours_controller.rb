@@ -6,15 +6,43 @@ class ToursController < ApplicationController
   def index
     respond_to do |format|
       if current_user.admin?
-        @tours = Tour.includes(:quiz).order(start_time: :desc).paginate(page: params[:page], per_page: 20)
-        
-        @tours_size = Tour.where.not(base: true).where.not(status: [:cancelled]).size
-        @quizzes = Tour.order(number: :desc).where.not(base: true)
-        @users = User.order(created_at: :desc).where.not(role: 'admin')
+        if params[:query].present?
+          @tours = Tour.search(params[:query])
+                       .includes(:quiz)
+                       .order(start_time: :desc)
+                       .paginate(page: params[:page], per_page: 20)
+        else
+          @tours = Tour.includes(:quiz)
+                       .order(start_time: :desc)
+                       .paginate(page: params[:page], per_page: 20)
+        end
+
+        @tours_size = Tour.where.not(base: true)
+                          .where.not(status: [:cancelled])
+                          .size
+
+        @quizzes = Tour.order(number: :desc)
+                       .where.not(base: true)
+
+        @users = User.order(created_at: :desc)
+                     .where.not(role: 'admin')
 
         format.html { render :dashboard}
       else
-        @tours = Tour.order(start_time: :desc).where.not(base: true).where.not(status: [:pending]).includes(:quiz).paginate(page: params[:page], per_page: 20)
+        if params[:query].present?
+          @tours = Tour.search(params[:query])
+                       .order(start_time: :desc)
+                       .where.not(base: true)
+                       .where.not(status: [:pending])
+                       .includes(:quiz)
+                       .paginate(page: params[:page], per_page: 20)
+        else
+          @tours = Tour.order(start_time: :desc)
+                       .where.not(base: true)
+                       .where.not(status: [:pending])
+                       .includes(:quiz)
+                       .paginate(page: params[:page], per_page: 20)
+        end
         @attempts = current_user.attempts
         format.html { render :user_dashboard}
       end

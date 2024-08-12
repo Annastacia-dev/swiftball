@@ -13,7 +13,7 @@
 <% end %>
 
 
-<div class="min-h-screen relative" data-controller="confetti" data-attempt-position="<%= @attempt.final_position %>" data-quiz-status="<%= @quiz.tour.status %>" data-size="full">
+<div class="lg:pt-32 pt-24 pb-20 min-h-screen relative" data-controller="confetti" data-attempt-position="<%= @attempt.final_position %>" data-quiz-status="<%= @quiz.tour.status %>" data-size="full">
    <div class="p-5">
     <%= render 'components/breadcrumb', breadcrumbs: breadcrumbs %>
     </div>
@@ -35,7 +35,7 @@
 
 
     <% if  tour.status == 'closed' %>
-      <div class="absolute right-10 lg:top-1 top-10 font-handwriting">
+      <div class="absolute right-10 lg:top-24 top-20 font-handwriting">
 
           <% if (@attempt.final_position <= 3) %>
             <div class="absolute -top-2 z-10 -left-5">
@@ -54,7 +54,7 @@
     <% end %>
 
     <% if  tour.status == 'live' %>
-      <div class="absolute right-10 lg:top-1 top-10 font-handwriting">
+      <div class="absolute right-10 lg:top-24 top-20 font-handwriting">
           <div class="bg-green-500 h-5 w-5 rounded-full absolute top-4 z-10 left-1 animate-ping"></div>
           <div class="sticky-note dark:bg-black bg-white p-5 w-44 h-44 m-4 rounded-lg flex flex-col gap-2">
               <h2 class="text-xl underline tracking-wide font-bold mb-2 uppercase">live progress</h2>
