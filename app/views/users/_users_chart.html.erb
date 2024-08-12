@@ -1,0 +1,19 @@
+<div class="flex flex-col gap-5 mt-10">
+  <div class="flex lg:flex-row flex-col justify-between">
+    <h5 class="font-semibold font-courier uppercase text-md ">
+    users by country (<%= @users_by_country.size %>)
+    </h5>
+    <div class="flex lg:flex-row flex-col lg:items-center lg:text-base text-sm">
+      <%= form_tag(users_path , method: 'get', class: 'flex lg:flex-row flex-col lg:items-center gap-2', id: 'usersChart') do %>
+        <%= select_tag 'chart_type', options_for_select(chart_types.map { |chart| [chart.humanize, chart] }, @chart_type), class: 'w-40 h-10 capitalize lg:text-base text-sm dark:bg-black bg-gray-50', id: 'usersChartTypeSelect'  %>
+      <% end %>
+    </div>
+  </div>
+  <%= render_chart @chart_data, 'Users by Country', 'No data', 'users' %>
+</div>
+
+<script>
+  document.getElementById('usersChartTypeSelect').addEventListener('change', function() {
+    document.getElementById('usersChart').submit();
+  });
+</script>

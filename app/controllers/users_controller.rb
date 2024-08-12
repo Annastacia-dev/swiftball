@@ -4,13 +4,25 @@ class UsersController < ApplicationController
   before_action :find_user, only: %i[unsubscribe subscribe show]
 
   def index
-    @users = User.order(created_at: :desc).where.not(role: 'admin').paginate(page: params[:page], per_page: 20)
+    @users = User.where.not(role: 'admin').order(created_at: :desc)
+    if params[:query].present?
+      @users = @users.search(params[:query])
+                      .paginate(page: params[:page], per_page: 20)
+    else
+      @users = @users.paginate(page: params[:page], per_page: 20)
+    end
 
-    @users_by_country = User.where.not(role: 'admin').order(:country).group(:country).count
-
+    @users_by_country = @users.order(:country)
+                              .group(:country)
+                              .count
 
     @chart_data = @users_by_country.map do |country, count|
       [country, count]
+    end
+
+    respond_to do |format|
+      format.html  # This renders the full view for normal requests
+      format.js { render partial: 'users/table', locals: { users: @users } }  # Only render the table partial for JS requests
     end
   end
 
