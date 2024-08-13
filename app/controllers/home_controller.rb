@@ -78,11 +78,11 @@ class HomeController < ApplicationController
     if params[:query]
       @tours = Tour.search(params[:query])
                    .where.not(base: true)
-                   .order(number: :desc)
+                   .order(start_time: :desc)
                    .where(status: [:closed, :live])
     else
       @tours = Tour.where.not(base: true)
-                   .order(number: :desc)
+                   .order(start_time: :desc)
                    .where(status: [:closed, :live])
     end
     @view = params[:view] || 'card_view'
