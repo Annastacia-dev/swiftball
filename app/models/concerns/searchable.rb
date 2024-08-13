@@ -19,7 +19,7 @@ module Searchable
                           dictionary: 'english'
                         },
                         trigram: {
-                          threshold: 0.1
+                          threshold: 0.5
                         }
                       }
     end

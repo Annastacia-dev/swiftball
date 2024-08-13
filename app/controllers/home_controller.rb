@@ -75,7 +75,16 @@ class HomeController < ApplicationController
   end
 
   def surprise_songs
-    @tours = Tour.all.where.not(base: true).order(number: :desc).where(status: [:closed, :live])
+    if params[:query]
+      @tours = Tour.search(params[:query])
+                   .where.not(base: true)
+                   .order(number: :desc)
+                   .where(status: [:closed, :live])
+    else
+      @tours = Tour.where.not(base: true)
+                   .order(number: :desc)
+                   .where(status: [:closed, :live])
+    end
     @view = params[:view] || 'card_view'
     @albums = Album.includes(:songs).where(status: :active)
     @correct_mashups = MashupAnswer.includes([question: [quiz: :tour]]).where(correct: true)

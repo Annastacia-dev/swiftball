@@ -1,4 +1,4 @@
-<div class="min-h-screen">
+<div class="lg:pt-32 pt-24 pb-20 min-h-screen">
   <h5 class="font-semibold font-courier uppercase text-md px-5 pt-10"><%= @quiz.title %>
     <% if @quiz.tour.status == 'open' %>
       <span> (closes <%= time_user_timezone(@quiz.tour.quiz_live_time, current_user) %>)

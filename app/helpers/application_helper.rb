@@ -1,6 +1,6 @@
 module ApplicationHelper
 
-  def navbar_items
+  def sidebar_items
     items = [ { path: root_path, icon_class: 'fa-solid fa-house', menu_text: 'Home' } ]
 
     if current_user.admin?
@@ -83,6 +83,8 @@ module ApplicationHelper
     items = [
       { path: root_path, icon_class: 'fa-solid fa-house', menu_text: 'Home' },
       { path: leaderboard_path, icon_class: 'fa-solid fa-chess-board', menu_text: 'Leaderboard' },
+      { path: surprise_songs_path, icon_class: 'fa-solid fa-guitar', menu_text: 'Surprise Songs' },
+      { path: tracker_outfits_path, icon_class: 'fa-solid fa-shirt', menu_text: 'Outfits Tracker' }
     ]
 
     if current_user.admin?
