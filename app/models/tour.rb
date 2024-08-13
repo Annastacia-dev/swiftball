@@ -20,7 +20,10 @@ class Tour < ApplicationRecord
   has_one_attached :city_image
 
   include Sluggable
+  include Searchable
+
   friendly_slug_scope to_slug: :title
+  searchable against: %i[title number]
 
   # associations
   has_one :quiz, dependent: :destroy

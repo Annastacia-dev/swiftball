@@ -30,7 +30,10 @@ class User < ApplicationRecord
 
   include StreakScores
   include Sluggable
+  include Searchable
+
   friendly_slug_scope to_slug: :username
+  searchable against: %i[name username email]
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
