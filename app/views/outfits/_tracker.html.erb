@@ -1,5 +1,5 @@
 <% @labels.each do |label| %>
-  <h1 class="<%= label_color(label) %> font-bold uppercase lg:text-lg text-sm p-2 flex justify-center items-center">
+  <h1 class="<%= label_color(label) %> font-medium uppercase  text-xs p-2 flex justify-center items-center">
     <%= label.humanize %> -
     <% if label != 'retired' %>
       <span class="ml-1">Missing for <%= label_description(label) %>+ shows </span>
@@ -8,7 +8,7 @@
     <% end %>
   </h1>
 
-  <div class="flex flex-col  px-5 py-3 capitalize font-medium ">
+  <div class="flex flex-col  px-5 py-3 capitalize text-xs ">
     <div class="grid md:grid-cols-6 grid-cols-2 gap-4">
     <% Choice.select('DISTINCT ON (content) *').includes([image_attachment: :blob]).with_label(label).each do |choice| %>
         <div class="py-3 flex flex-col gap-4 relative">

@@ -1,33 +1,33 @@
 <%= form_with(model: [@quiz, @question, choice], class: "contents") do |form| %>
   <%= render 'shared/errors', object: choice %>
 
-  <div class="grid md:grid-cols-2 gap-5 lg:w-1/2 my-5">
+  <div class="grid md:grid-cols-2 lg:gap-10 gap-5 lg:w-1/2 my-5 flex items-center text-sm">
 
     <div class="flex flex-col gap-1">
       <%= form.label :image %>
-      <%= form.file_field :image, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full" %>
+      <%= form.file_field :image, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full text-sm" %>
     </div>
 
     <div class="flex flex-col gap-1">
       <%= form.label :content %>
-      <%= form.text_field :content, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full", required: true %>
+      <%= form.text_field :content, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full text-sm", required: true %>
     </div>
 
     <% if action_name == 'edit' %>
       <div class="flex flex-col gap-1">
         <%= form.label :position %>
-        <%= form.number_field :position, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full", required: true %>
+        <%= form.number_field :position, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full text-sm", required: true %>
       </div>
     <% end %>
 
       <div class="flex flex-col gap-1">
         <%= form.label :outfit_codename %>
-        <%= form.text_field :outfit_codename, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full" %>
+        <%= form.text_field :outfit_codename, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full text-sm" %>
       </div>
 
     <div class="flex flex-col gap-1">
       <%= form.label :label %>
-      <%= form.select :label, Choice.labels_options, {}, class: "border border-gray-200 outline-none px-3 py-2  w-full dark:bg-black" %>
+      <%= form.select :label, Choice.labels.map { |k, _v| ["#{k.humanize} - #{label_title(k)}", k] }, {}, class: "border border-gray-200 outline-none px-3 py-2  w-full dark:bg-black capitalize text-sm" %>
     </div>
 
     <div class="flex items-center gap-2">
