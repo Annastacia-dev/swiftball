@@ -32,7 +32,7 @@
   .pagination {
     display: flex;
     justify-content: center;
-    gap: 5px;
+    gap: 8px;
     margin-top: 10px;
     margin-bottom: 20px;
     text-transform: uppercase;
@@ -42,9 +42,7 @@
   .pagination a, .pagination span {
     padding: 5px;
     margin: 0 2px;
-    border: 1px solid #ddd;
     text-decoration: none;
-    color: #fff;
   }
 
   .pagination .disabled {
