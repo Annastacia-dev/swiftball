@@ -8,7 +8,9 @@
 
   <div class="flex justify-between items-center">
     <h5 class="font-semibold font-courier uppercase text-md "><%= @tour.title %> attempts (<%=@attempts.size %>) </h5>
-    <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: quiz_dropdown_items(@tour.quiz) %>
+    <% if @tour.quiz %>
+      <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: quiz_dropdown_items(@tour.quiz) %>
+    <% end %>
   </div>
 
   <div class="flex flex-col mt-10">
