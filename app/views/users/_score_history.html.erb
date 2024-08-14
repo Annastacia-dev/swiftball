@@ -15,13 +15,15 @@
         <% @attempts.order(created_at: :desc).each_with_index do |attempt, index| %>
           <% quiz = attempt.quiz %>
           <% tour = quiz.tour %>
-        <tr>
+        <tr class="<%= tour.status == 'cancelled' ? 'text-red-500': '' %>">
           <td class="px-6 py-4 whitespace-nowrap text-sm capitalize">
             <%= quiz.title %>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
             <% if tour.status == 'closed' || tour.status == 'live' %>
               <%= attempt.score %>
+            <% elsif  tour.status == 'cancelled' %>
+              <i class="fa-solid fa-xmark text-red-500" title="cancelled"></i>
             <% else %>
               <i class="fa-solid fa-spinner text-gray-600" title="in progress"></i>
             <% end %>
