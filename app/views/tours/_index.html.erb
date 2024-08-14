@@ -80,7 +80,9 @@
         </div>
       <% end %>
       <% if current_user.admin? %>
-        <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: quiz_dropdown_items(tour.quiz) %>
+        <% if tour.quiz %>
+          <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: quiz_dropdown_items(tour.quiz) %>
+        <% end %>
       <% else %>
         <% if tour.status == 'pending' %>
           <i class="fa-solid fa-spinner text-gray-600" title="pending"></i>
