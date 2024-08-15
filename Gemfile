@@ -10,6 +10,7 @@ gem 'chartkick', '~> 5.0', '>= 5.0.7'
 gem 'cloudinary', '~> 2.1', '>= 2.1.0'
 gem 'countries', '~> 6.0.1'
 gem 'devise', '~> 4.9', '>= 4.9.4'
+gem 'exception_notification', '~> 4.5', '>= 4.5.0'
 gem 'font-awesome-sass', '~> 6.5', '>= 6.5.2'
 gem 'friendly_id', '~> 5.5', '>= 5.5.1'
 gem "image_processing", "~> 1.2"
