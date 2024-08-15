@@ -104,7 +104,7 @@
             <% correct_songs = correct_mashups.pluck(:song_id) %>
 
             <% question_content = 'pick piano acoustic set album and song' %>
-            <% piano_question = @attempt.quiz.questions.find_by(content: question_content) %>
+            <% piano_question = @attempt.quiz&.questions.find_by(content: question_content) %>
             <% piano_correct_mashups = piano_question.mashup_answers.where(response_id: nil, correct: true) %>
             <% piano_correct_albums = piano_correct_mashups.pluck(:album_id) %>
             <% piano_correct_songs = piano_correct_mashups.pluck(:song_id) %>
@@ -115,7 +115,7 @@
             <% end %>
 
             <% question_content = 'pick guitar acoustic set album and song' %>
-            <% guitar_question = @attempt.quiz.questions.find_by(content: question_content) %>
+            <% guitar_question = @attempt.quiz&.questions.find_by(content: question_content) %>
             <% guitar_correct_mashups = guitar_question.mashup_answers.where(response_id: nil, correct: true) %>
             <% guitar_correct_albums = guitar_correct_mashups.pluck(:album_id) %>
             <% guitar_correct_songs = guitar_correct_mashups.pluck(:song_id) %>

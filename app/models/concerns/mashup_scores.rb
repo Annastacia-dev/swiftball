@@ -6,13 +6,13 @@ module MashupScores
 
     pm_score = 0
 
-    @piano_mashup_number_question = quiz.questions.find_by(piano_mashup: true)
+    @piano_mashup_number_question = quiz&.questions.find_by(piano_mashup: true)
 
     if @piano_mashup_number_question
       @piano_mashup_number_choice = responses.find_by(question_id: @piano_mashup_number_question.id)&.choice
 
       @piano_question_content = 'pick piano acoustic set album and song'
-      @piano_question = quiz.questions.find_by(content: @piano_question_content)
+      @piano_question = quiz&.questions.find_by(content: @piano_question_content)
 
       @piano_mashup_predictions = responses.flat_map do |response|
         response.mashup_answers.where(question_id: @piano_question.id)
@@ -43,14 +43,14 @@ module MashupScores
 
     gm_score = 0
 
-    @guitar_mashup_number_question = quiz.questions.find_by(guitar_mashup: true)
+    @guitar_mashup_number_question = quiz&.questions.find_by(guitar_mashup: true)
 
     if @guitar_mashup_number_question
 
       @guitar_mashup_number_choice = responses.find_by(question_id: @guitar_mashup_number_question.id)&.choice
 
       @guitar_question_content = 'pick guitar acoustic set album and song'
-      @guitar_question = quiz.questions.find_by(content: @guitar_question_content)
+      @guitar_question = quiz&.questions.find_by(content: @guitar_question_content)
 
       @guitar_mashup_predictions = responses.flat_map do |response|
         response.mashup_answers.where(question_id: @guitar_question.id)

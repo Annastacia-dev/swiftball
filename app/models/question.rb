@@ -51,7 +51,7 @@ class Question < ApplicationRecord
 
   def set_position
     if position.nil?
-      max_position = quiz.questions.maximum(:position) || 0
+      max_position = quiz&.questions.maximum(:position) || 0
       self.position = max_position + 1
     end
   end

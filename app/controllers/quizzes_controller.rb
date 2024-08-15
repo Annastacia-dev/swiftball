@@ -16,9 +16,9 @@ class QuizzesController < ApplicationController
 
   # DELETE /quizzes/1 or /quizzes/1.json
   def destroy
-    @quiz.questions.each  { |qn| qn.choices.each { |choice| choice.delete }}
-    @quiz.questions.each  { |qn| qn.mashup_answers.each { |answer| answer.delete }}
-    @quiz.questions.each { |qn| qn.delete }
+    @quiz&.questions.each  { |qn| qn.choices.each { |choice| choice.delete }}
+    @quiz&.questions.each  { |qn| qn.mashup_answers.each { |answer| answer.delete }}
+    @quiz&.questions.each { |qn| qn.delete }
     @quiz.destroy!
 
     respond_to do |format|

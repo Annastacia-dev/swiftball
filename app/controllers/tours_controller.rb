@@ -135,7 +135,7 @@ class ToursController < ApplicationController
       dupe = original_quiz.dup
       dupe.tour_id = new_tour.id
       dupe.save!
-      original_quiz.questions.each do |original_question|
+      original_quiz&.questions.each do |original_question|
         new_question = original_question.dup
         new_question.quiz_id = dupe.id
         new_question.save!

@@ -15,7 +15,7 @@ class QuestionsController < ApplicationController
 
   # GET /questions/new
   def new
-    @question = @quiz.questions.new
+    @question = @quiz&.questions.new
   end
 
   # GET /questions/1/edit
@@ -24,7 +24,7 @@ class QuestionsController < ApplicationController
 
   # POST /questions or /questions.json
   def create
-    @question = @quiz.questions.new(question_params)
+    @question = @quiz&.questions.new(question_params)
 
     respond_to do |format|
       if @question.save
@@ -62,8 +62,8 @@ class QuestionsController < ApplicationController
   end
 
   def pick_surprise_song
-    guitar = @quiz.questions.find_by(guitar_mashup: true)
-    piano = @quiz.questions.find_by(piano_mashup: true)
+    guitar = @quiz&.questions.find_by(guitar_mashup: true)
+    piano = @quiz&.questions.find_by(piano_mashup: true)
 
     if @question.content.downcase == 'pick piano acoustic set album and song'
       @mashup_ans = piano&.choices&.find_by(correct: true)&.content&.downcase || 'no mashup'

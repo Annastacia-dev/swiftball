@@ -67,7 +67,7 @@ class Attempt < ApplicationRecord
   end
 
   def total_possible_points
-    quiz.questions.sum(:points)
+    quiz&.questions.sum(:points)
   end
 
   def position

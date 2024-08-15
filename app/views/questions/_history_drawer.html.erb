@@ -1,7 +1,7 @@
 <div class="grid xl:grid-cols-6 lg:grid-cols-3 grid-cols-2 gap-4 mt-5">
   <% Tour.where.not(base: true).where.not(status: [:pending, :open]).includes(quiz: { mashup_answers: [:album, :song] }).order(number: :desc).each do |tour| %>
     <% quiz = tour&.quiz %>
-    <% question = quiz.questions.find_by(content: question&.content) %>
+    <% question = quiz&.questions.find_by(content: question&.content) %>
     <% if question %>
       <% unless question.include_album_and_song? %>
         <% choice = question.choices.find_by(correct: true) %>

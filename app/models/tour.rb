@@ -110,7 +110,7 @@ class Tour < ApplicationRecord
     dupe = original_quiz.dup
     dupe.tour_id = self.id
     dupe.save!
-    original_quiz.questions.each do |original_question|
+    original_quiz&.questions.each do |original_question|
       new_question = original_question.dup
       new_question.quiz_id = dupe.id
       new_question.save!
