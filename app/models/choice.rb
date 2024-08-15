@@ -60,7 +60,7 @@ class Choice < ApplicationRecord
 
   def self.with_label(label)
     tour = Tour.order(number: :desc).first
-    quiz = tour.quiz
+    quiz = tour&.quiz
     quiz.choices.where(label: labels[label.to_sym])
   end
 

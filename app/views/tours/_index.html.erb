@@ -80,24 +80,24 @@
         </div>
       <% end %>
       <% if current_user.admin? %>
-        <% if tour.quiz %>
-          <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: quiz_dropdown_items(tour.quiz) %>
+        <% if tour&.quiz %>
+          <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: quiz_dropdown_items(tour&.quiz) %>
         <% end %>
       <% else %>
         <% if tour.status == 'pending' %>
           <i class="fa-solid fa-spinner text-gray-600" title="pending"></i>
         <% elsif tour.status == 'open' %>
-          <% if  current_user.has_attempted_quiz?(tour.quiz) %>
-            <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: attempt_dropdown_items(tour.quiz) %>
+          <% if  current_user.has_attempted_quiz?(tour&.quiz) %>
+            <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: attempt_dropdown_items(tour&.quiz) %>
           <% else %>
-            <%= link_to take_quiz_path(tour.quiz), class:"bg-gray-200 dark:bg-black  px-4 py-2 rounded flex items-center gap-2 dark:hover:bg-gray-900 hover:bg-gray-100" do %>
+            <%= link_to take_quiz_path(tour&.quiz), class:"bg-gray-200 dark:bg-black  px-4 py-2 rounded flex items-center gap-2 dark:hover:bg-gray-900 hover:bg-gray-100" do %>
               <i class="fa-solid fa-wand-magic-sparkles" title="predict"></i>
               <span>predict</span>
             <% end %>
           <% end %>
         <% elsif tour.status == 'closed' || tour.status == 'live' || tour.status == 'cancelled' %>
-          <% if  current_user.has_attempted_quiz?(tour.quiz) %>
-            <% attempt = current_user.attempts.find_by(quiz_id: tour.quiz.id) %>
+          <% if  current_user.has_attempted_quiz?(tour&.quiz) %>
+            <% attempt = current_user.attempts.find_by(quiz_id: tour&.quiz.id) %>
             <%= link_to attempt_path(attempt), class: "bg-gray-200 dark:bg-black px-2 py-2 dark:hover:bg-gray-900 hover:bg-gray-100 rounded flex items-center gap-2" do %>
               <i class="fa-solid fa-square-poll-vertical" title="<%= tour.status == 'live' ? 'view progress' : tour.status == 'closed' ? 'view results' : '' %>"></i>
               <span class="lg:flex hidden">
@@ -109,13 +109,13 @@
             <% end %>
           <% else %>
             <% if tour.status == 'closed' %>
-             <%= link_to results_quiz_path(tour.quiz), class: 'bg-gray-200 dark:bg-black px-2 py-2 dark:hover:bg-gray-900 hover:bg-gray-100 rounded flex items-center gap-2' do %>
+             <%= link_to results_quiz_path(tour&.quiz), class: 'bg-gray-200 dark:bg-black px-2 py-2 dark:hover:bg-gray-900 hover:bg-gray-100 rounded flex items-center gap-2' do %>
               <i class="fa-solid fa-square-poll-vertical title="see results"></i>
               <span class="lg:flex hidden">see results </span>
               <span class="lg:hidden flex">results</span>
              <% end %>
             <% elsif tour.status == 'live' %>
-              <%= link_to progress_quiz_path(tour.quiz), class: 'bg-gray-200 dark:bg-black px-2 py-2 dark:hover:bg-gray-900 hover:bg-gray-100 rounded flex items-center gap-2' do %>
+              <%= link_to progress_quiz_path(tour&.quiz), class: 'bg-gray-200 dark:bg-black px-2 py-2 dark:hover:bg-gray-900 hover:bg-gray-100 rounded flex items-center gap-2' do %>
                 <i class="fa-solid fa-square-poll-vertical title="see results"></i>
                 <span class="lg:flex hidden">see live progress </span>
                 <span class="lg:hidden flex">view</span>
@@ -126,7 +126,7 @@
       <% end %>
     </div>
       <% if tour.status == 'open' %>
-        <span class="text-[10px] font-courier">(closes <%= time_user_timezone(tour.quiz_live_time, current_user) %>)</span>
+        <span class="text-[10px] font-courier">(closes <%= time_user_timezone(tour&.quiz_live_time, current_user) %>)</span>
       <% end %>
     <% if index != (@tours.length - 1) %>
       <hr class="border border-black dark:border-gray-100" />

@@ -112,7 +112,7 @@ class ToursController < ApplicationController
 
     respond_to do |format|
       if new_tour.save(validate: false)
-        duplicate_tour_quiz(@tour.quiz, new_tour)
+        duplicate_tour_quiz(@tour&.quiz, new_tour)
         format.html { redirect_to tours_path, notice: "Tour was successfully copied." }
       else
         format.html { redirect_to tours_path, alert: "Something went wrong, try again!" }

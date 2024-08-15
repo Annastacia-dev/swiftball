@@ -98,7 +98,7 @@ class Tour < ApplicationRecord
 
   def create_quiz
     tour = Tour.where.not(id: self.id).order(number: :desc).first
-    quiz = tour.quiz
+    quiz = tour&.quiz
     if quiz
       duplicate_quiz(quiz)
     else

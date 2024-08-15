@@ -30,7 +30,7 @@ module Quizzes
           user = subscription.user
           payload = {
             title: "#{quiz.title.titleize} Swiftball is Open!",
-            body: "Make your predictions before #{quiz.tour.quiz_live_time.in_time_zone(user.timezone).strftime("%A %d %B %Y %H:%M")}",
+            body: "Make your predictions before #{quiz.tour&.quiz_live_time.in_time_zone(user.timezone).strftime("%A %d %B %Y %H:%M")}",
             icon: '/icon-96.png',
             badge: '/icon-96.png',
             url: take_quiz_url(quiz)

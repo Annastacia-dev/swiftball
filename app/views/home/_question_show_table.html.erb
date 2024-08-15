@@ -21,7 +21,7 @@
           </td>
           <% tours.each do |tour| %>
 
-            <% quiz = tour.quiz %>
+            <% quiz = tour&.quiz %>
             <% response = @responses.select { |response| response.question.content == question_content && response.question.quiz.tour_id == tour.id }.first %>
 
 
