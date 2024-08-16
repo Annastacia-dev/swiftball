@@ -10,7 +10,7 @@
 
   <div class="flex flex-col  px-5 py-3 capitalize text-xs ">
     <div class="grid md:grid-cols-6 grid-cols-2 gap-4">
-    <% Choice.select('DISTINCT ON (content) *').includes([image_attachment: :blob]).with_label(label).each do |choice| %>
+    <% Choice.select('DISTINCT ON (content) *').includes([image_attachment: :blob]).where(label: label).each do |choice| %>
         <div class="py-3 flex flex-col gap-4 relative">
         <% if choice.image.attached? %>
             <%= image_tag(choice.image, alt: choice.content, class: 'w-full h-72 object-cover object-center rounded')%>
