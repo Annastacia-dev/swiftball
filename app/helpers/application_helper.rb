@@ -83,8 +83,8 @@ module ApplicationHelper
     items = [
       { path: root_path, icon_class: 'fa-solid fa-house', menu_text: 'Home' },
       { path: leaderboard_path, icon_class: 'fa-solid fa-chess-board', menu_text: 'Leaderboard' },
-      { path: surprise_songs_path, icon_class: 'fa-solid fa-guitar', menu_text: 'Surprise Songs' },
-      { path: tracker_outfits_path, icon_class: 'fa-solid fa-shirt', menu_text: 'Outfits Tracker' }
+      { path: surprise_songs_path(tab: 'songs'), icon_class: 'fa-solid fa-guitar', menu_text: 'Surprise Songs' },
+      { path: tracker_outfits_path(tab: 'stats'), icon_class: 'fa-solid fa-shirt', menu_text: 'Outfits Tracker' }
     ]
 
     if current_user.admin?
