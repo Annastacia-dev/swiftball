@@ -27,6 +27,8 @@ class Tour < ApplicationRecord
 
   # associations
   has_one :quiz, dependent: :destroy
+  has_many :questions, through: :quiz, dependent: :destroy
+  has_many :choices, through: :questions, dependent: :destroy
   has_many :attempts, through: :quiz, dependent: :destroy
   has_many :mashup_answers, through: :quiz, dependent: :destroy
   has_and_belongs_to_many :openers
