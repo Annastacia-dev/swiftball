@@ -55,10 +55,12 @@ class Tour < ApplicationRecord
   }
 
   # callbacks
+  before_validation :set_tour_number, on: :create
   before_validation :downcase_title
   before_validation :set_timezone
   after_create :create_quiz, if: :not_preapp?
   after_update :update_quiz_slug, if: :saved_change_to_title?
+
 
   def quiz_live_time
     self.start_time + 1.hour + 15.minutes
@@ -77,6 +79,12 @@ class Tour < ApplicationRecord
   end
 
   private
+
+  def set_tour_number
+    last_number = Tour.where.not(status: :cancelled).order(number: :desc).first.number
+
+    self.number = last_number.to_i + 1
+  end
 
   def is_cancelled?
     self.status == 'cancelled'
@@ -122,6 +130,7 @@ class Tour < ApplicationRecord
         new_choice.question_id = new_question.id
         new_choice.correct = false
         new_choice.save!
+        new_choice.update_choice_label
 
         if original_choice.image.attached?
           new_choice.image.attach(original_choice.image.blob)

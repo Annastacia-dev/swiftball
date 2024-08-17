@@ -108,6 +108,27 @@ class Choice < ApplicationRecord
     Tour.where('start_time > ?', last_seen_tour.start_time).count
   end
 
+  def update_choice_label
+    return if self.new_item == true
+
+    case shows_since_last_seen
+    when 5..7
+      self.update(label: :vulnarable)
+    when 7..9
+      self.update(label: :on_alert)
+    when 10..16
+      self.update(label: :endangered)
+    when 17..29
+      self.update(label: :critical)
+    when 30..49
+      self.update(label: :hibernating)
+    when 49..Float::INFINITY
+      self.update(label: :extinct)
+    else
+      self.update(label: :no_label)
+    end
+  end
+
   private
 
   def set_outfit_codename_to_nil_if_empty
