@@ -107,10 +107,16 @@
   ],
   "shortcuts": [
     {
-      "name": "Home",
-      "short_name": "Home",
-      "description": "View Upcoming and Past Predictions",
-      "url": "/"
+      "name": "View Surprise Songs",
+      "short_name": "Surprise Songs",
+      "description": "View surprise songs history and stats.",
+      "url": "/surprise_songs?tab=songs"
+    },
+    {
+      "name": "View Outfit Stats",
+      "short_name": "Outfit Stats",
+      "description": "View outfits stats and tracker.",
+      "url": "/outfits/tracker?tab=stats"
     },
     {
       "name": "View Stats",
@@ -123,12 +129,6 @@
       "short_name": "Leaderboard",
       "description": "View Leaderboard",
       "url": "/leaderboard"
-    },
-    {
-      "name": "My Predictions",
-      "short_name": "predictions",
-      "description": "View my predictions",
-      "url": "/attempts"
     }
   ],
   "theme_color": "#f2f2f2",
