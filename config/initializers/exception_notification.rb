@@ -22,7 +22,7 @@ ExceptionNotification.configure do |config|
   config.add_notifier :email, {
     email_prefix: '[ERROR] ',
     sender_address: %{"Swiftball Online" <info@webcafe.africa>},
-    exception_recipients: %w{annetotoh@gmail.com}
+    exception_recipients: %w{info@webcafe.africa}
   }
 
   config.ignore_if do |exception, options|
