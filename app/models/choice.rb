@@ -116,6 +116,8 @@ class Choice < ApplicationRecord
 
     return if self.outfit_codename == nil || self.outfit_codename == ''
 
+    return if self.label == 'retired'
+
     case shows_since_last_seen
     when 5..7
       self.update(label: :vulnarable)
