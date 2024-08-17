@@ -23,7 +23,7 @@ gem 'pg', '~> 1.5', '>= 1.5.6'
 gem 'puma', '~> 6.4', '>= 6.4.2'
 gem 'puma_worker_killer', '~> 0.3.1'
 gem 'rails', '~> 7.1', '>= 7.1.3.3'
-gem 'rack-timeout', '~> 0.7.0'
+# gem 'rack-timeout', '~> 0.7.0'
 gem 'redis', '~> 5.2'
 gem "rexml", ">= 3.3.3"
 gem 'resolv', '~> 0.4.0'
