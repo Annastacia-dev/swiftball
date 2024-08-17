@@ -105,11 +105,13 @@ class Choice < ApplicationRecord
 
     return 0 unless last_seen_tour
 
-    Tour.where(status: [:closed]).where('start_time > ?', last_seen_tour.start_time).count
+    Tour.where(status: [:closed, :live]).where('start_time > ?', last_seen_tour.start_time).count
   end
 
   def update_choice_label
     return if self.new_item == true
+
+    return if self.outfit_codename == nil || self.outfit_codename == ''
 
     case shows_since_last_seen
     when 5..7
