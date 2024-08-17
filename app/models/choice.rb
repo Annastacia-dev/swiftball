@@ -26,6 +26,9 @@ class Choice < ApplicationRecord
 
   has_one_attached :image
 
+  include Searchable
+  searchable against: %i[outfit_codename content]
+
   # association
   belongs_to :question, counter_cache: true, dependent: :destroy
   has_many :responses, dependent: :destroy

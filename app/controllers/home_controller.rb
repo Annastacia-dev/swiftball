@@ -75,15 +75,13 @@ class HomeController < ApplicationController
   end
 
   def surprise_songs
+    tours = Tour.where.not(base: true)
+                .where(status: [:closed, :live])
+                .order(number: :desc)
     if params[:query]
-      @tours = Tour.search(params[:query])
-                   .where.not(base: true)
-                   .order(start_time: :desc)
-                   .where(status: [:closed, :live])
+      @tours = tours.search(params[:query])
     else
-      @tours = Tour.where.not(base: true)
-                   .order(start_time: :desc)
-                   .where(status: [:closed, :live])
+      @tours = tours
     end
     @view = params[:view] || 'card_view'
     @albums = Album.includes(:songs).where(status: :active)

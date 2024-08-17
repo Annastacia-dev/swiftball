@@ -1,7 +1,8 @@
 <div class="grid lg:grid-cols-3 lg:gap-5 gap-16 rounded text-xs">
-  <% @tours.all.each do |tour| %>
+  <% @tours.order(number: :desc).each do |tour| %>
     <div class="border rounded border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-black/30">
       <h5 class="uppercase font-semibold text-center uppercase border-b border-gray-300 dark:border-gray-600  py-2"> <%= tour.title %> </h5>
+      <%= debug tour.number %>
       <div class="pt-2 flex flex-col gap-2">
         <% tour.mashup_answers.order(:created_at).where(correct: true).includes(:album, :song).group_by(&:instrument).each do |instrument, mashup_answers| %>
           <div class="py-1 text-xs flex justify-center items-center gap-2">

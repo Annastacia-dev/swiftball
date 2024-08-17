@@ -4,17 +4,20 @@ class ToursController < ApplicationController
 
   # GET /tours or /tours.json
   def index
+
     respond_to do |format|
       if current_user.admin?
+
+        tours = Tour.where.not(base: true)
+                .includes(:quiz)
+                .order(start_time: :desc)
+                .paginate(page: params[:page], per_page: 20)
+
+
         if params[:query].present?
-          @tours = Tour.search(params[:query])
-                       .includes(:quiz)
-                       .order(start_time: :desc)
-                       .paginate(page: params[:page], per_page: 20)
+          @tours = tours.search(params[:query])
         else
-          @tours = Tour.includes(:quiz)
-                       .order(start_time: :desc)
-                       .paginate(page: params[:page], per_page: 20)
+          @tours = tours
         end
 
         @tours_size = Tour.where.not(base: true)
@@ -29,19 +32,18 @@ class ToursController < ApplicationController
 
         format.html { render :dashboard}
       else
+
+        tours = Tour.where.not(base: true)
+                    .where.not(status: [:pending])
+                    .includes(:quiz)
+                    .order(start_time: :desc)
+                    .paginate(page: params[:page], per_page: 20)
+
         if params[:query].present?
-          @tours = Tour.search(params[:query])
-                       .order(start_time: :desc)
-                       .where.not(base: true)
-                       .where.not(status: [:pending])
-                       .includes(:quiz)
-                       .paginate(page: params[:page], per_page: 20)
+          @tours = tours.search(params[:query])
+
         else
-          @tours = Tour.order(start_time: :desc)
-                       .where.not(base: true)
-                       .where.not(status: [:pending])
-                       .includes(:quiz)
-                       .paginate(page: params[:page], per_page: 20)
+          @tours = tours
         end
         @attempts = current_user.attempts
         format.html { render :user_dashboard}

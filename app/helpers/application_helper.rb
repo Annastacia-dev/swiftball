@@ -10,7 +10,7 @@ module ApplicationHelper
         menu_text: 'Music',
         children: [
           { path: albums_path, icon_class: 'fa-solid fa-record-vinyl', menu_text: 'Albums'},
-          { path: surprise_songs_path, icon_class: 'fa-solid fa-guitar', menu_text: 'Surprise Songs' },
+          { path: surprise_songs_path(tab: 'songs'), icon_class: 'fa-solid fa-guitar', menu_text: 'Surprise Songs' },
           { path: setlists_path, icon_class: 'fa-solid fa-record-vinyl', menu_text: 'Setlists'},
           { path: openers_path, icon_class: 'fa-solid fa-microphone', menu_text: 'Openers'}
         ]
@@ -20,7 +20,7 @@ module ApplicationHelper
         icon_class: 'fa-solid fa-shirt',
         menu_text: 'Outfits',
         children: [
-          { path: tracker_outfits_path, icon_class: 'fa-solid fa-chart-line', menu_text: 'Tracker & Stats'},
+          { path: tracker_outfits_path(tab: 'stats'), icon_class: 'fa-solid fa-chart-line', menu_text: 'Tracker & Stats'},
           { path: new_outfit_path, icon_class: 'fa-solid fa-plus', menu_text: 'New Outfit'},
           { path: outfits_path, icon_class: 'fa-regular fa-images', menu_text: 'Gallery'}
         ]
@@ -33,7 +33,7 @@ module ApplicationHelper
         icon_class: 'fa-solid fa-music',
         menu_text: 'Music',
         children: [
-          { path: surprise_songs_path, icon_class: 'fa-solid fa-guitar', menu_text: 'Surprise Songs' },
+          { path: surprise_songs_path(tab: 'songs'), icon_class: 'fa-solid fa-guitar', menu_text: 'Surprise Songs' },
           { path: setlists_path, icon_class: 'fa-solid fa-record-vinyl', menu_text: 'Setlists'}
         ]
       )
@@ -42,7 +42,7 @@ module ApplicationHelper
         icon_class: 'fa-solid fa-shirt',
         menu_text: 'Outfits',
         children: [
-          { path: tracker_outfits_path, icon_class: 'fa-solid fa-chart-line', menu_text: 'Tracker & Stats'},
+          { path: tracker_outfits_path(tab: 'stats'), icon_class: 'fa-solid fa-chart-line', menu_text: 'Tracker & Stats'},
           { path: outfits_path, icon_class: 'fa-regular fa-images', menu_text: 'Gallery'}
         ]
       }
