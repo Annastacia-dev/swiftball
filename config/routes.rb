@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get 'leaderboard', to: 'home#leaderboard'
   get 'credits', to: 'home#credits'
   get 'surprise_songs', to: 'home#surprise_songs'
+  get 'guidelines', to: 'home#guidelines'
 
 
   devise_for :users, :controllers => {
