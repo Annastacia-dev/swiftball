@@ -105,7 +105,7 @@ class Choice < ApplicationRecord
 
     return 0 unless last_seen_tour
 
-    Tour.where('start_time > ?', last_seen_tour.start_time).count
+    Tour.where(status: [:closed]).where('start_time > ?', last_seen_tour.start_time).count
   end
 
   def update_choice_label
