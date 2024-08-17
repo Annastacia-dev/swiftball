@@ -38,6 +38,7 @@ class Choice < ApplicationRecord
 
   # callbacks
   before_validation :set_position
+  before_save :set_outfit_codename_to_nil_if_empty
 
   # enums
   enum label: {
@@ -99,7 +100,21 @@ class Choice < ApplicationRecord
     outfits.where(correct: true).count
   end
 
+  def shows_since_last_seen
+    last_seen_tour = last_seen
+
+    return 0 unless last_seen_tour
+
+    Tour.where('start_time > ?', last_seen_tour.start_time).count
+  end
+
   private
+
+  def set_outfit_codename_to_nil_if_empty
+    if outfit_codename == ''
+      self.outfit_codename == nil
+    end
+  end
 
   def set_position
     if position.nil?
