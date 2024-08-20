@@ -34,6 +34,7 @@
             <% if tour.status == 'closed' %>
               <%= attempt.final_position %> / <%= quiz.total_attempts %>
             <% elsif tour.status == 'cancelled' %>
+            <% elsif tour.status == 'open' %>
             <% else %>
               <%= index + 1 %>
             <% end %>
