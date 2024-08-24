@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :set_variables
+  before_action :set_data_details
   before_action :set_paper_trail_whodunnit
   before_action :authenticate_user!, unless: :devise_controller?
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -9,6 +10,11 @@ class ApplicationController < ActionController::Base
 
   def set_time_zone
     Time.zone = current_user.timezone if current_user.timezone.present?
+  end
+
+  def set_data_details
+    @unread_notifications_total = current_user.notifications.where(status: :unread).size
+    @unread_feedback_total = Feedback.where(status: :unread).size
   end
 
   def authenticate_admin!

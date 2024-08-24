@@ -1,8 +1,13 @@
 <div class="fixed bottom-0 w-full bg-gray-50 dark:bg-black border-t border-gray-200 dark:border-gray-900 md:hidden px-2 py-2 z-50">
-  <div class="flex justify-around py-3">
+  <div class="flex justify-around">
   <% bottom_nav_links.each do |link| %>
-    <%= link_to link[:path], class: "text-center flex flex-col text-lg font-bold" do %>
+    <%= link_to link[:path], class: "text-center flex flex-col text-lg font-bold relative py-3 px-2" do %>
         <i class="<%= link[:icon_class] %>" title="<%= link[:menu_text] %>"></i>
+        <% if link[:data] && !link[:data].to_i.zero? %>
+          <div class='absolute text-[10px] font-semibold border-2 border-gray-50 dark:border-black bg-black dark:bg-white h-5 w-5 rounded-full text-white dark:text-black flex items-center justify-center -top-2 left-2'>
+            <%= link[:data] %>
+          </div>
+        <% end %>
     <% end %>
   <% end %>
   </div>

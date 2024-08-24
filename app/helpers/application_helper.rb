@@ -25,7 +25,7 @@ module ApplicationHelper
           { path: outfits_path, icon_class: 'fa-regular fa-images', menu_text: 'Gallery'}
         ]
       )
-      items << { path: feedbacks_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'}
+      items << { path: feedbacks_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback', data: @unread_feedback_total}
     else
       items.insert(1, { path: stats_path, icon_class: 'fa-solid fa-chart-simple', menu_text: 'Statistics' })
       items.push(
@@ -85,7 +85,8 @@ module ApplicationHelper
       { path: root_path, icon_class: 'fa-solid fa-house', menu_text: 'Home' },
       { path: leaderboard_path, icon_class: 'fa-solid fa-chess-board', menu_text: 'Leaderboard' },
       { path: surprise_songs_path(tab: 'songs'), icon_class: 'fa-solid fa-guitar', menu_text: 'Surprise Songs' },
-      { path: tracker_outfits_path(tab: 'stats'), icon_class: 'fa-solid fa-shirt', menu_text: 'Outfits Tracker' }
+      { path: tracker_outfits_path(tab: 'stats'), icon_class: 'fa-solid fa-shirt', menu_text: 'Outfits Tracker' },
+      { path: notifications_path, icon_class: 'fa-solid fa-bell', menu_text: 'Notifications', data: @unread_notifications_total  }
     ]
 
     if current_user.admin?
