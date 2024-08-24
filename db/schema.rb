@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_12_184604) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_24_152002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -112,6 +112,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_12_184604) do
     t.index ["question_id"], name: "index_mashup_answers_on_question_id"
     t.index ["response_id"], name: "index_mashup_answers_on_response_id"
     t.index ["song_id"], name: "index_mashup_answers_on_song_id"
+  end
+
+  create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "subject"
+    t.text "message"
+    t.string "link"
+    t.uuid "user_id", null: false
+    t.integer "status", default: 0
+    t.boolean "email_only", default: false
+    t.boolean "push_only", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "openers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -259,6 +272,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_12_184604) do
   add_foreign_key "mashup_answers", "questions"
   add_foreign_key "mashup_answers", "responses"
   add_foreign_key "mashup_answers", "songs"
+  add_foreign_key "notifications", "users"
   add_foreign_key "push_subscriptions", "users"
   add_foreign_key "questions", "quizzes"
   add_foreign_key "quizzes", "tours"

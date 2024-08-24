@@ -3,13 +3,35 @@
 # Table name: notifications
 #
 #  id         :uuid             not null, primary key
-#  message    :string
+#  email_only :boolean          default(FALSE)
+#  link       :string
+#  message    :text
+#  push_only  :boolean          default(FALSE)
+#  status     :integer          default(0)
+#  subject    :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  user_id    :uuid             not null
+#
+# Indexes
+#
+#  index_notifications_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
 #
 
 one:
-  message: MyString
+  subject: MyString
+  message: MyText
+  link: MyString
+  user: one
+  status: 1
 
 two:
-  message: MyString
+  subject: MyString
+  message: MyText
+  link: MyString
+  user: two
+  status: 1

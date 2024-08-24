@@ -21,10 +21,19 @@
 #
 #  fk_rails_...  (user_id => users.id)
 #
-require "test_helper"
+class Notification < ApplicationRecord
+  has_paper_trail
 
-class NotificationTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  # associations
+  belongs_to :user
+
+  # validations
+  validates :subject, presence: true
+  validates :message, presence: true
+
+  # enums
+  enum status: {
+    unread: 0,
+    read: 1
+  }
 end
