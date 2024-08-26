@@ -118,10 +118,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_24_152002) do
     t.string "subject"
     t.text "message"
     t.string "link"
-    t.uuid "user_id", null: false
+    t.uuid "user_id"
     t.integer "status", default: 0
-    t.boolean "email_only", default: false
-    t.boolean "push_only", default: false
+    t.boolean "email", default: false
+    t.boolean "push", default: false
+    t.boolean "in_app", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_notifications_on_user_id"

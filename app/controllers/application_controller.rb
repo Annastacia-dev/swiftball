@@ -1,10 +1,11 @@
 class ApplicationController < ActionController::Base
   before_action :set_variables
-  before_action :set_data_details
   before_action :set_paper_trail_whodunnit
   before_action :authenticate_user!, unless: :devise_controller?
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_time_zone, if: :current_user
+  before_action :set_data_details, if: :current_user
+
 
   private
 

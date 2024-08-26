@@ -3,15 +3,16 @@
 # Table name: notifications
 #
 #  id         :uuid             not null, primary key
-#  email_only :boolean          default(FALSE)
+#  email      :boolean          default(FALSE)
+#  in_app     :boolean          default(FALSE)
 #  link       :string
 #  message    :text
-#  push_only  :boolean          default(FALSE)
-#  status     :integer          default(0)
+#  push       :boolean          default(FALSE)
+#  status     :integer          default("unread")
 #  subject    :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  user_id    :uuid             not null
+#  user_id    :uuid
 #
 # Indexes
 #

@@ -3,15 +3,16 @@
 # Table name: notifications
 #
 #  id         :uuid             not null, primary key
-#  email_only :boolean          default(FALSE)
+#  email      :boolean          default(FALSE)
+#  in_app     :boolean          default(FALSE)
 #  link       :string
 #  message    :text
-#  push_only  :boolean          default(FALSE)
-#  status     :integer          default(0)
+#  push       :boolean          default(FALSE)
+#  status     :integer          default("unread")
 #  subject    :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  user_id    :uuid             not null
+#  user_id    :uuid
 #
 # Indexes
 #
@@ -25,7 +26,7 @@ class Notification < ApplicationRecord
   has_paper_trail
 
   # associations
-  belongs_to :user
+  belongs_to :user, optional: true
 
   # validations
   validates :subject, presence: true
@@ -36,4 +37,8 @@ class Notification < ApplicationRecord
     unread: 0,
     read: 1
   }
+
+  def self.status_options
+    statuses.map { |k, _v| [k.humanize, k] }
+  end
 end

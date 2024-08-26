@@ -1,0 +1,14 @@
+<div class="lg:pt-32 pt-24 pb-20 px-12 min-h-screen">
+
+  <%= render 'components/breadcrumb', breadcrumbs: [
+    { text: 'home', path: root_path },
+    { text: 'notifications', path: notifications_path },
+    { text: "Edit Notification: #{@notification.subject}"}
+  ] %>
+
+
+  <h1 class="font-semibold text-xl font-courier capitalize">Edit Notification</h1>
+
+  <%= render "form", notification: @notification %>
+
+</div>

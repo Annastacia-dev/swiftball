@@ -1,0 +1,37 @@
+<%= form_with(model: notification, class: "contents") do |form| %>
+  <% if notification.errors.any? %>
+    <%= render 'shared/errors', object: notification %>
+  <% end %>
+
+  <div class="grid lg:grid-cols-2 gap-x-10 gap-y-5 lg:w-3/4 my-5">
+
+    <div class="flex flex-col gap-1">
+      <%= form.label :subject %>
+      <%= form.text_field :subject, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full" %>
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <%= form.label :message %>
+      <%= form.text_area :message, class: "border border-gray-200 outline-none px-3 py-2 bg-transparent w-full", required: true %>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <%= form.check_box :email, class: "h-8 w-8" %>
+      <%= form.label :email %>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <%= form.check_box :push, class: "h-8 w-8" %>
+      <%= form.label :push %>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <%= form.check_box :in_app, class: "h-8 w-8" %>
+      <%= form.label :in_app %>
+    </div>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "rounded py-2 px-4 dark:bg-black bg-gray-200 font-medium cursor-pointer" %>
+  </div>
+<% end %>
