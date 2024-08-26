@@ -4,6 +4,7 @@ class CreateNotifications < ActiveRecord::Migration[7.1]
       t.string :subject
       t.text :message
       t.string :link
+      t.string :link_text
       t.references :user, foreign_key: true, type: :uuid
       t.integer :status, default: 0
       t.boolean :email, default: false

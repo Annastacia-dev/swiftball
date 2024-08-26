@@ -1,0 +1,24 @@
+<div style="font-family: Roboto, sans-serif; padding: 20px; border-radius: 8px; max-width: 600px; margin: 0 auto;">
+  <h3>Oh Hi! <%= @user.name.titleize %>,</h3>
+
+  <p>
+    <%= @notification.message.html_safe %>
+  </p>
+
+  <br />
+
+  <% if @notification.link %>
+    <%= link_to @notification.link_text, @notification.link, target: '_blank', style: "padding: 10px; background-color: #000; color: #fff; text-decoration: none; cursor: pointer;" %>
+  <% end %>
+
+  <br />
+
+  <hr style="margin-top: 40px;margin-top: 40px" />
+
+  <% if @user.notify_me %>
+    <%= link_to 'unsubscribe', unsubscribe_user_url(@user), style: "display: flex; align-items: center; justify-content: center; text-align: center; margin-top: 20px; text-decoration: none;" %>
+  <% else %>
+    <%= link_to 'subscribe', subscribe_user_url(@user), style: "display: flex; align-items: center; justify-content: center; text-align: center; margin-top: 20px; text-decoration: none;" %>
+  <% end %>
+</div>
+

@@ -6,6 +6,7 @@
 #  email      :boolean          default(FALSE)
 #  in_app     :boolean          default(FALSE)
 #  link       :string
+#  link_text  :string
 #  message    :text
 #  push       :boolean          default(FALSE)
 #  status     :integer          default("unread")

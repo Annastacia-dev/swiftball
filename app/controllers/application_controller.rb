@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_data_details
-    @unread_notifications_total = current_user.notifications.where(status: :unread).size
+    @unread_notifications_total = current_user.notifications.where(in_app: true).where(status: :unread).size
     @unread_feedback_total = Feedback.where(status: :unread).size
   end
 

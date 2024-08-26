@@ -118,6 +118,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_24_152002) do
     t.string "subject"
     t.text "message"
     t.string "link"
+    t.string "link_text"
     t.uuid "user_id"
     t.integer "status", default: 0
     t.boolean "email", default: false
