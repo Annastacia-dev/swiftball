@@ -8,11 +8,15 @@ class NotificationWorker
     return if notification.nil?
 
     if notification.email
-      Notifications::SendEmails.call(*args)
-    elsif notification.push
-      Notifications::SendPush.call(*args)
-    elsif
+      Notifications::SendEmail.call(*args)
+    end
+
+    if notification.in_app
       Notifications::SendInApp.call(*args)
+    end
+
+    if notification.push
+      Notifications::SendPush.call(*args)
     end
   end
 end

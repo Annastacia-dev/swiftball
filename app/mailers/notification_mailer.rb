@@ -5,7 +5,7 @@ class NotificationMailer < ApplicationMailer
     @notification = Notification.find(params[:notification_id])
     @user = User.friendly.find(params[:user_id])
     @message = @notification.message
-    subject = @notification.subject
+    subject = @notification.subject.titleize
 
     mail(
       subject: subject,

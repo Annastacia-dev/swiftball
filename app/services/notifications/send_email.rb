@@ -18,10 +18,9 @@ class Notifications::SendEmail < ApplicationService
   def send_emails
     return if notification.nil?
 
-    byebug
-
     User.all.each do |user|
       if user.notify_me
+        logger.info "Sending email to #{user.username} - #{user.email}"
         NotificationMailer.with(user_id: user.id, notification_id: notification.id)
                 .email
                 .deliver_later(wait: 2.seconds)

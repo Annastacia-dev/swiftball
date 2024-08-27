@@ -21,7 +21,7 @@
    <% @notifications.each do |notification| %>
     <%= link_to notification_path(notification), class: "px-12 py-3 border flex flex-col gap-2 #{notification.unread? ? 'bg-gray-100' : 'bg-gray-50'}" do %>
       <h5 class="font-medium text-sm capitalize flex gap-3 items-center">
-        <%= notification.subject %>: <span class="text-sm capitalize font-normal"><%= notification.message.html_safe %></span>
+        <%= notification.subject %>: <span class="text-sm capitalize font-normal"><%= notification.message %></span>
       </h5>
     <% end %>
    <% end %>

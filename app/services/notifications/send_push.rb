@@ -19,7 +19,7 @@ class Notifications::SendPush < ApplicationService
 
   def send_push_notifications
     return if notification.nil?
-    byebug
+
     subscriptions =User.all.map(&:push_subscriptions).flatten
 
       if subscriptions.present?
@@ -32,6 +32,7 @@ class Notifications::SendPush < ApplicationService
             badge: '/icon-96.png',
             url: notification.link
           }
+          logger.info "Sending Push notification to #{user.username}"
           send_push_to_subscription(subscription, payload)
         end
       else

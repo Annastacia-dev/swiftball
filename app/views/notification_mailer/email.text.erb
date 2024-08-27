@@ -1,0 +1,18 @@
+Oh Hi! <%= @user.name.titleize %>,
+
+<%= @notification.message.gsub(/<br\/?>/, ' ') %>
+
+
+<% if @notification.link %>
+<%= @notification.link %>
+<% end %>
+
+--------------------------------------------------------------
+
+<% if @user.notify_me %>
+  <%=  unsubscribe_user_url(@user) %>
+<% else %>
+  <%= link_to 'subscribe', subscribe_user_url(@user) %>
+<% end %>
+
+
