@@ -70,9 +70,17 @@ class HomeController < ApplicationController
     @next_tour = @tours[current_index - 1] if current_index && current_index > 0
     @previous_tour = @tours[current_index + 1] if current_index && current_index < @tours.size - 1
 
-    @attempts = @tour.quiz.attempts
+    if @tour.status == 'closed'
+      @attempts = @tour.quiz.attempts
                           .includes(:responses, :user)
-                          .sort_by { |attempt| [-attempt.score, attempt.created_at] }
+                          .order(:final_position)
+                          .paginate(page: params[:page], per_page: 20)
+    else
+      @attempts = @tour.quiz.attempts
+      .includes(:responses, :user)
+      .sort_by { |attempt| [-attempt.score, attempt.created_at] }
+    end
+
   end
 
   def surprise_songs

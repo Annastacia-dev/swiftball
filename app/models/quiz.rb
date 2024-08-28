@@ -31,7 +31,7 @@ class Quiz < ApplicationRecord
 
   # instance methods
   def title
-    tour.title
+    tour.title.titleize
   end
 
   def total_attempts

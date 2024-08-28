@@ -23,17 +23,23 @@
 #
 #  fk_rails_...  (user_id => users.id)
 #
+class Notification < ApplicationRecord
+  has_paper_trail
 
-one:
-  subject: MyString
-  message: MyText
-  link: MyString
-  user: one
-  status: 1
+  # associations
+  belongs_to :user, optional: true
 
-two:
-  subject: MyString
-  message: MyText
-  link: MyString
-  user: two
-  status: 1
+  # validations
+  validates :subject, presence: true
+  validates :message, presence: true
+
+  # enums
+  enum status: {
+    unread: 0,
+    read: 1
+  }
+
+  def self.status_options
+    statuses.map { |k, _v| [k.humanize, k] }
+  end
+end

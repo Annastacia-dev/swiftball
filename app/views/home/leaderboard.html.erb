@@ -71,6 +71,13 @@
         </tbody>
       </table>
     </div>
+
+    <% if @tour.status == 'closed' %>
+      <div class="flex justify-end mt-3 overflow-x-scroll">
+        <%= will_paginate @attempts %>
+      </div>
+    <% end %>
+
   <% else %>
     <div class="flex justify-center items-center mt-20">
       No stats yet.

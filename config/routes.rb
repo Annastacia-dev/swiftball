@@ -78,4 +78,5 @@ Rails.application.routes.draw do
   end
 
   resources :openers
+  resources :notifications
 end

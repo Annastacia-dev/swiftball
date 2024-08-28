@@ -54,10 +54,30 @@ class OpenQuiz
 
     @tours_to_open.each do |tour|
       tour.update!(status: :open)
-      Quizzes::OpenPushNotification.call('quiz_id' => tour&.quiz.id)
-      Quizzes::OpenEmail.call('quiz_id' => tour&.quiz.id)
+      create_notification(tour)
 
       logger.info "Opened tour: #{tour.title}"
     end
+  end
+
+  def create_notification(tour)
+    quiz = tour.quiz
+    notification = Notification.new(
+      subject: "#{quiz.title} Quiz is open!",
+      message: "#{quiz.title} is open!<br/><br/>Make your predictions before #{quiz.tour&.quiz_live_time.in_time_zone(current_user.timezone).strftime("%A %d %B %Y")}",
+      link: take_quiz_url(quiz),
+      link_text: 'Predict',
+      push: true
+    )
+
+    if notification.save
+      send_notification(notification)
+    else
+      puts "Something went wrong"
+    end
+  end
+
+  def send_notification(notification)
+    NotificationWorker.perform_async(notification.id)
   end
 end

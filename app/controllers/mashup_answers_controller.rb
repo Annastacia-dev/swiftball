@@ -49,7 +49,6 @@ class MashupAnswersController < ApplicationController
     end
   end
 
-
   private
 
   def find_response

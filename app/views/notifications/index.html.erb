@@ -1,0 +1,29 @@
+<div class="lg:pt-32 pt-24 pb-20  min-h-screen">
+
+  <div class="px-10">
+    <%= render 'components/breadcrumb', breadcrumbs: [
+      {text: 'home', path: root_path},
+      {text: "Notifications"}
+    ] %>
+  </div>
+
+  <div class="flex justify-between items-center px-10 mb-8">
+    <h1 class="font-semibold text-md font-courier">Notifications (<%= @unread_notifications_total %>)</h1>
+    <% if current_user.admin?%>
+      <%= link_to new_notification_path, class: "rounded py-2 px-4 dark:bg-black bg-gray-200 shadow font-medium capitalize flex gap-2 items-center" do %>
+        <i class="fa-solid fa-plus"></i>
+        new notification
+      <% end %>
+    <% end %>
+  </div>
+
+  <div>
+   <% @notifications.each do |notification| %>
+    <%= link_to notification_path(notification), class: "px-12 py-3 border flex flex-col gap-2 #{notification.unread? ? 'bg-gray-100' : 'bg-gray-50'}" do %>
+      <h5 class="font-medium text-sm capitalize flex gap-3 items-center">
+        <%= notification.subject %>: <span class="text-sm capitalize font-normal"><%= notification.message %></span>
+      </h5>
+    <% end %>
+   <% end %>
+  </div>
+</div>

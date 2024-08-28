@@ -102,8 +102,7 @@ class QuizzesController < ApplicationController
     if @tour.status != 'open'
       respond_to do |format|
         if @tour.update(status: :open)
-          send_push_notifications
-          send_emails
+          create_notification
           format.html { redirect_to tours_path, notice: 'Quiz is now open' }
         else
           format.html { redirect_to tours_path, notice: 'Something went wrong, try again' }
@@ -134,10 +133,23 @@ class QuizzesController < ApplicationController
   end
 
   def send_notification
-    send_push_notifications
-    send_emails
+
+    notification = Notification.new(
+      subject: "#{@quiz.title} Quiz is open!",
+      message: "#{@quiz.title} is open!<br/><br/>Make your predictions before #{@quiz.tour&.quiz_live_time.in_time_zone(current_user.timezone).strftime("%A %d %B %Y")}",
+      link: take_quiz_url(@quiz),
+      link_text: 'Predict',
+      push: true
+    )
+
     respond_to do |format|
-      format.html { redirect_to tours_path, notice: 'Notifications send' }
+      if notification.save
+        format.html { redirect_to tours_path, notice: 'Notifications send' }
+        send_notification_via_worker(notification)
+      else
+        puts "Something went wrong"
+        format.html { redirect_to tours_path, alert: 'Something went wrong' }
+      end
     end
   end
 
@@ -198,12 +210,25 @@ class QuizzesController < ApplicationController
       merged_hash
     end
 
-    def send_push_notifications
-      OpenQuizPushNotification.perform_async('quiz_id' => @quiz.id)
+    def create_notification
+      notification = Notification.new(
+        subject: "#{@quiz.title} Quiz is open!",
+        message: "#{@quiz.title} is open!<br/><br/>Make your predictions before #{@quiz.tour&.quiz_live_time.in_time_zone(current_user.timezone).strftime("%A %d %B %Y")}",
+        link: take_quiz_url(@quiz),
+        link_text: 'Predict',
+        email: true,
+        push: true
+      )
+
+      if notification.save
+        send_notification_via_worker(notification)
+      else
+        puts "Something went wrong"
+      end
     end
 
-    def send_emails
-      OpenQuizEmail.perform_async('quiz_id' => @quiz.id)
+    def send_notification_via_worker(notification)
+      NotificationWorker.perform_async(notification.id)
     end
 
     def update_attempts_final_position

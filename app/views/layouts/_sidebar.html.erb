@@ -74,9 +74,14 @@
             <span class="hover:underline"><%= item[:menu_text] %></span>
           <% end %>
         <% else %>
-          <%= link_to item[:path], class: "px-4 flex items-center gap-4" do %>
+          <%= link_to item[:path], class: "px-4 flex items-center gap-4 relative" do %>
             <i class="<%= item[:icon_class] %>"></i>
             <span class="hover:underline"><%= item[:menu_text] %></span>
+            <% if item[:data] && !item[:data].to_i.zero? %>
+              <div class='absolute text-[10px] font-semibold border-2 border-gray-50 dark:border-black bg-black dark:bg-white h-5 w-5 rounded-full text-white dark:text-black flex items-center justify-center -top-2 left-2'>
+                <%= item[:data] %>
+              </div>
+            <% end %>
           <% end %>
         <% end %>
       </li>
