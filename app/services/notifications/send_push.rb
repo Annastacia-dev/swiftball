@@ -20,7 +20,7 @@ class Notifications::SendPush < ApplicationService
   def send_push_notifications
     return if notification.nil?
 
-    subscriptions =User.all.map(&:push_subscriptions).flatten
+    subscriptions = User.all.map(&:push_subscriptions).flatten.uniq
 
       if subscriptions.present?
         subscriptions.each do |subscription|
@@ -54,7 +54,10 @@ class Notifications::SendPush < ApplicationService
       open_timeout: 5,
       read_timeout: 5
     )
-  rescue WebPush::InvalidSubscription => e
-    Rails.logger.error "Failed to send push notification: #{e.message}"
+  rescue WebPush::InvalidSubscription, WebPush::ExpiredSubscription => e
+    subscription.destroy
+    Rails.logger.error "Failed to send push notification and destroyed the subscription: #{e.message}"
+  rescue StandardError => e
+    Rails.logger.error "Unexpected error when sending push notification: #{e.message}"
   end
 end
