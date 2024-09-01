@@ -14,24 +14,24 @@
 
 
 <div class="lg:pt-32 pt-24 pb-20 min-h-screen relative" data-controller="confetti" data-attempt-position="<%= @attempt.final_position %>" data-quiz-status="<%= @quiz.tour.status %>" data-size="full">
-   <div class="p-5">
+  <div class="p-5">
     <%= render 'components/breadcrumb', breadcrumbs: breadcrumbs %>
-    </div>
+  </div>
 
-    <div class="flex justify-between items-center p-5">
-      <h5 class="font-semibold font-courier uppercase text-md lg:mt-0 <%= @quiz.tour.status == 'live' || @quiz.tour.status == 'closed' ? 'mt-24' : 'mt-0' %>">
-        <% if current_user.admin? %>
-          @<%= @attempt.user.username %>'s
-        <% else %>
-          your
-        <% end %>
-        <%= @quiz.title %> predicitions
-        <% if @quiz.tour.status == 'open' %>
-        <span> (closes <%= time_user_timezone(@quiz.tour&.quiz_live_time, current_user) %>)
-        </span>
+  <div class="flex justify-between items-center p-5">
+    <h5 class="font-semibold font-courier uppercase text-md lg:mt-0 <%= @quiz.tour.status == 'live' || @quiz.tour.status == 'closed' ? 'mt-24' : 'mt-0' %>">
+      <% if current_user.admin? %>
+        @<%= @attempt.user.username %>'s
+      <% else %>
+        your
       <% end %>
-      </h5>
-    </div>
+      <%= @quiz.title %> predicitions
+      <% if @quiz.tour.status == 'open' %>
+      <span> (closes <%= time_user_timezone(@quiz.tour&.quiz_live_time, current_user) %>)
+      </span>
+    <% end %>
+    </h5>
+  </div>
 
 
     <% if  tour.status == 'closed' %>

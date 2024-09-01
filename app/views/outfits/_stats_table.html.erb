@@ -1,0 +1,69 @@
+<div class="flex flex-col mt-10 overflow-x-scroll">
+  <table class="min-w-full divide-y divide-gray-200 relative">
+    <thead class="dark:bg-black/10 bg-gray-50 border">
+      <tr class="border">
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky left-0 bg-gray-50 dark:bg-black border" >
+          Outfit
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider border" >
+          first seen
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider border" >
+          last seen
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider border" >
+          no. of times worn
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider border" >
+          shows since last seen
+        </th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200 border">
+      <% @outfits.each do |era, era_outfits| %>
+        <tr>
+          <td colspan="5" class="text-center py-3 font-medium uppercase text-sm <%= era_color(era) %>">
+            <%= era.humanize %>
+          </td>
+        </tr>
+
+
+        <% era_outfits.sort_by { |outfit| outfit.question.position }.group_by{ |outfit| outfit.question.content.downcase }.each do |question, outfits| %>
+
+          <tr>
+            <td colspan="5" class="text-center py-3 text-xs capitalize <%= era_color(era) %>">
+              <%= question %>
+            </td>
+          </tr>
+
+          <% outfits.sort_by(&:position).each do |outfit| %>
+            <% if outfit.outfit_codename.present? %>
+              <tr class="border">
+                <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black border break-words w-5 z-10" >
+                  <div class="flex flex-col gap-3">
+                    <% if outfit.image.attached? %>
+                      <%= image_tag(outfit.image, alt: outfit.content, class: 'w-20 lg:h-40 object-cover object-center rounded')%>
+                    <% end %>
+                    <%= outfit.outfit_codename.humanize %>
+                  </div>
+                </td>
+                <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black w-40 border" >
+                  <%= outfit&.first_seen&.title %>
+                </td>
+                <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black w-40 border" >
+                  <%= outfit&.last_seen&.title %>
+                </td>
+                <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black w-40 border" >
+                  <%= outfit&.times_worn %>
+                </td>
+                <td class="px-6 py-4 text-xs sticky left-0 bg-gray-50 dark:bg-black w-40 border" >
+                  <%= outfit&.shows_since_last_seen %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

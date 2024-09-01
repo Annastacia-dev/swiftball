@@ -1,0 +1,25 @@
+<div class="mt-10 flex flex-col gap-3">
+  <% @outfits.each do |era, era_outfits| %>
+    <div class="text-center py-3 font-medium uppercase text-sm <%= era_color(era) %>">
+      <%= era.humanize %>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <% era_outfits.sort_by { |outfit| outfit.question.position }.group_by{ |outfit| outfit.question.content.downcase }.each do |question, outfits| %>
+
+        <% data = outfits.sort_by(&:position).each_with_object({}) do |outfit, hash| %>
+          <% if outfit.outfit_codename.present? %>
+            <% if outfit.available.to_f > 0 %>
+              <% percentage_worn = (outfit.times_worn.to_f / outfit.available.to_f) * 100 %>
+            <% else %>
+              <% percentage_worn = 0 %>
+            <% end %>
+            <% hash[outfit.outfit_codename.humanize] = percentage_worn.to_i %>
+          <% end %>
+        <% end %>
+
+        <%= column_chart data, height: "150px", legend: false, donut: true %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
