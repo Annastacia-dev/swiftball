@@ -4,7 +4,7 @@
       <%= era.humanize %>
     </div>
 
-    <div class="flex md:flex-row flex-col items-center gap-12">
+    <div class="grid md:grid-cols-2 items-center gap-12">
       <% era_outfits.sort_by { |outfit| outfit.question.position }.group_by{ |outfit| outfit.question.content.downcase }.each do |question, outfits| %>
         <% data = outfits.sort_by(&:position).each_with_object({}) do |outfit, hash| %>
           <% if outfit.outfit_codename.present? %>
@@ -16,8 +16,6 @@
             <% hash[outfit.outfit_codename.humanize] = "#{percentage_worn.to_i} %" %>
           <% end %>
         <% end %>
-
-        <div class="flex items-center gap-10">
           <%= pie_chart data, donut: true, library: {
             plugins: {
               legend: {
@@ -32,7 +30,6 @@
               },
             }
           } %>
-        </div>
       <% end %>
     </div>
   <% end %>
