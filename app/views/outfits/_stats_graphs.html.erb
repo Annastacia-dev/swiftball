@@ -1,10 +1,11 @@
 <div class="mt-10 flex flex-col gap-10">
   <% @outfits.each do |era, era_outfits| %>
-    <div class="text-center py-3 font-medium uppercase text-sm <%= era_color(era) %>">
-      <%= era.humanize %>
-    </div>
+    <% if era.downcase != 'extra' %>
+      <div class="text-center py-3 font-medium uppercase text-sm <%= era_color(era) %>">
+        <%= era.humanize %>
+      </div>
 
-    <div class="grid md:grid-cols-2 items-center gap-12">
+      <div class="grid md:grid-cols-3 items-center gap-12">
       <% era_outfits.sort_by { |outfit| outfit.question.position }.group_by{ |outfit| outfit.question.content.downcase }.each do |question, outfits| %>
         <% data = outfits.sort_by(&:position).each_with_object({}) do |outfit, hash| %>
           <% if outfit.outfit_codename.present? %>
@@ -32,5 +33,8 @@
           } %>
       <% end %>
     </div>
+    <% end %>
+
+   
   <% end %>
 </div>
