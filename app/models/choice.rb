@@ -112,8 +112,8 @@ class Choice < ApplicationRecord
   end
 
   def available
-    if last_seen && first_seen
-      last_seen&.number - first_seen&.number
+    if first_seen
+      Tour.where.not(number: nil).order(number: :desc).first.number - first_seen&.number
     else
       nil
     end
