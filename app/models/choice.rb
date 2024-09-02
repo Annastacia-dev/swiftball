@@ -112,8 +112,8 @@ class Choice < ApplicationRecord
   end
 
   def available
-    if last_seen&.start_time && first_seen&.start_time
-      ((last_seen.start_time - first_seen.start_time) / 86400.0).to_i
+    if last_seen && first_seen
+      last_seen&.number - first_seen&.number
     else
       nil
     end
