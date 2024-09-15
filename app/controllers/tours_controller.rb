@@ -53,12 +53,11 @@ class ToursController < ApplicationController
 
   # GET /tours/1 or /tours/1.json
   def show
+    @pagination = 20
     @attempts = @tour.attempts
                      .includes(:quiz, :user, :responses)
-                     .sort_by { |attempt|
-                       primary_sort = @tour.closed? ? (attempt.final_position || Float::INFINITY) : -attempt.score
-                       [primary_sort, attempt.created_at]
-                      }
+                     .order(:final_position)
+                     .paginate(page: params[:page], per_page: @pagination)
   end
 
   # GET /tours/new

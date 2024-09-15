@@ -70,16 +70,11 @@ class HomeController < ApplicationController
     @next_tour = @tours[current_index - 1] if current_index && current_index > 0
     @previous_tour = @tours[current_index + 1] if current_index && current_index < @tours.size - 1
 
-    if @tour.status == 'closed'
-      @attempts = @tour.quiz.attempts
-                          .includes(:responses, :user)
-                          .order(:final_position)
-                          .paginate(page: params[:page], per_page: 20)
-    else
-      @attempts = @tour.quiz.attempts
-      .includes(:responses, :user)
-      .sort_by { |attempt| [-attempt.score, attempt.created_at] }
-    end
+    @pagination = 20
+    @attempts = @tour.attempts
+                     .includes(:quiz, :user, :responses)
+                     .order(:final_position)
+                     .paginate(page: params[:page], per_page: @pagination)
 
   end
 
