@@ -79,4 +79,5 @@ Rails.application.routes.draw do
 
   resources :openers
   resources :notifications
+  resources :leaderboards
 end

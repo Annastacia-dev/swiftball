@@ -9,7 +9,7 @@
    <div data-controller='tabs'>
     <%= render 'components/tabs', tabs: [
       { id: 'general', label: 'general', partial: 'general_leaderboard' },
-      { id: "#{current_user.username}", label: "#{current_user.username}'s Version", partial: 'user_leaderboard' },
+      { id: "#{current_user.leaderboard.slug}", label: "#{current_user.leaderboard.name}", partial: 'user_leaderboard' },
     ] %>
   </div>
 

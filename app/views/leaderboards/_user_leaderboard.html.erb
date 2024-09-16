@@ -1,0 +1,6 @@
+<div class="flex justify-between items-center">
+  <%= render 'leaderboard_tour_navigator' %>
+  <button class="bg-gray-100 px-4 py-2 dark:bg-black/95 rounded font-normal"> Add Friends </button>
+</div>
+
+<%= render 'leaderboard_table', attempts: @user_leaderboard_attempts %>

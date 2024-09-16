@@ -4,6 +4,7 @@
 #
 #  id         :uuid             not null, primary key
 #  name       :string           not null
+#  slug       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  creator_id :uuid             not null
@@ -18,6 +19,10 @@
 #
 class Leaderboard < ApplicationRecord
 
+  include Sluggable
+  friendly_slug_scope to_slug: :name
+
   #associations
-   belongs_to :creator, class_name: 'User'
+  belongs_to :creator, class_name: 'User'
+  has_many :leaderboard_users, dependent: :destroy
 end

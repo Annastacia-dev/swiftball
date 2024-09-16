@@ -1,0 +1,15 @@
+<div class="flex justify-center items-center lg:gap-5 gap-2">
+  <% if @previous_tour %>
+    <%= link_to leaderboards_path(tour: @previous_tour, tab: params[:tab]), class: "font-semibold font-courier uppercase text-md border-2 border-black bg-black/95 dark:bg-gray-50 text-white dark:text-black py-2 rounded px-5" do %>
+      <i class="fa-solid fa-circle-arrow-left"></i>
+    <% end %>
+  <% end %>
+
+  <h5 class="font-semibold font-courier uppercase text-md border-2 border-black dark:border-gray-100 py-2 rounded lg:px-5 px-3"><%= @tour.title %></h5>
+
+  <% if @next_tour %>
+    <%= link_to leaderboards_path(tour: @next_tour, tab: params[:tab]), class: "font-semibold font-courier uppercase text-md border-2 border-black dark:border-gray-100 py-2 bg-black/95 dark:bg-gray-50 text-white dark:text-black rounded px-5" do %>
+      <i class="fa-solid fa-circle-arrow-right"></i>
+    <% end %>
+  <% end %>
+</div>

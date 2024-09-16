@@ -110,6 +110,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_16_155138) do
   create_table "leaderboards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "creator_id", null: false
     t.string "name", null: false
+    t.string "slug", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_leaderboards_on_creator_id"
