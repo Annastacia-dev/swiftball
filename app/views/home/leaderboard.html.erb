@@ -2,87 +2,15 @@
 
   <%= render 'components/breadcrumb', breadcrumbs: [
     { text: 'home', path: root_path },
-    { text: "Leaderboard" },
+    { text: "Leaderboards" },
   ]
   %>
 
-  <div class="flex justify-center items-center lg:gap-5 gap-2 ">
-    <% if @previous_tour %>
-      <%= link_to  leaderboard_path(tour: @previous_tour), class: "font-semibold font-courier uppercase text-md border-2 border-black bg-black/95 dark:bg-gray-50 text-white dark:text-black py-2 rounded px-5" do %>
-        <i class="fa-solid fa-circle-arrow-left"></i>
-      <% end %>
-    <% end %>
-
-    <h5 class="font-semibold font-courier uppercase text-md border-2 border-black dark:border-gray-100 dark:border-gray-100 py-2 rounded lg:px-5 px-3"><%= @tour.title %> </h5>
-
-    <% if @next_tour %>
-      <%= link_to leaderboard_path(tour: @next_tour), class: "font-semibold font-courier uppercase text-md border-2 border-black dark:border-gray-100 py-2 bg-black/95 dark:bg-gray-50 text-white dark:text-black  rounded px-5" do %>
-        <i class="fa-solid fa-circle-arrow-right"></i>
-      <% end %>
-    <% end %>
-
+   <div data-controller='tabs'>
+    <%= render 'components/tabs', tabs: [
+      { id: 'general', label: 'general', partial: 'general_leaderboard' },
+      { id: "#{current_user.username}", label: "#{current_user.username}'s Version", partial: 'user_leaderboard' },
+    ] %>
   </div>
 
-  <% unless @attempts.blank? %>
-    <div class="flex flex-col mt-16 lg:px-20 text-sm">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="dark:bg-black/10 bg-gray-50">
-          <tr>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-            </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-            </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-            </th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200 relative">
-          <% @attempts.sort_by { |attempt|
-            primary_sort = @tour.closed? ? (attempt.final_position || Float::INFINITY) : -attempt.score
-            [primary_sort, attempt.created_at]
-          }.each_with_index do |attempt, index| %>
-            <tr data-controller="confetti"  data-attempt-position = "<%= attempt.final_position %>" data-quiz-status="<%= attempt.quiz.tour.status %>" data-size="mini" id="targetRow">
-              <canvas id="leaderboardConfetti" class="absolute h-[62px] lg:w-3/4 w-11/12 lg:top-[310px] top-[283px]" data-confetti-target="canvas"></canvas>
-              <td class="px-6 py-4 whitespace-nowrap text-sm">
-                <span class="font-bold">
-                <% if attempt.quiz.tour.status == 'closed' %>
-                    <%= attempt.final_position %>
-                <% else %>
-                <% position = ((params[:page].to_i - 1) * @pagination ) + (index + 1) %>
-                  <%= position %>.
-                <% end %>
-                </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm lowercase flex items-center gap-3">
-                <%= link_to user_path(attempt.user), class: "flex items-center gap-3 hover:underline w-full" do %>
-                  <span class="<%= current_user.id == attempt.user.id ? 'font-semibold' : '' %>">@<%= attempt.user.username %></span>
-                  <% if attempt.quiz.tour.closed? %>
-                    <% if attempt.final_position <= 3 %>
-                      <%= image_tag attempt_badge(attempt.final_position), class: attempt_badge_class(attempt.final_position) %>
-                    <% end %>
-                  <% end %>
-                <% end %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm">
-                <% if @tour.status == 'closed' || @tour.status == 'live' %>
-                  <span class="<%= current_user.id == attempt.user.id ? 'font-semibold' : '' %>"><%= attempt.score %></span>
-                <% else %>
-                  <i class="fa-solid fa-spinner text-gray-600" title="in progress"></i>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="flex justify-end mt-3 overflow-x-scroll">
-      <%= will_paginate @attempts %>
-    </div>
-
-  <% else %>
-    <div class="flex justify-center items-center mt-20">
-      No stats yet.
-    </div>
-  <% end %>
 </div>
