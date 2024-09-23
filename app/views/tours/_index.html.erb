@@ -36,7 +36,7 @@
             <% if tour.number? %>
               <span><%= (tour.number).to_s.rjust(2, '0') %>.</span>
             <% else %>
-             <span class="text-gray-50 dark:text-black"><%= (0).to_s.rjust(2, '0') %>.</span>
+             <span class="text-transparent"><%= (0).to_s.rjust(2, '0') %>.</span>
             <% end %>
             <%= tour.title %>
             <% if tour.status == 'open' %>
