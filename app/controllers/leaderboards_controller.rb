@@ -19,14 +19,19 @@ class LeaderboardsController < ApplicationController
   end
 
   def invite
-    return if current_user.id == @leaderboard.creator_id
-    return if @leaderboard.leaderboard_users.exists?(user_id: current_user.id)
 
-    @leaderboard.leaderboard_users.create!(user_id: current_user.id)
-    current_user.leaderboard.leaderboard_users.create!(user_id: @leaderboard.creator_id )
+    
 
     respond_to do |format|
-      format.html { redirect_to leaderboards_path(tab: "user"), notice: "You are now leaderboard buddies with #{@leaderboard.creator.username}" }
+      if current_user.id == @leaderboard.creator_id
+        format.html { redirect_to leaderboards_path(tab: "user"), notice: "You can’t add yourself to your own leaderboard. Nice try." }
+      elsif @leaderboard.leaderboard_users.exists?(user_id: current_user.id)
+        format.html { redirect_to leaderboards_path(tab: "user"), notice: "You already belong to this leaderboard" }
+      else
+        @leaderboard.leaderboard_users.create!(user_id: current_user.id)
+        current_user.leaderboard.leaderboard_users.create!(user_id: @leaderboard.creator_id )
+        format.html { redirect_to leaderboards_path(tab: "user"), notice: "You are now leaderboard buddies with #{@leaderboard.creator.username}" }
+      end
     end
   end
 
