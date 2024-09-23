@@ -19,6 +19,10 @@
     @apply border text-gray-900 dark:text-gray-300 font-bold rounded-t-lg border-b-0;
   }
 
+  .tab-active {
+    @apply border text-gray-900 dark:text-gray-300 font-bold rounded-t-lg border-b-0;
+  }
+
   .masonry-grid {
     column-count: 2;
     column-gap: 0.5rem;
