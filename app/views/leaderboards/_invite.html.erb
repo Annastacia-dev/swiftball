@@ -1,0 +1,27 @@
+<div class="lg:pt-10 pt-5 pb-20 px-5 min-h-screen flex flex-col gap-6">
+  <i class="fa-solid fa-paper-plane text-5xl flex justify-center items-center"></i>
+
+  <h5 class="text-lg font-semibold capitalize">Add friends to your leaderboard</h5>
+  <p>On leaderboards you can see your friend's guesses by clicking on their name</p>
+
+  <p class="mt-2">Send this link to your friends and they can add you.</p>
+
+  <input id="inviteLink" value="<%= invite_leaderboard_url(current_user.leaderboard) %>" readonly class="border border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none">
+
+  <button id="copyButton" onclick="copyLink()" class="bg-black text-white px-4 py-2 rounded-md">Copy Link</button>
+  </div>
+</div>
+
+<script>
+  function copyLink() {
+    var copyText = document.getElementById("inviteLink");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+
+    navigator.clipboard.writeText(copyText.value);
+
+    // Show success message
+    const copyButton = document.getElementById('copyButton')
+    copyButton.innerText = 'Copied!'
+  }
+</script>

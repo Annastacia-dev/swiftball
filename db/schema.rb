@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_24_152002) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_16_155138) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -96,6 +96,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_24_152002) do
     t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
+
+  create_table "leaderboard_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.uuid "leaderboard_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["leaderboard_id"], name: "index_leaderboard_users_on_leaderboard_id"
+    t.index ["user_id"], name: "index_leaderboard_users_on_user_id"
+  end
+
+  create_table "leaderboards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "creator_id", null: false
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_leaderboards_on_creator_id"
   end
 
   create_table "mashup_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -270,6 +288,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_24_152002) do
   add_foreign_key "attempts", "users"
   add_foreign_key "choices", "questions"
   add_foreign_key "feedbacks", "users"
+  add_foreign_key "leaderboard_users", "leaderboards"
+  add_foreign_key "leaderboard_users", "users"
+  add_foreign_key "leaderboards", "users", column: "creator_id"
   add_foreign_key "mashup_answers", "albums"
   add_foreign_key "mashup_answers", "questions"
   add_foreign_key "mashup_answers", "responses"

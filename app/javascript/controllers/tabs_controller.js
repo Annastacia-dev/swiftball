@@ -18,6 +18,7 @@ export default class extends Controller {
     }
   }
 
+
   activate(event) {
     const tabId = event.target.dataset.tab;
     this.activateTab(tabId);
