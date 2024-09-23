@@ -20,6 +20,7 @@ class LeaderboardsController < ApplicationController
 
   def invite
     return if current_user.id == @leaderboard.creator_id
+    return if @leaderboard.leaderboard_users.exists?(user_id: current_user.id)
 
     @leaderboard.leaderboard_users.create!(user_id: current_user.id)
     current_user.leaderboard.leaderboard_users.create!(user_id: @leaderboard.creator_id )
