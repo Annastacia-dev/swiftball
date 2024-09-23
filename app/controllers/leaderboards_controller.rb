@@ -19,9 +19,6 @@ class LeaderboardsController < ApplicationController
   end
 
   def invite
-
-    
-
     respond_to do |format|
       if current_user.id == @leaderboard.creator_id
         format.html { redirect_to leaderboards_path(tab: "user"), notice: "You can’t add yourself to your own leaderboard. Nice try." }
