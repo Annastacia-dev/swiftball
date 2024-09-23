@@ -46,6 +46,10 @@ class LeaderboardsController < ApplicationController
     @leaderboard = Leaderboard.friendly.find(params[:id])
   end
 
+  def find_leaderboard
+    @leaderboard = Leaderboard.friendly.find(params[:id])
+  end
+
   def general_leaderboard
     LeaderboardWorker.perform_async(@tour.id )
 
