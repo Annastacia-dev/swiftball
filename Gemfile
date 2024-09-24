@@ -13,6 +13,7 @@ gem 'devise', '~> 4.9', '>= 4.9.4'
 gem 'exception_notification', '~> 4.5', '>= 4.5.0'
 gem 'font-awesome-sass', '~> 6.5', '>= 6.5.2'
 gem 'friendly_id', '~> 5.5', '>= 5.5.1'
+gem "fugit", ">= 1.11.1"
 gem "image_processing", "~> 1.2"
 gem 'importmap-rails', '~> 2.0', '>= 2.0.1'
 gem 'jbuilder', '~> 2.12'
@@ -20,12 +21,12 @@ gem 'paper_trail', '~> 15.1'
 gem 'obscenity', '~> 1.0', '>= 1.0.2'
 gem 'pg_search', '~> 2.3', '>= 2.3.7'
 gem 'pg', '~> 1.5', '>= 1.5.6'
-gem 'puma', '~> 6.4', '>= 6.4.2'
+gem "puma", ">= 6.4.3"
 gem 'puma_worker_killer', '~> 0.3.1'
 gem 'rails', '~> 7.1', '>= 7.1.3.3'
 # gem 'rack-timeout', '~> 0.7.0'
 gem 'redis', '~> 5.2'
-gem "rexml", ">= 3.3.3"
+gem "rexml", ">= 3.3.6"
 gem 'resolv', '~> 0.4.0'
 gem 'rubocop', '~> 1.64', '>= 1.64.1'
 gem 'sidekiq', '~> 7.2', '>= 7.2.4'
