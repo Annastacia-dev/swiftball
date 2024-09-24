@@ -36,6 +36,7 @@ gem 'tailwindcss-rails', '~> 2.6'
 gem 'turbo-rails', '~> 2.0', '>= 2.0.5'
 gem 'tzinfo', '~> 2.0', '>= 2.0.6', platforms: %i[ windows jruby ]
 gem 'web-push', '~> 3.0', '>= 3.0.1'
+gem 'webrick', '~> 1.8', '>= 1.8.2'
 gem 'will_paginate', '~> 4.0', '>= 4.0.1'
 
 group :development, :test do

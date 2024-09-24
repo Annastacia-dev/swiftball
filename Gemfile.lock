@@ -1897,7 +1897,7 @@ GEM
     web-push (3.0.1)
       jwt (~> 2.0)
       openssl (~> 3.0)
-    webrick (1.8.1)
+    webrick (1.8.2)
     websocket (1.2.10)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
@@ -1953,6 +1953,7 @@ DEPENDENCIES
   tzinfo (~> 2.0, >= 2.0.6)
   web-console (~> 4.2, >= 4.2.1)
   web-push (~> 3.0, >= 3.0.1)
+  webrick (~> 1.8, >= 1.8.2)
   will_paginate (~> 4.0, >= 4.0.1)
 
 RUBY VERSION
