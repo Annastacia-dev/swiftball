@@ -16,11 +16,17 @@ class FeedbacksController < ApplicationController
       if @feedback.status == 'read'
         format.html { render :show }
       else
-        if @feedback.update(status: 'read')
-          @feedback.feedback_responses.where(status: 'unread').update(status: 'read')
-          format.html { render :show }
+        if current_user.admin?
+          if @feedback.update_column('status', 'read')
+            if @feedback.feedback_responses.where(status: 'unread').present?
+              @feedback.feedback_responses.where(status: 'unread').update(status: 'read')
+            end
+            format.html { render :show }
+          else
+            format.html { render :new, status: :unprocessable_entity }
+          end
         else
-          format.html { render :new, status: :unprocessable_entity }
+          format.html { render :show }
         end
       end
     end
