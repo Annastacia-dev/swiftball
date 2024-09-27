@@ -37,7 +37,7 @@ class FeedbacksController < ApplicationController
 
     respond_to do |format|
       if @feedback.save
-        format.html { redirect_to tours_path, notice: "Feedback was successfully submitted." }
+        format.html { redirect_to feedbacks_path, notice: "Feedback was successfully submitted." }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
