@@ -9,10 +9,15 @@
       <% if current_user.admin? %>
 
         <!-- Feedback Info -->
-        <h5 class="font-courier capitalize text-md ">
-          <%= @feedback.user.name %> | 
-          <span class="lowercase">@<%= @feedback.user.username %> | <%= @feedback.user.email %></span>
-        </h5>
+        <div class="flex justify-between">
+          <h5 class="font-courier capitalize text-md ">
+            <%= @feedback.user.name %> | 
+            <span class="lowercase">@<%= @feedback.user.username %> | <%= @feedback.user.email %></span>
+          </h5>
+          <%= button_to feedback_path(@feedback), method: :delete, class: 'text-red-500', data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" } do %>
+            <i class="fa-solid fa-trash"></i>
+          <% end %>
+        </div>
 
         <hr class="border border-black dark:border-gray-100 my-2" />
       <% end %>

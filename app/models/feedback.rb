@@ -32,6 +32,6 @@ class Feedback < ApplicationRecord
   }
 
   # validations
-  validates :subject, presence: true, restricted_keywords: true, obscenity: true
+  validates :subject, presence: true, restricted_keywords: true, obscenity: true, uniqueness: {scope: :user_id }
   validates :message, presence: true, restricted_keywords: true, obscenity: true
 end
