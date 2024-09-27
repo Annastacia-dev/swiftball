@@ -7,7 +7,7 @@
     ] %>
   </div>
 
-  <div class="flex justify-between items-center px-10 mb-8">
+  <div class="flex md:flex-row flex-col justify-between items-center px-10 mb-8 gap-4">
     <h1 class="font-semibold text-md font-courier">Notifications (<%= @unread_notifications_total %>)</h1>
     <% if current_user.admin?%>
       <%= link_to new_notification_path, class: "rounded py-2 px-4 dark:bg-black bg-gray-200 shadow font-medium capitalize flex gap-2 items-center" do %>
