@@ -1,11 +1,10 @@
 class FeedbacksController < ApplicationController
-  before_action :authenticate_admin!, except: %i[new create]
   before_action :set_feedback, only: %i[show destroy ]
 
   # GET /feedbacks or /feedbacks.json
   def index
-    @unread_feedbacks = Feedback.where(status: :unread).order(created_at: :desc)
-    @read_feedbacks = Feedback.where(status: :read).order(created_at: :desc)
+    @feedbacks = Feedback.all.order(created_at: :desc)
+    @user_feedbacks = Feedback.where(user: current_user)
   end
 
   # GET /feedbacks/1 or /feedbacks/1.json

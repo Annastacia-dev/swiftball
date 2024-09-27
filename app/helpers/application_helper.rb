@@ -74,7 +74,7 @@ module ApplicationHelper
 
     if !current_user.admin?
       items << { path: 'https://ko-fi.com/swiftballonline', icon_class: 'fa-solid fa-mug-hot', menu_text: 'Buy A coffee' }
-      items << { path: new_feedback_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'}
+      items << { path: feedbacks_path, icon_class: 'fa-solid fa-message', menu_text: 'Feedback'}
     end
 
     items

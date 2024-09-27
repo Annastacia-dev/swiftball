@@ -5,18 +5,21 @@
     { text: "#{@feedback.subject}" },
   ] %>
 
-  <div class="flex justify-between items-center">
-    <h5 class="font-semibold font-courier uppercase text-md "><%= @feedback.subject %> </h5>
-  </div>
+  <% if current_user.admin? %>
 
-  <hr class="border border-black dark:border-gray-100 my-2" />
+    <div class="flex flex-col text-left mt-10 gap-3">
+      <h5 class="font-courier capitalize text-md "><%= @feedback.user.name %> | <span class="lowercase">@<%= @feedback.user.username %> | <%= @feedback.user.email %></span>  </h5>
+    </div>
 
-  <div class="flex flex-col text-left mt-10 gap-3">
-    <h5 class="font-courier capitalize text-md "><%= @feedback.user.name %> </h5>
-    <h5 class="font-courier text-md "><%= @feedback.user.email %> </h5>
-  </div>
+    <div class="flex justify-between items-center">
+      <h5 class="font-semibold font-courier uppercase text-md "><%= @feedback.subject %> </h5>
+    </div>
 
-  <div class="flex flex-col text-left mt-10 gap-3">
-    <h5 class="font-courier capitalize text-md "><%= @feedback.message %> </h5>
-  </div>
+    <hr class="border border-black dark:border-gray-100 my-2" />
+
+    <div class="flex flex-col text-left mt-10 gap-3">
+      <h5 class="font-courier capitalize text-md "><%= @feedback.message %> </h5>
+    </div>
+  <% else %>
+  <% end %>
 </div>
