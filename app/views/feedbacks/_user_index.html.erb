@@ -5,8 +5,14 @@
       { text: 'feedback', path: feedbacks_path }
     ] %>
   </div>
-    <% unless @user_feedbacks.empty? %>
+  <div class="flex justify-end px-12">
+    <%= link_to new_feedback_path, class: 'bg-slate-100 dark:bg-black/80 px-4 py-2 flex items-center gap-2 text-sm' do%>
+      <i class="fa-solid fa-plus"> </i>
+      <span>New Feedback </span>
+    <% end %>
+  </div>
 
+  <% unless @user_feedbacks.empty? %>
       <div id="feedback" class="min-w-full mt-10">
           <% @user_feedbacks.each_with_index do |feedback, index| %>
             <% unread_count = feedback.feedback_responses.where(status: 'unread').count %>
