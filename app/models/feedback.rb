@@ -23,6 +23,7 @@ class Feedback < ApplicationRecord
 
   # associations
   belongs_to :user
+  has_many :feedback_responses, dependent: :destroy
 
   # enums
   enum status:{

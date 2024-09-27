@@ -9,11 +9,14 @@ class FeedbacksController < ApplicationController
 
   # GET /feedbacks/1 or /feedbacks/1.json
   def show
+    @feedback_response = @feedback.feedback_responses.new
+
     respond_to do |format|
       if @feedback.status == 'read'
         format.html { render :show }
       else
         if @feedback.update(status: 'read')
+          @feedback.feedback_responses.where(status: 'unread').update(status: 'read')
           format.html { render :show }
         else
           format.html { render :new, status: :unprocessable_entity }
