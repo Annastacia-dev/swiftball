@@ -125,9 +125,9 @@
       "url": "/stats"
     },
     {
-      "name": "View Leaderboard",
-      "short_name": "Leaderboard",
-      "description": "View Leaderboard",
+      "name": "View Leaderboards",
+      "short_name": "Leaderboards",
+      "description": "View Leaderboards",
       "url": "/leaderboard"
     }
   ],

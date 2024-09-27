@@ -79,4 +79,7 @@ Rails.application.routes.draw do
 
   resources :openers
   resources :notifications
+  resources :leaderboards do
+    get 'invite', on: :member
+  end
 end

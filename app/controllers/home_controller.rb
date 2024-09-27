@@ -57,32 +57,6 @@ class HomeController < ApplicationController
     end.to_h
   end
 
-  def leaderboard
-    @tours = Tour.where.not(status: [:pending, :cancelled]).where.not(base: true).where.not(preapp: true).order(number: :desc)
-    @users = User.where.not(role: :admin)
-    if params[:tour]
-      @tour = Tour.friendly.find(params[:tour])
-    else
-      @tour = @tours.first
-    end
-
-    current_index = @tours.index(@tour)
-    @next_tour = @tours[current_index - 1] if current_index && current_index > 0
-    @previous_tour = @tours[current_index + 1] if current_index && current_index < @tours.size - 1
-
-    if @tour.status == 'closed'
-      @attempts = @tour.quiz.attempts
-                          .includes(:responses, :user)
-                          .order(:final_position)
-                          .paginate(page: params[:page], per_page: 20)
-    else
-      @attempts = @tour.quiz.attempts
-      .includes(:responses, :user)
-      .sort_by { |attempt| [-attempt.score, attempt.created_at] }
-    end
-
-  end
-
   def surprise_songs
     tours = Tour.where.not(base: true)
                 .where(status: [:closed, :live])

@@ -111,6 +111,14 @@ class Choice < ApplicationRecord
     Tour.where(status: [:closed, :live]).where('start_time > ?', last_seen_tour.start_time).count
   end
 
+  def available
+    if first_seen
+      Tour.where(status: [:live, :closed]).where.not(number: nil).order(number: :desc).first.number - first_seen&.number
+    else
+      nil
+    end
+  end
+
   def update_choice_label
     return if self.new_item == true
 

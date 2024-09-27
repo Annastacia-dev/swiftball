@@ -8,9 +8,9 @@
           new
         <% end %>
       <% end %>
-      <%= link_to leaderboard_path, class: "lg:flex hidden rounded py-2 px-4 dark:bg-black bg-gray-200  font-medium capitalize flex gap-2 items-center font-courier" do %>
+      <%= link_to leaderboards_path(tab: 'general'), class: "lg:flex hidden rounded py-2 px-4 dark:bg-black bg-gray-200  font-medium capitalize flex gap-2 items-center font-courier" do %>
         <i class="fa-solid fa-chess-board"></i>
-        leaderboard
+        leaderboards
       <% end %>
     </div>
     <%= form_with url: tours_path, method: :get, local: true, class: 'flex gap-2 items-center' do |form| %>
@@ -36,7 +36,7 @@
             <% if tour.number? %>
               <span><%= (tour.number).to_s.rjust(2, '0') %>.</span>
             <% else %>
-             <span class="text-gray-50 dark:text-black"><%= (0).to_s.rjust(2, '0') %>.</span>
+             <span class="text-transparent"><%= (0).to_s.rjust(2, '0') %>.</span>
             <% end %>
             <%= tour.title %>
             <% if tour.status == 'open' %>
