@@ -5,6 +5,7 @@ class FeedbacksController < ApplicationController
   def index
     @feedbacks = Feedback.all.order(created_at: :desc)
     @user_feedbacks = Feedback.where(user: current_user)
+    @feedback = current_user.feedbacks.new
   end
 
   # GET /feedbacks/1 or /feedbacks/1.json
