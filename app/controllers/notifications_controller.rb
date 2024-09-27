@@ -5,6 +5,7 @@ class NotificationsController < ApplicationController
 
   def index
     @notifications = current_user.notifications.where(in_app: true).order(created_at: :desc)
+    @notifications.where(status: :unread).update(status: :read)
   end
 
   def new
