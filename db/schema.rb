@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_16_155138) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_27_100419) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -75,6 +75,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_16_155138) do
     t.integer "label", default: 0
     t.string "outfit_codename"
     t.index ["question_id"], name: "index_choices_on_question_id"
+  end
+
+  create_table "feedback_responses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "feedback_id", null: false
+    t.uuid "user_id", null: false
+    t.text "message"
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feedback_id"], name: "index_feedback_responses_on_feedback_id"
+    t.index ["user_id"], name: "index_feedback_responses_on_user_id"
   end
 
   create_table "feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -287,6 +298,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_16_155138) do
   add_foreign_key "attempts", "quizzes"
   add_foreign_key "attempts", "users"
   add_foreign_key "choices", "questions"
+  add_foreign_key "feedback_responses", "feedbacks"
+  add_foreign_key "feedback_responses", "users"
   add_foreign_key "feedbacks", "users"
   add_foreign_key "leaderboard_users", "leaderboards"
   add_foreign_key "leaderboard_users", "users"

@@ -1,20 +1,22 @@
 class FeedbacksController < ApplicationController
-  before_action :authenticate_admin!, except: %i[new create]
   before_action :set_feedback, only: %i[show destroy ]
 
   # GET /feedbacks or /feedbacks.json
   def index
-    @unread_feedbacks = Feedback.where(status: :unread).order(created_at: :desc)
-    @read_feedbacks = Feedback.where(status: :read).order(created_at: :desc)
+    @feedbacks = Feedback.all.order(created_at: :desc)
+    @user_feedbacks = Feedback.where(user: current_user)
   end
 
   # GET /feedbacks/1 or /feedbacks/1.json
   def show
+    @feedback_response = @feedback.feedback_responses.new
+
     respond_to do |format|
       if @feedback.status == 'read'
         format.html { render :show }
       else
         if @feedback.update(status: 'read')
+          @feedback.feedback_responses.where(status: 'unread').update(status: 'read')
           format.html { render :show }
         else
           format.html { render :new, status: :unprocessable_entity }
