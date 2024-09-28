@@ -17,8 +17,10 @@
   <div class="flex flex-col gap-1">
    <% @notifications.each do |notification| %>
     <%= link_to notification_path(notification), class: "px-12 py-3 border dark:border-gray-900 flex flex-col gap-2 #{notification.unread? ? 'bg-gray-100 dark:bg-gray-900' : 'bg-gray-50 dark:bg-black'}" do %>
-      <h5 class="font-medium text-sm capitalize flex gap-3 items-center">
-        <%= notification.subject %>: <span class="text-sm capitalize font-normal"><%= notification.message %></span>
+      <h5 class="font-medium text-sm capitalize flex md:flex-row flex-col gap-3 md:items-center">
+        <%= notification.subject %>
+        <span class='md:flex hidden'>:</span>
+        <span class="text-sm capitalize font-normal"><%= notification.message %></span>
       </h5>
     <% end %>
    <% end %>
