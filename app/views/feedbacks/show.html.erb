@@ -43,7 +43,7 @@
 
     <!-- Form for New Response -->
     <%= form_with(model: [@feedback, @feedback_response], class: "contents") do |form| %>
-      <div class="flex justify-between gap-8 mt-5 mb-2">
+      <div class="flex lg:flex-row flex-col justify-between gap-8 mt-5 mb-2">
         <div class="w-11/12">
           <% if @feedback_response.errors[:message].any? %>
             <p class="text-red-600 text-xs mb-1 flex items-center gap-1">
