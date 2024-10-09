@@ -43,7 +43,9 @@ Rails.application.routes.draw do
       resources :choices
     end
   end
-  resources :attempts
+  resources :attempts do
+    get 'download_pdf', on: :member
+  end
   resources :choices do
     post 'correct', on: :member
     post 'incorrect', on: :member
