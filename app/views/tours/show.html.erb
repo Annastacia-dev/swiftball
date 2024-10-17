@@ -36,7 +36,9 @@
         }.each_with_index do |attempt, index| %>
         <tr>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
-              <% if attempt.quiz.tour.status == 'closed' %>
+              <% if attempt.quiz.tour.status == 'open' %>
+                  <%= index + 1 %>
+              <% elsif attempt.quiz.tour.status == 'closed' %>
                   <%= attempt.final_position %>
               <% else %>
                <% position = ((params[:page].to_i - 1) * @pagination ) + (index + 1) %>
