@@ -45,9 +45,12 @@ class LeaderboardsController < ApplicationController
 
   def general_leaderboard
     @general_attempts = @tour.attempts
-                     .includes(:quiz, :user, :responses)
-                     .order(:final_position)
-                     .paginate(page: params[:page], per_page: @pagination)
+    .includes(:quiz, :user, :responses)
+    .order(:final_position)
+
+    @sorted_attempts = @general_attempts.to_a.sort_by { |attempt| [-attempt.score, attempt.created_at] }
+    
+    @paginated_attempts = @sorted_attempts.paginate(page: params[:page], per_page: @pagination)
   end
 
   def user_leaderboard
