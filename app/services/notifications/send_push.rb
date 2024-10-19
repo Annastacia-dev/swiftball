@@ -27,7 +27,7 @@ class Notifications::SendPush < ApplicationService
           user = subscription.user
           payload = {
             title: notification.subject,
-            body: notification.message.replace(/<\/?[^>]+(>|$)/g, ""),
+            body: notification.message.gsub(/<\/?[^>]+>/, ""),
             icon: '/icon-96.png',
             badge: '/icon-96.png',
             url: notification.link
