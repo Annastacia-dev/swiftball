@@ -5,8 +5,6 @@
    <% end %>
 </div>
 
-
-
 <div class="flex flex-col mt-16 lg:px-20 text-sm">
   <table class="min-w-full divide-y divide-gray-200">
     <thead class="dark:bg-black/10 bg-gray-50">
@@ -21,10 +19,7 @@
     </thead>
     <tbody class="divide-y divide-gray-200 relative">
      <% unless @user_leaderboard_attempts.empty? %>
-        <% @user_leaderboard_attempts.sort_by { |attempt|
-          primary_sort = @tour.closed? ? (attempt.final_position || Float::INFINITY) : -attempt.score
-          [primary_sort, attempt.created_at]
-          }.each_with_index do |attempt, index| %>
+        <% @paginated_user_attempts.each_with_index do |attempt, index| %>
           <tr data-controller="confetti"  data-attempt-position = "<%= attempt.final_position %>" data-quiz-status="<%= attempt.quiz.tour.status %>" data-size="mini" id="targetRow">
             <canvas id="leaderboardConfetti" class="absolute h-[62px] lg:w-3/4 w-11/12 lg:top-[31em] top-[34em]" data-confetti-target="canvas"></canvas>
             <td class="px-6 py-4 whitespace-nowrap text-sm">
@@ -76,6 +71,6 @@
 </div>
 
 <div class="flex justify-end mt-3 overflow-x-scroll">
-  <%= will_paginate @user_leaderboard_attempts %>
+  <%= will_paginate @paginated_user_attempts %>
 </div>
 

@@ -62,7 +62,10 @@ class LeaderboardsController < ApplicationController
                        .includes(:quiz, :user, :responses)
                        .where(user_id: users.pluck(:id))
                        .order(:final_position)
-                       .paginate(page: params[:page], per_page: @pagination)
+
+    @sorted_user_attempts = @general_attempts.to_a.sort_by { |attempt| [-attempt.score, attempt.created_at] }
+
+    @paginated_user_attempts = @sorted_attempts.paginate(page: params[:page], per_page: @pagination)
   end
 
 end
