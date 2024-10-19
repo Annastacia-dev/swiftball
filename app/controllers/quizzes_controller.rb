@@ -136,7 +136,7 @@ class QuizzesController < ApplicationController
 
     notification = Notification.new(
       subject: "#{@quiz.title} Quiz is open!",
-      message: "#{@quiz.title} is open!<br/><br/>Make your predictions before #{@quiz.tour&.quiz_live_time.in_time_zone(current_user.timezone).strftime("%A %d %B %Y")}",
+      message: "#{@quiz.title} is open!<br/><br/>Make your predictions",
       link: take_quiz_url(@quiz),
       link_text: 'Predict',
       push: true
@@ -213,7 +213,7 @@ class QuizzesController < ApplicationController
     def create_notification
       notification = Notification.new(
         subject: "#{@quiz.title} Quiz is open!",
-        message: "#{@quiz.title} is open!<br/><br/>Make your predictions before #{@quiz.tour&.quiz_live_time.in_time_zone(current_user.timezone).strftime("%A %d %B %Y")}",
+        message: "#{@quiz.title} is open!<br/><br/>Make your predictions",
         link: take_quiz_url(@quiz),
         link_text: 'Predict',
         email: true,
