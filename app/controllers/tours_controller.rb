@@ -58,6 +58,10 @@ class ToursController < ApplicationController
                      .includes(:quiz, :user, :responses)
                      .order(:final_position)
                      .paginate(page: params[:page], per_page: @pagination)
+
+    @sorted_attempts = @attempts.to_a.sort_by { |attempt| [-attempt.score, attempt.created_at] }
+
+    @paginated_attempts = @attempts.paginate(page: params[:page], per_page: @pagination)
   end
 
   # GET /tours/new
