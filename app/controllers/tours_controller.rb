@@ -60,7 +60,7 @@ class ToursController < ApplicationController
 
     @sorted_attempts = @attempts.to_a.sort_by { |attempt| [-attempt.score, attempt.created_at] }
 
-    @paginated_attempts = @attempts.paginate(page: params[:page], per_page: @pagination)
+    @paginated_attempts = @sorted_attempts.paginate(page: params[:page], per_page: @pagination)
   end
 
   # GET /tours/new
