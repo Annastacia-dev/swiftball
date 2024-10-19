@@ -83,7 +83,7 @@ module ApplicationHelper
   def bottom_nav_links
     items = [
       { path: root_path, icon_class: 'fa-solid fa-house', menu_text: 'Home' },
-      { path: leaderboards_path(tab: 'general'), icon_class: 'fa-solid fa-chess-board', menu_text: 'Leaderboards' },
+      { path: leaderboards_path(tab: 'general', page: 1), icon_class: 'fa-solid fa-chess-board', menu_text: 'Leaderboards' },
       { path: surprise_songs_path(tab: 'songs'), icon_class: 'fa-solid fa-guitar', menu_text: 'Surprise Songs' },
       { path: tracker_outfits_path(tab: 'stats'), icon_class: 'fa-solid fa-shirt', menu_text: 'Outfits Tracker' },
       { path: notifications_path, icon_class: 'fa-solid fa-bell', menu_text: 'Notifications', data: @unread_notifications_total  }
