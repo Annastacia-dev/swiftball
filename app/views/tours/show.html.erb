@@ -38,7 +38,7 @@
               <% elsif attempt.quiz.tour.status == 'closed' %>
                   <%= attempt.final_position %>
               <% else %>
-               <% position = ((params[:page].to_i - 1) * @pagination ) + (index + 1) %>
+               <% position = (((params[:page].to_i || 1 ) - 1) * @pagination ) + (index + 1) %>
                 <%= position.to_s.rjust(2, '0') %>.
               <% end %>
           </td>
