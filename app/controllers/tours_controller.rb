@@ -54,24 +54,25 @@ class ToursController < ApplicationController
   # GET /tours/1 or /tours/1.json
   def show
     @pagination = 50
-  
+
     # Trigger the worker to process the leaderboard
     LeaderboardWorker.perform_async(@tour.id )
-  
+
     # Fetch the result from Redis (or handle when not yet available)
     cached_attempts = $redis.get("leaderboard_#{@tour.id}")
-    
+
     if cached_attempts
       @sorted_attempts = JSON.parse(cached_attempts)
       @paginated_attempts = @sorted_attempts.paginate(page: params[:page], per_page: @pagination)
     else
+      @sorted_attempts ||= []
       @paginated_attempts = WillPaginate::Collection.create(params[:page] || 1, @pagination, 0) do |pager|
         pager.replace(@sorted_attempts)
       end
-      flash[:notice] = "Leaderboard is being processed. Please check back later."
+      flash[:notice] = "Leaderboard is being processed. Refresh page to check."
     end
   end
-  
+
 
   # GET /tours/new
   def new
