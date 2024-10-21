@@ -36,7 +36,7 @@ class LeaderboardsController < ApplicationController
 
   def set_tours
     @tours = Tour.where.not(status: [:pending, :cancelled]).where.not(base: true).where.not(preapp: true).order(number: :desc)
-    @pagination = 20
+    @pagination = 50
   end
 
   def find_leaderboard
@@ -44,8 +44,17 @@ class LeaderboardsController < ApplicationController
   end
 
   def general_leaderboard
-    @sorted_attempts = Leaderboards::General.call(tour_id: @tour.id)
-    @paginated_attempts = @sorted_attempts.paginate(page: params[:page], per_page: @pagination)
+    LeaderboardWorker.perform_async(@tour.id )
+
+    cached_attempts = $redis.get("leaderboard_#{@tour.id}")
+
+    if cached_attempts
+      @sorted_attempts = JSON.parse(cached_attempts)
+      @paginated_attempts = @sorted_attempts.paginate(page: params[:page], per_page: @pagination)
+    else
+      @sorted_attempts = Leaderboards::General.call(tour_id: @tour.id)
+      @paginated_attempts = @sorted_attempts.paginate(page: params[:page], per_page: @pagination)
+    end
   end
 
   def user_leaderboard
