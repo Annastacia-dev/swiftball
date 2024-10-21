@@ -1,35 +1,37 @@
-<% tours = Tour.where.not(base: true).where.not(status: [:pending, :open, :cancelled]).includes(:quiz).order(number: :desc) %>
+<% tours = Tour.where.not(base: true).where.not(status: [:pending, :open, :cancelled]).includes(:quiz).order(number: :desc)%>
 
 <div class="grid xl:grid-cols-6 lg:grid-cols-3 grid-cols-2 gap-4 mt-5">
   <% tours.each do |tour| %>
     <% quiz = tour&.quiz %>
     <% question = quiz&.questions.find_by(content: question&.content) %>
     <% if question %>
-      <% unless question.include_album_and_song? %>
-        <% choice = question.choices.find_by(correct: true) %>
-        <% if choice %>
-          <div class="flex flex-col gap-3">
-          <%= image_tag(choice.image, alt: "#{choice.content}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
-          <div class="flex flex-col gap-1">
-            <p class="text-sm capitalize font-semibold"><%=choice.content %></p>
-            <p class="text-sm capitalize font-medium"><%=tour.title %></p>
-          </div>
-          </div>
-        <% end %>
-      <% else %>
-        <% mashup_answers = quiz.mashup_answers.includes(:question, :album, :song).where(correct: true) %>
-        <% if mashup_answers.present? %>
-        <% mashup_answers.group_by { |mashup| mashup.question.id }.each do |question_id, mashups| %>
-          <% qn = Question.find(question_id) %>
-          <% if qn.content == question.content %>
+      <%= cache @question do %>
+        <% unless question.include_album_and_song? %>
+          <% choice = question.choices.find_by(correct: true) %>
+          <% if choice %>
+            <div class="flex flex-col gap-3">
+            <%= image_tag(choice.image, alt: "#{choice.content}", class: 'w-full h-72 object-cover object-center rounded') if choice.image.attached? %>
             <div class="flex flex-col gap-1">
-              <p class="text-sm uppercase font-medium mb-1"><%= tour.title %></p>
-              <% mashups.each do |mashup| %>
-                  <p class="text-sm capitalize <%= album_color(mashup.album.abbr) %>"><%= mashup.album.abbr %> - <%= mashup.song.title %></p>
-              <% end %>
+              <p class="text-sm capitalize font-semibold"><%=choice.content %></p>
+              <p class="text-sm capitalize font-medium"><%=tour.title %></p>
+            </div>
             </div>
           <% end %>
-        <% end %>
+        <% else %>
+          <% mashup_answers = quiz.mashup_answers.includes(:question, :album, :song).where(correct: true) %>
+          <% if mashup_answers.present? %>
+          <% mashup_answers.group_by { |mashup| mashup.question.id }.each do |question_id, mashups| %>
+            <% qn = Question.find(question_id) %>
+            <% if qn.content == question.content %>
+              <div class="flex flex-col gap-1">
+                <p class="text-sm uppercase font-medium mb-1"><%= tour.title %></p>
+                <% mashups.each do |mashup| %>
+                    <p class="text-sm capitalize <%= album_color(mashup.album.abbr) %>"><%= mashup.album.abbr %> - <%= mashup.song.title %></p>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>
