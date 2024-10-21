@@ -8,7 +8,7 @@
 
 
   <div class="flex justify-between items-center">
-    <h5 class="font-semibold font-courier uppercase text-md "><%= @tour.title %> attempts (<%=@attempts.size %>) </h5>
+    <h5 class="font-semibold font-courier uppercase text-md "><%= @tour.title %> attempts (<%= @tour.attempts.size %>) </h5>
     <% if @tour&.quiz %>
       <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: quiz_dropdown_items(@tour&.quiz) %>
     <% end %>
@@ -38,8 +38,9 @@
               <% elsif attempt.quiz.tour.status == 'closed' %>
                   <%= attempt.final_position %>
               <% else %>
-               <% position = (((params[:page].to_i || 1 ) - 1) * @pagination ) + (index + 1) %>
-                <%= position.to_s.rjust(2, '0') %>.
+                <% page = params[:page] || 1 %>
+                <% position = ((page - 1) * @pagination) + (index + 1) %>
+                <%= position %>.
               <% end %>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm lowercase hover:underline flex items-center gap-3">

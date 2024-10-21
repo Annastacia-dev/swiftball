@@ -54,12 +54,7 @@ class ToursController < ApplicationController
   # GET /tours/1 or /tours/1.json
   def show
     @pagination = 20
-    @attempts = @tour.attempts
-                     .includes(:quiz, :user, :responses)
-                     .order(:final_position)
-
-    @sorted_attempts = @attempts.to_a.sort_by { |attempt| [-attempt.score, attempt.created_at] }
-
+    @sorted_attempts = Leaderboards::General.call(tour_id: @tour.id)
     @paginated_attempts = @sorted_attempts.paginate(page: params[:page], per_page: @pagination)
   end
 
