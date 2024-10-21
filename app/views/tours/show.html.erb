@@ -30,7 +30,8 @@
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-200">
-        <% @paginated_attempts.each_with_index do |attempt, index| %>
+        <% @paginated_attempts.each_with_index do |a, index| %>
+          <% attempt = Attempt.find(a['id']) %>
         <tr>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
               <% if attempt.quiz.tour.status == 'open' %>
@@ -38,7 +39,7 @@
               <% elsif attempt.quiz.tour.status == 'closed' %>
                   <%= attempt.final_position %>
               <% else %>
-                <% page = params[:page] || 1 %>
+                <% page = params[:page].to_i || 1 %>
                 <% position = ((page - 1) * @pagination) + (index + 1) %>
                 <%= position %>.
               <% end %>

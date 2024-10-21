@@ -4,7 +4,7 @@ class Leaderboards::General < ApplicationService
 
   def initialize(params)
     super()
-    @tour = Tour.find(params[:tour_id])
+    @tour = Tour.find(params[:tour_id] || params['tour_id'])
   end
 
   def call
