@@ -53,7 +53,7 @@ class ToursController < ApplicationController
 
   # GET /tours/1 or /tours/1.json
   def show
-    @pagination = 20
+    @pagination = 50
   
     # Trigger the worker to process the leaderboard
     LeaderboardWorker.perform_async(@tour.id )
