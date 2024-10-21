@@ -14,7 +14,7 @@
   <div class="px-2 capitalize">
     <ul class="flex text-sm">
       <% tabs.each do |tab| %>
-        <%= link_to leaderboards_path(tab: tab[:id]), class: "p-4 cursor-pointer border-b #{ 'tab-active border-b-0' if params[:tab] == tab[:id] || (params[:tab].blank? && tab[:id] == 'general') }" do %>
+        <%= link_to leaderboards_path(tab: tab[:id], tour: params[:tour]), class: "p-4 cursor-pointer border-b #{ 'tab-active border-b-0' if params[:tab] == tab[:id] || (params[:tab].blank? && tab[:id] == 'general') }" do %>
           <%= tab[:label] %>
         <% end %>
       <% end %>
