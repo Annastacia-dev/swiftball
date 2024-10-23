@@ -8,9 +8,9 @@
           new
         <% end %>
       <% end %>
-      <%= link_to leaderboard_path, class: "lg:flex hidden rounded py-2 px-4 dark:bg-black bg-gray-200  font-medium capitalize flex gap-2 items-center font-courier" do %>
+      <%= link_to leaderboards_path(tab: 'general', page: 1), class: "lg:flex hidden rounded py-2 px-4 dark:bg-black bg-gray-200  font-medium capitalize flex gap-2 items-center font-courier" do %>
         <i class="fa-solid fa-chess-board"></i>
-        leaderboard
+        leaderboards
       <% end %>
     </div>
     <%= form_with url: tours_path, method: :get, local: true, class: 'flex gap-2 items-center' do |form| %>
@@ -31,12 +31,12 @@
   <% @tours.each_with_index do |tour, index| %>
     <div class="flex justify-between items-center font-courier py-4 px-2 <%= tour.status == 'cancelled' ? 'text-red-500' : '' %>">
       <% if current_user.admin? %>
-        <%= link_to tour_path(tour), class:"flex lg:flex-row flex-col gap-2" do %>
+        <%= link_to tour_path(tour, page: 1), class:"flex lg:flex-row flex-col gap-2" do %>
           <span class="font-semibold uppercase flex gap-2 items-center hover:underline" title="<%= tour&.start_time&.strftime("%A %d %B %Y %H:%M") %>">
             <% if tour.number? %>
               <span><%= (tour.number).to_s.rjust(2, '0') %>.</span>
             <% else %>
-             <span class="text-gray-50 dark:text-black"><%= (0).to_s.rjust(2, '0') %>.</span>
+             <span class="text-transparent"><%= (0).to_s.rjust(2, '0') %>.</span>
             <% end %>
             <%= tour.title %>
             <% if tour.status == 'open' %>

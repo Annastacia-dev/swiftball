@@ -1,0 +1,33 @@
+<div class="lg:pt-32 pt-24 pb-20 lg:px-12 px-1 min-h-screen">
+
+  <%= render 'components/breadcrumb', breadcrumbs: [
+    { text: 'home', path: root_path },
+    { text: "Leaderboards" },
+  ]
+  %>
+
+    <% tabs = [
+      { id: 'general', label: 'general', partial: 'general_leaderboard' },
+      { id: "user", label: "#{current_user.leaderboard.name}", partial: 'user_leaderboard' },
+    ] %>
+
+  <div class="px-2 capitalize">
+    <ul class="flex text-sm">
+      <% tabs.each do |tab| %>
+        <%= link_to leaderboards_path(tab: tab[:id], tour: params[:tour]), class: "p-4 cursor-pointer border-b #{ 'tab-active border-b-0' if params[:tab] == tab[:id] || (params[:tab].blank? && tab[:id] == 'general') }" do %>
+          <%= tab[:label] %>
+        <% end %>
+      <% end %>
+    </ul>
+
+    <div class="p-4">
+      <% tabs.each do |tab| %>
+        <% if params[:tab] == tab[:id] || (params[:tab].blank? && tab[:id] == 'general') %>
+          <%= render partial: tab[:partial] %>
+        <% end %>
+      <% end %>
+    </div>
+</div>
+
+
+</div>

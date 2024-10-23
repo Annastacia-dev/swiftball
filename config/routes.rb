@@ -74,11 +74,16 @@ Rails.application.routes.draw do
 
   resources :push_subscriptions, only: [:create]
   resources :push_notifications, only: [:create]
-  resources :feedbacks
+  resources :feedbacks do
+    resources :feedback_responses
+  end
   resources :setlists do
     resources :setlists_songs
   end
 
   resources :openers
   resources :notifications
+  resources :leaderboards do
+    get 'invite', on: :member
+  end
 end

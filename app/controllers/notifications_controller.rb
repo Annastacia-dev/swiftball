@@ -4,7 +4,8 @@ class NotificationsController < ApplicationController
   before_action :find_notification, except: %i[index new create]
 
   def index
-    @notifications = current_user.notifications.where(in_app: true)
+    @notifications = current_user.notifications.where(in_app: true).order(created_at: :desc)
+    @notifications.where(status: :unread).update(status: :read)
   end
 
   def new
@@ -64,7 +65,7 @@ class NotificationsController < ApplicationController
   end
 
   def notification_params
-    params.require(:notification).permit(:subject, :message, :email, :push, :in_app)
+    params.require(:notification).permit(:subject, :message, :email, :push, :in_app, :link, :link_test)
   end
 
   def send_notification

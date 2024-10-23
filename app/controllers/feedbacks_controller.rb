@@ -1,23 +1,32 @@
 class FeedbacksController < ApplicationController
-  before_action :authenticate_admin!, except: %i[new create]
   before_action :set_feedback, only: %i[show destroy ]
 
   # GET /feedbacks or /feedbacks.json
   def index
-    @unread_feedbacks = Feedback.where(status: :unread).order(created_at: :desc)
-    @read_feedbacks = Feedback.where(status: :read).order(created_at: :desc)
+    @feedbacks = Feedback.all.order(created_at: :desc)
+    @user_feedbacks = Feedback.where(user: current_user)
+    @feedback = current_user.feedbacks.new
   end
 
   # GET /feedbacks/1 or /feedbacks/1.json
   def show
+    @feedback_response = @feedback.feedback_responses.new
+
     respond_to do |format|
       if @feedback.status == 'read'
         format.html { render :show }
       else
-        if @feedback.update(status: 'read')
-          format.html { render :show }
+        if current_user.admin?
+          if @feedback.update_column('status', 'read')
+            if @feedback.feedback_responses.where(status: 'unread').present?
+              @feedback.feedback_responses.where(status: 'unread').update(status: 'read')
+            end
+            format.html { render :show }
+          else
+            format.html { render :new, status: :unprocessable_entity }
+          end
         else
-          format.html { render :new, status: :unprocessable_entity }
+          format.html { render :show }
         end
       end
     end
@@ -34,7 +43,7 @@ class FeedbacksController < ApplicationController
 
     respond_to do |format|
       if @feedback.save
-        format.html { redirect_to tours_path, notice: "Feedback was successfully submitted." }
+        format.html { redirect_to root_path, notice: "Feedback was successfully submitted." }
       else
         format.html { render :new, status: :unprocessable_entity }
       end

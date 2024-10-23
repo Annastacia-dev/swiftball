@@ -5,18 +5,64 @@
     { text: "#{@feedback.subject}" },
   ] %>
 
-  <div class="flex justify-between items-center">
-    <h5 class="font-semibold font-courier uppercase text-md "><%= @feedback.subject %> </h5>
-  </div>
+    <div class="flex flex-col mt-10 gap-3">
+      <% if current_user.admin? %>
 
-  <hr class="border border-black dark:border-gray-100 my-2" />
+        <!-- Feedback Info -->
+        <div class="flex justify-between">
+          <h5 class="font-courier capitalize text-md ">
+            <%= @feedback.user.name %> | 
+            <span class="lowercase">@<%= @feedback.user.username %> | <%= @feedback.user.email %></span>
+          </h5>
+          <%= button_to feedback_path(@feedback), method: :delete, class: 'text-red-500', data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" } do %>
+            <i class="fa-solid fa-trash"></i>
+          <% end %>
+        </div>
 
-  <div class="flex flex-col text-left mt-10 gap-3">
-    <h5 class="font-courier capitalize text-md "><%= @feedback.user.name %> </h5>
-    <h5 class="font-courier text-md "><%= @feedback.user.email %> </h5>
-  </div>
+        <hr class="border border-black dark:border-gray-100 my-2" />
+      <% end %>
 
-  <div class="flex flex-col text-left mt-10 gap-3">
-    <h5 class="font-courier capitalize text-md "><%= @feedback.message %> </h5>
-  </div>
+      <div class="flex justify-between items-center">
+        <h5 class="font-semibold font-courier uppercase text-md "><%= @feedback.subject %> </h5>
+      </div>
+
+      <!-- Chat Style -->
+      <div class="flex flex-col mt-10 gap-3 justify-end">
+        <!-- Feedback Message -->
+        <div class="<%= 'self-end' if @feedback.user == current_user %> bg-gray-100 dark:bg-gray-800 p-3 rounded-lg max-w-lg">
+          <h5 class="font-courier capitalize text-md text-left"><%= @feedback.message %></h5>
+        </div>
+
+        <!-- Feedback Responses -->
+        <% @feedback.feedback_responses.includes(:user).order(created_at: :asc).each do |response| %>
+          <div class="<%= 'self-end' if response.user == current_user %> bg-gray-100 dark:bg-gray-800 p-3 rounded-lg max-w-lg">
+            <h5 class="font-courier capitalize text-md text-left"><%= response.message %></h5>
+          </div>
+        <% end %>
+      </div>
+
+    <!-- Form for New Response -->
+    <%= form_with(model: [@feedback, @feedback_response], class: "contents") do |form| %>
+      <div class="flex lg:flex-row flex-col justify-between gap-8 mt-5 mb-2">
+        <div class="w-11/12">
+          <% if @feedback_response.errors[:message].any? %>
+            <p class="text-red-600 text-xs mb-1 flex items-center gap-1">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              <%= @feedback_response.errors.full_messages_for(:message).join(', ') %>
+            </p>
+          <% end %>
+          <div>
+            <%= form.text_area :message,
+                  class: "border outline-none px-3 py-2 bg-transparent w-full
+                  #{'border-red-500' if @feedback_response.errors[:message].any? }",
+                  required: true %>
+          </div>
+        </div>
+
+        <button type="submit" class="rounded px-4 py-2 dark:bg-black bg-gray-100 min-w-32">
+          <i class="fa-regular fa-paper-plane"></i>
+        </button>
+      </div>
+    <% end %>
+    </div>
 </div>

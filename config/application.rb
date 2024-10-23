@@ -1,9 +1,9 @@
 require_relative "boot"
-
+require 'benchmark'
 require "rails/all"
 require 'obscenity/active_model'
-require "prawn"
-require 'web-push'
+require 'will_paginate/array'
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)

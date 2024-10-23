@@ -66,7 +66,7 @@ class AttemptsController < ApplicationController
   private
 
   def set_attempt
-    if current_user.admin?
+    if current_user.username != params[:id].split('-').first
       @attempt = Attempt.includes([:responses]).friendly.find(params[:id])
     else
       @attempt = current_user.attempts.friendly.find(params[:id])

@@ -40,9 +40,10 @@ class User < ApplicationRecord
 
   # associations
   has_many :attempts, dependent: :destroy
-  has_many :push_subscriptions
-  has_many :feedbacks
-  has_many :notifications
+  has_many :push_subscriptions, dependent: :destroy
+  has_many :feedbacks, dependent: :destroy
+  has_many :notifications, dependent: :destroy
+  has_one :leaderboard, foreign_key: 'creator_id', dependent: :destroy
 
   # validations
   validates :email, presence: true, email: true, obscenity: true, restricted_keywords: true
@@ -51,6 +52,9 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true, length: { minimum: 3, maximum: 20 },  restricted_keywords: true, username_format: true, obscenity: true
   validates :timezone, presence: true
   validates :country, presence: true
+
+  # callbacks
+  after_create :create_leaderboard
 
   # scopes
   scope :has_attempted_quiz, ->(quiz_id) {
@@ -73,5 +77,12 @@ class User < ApplicationRecord
 
   def has_attempted_quiz?(quiz_id)
     attempts.exists?(quiz_id: quiz_id)
+  end
+
+  def create_leaderboard
+    return if self.leaderboard
+
+    leaderboard = Leaderboard.create!(creator_id: self.id, name: "#{self.username}'s Version")
+    leaderboard.leaderboard_users.create(user: self)
   end
 end

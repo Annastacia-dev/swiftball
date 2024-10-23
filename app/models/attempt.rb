@@ -57,7 +57,7 @@ class Attempt < ApplicationRecord
   def score
     score = 0
 
-    responses.includes([:question, :choice]).each do |response|
+    responses.includes([:choice]).each do |response|
       if response.choice&.correct
         score += response.question.points
       end

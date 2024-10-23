@@ -1,0 +1,33 @@
+<div class="lg:pt-32 pt-24 pb-20 min-h-screen">
+  <div class='px-12'>
+    <%= render 'components/breadcrumb', breadcrumbs: [
+      { text: 'home', path: root_path },
+      { text: 'feedback', path: feedbacks_path }
+    ] %>
+  </div>
+  <div class="flex justify-end px-12">
+    <%= link_to new_feedback_path, class: 'bg-slate-100 dark:bg-black/80 px-4 py-2 flex items-center gap-2 text-sm' do%>
+      <i class="fa-solid fa-plus"> </i>
+      <span>New Feedback </span>
+    <% end %>
+  </div>
+
+  <% unless @user_feedbacks.empty? %>
+      <div id="feedback" class="min-w-full mt-10 flex flex-col gap-1">
+          <% @user_feedbacks.each_with_index do |feedback, index| %>
+            <% unread_count = feedback.feedback_responses.where(status: 'unread').count %>
+            <% bg_class = feedback.unread? ? 'bg-slate-200 dark:bg-black' : 'bg-slate-100 dark:bg-black/80' %>
+            <%= link_to feedback_path(feedback), class: "flex font-medium justify-between px-12 py-2 border dark:border-gray-900 capitalize font-courier capitalize text-md  #{bg_class}" do %>
+              <%= feedback.subject %>
+              <% if unread_count > 0 %>
+                <div class="text-xs h-5 w-5 rounded-full flex justify-center items-center font-semibold bg-slate-500 text-white dark:bg-gray-900">
+                  <%= unread_count %>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+  <% else %>
+    <%= render 'form' %>
+  <% end %>
+</div>

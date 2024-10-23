@@ -20,7 +20,7 @@
 
   <div class="flex justify-between items-center p-5">
     <h5 class="font-semibold font-courier uppercase text-md lg:mt-0 <%= @quiz.tour.status == 'live' || @quiz.tour.status == 'closed' ? 'mt-24' : 'mt-0' %>">
-      <% if current_user.admin? %>
+      <% if current_user != @attempt.user %>
         @<%= @attempt.user.username %>'s
       <% else %>
         your
@@ -45,7 +45,7 @@
             <div class="bg-red-500 h-5 w-5 rounded-full absolute top-4 z-10 left-1"></div>
           <% end %>
 
-          <div class="-rotate-3 bg-yellow-300 dark:bg-rose-300 shadow-lg p-5 w-40 h-36 m-4 rounded-lg flex flex-col gap-2 dark:text-black">
+          <div class="-rotate-3 bg-yellow-300 dark:bg-rose-300 shadow-lg p-5 w-44 h-36 m-4 rounded-lg flex flex-col gap-2 dark:text-black">
               <h2 class="text-xl underline tracking-wide font-bold mb-2 uppercase">results</h2>
               <span class="text-lg">POINTS: <%= @attempt.score %> / <%= @attempt.total_possible_points %> </span>
               <span class="text-lg"">POSITION: <%= @attempt.final_position %> / <%= @quiz.total_attempts %> </span>
