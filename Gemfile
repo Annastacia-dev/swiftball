@@ -6,6 +6,7 @@ gem 'aws-sdk', require: false
 gem "actionpack", ">= 7.1.3.4"
 gem "actiontext", ">= 7.1.3.4"
 gem "bootsnap", require: false
+gem 'benchmark', '~> 0.3.0'
 gem 'chartkick', '~> 5.0', '>= 5.0.7'
 gem 'cloudinary', '~> 2.1', '>= 2.1.0'
 gem 'countries', '~> 6.0.1'
@@ -42,17 +43,17 @@ gem 'will_paginate', '~> 4.0', '>= 4.0.1'
 
 # Be sure to require rack_mini_profiler below the pg and mysql gems in your Gemfile. rack_mini_profiler will identify these gems if they are loaded to insert instrumentation. If included too early no SQL will show up.
 
-gem 'rack-mini-profiler', require: false
-# For memory profiling
-gem 'memory_profiler'
-# For call-stack profiling flamegraphs
-gem 'stackprof'
+
 
 
 group :development, :test do
   gem 'bullet', '~> 7.1', '>= 7.1.6'
   gem 'byebug', '~> 11.1', '>= 11.1.3'
   gem 'debug', '~> 1.9', '>= 1.9.2', platforms: %i[ mri windows ]
+  gem 'memory_profiler', '~> 1.1.0'
+  gem 'rspec-rails', '~> 7.0.0'
+  gem 'rack-mini-profiler', require: false
+  gem 'stackprof', '~> 0.2.26'
 end
 
 group :development do

@@ -1,5 +1,5 @@
 require_relative "boot"
-
+require 'benchmark'
 require "rails/all"
 require 'web-push'
 require 'obscenity/active_model'
