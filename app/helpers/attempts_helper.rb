@@ -18,8 +18,6 @@ module AttemptsHelper
       if quiz.tour.status == 'closed'
         items << { path: attempt_path(attempt), icon_class: 'fa-solid fa-square-poll-vertical', menu_text: 'View Results' }
       end
-
-      items <<         { path: download_pdf_attempt_path(attempt), icon_class: 'fa-solid fa-file-pdf', menu_text: 'Download PDF' }
     end
 
     items

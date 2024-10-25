@@ -98,7 +98,11 @@
         <% elsif tour.status == 'closed' || tour.status == 'live' || tour.status == 'cancelled' %>
           <% if  current_user.has_attempted_quiz?(tour&.quiz) %>
             <% attempt = current_user.attempts.find_by(quiz_id: tour&.quiz.id) %>
-            <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: attempt_dropdown_items(tour&.quiz) %>
+            <%= link_to attempt_path(attempt), class: 'bg-gray-200 dark:bg-black px-2 py-2 dark:hover:bg-gray-900 hover:bg-gray-100 rounded flex items-center gap-2' do %>
+              <i class="fa-solid fa-square-poll-vertical title="view results"></i>
+              <span class="lg:flex hidden">view results </span>
+              <span class="lg:hidden flex">results</span>
+            <% end %>
           <% else %>
             <% if tour.status == 'closed' %>
              <%= link_to results_quiz_path(tour&.quiz), class: 'bg-gray-200 dark:bg-black px-2 py-2 dark:hover:bg-gray-900 hover:bg-gray-100 rounded flex items-center gap-2' do %>
