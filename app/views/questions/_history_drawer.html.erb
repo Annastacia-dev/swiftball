@@ -5,7 +5,6 @@
     <% quiz = tour&.quiz %>
     <% question = quiz&.questions.find_by(content: question&.content) %>
     <% if question %>
-      <%= cache @question do %>
         <% unless question.include_album_and_song? %>
           <% choice = question.choices.find_by(correct: true) %>
           <% if choice %>
@@ -33,7 +32,6 @@
           <% end %>
           <% end %>
         <% end %>
-      <% end %>
     <% end %>
   <% end %>
 </div>
