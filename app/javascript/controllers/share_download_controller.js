@@ -2,9 +2,9 @@ import { Controller } from "@hotwired/stimulus";
 import html2canvas from "html2canvas";
 
 export default class extends Controller {
-  static targets = ["download", "share", "attempt"]
+  static targets = ["download", "share", "attempt"];
 
-   loadImageAsBase64 = (url) => {
+  loadImageAsBase64 = (url) => {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.crossOrigin = "anonymous";
@@ -23,30 +23,29 @@ export default class extends Controller {
 
   async downloadImage() {
     const images = this.attemptTarget.querySelectorAll("img");
-  
+
     for (const img of images) {
       try {
-        const base64Data = await loadImageAsBase64(img.src);
+        const base64Data = await this.loadImageAsBase64(img.src);
         img.src = base64Data;
       } catch (error) {
         console.error("Error loading image as base64:", error);
       }
     }
-  
-    html2canvas(this.attemptTarget, { scale: 2, useCORS: true }).then(canvas => {
+
+    html2canvas(this.attemptTarget, { scale: 2, useCORS: true }).then((canvas) => {
       const link = document.createElement("a");
       link.href = canvas.toDataURL("image/png");
       link.download = `${this.attemptTarget.id}-predictions.png`;
       link.click();
-    }).catch(error => {
+    }).catch((error) => {
       console.error("Error capturing canvas:", error);
     });
   }
-  
 
   shareImage() {
-    html2canvas(this.attemptTarget).then(canvas => {
-      canvas.toBlob(blob => {
+    html2canvas(this.attemptTarget).then((canvas) => {
+      canvas.toBlob((blob) => {
         const file = new File([blob], `${this.attemptTarget.id}-predictions.png`, { type: "image/png" });
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
           navigator.share({
