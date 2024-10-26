@@ -5,11 +5,13 @@ export default class extends Controller {
   static targets = ["download", "share", "attempt"]
 
   downloadImage() {
-    html2canvas(this.attemptTarget, { scale: 2 }).then(canvas => {
+    html2canvas(this.attemptTarget, { scale: 2, useCORS: true }).then(canvas => {
       const link = document.createElement("a");
       link.href = canvas.toDataURL("image/png");
       link.download = `${this.attemptTarget.id}-predictions.png`;
       link.click();
+    }).catch(error => {
+      console.error("Error capturing canvas:", error);
     });
   }
 

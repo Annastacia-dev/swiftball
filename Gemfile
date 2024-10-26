@@ -3,7 +3,7 @@ source "https://rubygems.org"
 ruby "3.2.2"
 
 gem 'aws-sdk', require: false
-gem "actionpack", ">= 7.1.3.4"
+gem "actionpack", ">= 7.1.4.1"
 gem "actiontext", ">= 7.1.3.4"
 gem "bootsnap", require: false
 gem 'benchmark', '~> 0.3.0'
