@@ -40,7 +40,7 @@
             <% choice = response&.choice %>
             <% if choice&.image&.attached? %>
                   <div class="flex flex-col gap-3">
-                    <%= image_tag(choice&.image, alt: "#{choice&.content}", class: 'w-72 md:h-[20rem] h-40 object-cover object-center rounded', loading: 'lazy') if choice&.image&.attached? %>
+                    <%= image_tag(choice&.image, alt: "#{choice&.content}", class: 'w-72 md:h-[20rem] h-40 object-cover object-center rounded', loading: 'lazy', crossorigin: 'anonymous') if choice&.image&.attached? %>
                     <p class="capitalize flex lg:flex-row flex-col lg:items-center lg:gap-4 gap-2 text-xs">
                       <%= choice&.content %>
                       <% if choice&.correct %>
