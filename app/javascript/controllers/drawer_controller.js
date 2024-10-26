@@ -41,8 +41,8 @@ export default class extends Controller {
 
   async loadContent() {
     if (this.contentTarget.innerHTML.trim() === "") {
+      this.contentTarget.innerHTML = '<i class="fa-regular fa-snowflake mt-20 ml-5 animate-spin text-2xl"></i>';
       const url = this.contentTarget.dataset.url;
-      console.log("Fetching content from:", url); // Log the URL
       const response = await fetch(url);
       if (response.ok) {
         const html = await response.text();
