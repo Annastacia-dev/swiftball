@@ -3,12 +3,20 @@ module AttemptsHelper
     attempt = current_user.attempts.find_by(quiz_id: quiz.id)
 
     if attempt
-      items = [
-        { path: attempt_path(attempt), icon_class: 'fa-solid fa-wand-magic-sparkles', menu_text: 'View Predictions' },
-      ]
+      items = []
 
       if quiz.tour.status == 'open'
+        items << { path: attempt_path(attempt), icon_class: 'fa-solid fa-wand-magic-sparkles', menu_text: 'View Predictions' }
+
         items << { path: edit_attempt_path(attempt), icon_class: 'fa-solid fa-pencil', menu_text: 'Edit Predictions' }
+      end
+
+      if quiz.tour.status == 'live'
+        items << { path: attempt_path(attempt), icon_class: 'fa-solid fa-square-poll-vertical', menu_text: 'View Progress' }
+      end
+
+      if quiz.tour.status == 'closed'
+        items << { path: attempt_path(attempt), icon_class: 'fa-solid fa-square-poll-vertical', menu_text: 'View Results' }
       end
     end
 

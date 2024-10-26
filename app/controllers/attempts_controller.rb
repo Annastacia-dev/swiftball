@@ -2,8 +2,8 @@ class AttemptsController < ApplicationController
   include OrderQuestions
 
   before_action :authenticate_not_admin!, only: %i[index]
-  before_action :set_attempt, only: %i[show edit update]
-  before_action :set_quiz, only: %i[show edit update]
+  before_action :set_attempt, except: %i[index]
+  before_action :set_quiz, only: %i[show edit update share]
   before_action :order_questions, only: %i[edit]
   before_action :check_tour_open, only: %i[edit]
 
@@ -34,6 +34,14 @@ class AttemptsController < ApplicationController
     end
   end
 
+  def share
+    if @quiz.tour.status != 'open'
+      @responses = @attempt.responses.includes(:question, :mashup_answers, choice: { question: {}, image_attachment: :blob })
+    else
+      @responses = @attempt.responses.includes(:question, :mashup_answers, choice: { image_attachment: :blob })
+    end
+  end
+
   def update
     if @quiz.tour.status == 'open'
       responses = params[:attempt][:responses]
@@ -53,6 +61,14 @@ class AttemptsController < ApplicationController
     elsif @quiz.tour.status == 'closed' || @quiz.tour.status == 'live'
       redirect_to attempt_path(@attempt), alert: "Sorry this quiz has been closed!"
     end
+  end
+
+  def download_pdf
+    pdf = AttemptPdf.new(attempt: @attempt)
+    send_data pdf.render,
+              filename: "#{@attempt.slug}.pdf",
+              type: 'application/pdf',
+              disposition: 'inline'
   end
 
   private

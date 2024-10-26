@@ -1,0 +1,85 @@
+<% breadcrumbs = [
+    { text: 'home', path: root_path },
+    { text: 'back', path: attempt_path(@attempt) },
+    { text: 'share your predictions' }
+  ]
+%>
+
+<div data-controller="share-download" class="lg:pt-32 pt-24 pb-20 min-h-screen relative flex flex-col gap-2 lg:px-10 px-2">
+  <div>
+    <%= render 'components/breadcrumb', breadcrumbs: breadcrumbs %>
+  </div>
+
+  <div class="flex justify-between mb-4">
+    <h5></h5>
+    <div class="flex items-center gap-2">
+
+      <button data-action="share-download#downloadImage" class="flex items-center gap-2 text-sm px-4 py-2 bg-slate-100 dark:bg-white/10 capitalize rounded">
+        <i class="fa-solid fa-download"></i>
+      </button>
+
+      <button data-action="share-download#shareImage" class="flex items-center gap-2 text-sm px-4 py-2 bg-slate-100 dark:bg-white/10 capitalize rounded">
+        <i class="fa-solid fa-share"></i>
+      </button>
+    </div>
+  </div>
+
+
+  <div id="<%= @attempt.slug %>" data-share-download-target="attempt" class="lg:p-5 p-3 bg-white dark:bg-black shadow-md flex flex-col lg:gap-8 gap-4">
+
+   <div class="flex justify-between text-sm mb-4 items-center capitalize font-medium">
+     <h5>my <%= @quiz.title %> predicitions</h5>
+
+     <% if @quiz.tour.status == 'closed' || @quiz.tour.status == 'live' %>
+       <p class="p-2 bg-gray-100 dark:bg-white/10 rounded"><%= @attempt.score %> / <%= @attempt.total_possible_points %></p>
+     <% end %>
+   </div>
+
+    <div class="grid lg:grid-cols-6 grid-cols-3 lg:gap-5 gap-3">
+      <% @responses.each do |response| %>
+            <% choice = response&.choice %>
+            <% if choice&.image&.attached? %>
+                  <div class="flex flex-col gap-3">
+                    <%= image_tag(choice&.image, alt: "#{choice&.content}", class: 'w-72 md:h-[20rem] h-40 object-cover object-center rounded', loading: 'lazy') if choice&.image&.attached? %>
+                    <p class="capitalize flex lg:flex-row flex-col lg:items-center lg:gap-4 gap-2 text-xs">
+                      <%= choice&.content %>
+                      <% if choice&.correct %>
+                        <span class="bg-green-600 text-white lg:w-1/4 w-1/2 p-1 rounded text-xs] font-medium flex justify-center items-center gap-1">
+                        + <%= choice.question.points %>
+                        </span>
+                      <% else %>
+                        <% correct_choice = response.question.choices.find_by(correct: true) %>
+                        <% if !choice&.correct && correct_choice.present? %>
+                          <span class="bg-red-600 text-white lg:w-1/4 w-1/2 p-1 rounded text-xs] font-medium flex justify-center items-center gap-1">
+                          + 0
+                          </span>
+                        <% end %>
+                      <% end %>
+                    </p>
+                  </div>
+            <% end %>
+      <% end %>
+    </div>
+
+    <% all_mashup_answers = @responses.flat_map(&:mashup_answers).group_by { |mashup| mashup.question.content } %>
+
+    <div class="grid lg:grid-cols-2 gap-5 mt-4 capitalize text-xs font-medium">
+      <% all_mashup_answers.each do |question_content, mashups| %>
+        <div class="flex flex-col gap-4">
+          <%= image_tag question_icon(question_content), class: 'w-10' %>
+          <ul class="flex flex-col gap-3">
+            <% mashups.each do |mashup| %>
+              <li><%= mashup.album.abbr %> - <%= mashup.song.title %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="flex justify-center items-center mt-10 gap-3 text-sm">
+      <%= image_tag 'icon-192.png', class: 'w-7' %>
+      <span class="uppercase font-courier font-bold">swiftball online</span>
+    </div>
+
+  </div>
+</div>

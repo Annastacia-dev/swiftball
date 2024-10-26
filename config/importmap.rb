@@ -11,3 +11,4 @@ pin "Chart.bundle", to: "Chart.bundle.js"
 pin_all_from "app/javascript/controllers", under: "controllers"
 pin "canvas-confetti" # @1.9.3
 pin "@rails/ujs", to: "@rails--ujs.js" # @7.1.3
+pin "html2canvas" # @1.4.1

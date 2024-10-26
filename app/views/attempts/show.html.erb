@@ -13,12 +13,12 @@
 <% end %>
 
 
-<div class="lg:pt-32 pt-24 pb-20 min-h-screen relative" data-controller="confetti" data-attempt-position="<%= @attempt.final_position %>" data-quiz-status="<%= @quiz.tour.status %>" data-size="full">
+<div class="lg:pt-44 pt-24 pb-20 min-h-screen relative" data-controller="confetti" data-attempt-position="<%= @attempt.final_position %>" data-quiz-status="<%= @quiz.tour.status %>" data-size="full">
   <div class="p-5">
     <%= render 'components/breadcrumb', breadcrumbs: breadcrumbs %>
   </div>
 
-  <div class="flex justify-between items-center p-5">
+  <div class="flex lg:flex-row flex-col gap-5 justify-between lg:items-center p-5">
     <h5 class="font-semibold font-courier uppercase text-md lg:mt-0 <%= @quiz.tour.status == 'live' || @quiz.tour.status == 'closed' ? 'mt-24' : 'mt-0' %>">
       <% if current_user != @attempt.user %>
         @<%= @attempt.user.username %>'s
@@ -31,6 +31,21 @@
       </span>
     <% end %>
     </h5>
+
+    <% if current_user.id == @attempt.user.id %>
+     <div class="flex items-center gap-4">
+        <%= link_to share_attempt_path(@attempt), class:'flex items-center gap-2 text-sm px-4 py-2 bg-slate-100 dark:bg-white/10 capitalize rounded' do %>
+          <i class="fa-solid fa-share"></i>
+          <span>share</span>
+        <% end %>
+        <% if @quiz.tour == 'open' %>
+          <%= link_to edit_attempt_path(@attempt), class:'flex items-center gap-2 text-sm px-4 py-2 bg-slate-100 dark:bg-white/10 capitalize rounded' do %>
+            <i class="fa-solid fa-pencil"></i>
+            <span>edit</span>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 
 

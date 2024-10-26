@@ -38,13 +38,14 @@ Rails.application.routes.draw do
     post 'update_positions', on: :member
     resources :questions do
       get 'pick_surprise_song', on: :member
-      get 'history', on: :member
       post 'surprise_song_answer', on: :member
       get 'drawer_content', on: :member
       resources :choices
     end
   end
-  resources :attempts
+  resources :attempts do
+    get 'share', on: :member
+  end
   resources :choices do
     post 'correct', on: :member
     post 'incorrect', on: :member
