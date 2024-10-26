@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-200 relative">
-      <% unless @user_leaderboard_attempts.empty? %>
+      <% unless @paginated_user_attempts.empty? %>
           <% @paginated_user_attempts.each_with_index do |a, index| %>
             <% attempt = Attempt.find(a['id']) %>
             <tr data-controller="confetti"  data-attempt-position = "<%= attempt.final_position %>" data-quiz-status="<%= attempt.quiz.tour.status %>" data-size="mini" id="targetRow">

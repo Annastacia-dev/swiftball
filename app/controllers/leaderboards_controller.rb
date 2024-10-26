@@ -14,8 +14,11 @@ class LeaderboardsController < ApplicationController
     @next_tour = @tours[current_index - 1] if current_index && current_index > 0
     @previous_tour = @tours[current_index + 1] if current_index && current_index < @tours.size - 1
 
-    general_leaderboard
-    user_leaderboard
+    if params[:tab] == 'general'
+      general_leaderboard
+    elsif params[:tab] == 'user'
+      user_leaderboard
+    end
   end
 
   def invite
@@ -67,9 +70,9 @@ class LeaderboardsController < ApplicationController
                        .where(user_id: users.pluck(:id))
                        .order(:final_position)
 
-    @sorted_user_attempts = @general_attempts.to_a.sort_by { |attempt| [-attempt.score, attempt.created_at] }
+    @sorted_user_attempts = @user_leaderboard_attempts.to_a.sort_by { |attempt| [-attempt.score, attempt.created_at] }
 
-    @paginated_user_attempts = @sorted_attempts.paginate(page: params[:page], per_page: @pagination)
+    @paginated_user_attempts = @sorted_user_attempts.paginate(page: params[:page], per_page: @pagination)
   end
 
 end
