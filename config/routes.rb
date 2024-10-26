@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       get 'pick_surprise_song', on: :member
       get 'history', on: :member
       post 'surprise_song_answer', on: :member
+      get 'drawer_content', on: :member
       resources :choices
     end
   end

@@ -108,6 +108,17 @@ class QuestionsController < ApplicationController
     redirect_to quiz_path(@quiz), notice: "Surprise songs added"
   end
 
+  def drawer_content
+    @questions = Question.joins(quiz: :tour)
+                       .includes(quiz: :tour)
+                       .where(content: @question.content)
+                       .order("tours.number DESC")
+
+    respond_to do |format|
+     format.html { render partial: 'questions/history' }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def find_quiz

@@ -18,13 +18,15 @@
       <% questions.each_with_index do |question, index| %>
         <div class="flex flex-col px-5 py-3 ">
           <div class="flex justify-between capitalize font-medium">
-            <p class="flex gap-7">
-            <span><%= (index + 1).to_s.rjust(2, '0') %>.</span>
-            <span><%= question.content %> (worth <%= question.points %> points)</span>
+            <p class="flex gap-2">
+              <span><%= (index + 1).to_s.rjust(2, '0') %>.</span>
+              <span><%= question.content %> (worth <%= question.points %> points)</span>
+              <%= render 'questions/history_drawer', question: question %>
             </p>
+            
             <% if current_user.admin? %>
               <%= render 'components/dropdown', title: '', icon_class: 'fa-solid fa-ellipsis', items: question_dropdown_items(question) %>
-          <% end %>
+            <% end %>
           </div>
          <div class="grid <%= question&.choices&.first&.image&.attached? ? 'lg:grid-cols-6 grid-cols-2' : 'grid-cols-1' %> gap-4">
            <% question.choices.includes([:responses, image_attachment: :blob]).order(:position).each_with_index do |choice, index| %>
