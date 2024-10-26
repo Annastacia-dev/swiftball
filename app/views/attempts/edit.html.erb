@@ -24,9 +24,7 @@
           <div class="flex flex-col px-5 py-3 ">
             <p class="flex lg:flex-row flex-col gap-2 justify-between lg:text-base text-sm">
               <%= (q_index + 1).to_s.rjust(2, '0') %>. <%= question.content %> (worth <%= question.points %> points)
-              <%= render 'components/drawer', button_icon: '', button_text: 'view history', title: "#{question.content} history", id: "#{question.id}_history", button_class: "#{era_text_color(question.era)} underline hover:scale-90 ml-7 capitalize font-normal text-xs" do %>
-                <%= render 'questions/history_drawer', question: question %>
-              <% end %>
+              <%= render 'questions/history_drawer', question: question %>
             </p>
             <div class="grid <%= question&.choices&.first&.image&.attached? ? 'lg:grid-cols-6 grid-cols-2' : 'grid-cols-1' %> gap-4">
               <% question.choices.includes([image_attachment: :blob]).order(:position).each_with_index do |choice, c_index| %>
@@ -54,7 +52,7 @@
             </div>
           </div>
           <% if question.include_album_and_song %>
-            <% mashup_answers = @attempt.responses.where(question_id: question.id).flat_map(&:mashup_answers) %>
+            <% mashup_answers = @attempt.responses.includes(:mashup_answers).where(question_id: question.id).flat_map(&:mashup_answers) %>
             <% mashup_answers.each do |mashup| %>
               <div class="flex justify-between px-5 py-3">
                 <p class="flex gap-2 items-center font-medium capitalize">

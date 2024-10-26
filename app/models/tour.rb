@@ -78,6 +78,10 @@ class Tour < ApplicationRecord
     statuses.map { |k, _v| [k.humanize, k] }
   end
 
+  def correct_mashups
+    mashup_answers.includes(:album, :song).where(correct: true)
+  end
+
   private
 
   def set_tour_number

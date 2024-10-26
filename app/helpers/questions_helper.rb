@@ -2,7 +2,6 @@ module QuestionsHelper
   def question_dropdown_items(question)
     quiz = question.quiz
     items = [
-      { path: history_quiz_question_path(quiz, question), icon_class: 'fa-solid fa-clock-rotate-left', menu_text: 'View history' },
       { path: quiz_question_path(quiz, question), icon_class: 'fa-solid fa-circle-question', menu_text: 'View Question' },
       { path: edit_quiz_question_path(quiz, question), icon_class: 'fa-solid fa-pencil', menu_text: 'Edit Question' }
     ]
