@@ -3,7 +3,7 @@ class AttemptsController < ApplicationController
 
   before_action :authenticate_not_admin!, only: %i[index]
   before_action :set_attempt, except: %i[index]
-  before_action :set_quiz, only: %i[show edit update]
+  before_action :set_quiz, only: %i[show edit update share]
   before_action :order_questions, only: %i[edit]
   before_action :check_tour_open, only: %i[edit]
 
@@ -31,6 +31,14 @@ class AttemptsController < ApplicationController
                             .order(Arel.sql(order_clause))
                             .order('questions.position ASC')
                             .group_by { |response| response.question.era }
+    end
+  end
+
+  def share
+    if @quiz.tour.status != 'open'
+      @responses = @attempt.responses.includes(:question, :mashup_answers, choice: { question: {}, image_attachment: :blob })
+    else
+      @responses = @attempt.responses.includes(:question, :mashup_answers, choice: { image_attachment: :blob })
     end
   end
 
