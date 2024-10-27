@@ -47,7 +47,7 @@ gem 'will_paginate', '~> 4.0', '>= 4.0.1'
 
 
 group :development, :test do
-  gem 'bullet', '~> 7.1', '>= 7.1.6'
+  gem 'bullet', '~> 7.2', '>= 7.2.0'
   gem 'byebug', '~> 11.1', '>= 11.1.3'
   gem 'debug', '~> 1.9', '>= 1.9.2', platforms: %i[ mri windows ]
   gem 'memory_profiler', '~> 1.1.0'
