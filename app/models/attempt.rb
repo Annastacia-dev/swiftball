@@ -55,13 +55,15 @@ class Attempt < ApplicationRecord
   end
 
   def score
-    correct_points = responses.joins(:choice, :question)
-    .where(choices: { correct: true })
-    .sum("questions.points")
+    score = 0
 
+    responses.includes([:choice]).each do |response|
+      if response.choice&.correct
+        score += response.question.points
+      end
+    end
 
-    total_score = correct_points + piano_mashup_score + guitar_mashup_score + mixup_mashup_score
-    total_score.to_i
+    (score + piano_mashup_score + guitar_mashup_score + mixup_mashup_score).to_i
   end
 
   def total_possible_points
