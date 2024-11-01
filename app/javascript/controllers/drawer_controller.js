@@ -46,7 +46,6 @@ export default class extends Controller {
       const response = await fetch(url);
       if (response.ok) {
         const html = await response.text();
-        console.log("Loaded HTML:", html); // Log the fetched HTML
         this.contentTarget.innerHTML = html;
       } else {
         console.error("Failed to load content:", response.status);

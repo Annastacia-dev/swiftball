@@ -9,8 +9,6 @@ export default class extends Controller {
     const content = event.currentTarget.nextElementSibling;
     const icon = event.currentTarget.querySelector('[data-your-controller-name-target="icon"]');
 
-    console.log('Toggling icon:', icon); // Debugging line
-
     content.classList.toggle("collapse");
     icon.classList.toggle("fa-chevron-down");
     icon.classList.toggle("fa-chevron-up");

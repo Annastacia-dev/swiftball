@@ -1,8 +1,9 @@
 import { Controller } from "@hotwired/stimulus";
 import html2canvas from "html2canvas";
+import saveAs  from "file-saver";
 
 export default class extends Controller {
-  static targets = ["download", "share", "attempt"];
+  static targets = ["download", "share", "attempt", "choiceImage"];
 
   loadImageAsBase64 = (url) => {
     return new Promise((resolve, reject) => {
@@ -21,27 +22,50 @@ export default class extends Controller {
     });
   };
 
-  async downloadImage() {
-    const images = this.attemptTarget.querySelectorAll("img");
+  initialize() {
 
-    for (const img of images) {
-      try {
-        const base64Data = await this.loadImageAsBase64(img.src);
-        img.src = base64Data;
-      } catch (error) {
-        console.error("Error loading image as base64:", error);
-      }
-    }
-
-    html2canvas(this.attemptTarget, { useCORS: true }).then((canvas) => {
-      const link = document.createElement("a");
-      link.href = canvas.toDataURL("image/png");
-      link.download = `${this.attemptTarget.id}-predictions.png`;
-      link.click();
-    }).catch((error) => {
-      console.error("Error capturing canvas:", error);
+    this.choiceImageTargets.forEach((img) => {
+      const url = img.src;
+      this.loadImageAsBase64(url)
+        .then((base64Image) => {
+          img.src = base64Image;
+        })
+        .catch((err) => {
+          console.error("Error loading image:", err);
+        });
     });
   }
+
+  captureRankingImage = async () => {
+    const canvas = await html2canvas(this.attemptTarget, {
+      useCORS: true,
+      allowTaint: false
+     });
+    return new Promise((resolve) => {
+      canvas.toBlob((blob) => {
+        const file = new File([blob], "predictions.png", { type: "image/png" });
+        resolve(file);
+      });
+    });
+  };
+
+  async downloadImage() {
+    // Show loader
+    const loader = document.getElementById('share-download-loader');
+    loader.classList.remove('hidden');
+
+    try {
+      // Capture the image and download it
+      const file = await this.captureRankingImage();
+      saveAs(file, `${this.attemptTarget.id}-predictions.png`);
+    } catch (error) {
+      console.error("Error capturing or downloading image:", error);
+    } finally {
+      // Hide loader once the download is complete or if there was an error
+      loader.classList.add('hidden');
+    }
+  }
+
 
   shareImage() {
     html2canvas(this.attemptTarget).then((canvas) => {

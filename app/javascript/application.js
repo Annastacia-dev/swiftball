@@ -8,7 +8,6 @@ import "Chart.bundle";
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/service_worker.js')
     .then(async function (registration) {
-      // console.log('ServiceWorker registration successful with scope: ', registration.scope);
 
       const subscription = await registration.pushManager.getSubscription();
       if (subscription) {
@@ -36,8 +35,7 @@ if ('serviceWorker' in navigator) {
         throw new Error('Network response was not ok.');
       }
       return response.json();
-    }).then(function (data) {
-      // console.log('Subscription successful: ', data);
+    }).then(function (_data) {
     }).catch(function (error) {
       console.error('ServiceWorker registration failed: ', error);
     });
