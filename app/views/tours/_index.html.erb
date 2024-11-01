@@ -99,9 +99,10 @@
           <% if  current_user.has_attempted_quiz?(tour&.quiz) %>
             <% attempt = current_user.attempts.find_by(quiz_id: tour&.quiz.id) %>
             <%= link_to attempt_path(attempt), class: 'bg-gray-200 dark:bg-black px-2 py-2 dark:hover:bg-gray-900 hover:bg-gray-100 rounded flex items-center gap-2' do %>
+              <% text = tour.status == 'live' ? 'progress' : 'results' %>
               <i class="fa-solid fa-square-poll-vertical title="view results"></i>
-              <span class="lg:flex hidden">view results </span>
-              <span class="lg:hidden flex">results</span>
+              <span class="lg:flex hidden">view <%= text %> </span>
+              <span class="lg:hidden flex"><%= text %></span>
             <% end %>
           <% else %>
             <% if tour.status == 'closed' %>

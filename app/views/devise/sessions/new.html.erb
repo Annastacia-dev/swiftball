@@ -11,9 +11,12 @@
         <%= f.email_field :email, autofocus: true, autocomplete: "email", required: true, class: "bg-transparent" %>
       </div>
 
-      <div class="flex flex-col gap-1 lg:w-1/2">
+      <div class="flex flex-col gap-1 lg:w-1/2 relative">
         <%= f.label :password %>
-        <%= f.password_field :password, autocomplete: "current-password", required: true, class: "bg-transparent" %>
+        <%= f.password_field :password, autocomplete: "current-password", required: true, class: "bg-transparent", id: 'password' %>
+        <i class="fa fa-eye-slash absolute right-4 bottom-3 text-gray-900 cursor-pointer" id="show-password"></i>
+        <i class="fa fa-eye absolute absolute right-4 bottom-3  text-gray-900 cursor-pointer" id="hide-password" style="display: none"
+        ></i>
       </div>
 
       <% if devise_mapping.rememberable? %>
@@ -31,3 +34,25 @@
     </div>
 
 <% end %>
+
+<script>
+  document.addEventListener("turbo:load", () => {
+    const passwordField = document.getElementById("password");
+    const showPassword = document.getElementById("show-password");
+    const hidePassword = document.getElementById("hide-password");
+
+    showPassword.addEventListener("click", () => {
+      passwordField.type = "text";
+      showPassword.style.display = "none";
+      hidePassword.style.display = "block";
+    });
+
+    hidePassword.addEventListener("click", () => {
+      passwordField.type = "password";
+      showPassword.style.display = "block";
+      hidePassword.style.display = "none";
+    });
+
+  })
+</script>
+

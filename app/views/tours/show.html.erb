@@ -1,11 +1,8 @@
 <div class="lg:pt-32 pt-24 pb-20 lg:px-12 px-5 min-h-screen">
-
   <%= render 'components/breadcrumb', breadcrumbs: [
     { text: 'home', path: root_path },
     { text: "#{@tour.title}" },
-  ]
-  %>
-
+  ] %>
 
   <div class="flex justify-between items-center">
     <h5 class="font-semibold font-courier uppercase text-md "><%= @tour.title %> attempts (<%= @tour.attempts.size %>) </h5>
@@ -32,37 +29,33 @@
       <tbody class="divide-y divide-gray-200">
         <% @paginated_attempts.each_with_index do |a, index| %>
           <% attempt = Attempt.find(a['id']) %>
-        <tr>
-          <td class="px-6 py-4 whitespace-nowrap text-sm">
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">
               <% if attempt.quiz.tour.status == 'open' %>
-                  <%= index + 1 %>
+                <%= index + 1 %>
               <% elsif attempt.quiz.tour.status == 'closed' %>
-                  <%= attempt.final_position %>
+                <%= attempt.final_position %>
               <% else %>
-
                 <% page = params[:page].present? ? params[:page].to_i : 1 %>
                 <% position = ((page - 1) * @pagination) + (index + 1) %>
                 <%= position %>.
-               <% position = ((params[:page].to_i - 1) * @pagination ) + (index + 1) %>
-                <%= position.to_s.rjust(2, '0') %>.
               <% end %>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm lowercase hover:underline flex items-center gap-3">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm lowercase hover:underline flex items-center gap-3">
+              <%= attempt.user.username %>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">
+              <% if @tour.status == 'closed' || @tour.status == 'live' %>
+                <%= attempt.score %>
+              <% else %>
+                <i class="fa-solid fa-spinner text-gray-600" title="in progress"></i>
               <% end %>
-            <% end %>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm">
-             <% if @tour.status == 'closed' || @tour.status == 'live' %>
-              <%= attempt.score %>
-             <% else %>
-              <i class="fa-solid fa-spinner text-gray-600" title="in progress"></i>
-             <% end %>
-          </td>
-        </tr>
+            </td>
+          </tr>
         <% end %>
       </tbody>
     </table>
-  <div>
+  </div>
 
   <div class="flex justify-end mt-3 overflow-x-scroll">
     <%= will_paginate @paginated_attempts %>

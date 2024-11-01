@@ -10,14 +10,6 @@ module AttemptsHelper
 
         items << { path: edit_attempt_path(attempt), icon_class: 'fa-solid fa-pencil', menu_text: 'Edit Predictions' }
       end
-
-      if quiz.tour.status == 'live'
-        items << { path: attempt_path(attempt), icon_class: 'fa-solid fa-square-poll-vertical', menu_text: 'View Progress' }
-      end
-
-      if quiz.tour.status == 'closed'
-        items << { path: attempt_path(attempt), icon_class: 'fa-solid fa-square-poll-vertical', menu_text: 'View Results' }
-      end
     end
 
     items

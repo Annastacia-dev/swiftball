@@ -19,7 +19,7 @@ class AttemptsController < ApplicationController
   end
 
   def show
-    responses = @attempt.responses.includes(:question, :mashup_answers, choice: { image_attachment: :blob, question: :choices })
+    responses = @attempt.responses.includes(:question, :mashup_answers, choice: [ :image_attachment, question: :choices ])
     if @quiz.tour.era_order == 'new_order'
       @questions_by_era = responses.joins(:question)
                                    .order('questions.position ASC')
