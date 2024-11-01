@@ -33,7 +33,7 @@ export default class extends Controller {
       }
     }
 
-    html2canvas(this.attemptTarget, { scale: 2, useCORS: true }).then((canvas) => {
+    html2canvas(this.attemptTarget, { useCORS: true }).then((canvas) => {
       const link = document.createElement("a");
       link.href = canvas.toDataURL("image/png");
       link.download = `${this.attemptTarget.id}-predictions.png`;

@@ -35,7 +35,7 @@
      <% end %>
    </div>
 
-    <div class="grid lg:grid-cols-6 grid-cols-3 lg:gap-5 gap-3">
+    <div class="grid lg:grid-cols-6 grid-cols-4 lg:gap-5 gap-3">
       <% @responses.each do |response| %>
             <% choice = response&.choice %>
             <% if choice&.image&.attached? %>
@@ -63,7 +63,7 @@
 
     <% all_mashup_answers = @responses.flat_map(&:mashup_answers).group_by { |mashup| mashup.question.content } %>
 
-    <div class="grid lg:grid-cols-2 gap-5 mt-4 capitalize text-xs font-medium">
+    <div class="grid grid-cols-2 gap-5 mt-4 capitalize text-xs font-medium">
       <% all_mashup_answers.each do |question_content, mashups| %>
         <div class="flex flex-col gap-4">
           <%= image_tag question_icon(question_content), class: 'w-10' %>

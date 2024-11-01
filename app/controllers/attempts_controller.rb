@@ -36,9 +36,9 @@ class AttemptsController < ApplicationController
 
   def share
     if @quiz.tour.status != 'open'
-      @responses = @attempt.responses.includes(:question, :mashup_answers, choice: { question: {}, image_attachment: :blob })
+      @responses = @attempt.responses.includes(:question, :mashup_answers, choice: [ :question,:image_attachment ])
     else
-      @responses = @attempt.responses.includes(:question, :mashup_answers, choice: { image_attachment: :blob })
+      @responses = @attempt.responses.includes(:question, :mashup_answers, choice: [ :image_attachment ])
     end
   end
 
