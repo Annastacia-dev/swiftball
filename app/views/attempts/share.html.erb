@@ -51,7 +51,7 @@
                     crossorigin: 'anonymous', 
                     data: { share_download_target: "choiceImage", choice_id: choice.id }
                   ) if choice&.image&.attached? %>
-                    <p class="capitalize flex lg:flex-row flex-col lg:items-center lg:gap-4 gap-1 text-[5px]">
+                    <p class="capitalize flex lg:flex-row flex-col lg:items-center lg:gap-4 gap-1 text-[5px] font-medium">
                       <%= choice.content %>
                       <% if choice&.correct %>
                         <span class="bg-green-600 text-white lg:w-1/4 w-1/2 p-1 rounded text-xs] font-medium flex justify-center items-center gap-1">
