@@ -48,7 +48,9 @@
             <% end %>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
-             <% if tour.status == 'closed' || tour.status == 'live' %>
+            <% if @tour.status == 'closed' %>
+              <%= attempt.final_score %>
+            <% elsif @tour.status == 'live' %>
               <%= attempt.score %>
              <% elsif tour.status == 'cancelled' %>
                <i class="fa-solid fa-xmark text-red-500" title="cancelled"></i>
