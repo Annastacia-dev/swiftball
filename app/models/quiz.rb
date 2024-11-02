@@ -42,4 +42,8 @@ class Quiz < ApplicationRecord
     self.slug = nil
     save
   end
+
+  def correct_mashups
+    mashup_answers.includes(:album, :song).where(correct: true)
+  end
 end

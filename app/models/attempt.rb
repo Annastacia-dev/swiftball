@@ -65,7 +65,11 @@ class Attempt < ApplicationRecord
       end
     end
 
-    (score + piano_mashup_score + guitar_mashup_score + mixup_mashup_score).to_i
+    if quiz.correct_mashups.present?
+      (score + piano_mashup_score + guitar_mashup_score + mixup_mashup_score).to_i
+    else
+      score.to_i
+    end
   end
 
   def total_possible_points

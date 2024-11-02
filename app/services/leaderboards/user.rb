@@ -26,7 +26,7 @@ class Leaderboards::User < ApplicationService
       !@tour.attempts.exists?(user_id: user.id)
     end
     @user_leaderboard_attempts = @tour.attempts
-                       .includes(:quiz, :user, :responses)
+                       .includes(:quiz, :user)
                        .where(user_id: users.pluck(:id))
 
     if @tour.status == 'closed'

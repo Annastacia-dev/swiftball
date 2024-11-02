@@ -18,7 +18,7 @@ class Leaderboards::General < ApplicationService
 
   def load_attempts
     @general_attempts = @tour.attempts
-                             .includes(:quiz, :user, :responses)
+                             .includes(:quiz, :user)
 
     if @tour.status == 'closed'
       @sorted_attempts = @general_attempts.order(final_score: :desc)
