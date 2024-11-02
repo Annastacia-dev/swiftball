@@ -14,9 +14,7 @@ module MashupScores
       @piano_question_content = 'pick piano acoustic set album and song'
       @piano_question = quiz&.questions.find_by(content: @piano_question_content)
 
-      @piano_mashup_predictions = responses.flat_map do |response|
-        response.mashup_answers.where(question_id: @piano_question.id)
-      end
+      @piano_mashup_predictions = self.mashup_answers.where(question_id: @piano_question.id)
 
       @piano_correct_mashups = @piano_question.mashup_answers.where(response_id: nil, correct: true)
       @piano_correct_albums = @piano_correct_mashups.pluck(:album_id)
@@ -52,9 +50,7 @@ module MashupScores
       @guitar_question_content = 'pick guitar acoustic set album and song'
       @guitar_question = quiz&.questions.find_by(content: @guitar_question_content)
 
-      @guitar_mashup_predictions = responses.flat_map do |response|
-        response.mashup_answers.where(question_id: @guitar_question.id)
-      end
+      @guitar_mashup_predictions = self.mashup_answers.where(question_id: @guitar_question.id)
 
       @guitar_correct_mashups = @guitar_question.mashup_answers.where(response_id: nil, correct: true)
       @guitar_correct_albums = @guitar_correct_mashups.pluck(:album_id)

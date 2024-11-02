@@ -54,18 +54,8 @@ class ToursController < ApplicationController
   # GET /tours/1 or /tours/1.json
   def show
     @pagination = 50
-
-    LeaderboardWorker.perform_async(@tour.id )
-
-    cached_attempts = $redis.get("leaderboard_#{@tour.id}")
-
-    if cached_attempts
-      @sorted_attempts = JSON.parse(cached_attempts)
-      @paginated_attempts = @sorted_attempts.paginate(page: params[:page], per_page: @pagination)
-    else
-      @sorted_attempts = Leaderboards::General.call(tour_id: @tour.id)
-      @paginated_attempts = @sorted_attempts.paginate(page: params[:page], per_page: @pagination)
-    end
+    @sorted_attempts = Leaderboards::General.call(tour_id: @tour.id)
+    @paginated_attempts = @sorted_attempts.paginate(page: params[:page], per_page: @pagination)
   end
 
 

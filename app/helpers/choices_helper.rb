@@ -6,7 +6,7 @@ module ChoicesHelper
     ]
 
     if !choice.correct
-      items.unshift({ path: correct_choice_path(choice), icon_class: 'fa-solid fa-circle-check', menu_text: 'Mark As Correct', type: 'button', method: 'post' })
+      items.unshift({ path: correct_choice_path(choice), icon_class: 'fa-solid fa-circle-check', menu_text: 'Mark As Correct', type: 'button', method: 'post', button_class:  'mark-correct-button' })
     else
       items.unshift({ path: incorrect_choice_path(choice), icon_class: 'fa-solid fa-xmark', menu_text: 'Mark As incorrect', type: 'button', method: 'post' })
     end

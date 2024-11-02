@@ -24,9 +24,7 @@
               <canvas id="leaderboardConfetti" class="absolute h-[62px] w-3/4 lg:top-[30em] top-[28em]" data-confetti-target="canvas"></canvas>
               <td class="px-6 py-4 whitespace-nowrap text-sm">
                 <span class="font-bold">
-                <% if attempt.quiz.tour.status == 'open' %>
-                  <%= index + 1 %>
-                <% elsif attempt.quiz.tour.status == 'closed' %>
+                <% if attempt.quiz.tour.status == 'closed' %>
                     <%= attempt.final_position %>
                 <% else %>
                   <% page = params[:page].present? ? params[:page].to_i : 1 %>
@@ -41,7 +39,7 @@
                 <%= link_to path, class: "flex items-center gap-3 hover:underline w-full" do %>
                   <span class="<%= current_user.id == attempt.user.id ? 'font-semibold' : '' %>">@<%= attempt.user.username %></span>
                   <% if attempt.quiz.tour.closed? %>
-                    <% if attempt.final_position <= 3 %>
+                    <% if attempt&.final_position <= 3 %>
                       <%= image_tag attempt_badge(attempt.final_position), class: attempt_badge_class(attempt.final_position) %>
                     <% end %>
                   <% end %>

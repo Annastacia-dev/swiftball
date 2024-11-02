@@ -32,6 +32,7 @@ class Attempt < ApplicationRecord
   belongs_to :quiz
   has_many :responses, dependent: :destroy
   has_many :questions, through: :responses, dependent: :destroy
+  has_many :mashup_answers, through: :responses, dependent: :destroy
 
   # validations
   validate :single_attempt_per_quiz, on: :create
