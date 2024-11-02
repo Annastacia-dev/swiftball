@@ -4,6 +4,7 @@
 #
 #  id             :uuid             not null, primary key
 #  final_position :integer
+#  final_score    :integer
 #  slug           :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null

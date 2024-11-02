@@ -55,6 +55,7 @@ module QuizzesHelper
 
     if quiz.tour.status == 'closed'
       items << { path: update_positions_quiz_path(quiz), icon_class: 'fa-solid fa-ranking-star', menu_text: 'Update Positions', type:'button', method: 'post' }
+      items << { path: update_scores_quiz_path(quiz), icon_class: 'fa-solid fa-star', menu_text: 'Update Scores', type:'button', method: 'post' }
     end
 
     if quiz.tour.status != 'closed'

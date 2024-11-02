@@ -9,6 +9,7 @@
 #  new_item        :boolean          default(FALSE)
 #  outfit_codename :string
 #  position        :integer
+#  responses_count :integer          default(0)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  question_id     :uuid             not null

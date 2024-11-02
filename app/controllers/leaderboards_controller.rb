@@ -56,17 +56,8 @@ class LeaderboardsController < ApplicationController
   end
 
   def user_leaderboard
-    users = current_user.leaderboard.leaderboard_users.includes(:user).map(&:user)
-    @users_without_attempts = users.select do |user|
-      !@tour.attempts.exists?(user_id: user.id)
-    end
-    @user_leaderboard_attempts = @tour.attempts
-                       .includes(:quiz, :user, :responses)
-                       .where(user_id: users.pluck(:id))
-                       .order(:final_position)
-
-    @sorted_user_attempts = @user_leaderboard_attempts.to_a.sort_by { |attempt| [-attempt.score, attempt.created_at] }
-
+    @sorted_user_attempts = Leaderboards::User.call(tour_id: @tour.id, user_id: current_user.id)[:sorted_attempts]
+    @users_without_attempts = Leaderboards::User.call(tour_id: @tour.id, user_id: current_user.id)[:users_without_attempts]
     @paginated_user_attempts = @sorted_user_attempts.paginate(page: params[:page], per_page: @pagination)
   end
 

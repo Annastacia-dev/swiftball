@@ -120,6 +120,7 @@ class QuizzesController < ApplicationController
       respond_to do |format|
         if @tour.update(status: :closed)
           update_attempts_final_position
+          update_attempts_final_score
           format.html { redirect_to tours_path, notice: 'Quiz is now closed' }
         else
           format.html { redirect_to tours_path, alert: "#{@tour.errors.join(',')}", status: :unprocessable_entity }
@@ -158,6 +159,14 @@ class QuizzesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to tour_path(@quiz.tour), notice: 'Successfully updated final positions for all attempts' }
+    end
+  end
+
+  def update_scores
+    update_attempts_final_score
+
+    respond_to do |format|
+      format.html { redirect_to tour_path(@quiz.tour), notice: 'Successfully updated final scores for all attempts' }
     end
   end
 
@@ -234,6 +243,12 @@ class QuizzesController < ApplicationController
     def update_attempts_final_position
       @quiz.attempts.sort_by { |attempt| [-attempt.score, attempt.created_at] }.each_with_index do |attempt, index|
         attempt.update!(final_position: index + 1 )
+      end
+    end
+
+    def update_attempts_final_score
+      @quiz.attempts.each do |attempt|
+        attempt.update!(final_score: attempt.score )
       end
     end
 end

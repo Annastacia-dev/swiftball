@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     post 'live', on: :member
     post 'send_notification', on: :member
     post 'update_positions', on: :member
+    post 'update_scores', on: :member
     resources :questions do
       get 'pick_surprise_song', on: :member
       post 'surprise_song_answer', on: :member

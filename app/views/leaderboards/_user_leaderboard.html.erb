@@ -50,7 +50,9 @@
                 <% end %>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm">
-                <% if @tour.status == 'closed' || @tour.status == 'live' %>
+              <% if @tour.status == 'closed' %>
+                <span class="<%= current_user.id == attempt.user.id ? 'font-semibold' : '' %>"><%= attempt.final_score %></span>
+              <% elsif @tour.status == 'live' %>
                   <span class="<%= current_user.id == attempt.user.id ? 'font-semibold' : '' %>"><%= attempt.score %></span>
                 <% else %>
                   <i class="fa-solid fa-spinner text-gray-600" title="in progress"></i>
@@ -61,7 +63,7 @@
         <% end %>
 
         <% @users_without_attempts.each do |user| %>
-            <tr>
+            <tr class="text-gray-400">
               <td class="px-6 py-4 whitespace-nowrap text-sm">•</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm lowercase <%= current_user.id == user.id ? 'font-semibold' : '' %>">
                   @<%= user.username %>
