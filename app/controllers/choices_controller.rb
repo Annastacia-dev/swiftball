@@ -84,7 +84,7 @@ class ChoicesController < ApplicationController
 
       respond_to do |format|
         if @choice.update(correct: true)
-          render turbo_stream: turbo_stream.replace("question-#{@question.position}", partial: "questions/question", locals: { question: @question })
+          format.html { redirect_to request.referrer, notice: "#{@choice.content} marked correct" }
         else
           format.html { redirect_to request.referrer, alert: "Something went wrong." }
         end
