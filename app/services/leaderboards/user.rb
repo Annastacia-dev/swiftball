@@ -30,7 +30,7 @@ class Leaderboards::User < ApplicationService
                        .where(user_id: users.pluck(:id))
 
     if @tour.status == 'closed'
-      @sorted_attempts = @user_leaderboard_attempts.order(final_score: :desc)
+      @sorted_attempts = @user_leaderboard_attempts.order(:final_position)
     else
       @sorted_attempts = @user_leaderboard_attempts.to_a.sort_by { |attempt| [-attempt.score, attempt.created_at] }
     end

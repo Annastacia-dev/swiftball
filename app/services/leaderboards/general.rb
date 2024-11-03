@@ -21,7 +21,7 @@ class Leaderboards::General < ApplicationService
                              .includes(:quiz, :user)
 
     if @tour.status == 'closed'
-      @sorted_attempts = @general_attempts.order(final_score: :desc)
+      @sorted_attempts = @general_attempts.order(:final_position)
     else
       @sorted_attempts = @general_attempts.to_a.sort_by { |attempt| [-attempt.score, attempt.created_at] }
     end
