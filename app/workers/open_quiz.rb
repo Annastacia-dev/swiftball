@@ -63,7 +63,7 @@ class OpenQuiz
   def create_notification(tour)
     quiz = tour.quiz
     notification = Notification.new(
-      subject: "#{quiz.title} Quiz is open!",
+      subject: "Welcome To The Final Show - #{quiz.title} Quiz is open!",
       message: "#{quiz.title} is open!<br/><br/>Make your predictions",
       link: take_quiz_url(quiz),
       link_text: 'Predict',

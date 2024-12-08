@@ -136,7 +136,7 @@ class QuizzesController < ApplicationController
   def send_notification
 
     notification = Notification.new(
-      subject: "#{@quiz.title} Quiz is open!",
+      subject: "Welcome To The Final Show - #{@quiz.title} Quiz is open!",
       message: "#{@quiz.title} is open!<br/><br/>Make your predictions",
       link: take_quiz_url(@quiz),
       link_text: 'Predict',
@@ -221,7 +221,7 @@ class QuizzesController < ApplicationController
 
     def create_notification
       notification = Notification.new(
-        subject: "#{@quiz.title} Quiz is open!",
+        subject: "Welcome To The Final Show - #{@quiz.title} Quiz is open!",
         message: "#{@quiz.title} is open!<br/><br/>Make your predictions",
         link: take_quiz_url(@quiz),
         link_text: 'Predict',
