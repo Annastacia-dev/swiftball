@@ -17,7 +17,7 @@
         <% choice = question.choices.find_by(correct: true) %>
         <% if choice %>
           <div class="flex flex-col gap-3">
-            <% latest_choice = question.choices.where(outfit_codename: choice.outfit_codename).order(created_at: :desc).first %>
+            <% latest_choice = Choice.where(outfit_codename: choice.outfit_codename).order(created_at: :desc).first %>
             <% if latest_choice&.image&.attached? %>
               <%= image_tag(latest_choice.image, alt: latest_choice.content, class: 'w-full h-72 object-cover object-center rounded') %>
             <% end %>
